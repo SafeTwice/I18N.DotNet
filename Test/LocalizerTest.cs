@@ -91,7 +91,7 @@ namespace I18N.Net.Test
             // Prepare
 
             var localizer = new Localizer();
-            localizer.SetBaseLanguage("en-us").SetTargetLanguage("en-us").LoadXML( GetConfigA() );
+            localizer.SetTargetLanguage("en-us").LoadXML( GetConfigA() );
 
             // Execute & Verify
 
@@ -107,7 +107,7 @@ namespace I18N.Net.Test
             // Prepare
 
             var localizer = new Localizer();
-            localizer.SetBaseLanguage( "en-us" ).SetTargetLanguage( "fr-fr" ).LoadXML( GetConfigA() );
+            localizer.SetTargetLanguage( "fr-fr" ).LoadXML( GetConfigA() );
 
             // Execute & Verify
 
@@ -129,7 +129,7 @@ namespace I18N.Net.Test
             // Prepare
 
             var localizer = new Localizer();
-            localizer.SetBaseLanguage( "en-us" ).SetTargetLanguage( "en-us" ).LoadXML( GetConfigA() );
+            localizer.SetTargetLanguage( "en-us" ).LoadXML( GetConfigA() );
 
             // Execute & Verify
 
@@ -150,7 +150,7 @@ namespace I18N.Net.Test
             // Prepare
 
             var localizer = new Localizer();
-            localizer.SetBaseLanguage( "en-us" ).SetTargetLanguage( "es-es" ).LoadXML( GetConfigA() );
+            localizer.SetTargetLanguage( "es-es" ).LoadXML( GetConfigA() );
 
             // Execute & Verify
 
@@ -163,7 +163,7 @@ namespace I18N.Net.Test
             // Prepare
 
             var localizer = new Localizer();
-            localizer.SetBaseLanguage( "en-us" ).SetTargetLanguage( "es-es" ).LoadXML( GetConfigA() );
+            localizer.SetTargetLanguage( "es-es" ).LoadXML( GetConfigA() );
 
             // Execute & Verify
 
@@ -181,7 +181,7 @@ namespace I18N.Net.Test
             // Prepare
 
             var localizer = new Localizer();
-            localizer.SetBaseLanguage( "en-us" ).SetTargetLanguage( "fr-fr" ).LoadXML( GetConfigA() );
+            localizer.SetTargetLanguage( "fr-fr" ).LoadXML( GetConfigA() );
 
             // Execute & Verify
 
@@ -200,7 +200,7 @@ namespace I18N.Net.Test
             // Prepare
 
             var localizer = new Localizer();
-            localizer.SetBaseLanguage( "en-us" ).SetTargetLanguage( "fr-fr" ).LoadXML( GetConfigA() );
+            localizer.SetTargetLanguage( "fr-fr" ).LoadXML( GetConfigA() );
 
             // Execute & Verify
 
@@ -219,7 +219,7 @@ namespace I18N.Net.Test
             // Prepare
 
             var localizer = new Localizer();
-            localizer.SetBaseLanguage( "en-us" ).SetTargetLanguage( "es-es" ).LoadXML( GetConfigA() );
+            localizer.SetTargetLanguage( "es-es" ).LoadXML( GetConfigA() );
 
             // Execute & Verify
 
@@ -238,7 +238,7 @@ namespace I18N.Net.Test
             // Prepare
 
             var localizer = new Localizer();
-            localizer.SetBaseLanguage( "en-us" ).SetTargetLanguage( "fr-fr" ).LoadXML( GetConfigA() );
+            localizer.SetTargetLanguage( "fr-fr" ).LoadXML( GetConfigA() );
 
             // Execute & Verify
 
@@ -253,7 +253,7 @@ namespace I18N.Net.Test
             // Prepare
 
             var localizer = new Localizer();
-            localizer.SetBaseLanguage( "en-us" ).SetTargetLanguage( "es-es" ).LoadXML( GetConfigA() );
+            localizer.SetTargetLanguage( "es-es" ).LoadXML( GetConfigA() );
 
             // Execute & Verify
 

@@ -159,18 +159,6 @@ namespace I18N.Net
         }
 
         /**
-         * Sets the base language of the application (i.e., from which language conversion is performed).
-         * 
-         * @param [in] language Name or code of the language
-         */
-        public Localizer SetBaseLanguage( string language )
-        {
-            m_baseLanguage = language.ToLower();
-
-            return this;
-        }
-
-        /**
          * Sets the localized language to which conversion will be performed.
          * 
          * @param [in] language Name or code of the language
@@ -232,27 +220,23 @@ namespace I18N.Net
                 m_nestedContexts.Clear();
             }
 
-            if( m_targetLanguage != m_baseLanguage )
+            XElement rootElement = doc.Root;
+
+            if( rootElement.Name != "I18N" )
             {
-                XElement rootElement = doc.Root;
-
-                if( rootElement.Name != "I18N" )
-                {
-                    throw new ParseException( $"Line {( (IXmlLineInfo) rootElement ).LineNumber}: Invalid XML root element" );
-                }
-
-                Load( rootElement );
+                throw new ParseException( $"Line {( (IXmlLineInfo) rootElement ).LineNumber}: Invalid XML root element" );
             }
+
+            Load( rootElement );
         }
 
         /*===========================================================================
          *                          PRIVATE CONSTRUCTORS
          *===========================================================================*/
 
-        private Localizer( Localizer parent, string baseLanguage, string targetLanguage )
+        private Localizer( Localizer parent, string targetLanguage )
         {
             m_parentContext = parent;
-            m_baseLanguage = baseLanguage;
             m_targetLanguage = targetLanguage;
         }
 
@@ -397,7 +381,7 @@ namespace I18N.Net
 
                 if( nestedContext == null )
                 {
-                    nestedContext = new Localizer( currentContext, m_baseLanguage, m_targetLanguage );
+                    nestedContext = new Localizer( currentContext, m_targetLanguage );
                     currentContext.m_nestedContexts.Add( nestedContextId, nestedContext );
                 }
 
@@ -412,7 +396,6 @@ namespace I18N.Net
          *===========================================================================*/
 
         private Localizer m_parentContext = null;
-        private string m_baseLanguage = null;
         private string m_targetLanguage = null;
         private Dictionary<string, string> m_localizations = new Dictionary<string, string>();
         private Dictionary<string, Localizer> m_nestedContexts = new Dictionary<string, Localizer>();

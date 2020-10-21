@@ -422,35 +422,5 @@ namespace I18N.Net.Test
 
             Assert.Contains( "Missing attribute 'id' in 'Context' XML element", exception.Message );
         }
-
-        [Fact]
-        public void LoadXML_Context_EmptyId()
-        {
-            // Prepare
-
-            var localizer = new Localizer();
-            var data = CreateStream( "<I18N><Context id=''></Context></I18N>" );
-
-            // Execute & Verify
-
-            var exception = Assert.Throws<Localizer.ParseException>( () => localizer.SetTargetLanguage( "x" ).LoadXML( data ) );
-
-            Assert.Contains( "Empty context identifier in attribute 'id' of 'Context' XML element", exception.Message );
-        }
-
-        [Fact]
-        public void LoadXML_Context_EmptyNestedId()
-        {
-            // Prepare
-
-            var localizer = new Localizer();
-            var data = CreateStream( "<I18N><Context id='L1..L2'></Context></I18N>" );
-
-            // Execute & Verify
-
-            var exception = Assert.Throws<Localizer.ParseException>( () => localizer.SetTargetLanguage( "x" ).LoadXML( data ) );
-
-            Assert.Contains( "Empty context identifier in attribute 'id' of 'Context' XML element", exception.Message );
-        }
     }
 }

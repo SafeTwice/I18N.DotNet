@@ -141,20 +141,19 @@ namespace I18N.Net
             string leftContextId = splitContextIds.Current.Trim();
 
             Localizer localizer;
-            if( m_nestedContexts.TryGetValue( leftContextId, out localizer ) )
+            if( !m_nestedContexts.TryGetValue( leftContextId, out localizer ) )
             {
-                if( splitContextIds.MoveNext() )
-                {
-                    return localizer.Context( splitContextIds );
-                }
-                else
-                {
-                    return localizer;
-                }
+                localizer = new Localizer( this, m_targetLanguageFull, m_targetLanguagePrimary );
+                m_nestedContexts.Add( leftContextId, localizer );
+            }
+
+            if( splitContextIds.MoveNext() )
+            {
+                return localizer.Context( splitContextIds );
             }
             else
             {
-                return this;
+                return localizer;
             }
         }
 
@@ -405,38 +404,13 @@ namespace I18N.Net
 
         private void LoadContext( XElement element )
         {
-            string contextId = element.Attribute( "id" )?.Value.Trim();
+            string contextId = element.Attribute( "id" )?.Value;
             if( contextId == null )
             {
                 throw new ParseException( $"Line {( (IXmlLineInfo) element ).LineNumber}: Missing attribute 'id' in '{element.Name}' XML element" );
             }
 
-            Localizer currentContext = this;
-
-            foreach( var nestedContextId in contextId.Split( '.' ) )
-            {
-                if( nestedContextId.Length == 0 )
-                {
-                    throw new ParseException( $"Line {( (IXmlLineInfo) element ).LineNumber}: Empty context identifier in attribute 'id' of '{element.Name}' XML element" );
-                }
-
-                Localizer nestedContext = currentContext.Context( nestedContextId );
-
-                if( nestedContext == currentContext )
-                {
-                    nestedContext = null;
-                }
-
-                if( nestedContext == null )
-                {
-                    nestedContext = new Localizer( currentContext, m_targetLanguage );
-                    currentContext.m_nestedContexts.Add( nestedContextId, nestedContext );
-                }
-
-                currentContext = nestedContext;
-            }
-
-            currentContext.Load( element );
+            Context( contextId ).Load( element );
         }
 
         /*===========================================================================

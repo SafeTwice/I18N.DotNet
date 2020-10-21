@@ -161,11 +161,27 @@ namespace I18N.Net
         /**
          * Sets the localized language to which conversion will be performed.
          * 
-         * @param [in] language Name or code of the language
+         * Language matching is case-insensitive.
+         * 
+         * Any arbitrary string can be used for identifying languages, but when using language identifiers formed
+         * by a primary code and a variant code separated by an hyphen (e.g., "en-us") if a localized conversion
+         * for the "full" language is not found then a conversion for the primary (base) language is tried too.
+         * 
+         * @param [in] language Name, code or identifier for the language
          */
         public Localizer SetTargetLanguage( string language )
         {
-            m_targetLanguage = language.ToLower();
+            m_targetLanguageFull = language.ToLower();
+
+            var splitLanguage = m_targetLanguageFull.Split( new char[] { '-' }, 2 );
+            if( splitLanguage.Length > 1 )
+            {
+                m_targetLanguagePrimary = splitLanguage[0];
+            }
+            else
+            {
+                m_targetLanguagePrimary = null;
+            }
 
             return this;
         }
@@ -209,7 +225,7 @@ namespace I18N.Net
          */
         public void LoadXML( XDocument doc, bool merge = false )
         {
-            if( m_targetLanguage == null )
+            if( m_targetLanguageFull == null )
             {
                 throw new InvalidOperationException( "Language must be set before loading localization files" );
             }
@@ -234,10 +250,23 @@ namespace I18N.Net
          *                          PRIVATE CONSTRUCTORS
          *===========================================================================*/
 
-        private Localizer( Localizer parent, string targetLanguage )
+        private Localizer( Localizer parent, string targetLanguageFull, string targetLanguagePrimary )
         {
             m_parentContext = parent;
-            m_targetLanguage = targetLanguage;
+
+            m_targetLanguageFull = targetLanguageFull;
+            m_targetLanguagePrimary = targetLanguagePrimary;
+        }
+
+        /*===========================================================================
+         *                         PRIVATE NESTED CLASSES
+         *===========================================================================*/
+
+        private enum EValueType
+        {
+            NO_MATCH,
+            FULL,
+            PRIMARY
         }
 
         /*===========================================================================
@@ -267,8 +296,9 @@ namespace I18N.Net
         private void LoadEntry( XElement element )
         {
             string key = null;
-            string value = null;
-            
+            string valueFull = null;
+            string valuePrimary = null;
+
             foreach( var childElement in element.Elements() )
             {
                 switch( childElement.Name.ToString() )
@@ -282,14 +312,23 @@ namespace I18N.Net
                         break;
 
                     case "Value":
-                        string loadedValue = LoadValue( childElement );
-                        if( loadedValue != null )
+                        string loadedValue;
+                        var loadedValueType = LoadValue( childElement, out loadedValue );
+                        if( loadedValueType == EValueType.FULL )
                         {
-                            if( value != null )
+                            if( valueFull != null )
                             {
                                 throw new ParseException( $"Line {( (IXmlLineInfo) childElement ).LineNumber}: Too many child '{childElement.Name}' XML elements with the same 'lang' attribute" );
                             }
-                            value = loadedValue;
+                            valueFull = loadedValue;
+                        }
+                        else if( loadedValueType == EValueType.PRIMARY )
+                        {
+                            if( valuePrimary != null )
+                            {
+                                throw new ParseException( $"Line {( (IXmlLineInfo) childElement ).LineNumber}: Too many child '{childElement.Name}' XML elements with the same 'lang' attribute" );
+                            }
+                            valuePrimary = loadedValue;
                         }
                         break;
 
@@ -303,27 +342,36 @@ namespace I18N.Net
                 throw new ParseException( $"Line {( (IXmlLineInfo) element ).LineNumber}: Missing child 'Key' XML element" );
             }
 
+            string value = ( valueFull ?? valuePrimary );
+
             if( value != null )
             {
                 m_localizations.Add( key, value );
             }
         }
 
-        private string LoadValue( XElement element )
+        private EValueType LoadValue( XElement element, out string value )
         {
-            string lang = element.Attribute( "lang" )?.Value;
+            string lang = element.Attribute( "lang" )?.Value.ToLower();
             if( lang == null )
             {
                 throw new ParseException( $"Line {( (IXmlLineInfo) element ).LineNumber}: Missing attribute 'lang' in '{element.Name}' XML element" );
             }
 
-            if( lang.ToLower() != m_targetLanguage )
+            if( lang == m_targetLanguageFull )
             {
-                return null;
+                value = UnescapeEscapeCodes( element.Value );
+                return EValueType.FULL;
+            }
+            else if( lang == m_targetLanguagePrimary )
+            {
+                value = UnescapeEscapeCodes( element.Value );
+                return EValueType.PRIMARY;
             }
             else
             {
-                return UnescapeEscapeCodes( element.Value );
+                value = null;
+                return EValueType.NO_MATCH;
             }
         }
 
@@ -396,7 +444,8 @@ namespace I18N.Net
          *===========================================================================*/
 
         private Localizer m_parentContext = null;
-        private string m_targetLanguage = null;
+        private string m_targetLanguageFull = null;
+        private string m_targetLanguagePrimary = null;
         private Dictionary<string, string> m_localizations = new Dictionary<string, string>();
         private Dictionary<string, Localizer> m_nestedContexts = new Dictionary<string, Localizer>();
     }

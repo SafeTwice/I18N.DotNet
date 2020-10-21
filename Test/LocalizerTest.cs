@@ -52,7 +52,7 @@ namespace I18N.Net.Test
                 "  <Entry>\n" +
                 "    <Key>Format Key: {0:X4}</Key>\n" +
                 "    <Value lang='es-es'>Clave de formato: {0}</Value>\n" +
-                "    <Value lang='fr-fr'>Clef de format: {0}</Value>\n" +
+                "    <Value lang='fr'>Clef de format: {0}</Value>\n" +
                 "  </Entry>\n" +
                 "  <Context id='Level1.Level2'>\n" +
                 "    <Entry>\n" +
@@ -70,7 +70,7 @@ namespace I18N.Net.Test
                 "    <Context id='Level2'>\n" +
                 "      <Entry>\n" +
                 "        <Key>Simple Key 3</Key>\n" +
-                "        <Value lang='fr-fr'>Clef simple 3 en contexte L2</Value>\n" +
+                "        <Value lang='fr'>Clef simple 3 en contexte L2</Value>\n" +
                 "      </Entry>\n" +
                 "    </Context>\n" +
                 "  </Context>\n" +
@@ -359,6 +359,21 @@ namespace I18N.Net.Test
             // Execute & Verify
 
             var exception = Assert.Throws<Localizer.ParseException>( () => localizer.SetTargetLanguage( "x" ).LoadXML( data ) );
+
+            Assert.Contains( "Too many child 'Value' XML elements with the same 'lang' attribute", exception.Message );
+        }
+
+        [Fact]
+        public void LoadXML_Entry_TooManyValuesForSamePrimaryLanguage()
+        {
+            // Prepare
+
+            var localizer = new Localizer();
+            var data = CreateStream( "<I18N><Entry><Key>X</Key><Value lang='en'>X</Value><Value lang='en'>Y</Value><Value lang='en-gb'>Z</Value></Entry></I18N>" );
+
+            // Execute & Verify
+
+            var exception = Assert.Throws<Localizer.ParseException>( () => localizer.SetTargetLanguage( "en-GB" ).LoadXML( data ) );
 
             Assert.Contains( "Too many child 'Value' XML elements with the same 'lang' attribute", exception.Message );
         }

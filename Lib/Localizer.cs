@@ -14,8 +14,10 @@ using System.Xml.Linq;
 namespace I18N.Net
 {
     /**
+     * <summary>
      * This class is used to convert strings from a language-neutral value to its corresponding
      * language-specific localization.
+     * </summary>
      */
     public class Localizer
     {
@@ -24,7 +26,9 @@ namespace I18N.Net
          *===========================================================================*/
 
         /**
+         * <summary>
          * Exception thrown when a localization file cannot be parsed properly.
+         * </summary>
          */
         public class ParseException : ApplicationException
         {
@@ -36,7 +40,9 @@ namespace I18N.Net
          *===========================================================================*/
 
         /**
+         * <summary>
          * Default constructor.
+         * </summary>
          */
         public Localizer()
         {
@@ -47,10 +53,16 @@ namespace I18N.Net
          *===========================================================================*/
 
         /**
-         * Converts the language-neutral string @p text to its corresponding language-specific localized value.
+         * <summary>
+         * Localizes a string.
+         * </summary>
          * 
-         * @param [in] text Language-neutral string
-         * @return Language-specific localized string if found, or @p text otherwise
+         * <remarks>
+         * Converts the language-neutral string <paramref name="text"/> to its corresponding language-specific localized value.
+         * </remarks>
+         * 
+         * <param name="text">Language-neutral string</param>
+         * <returns>Language-specific localized string if found, or <paramref name="text"/> otherwise</returns>
          */
         public string Localize( PlainString text )
         {
@@ -70,12 +82,19 @@ namespace I18N.Net
         }
 
         /**
-         * Converts the composite format string of the language-neutral formattable string @p frmtText (e.g. an interpolated string) 
-         * to its corresponding language-specific localized composite format value, and then generates the result by formatting the 
-         * localized composite format value along with the @p frmtText arguments by using the formatting conventions of the current culture.
+         * <summary>
+         * Localizes an interpolated string.
+         * </summary>
          * 
-         * @param [in] frmtText Language-neutral formattable string
-         * @return Formatted string generated from the language-specific localized format string if found, or generated from @p frmtText otherwise
+         * <remarks>
+         * Converts the composite format string of the language-neutral formattable string <paramref name="frmtText"/> (e.g. an interpolated string) 
+         * to its corresponding language-specific localized composite format value, and then generates the result by formatting the 
+         * localized composite format value along with the <paramref name="frmtText"/> arguments by using the formatting conventions of the current culture.
+         * </remarks>
+         * 
+         * <param name="frmtText">Language-neutral formattable string</param>
+         * <returns>Formatted string generated from the language-specific localized format string if found,
+         *          or generated from <paramref name="frmtText"/> otherwise</returns>
          */
         public string Localize( FormattableString frmtText )
         {
@@ -83,13 +102,20 @@ namespace I18N.Net
         }
 
         /**
-         * Converts the language-neutral format string @p format to its corresponding language-specific localized format value, 
-         * and then generates the result by formatting the localized format value along with the @p args arguments by using the formatting 
-         * conventions of the current culture.
+         * <summary>
+         * Localizes and then formats a string.
+         * </summary>
          * 
-         * @param [in] format Language-neutral format string
-         * @param [in] args Arguments for the format string
-         * @return Formatted string generated from the language-specific localized format string if found, or generated from @p format otherwise
+         * <remarks>
+         * Converts the language-neutral format string <paramref name="format"/> to its corresponding language-specific localized format value, 
+         * and then generates the result by formatting the localized format value along with the <paramref name="args"/> arguments by using the formatting 
+         * conventions of the current culture.
+         * </remarks>
+         * 
+         * <param name="format">Language-neutral format string</param>
+         * <param name="args">Arguments for the format string</param>
+         * <returns>Formatted string generated from the language-specific localized format string if found,
+         *          or generated from <paramref name="format"/> otherwise</returns>
          */
         public string LocalizeFormat( string format, params object[] args )
         {
@@ -109,16 +135,24 @@ namespace I18N.Net
         }
 
         /**
+         * <summary>
          * Gets the localizer for a context in the current localizer.
+         * </summary>
          * 
+         * <remarks>
+         * <para>
          * Contexts are used to disambiguate the conversion of the same language-neutral string to different
          * language-specific strings depending on the context where the conversion is performed.
+         * </para>
          * 
+         * <para>
          * Contexts can be nested. The context identifier can identify a chain of nested contexts by separating
          * their identifiers with the '.' character (left = outermost / right = innermost).
+         * </para>
+         * </remarks>
          * 
-         * @param [in] section Identifier of the context
-         * @return Localizer for the given context
+         * <param name="section">Identifier of the context</param>
+         * <returns>Localizer for the given context</returns>
          */
         public Localizer Context( string contextId )
         {
@@ -128,13 +162,17 @@ namespace I18N.Net
         }
 
         /**
+         * <summary>
          * Gets the localizer for a context in the current localizer.
+         * </summary>
          * 
+         * <remarks>
          * Contexts are used to disambiguate the conversion of the same language-neutral string to different
          * language-specific strings depending on the context where the conversion is performed.
+         * </remarks>
          * 
-         * @param [in] splitContextIds Chain of context identifiers in split form
-         * @return Localizer for the given context
+         * <param name="splitContextIds">Chain of context identifiers in split form</param>
+         * <returns>Localizer for the given context</returns>
          */
         public Localizer Context( IEnumerator<string> splitContextIds )
         {
@@ -158,15 +196,23 @@ namespace I18N.Net
         }
 
         /**
+         * <summary>
          * Sets the localized language to which conversion will be performed.
+         * </summary>
          * 
+         * <remarks>
+         * <para>
          * Language matching is case-insensitive.
+         * </para>
          * 
+         * <para>
          * Any arbitrary string can be used for identifying languages, but when using language identifiers formed
          * by a primary code and a variant code separated by an hyphen (e.g., "en-us") if a localized conversion
          * for the "full" language is not found then a conversion for the primary (base) language is tried too.
+         * </para>
+         * </remarks>
          * 
-         * @param [in] language Name, code or identifier for the language
+         * <param name="language">Name, code or identifier for the language</param>
          */
         public Localizer SetTargetLanguage( string language )
         {
@@ -186,13 +232,20 @@ namespace I18N.Net
         }
 
         /**
+         * <summary>
          * Loads a localization configuration from a file in XML format.
+         * </summary>
          * 
-         * @pre The language must be set before calling this method.
+         * <remarks>
+         * Precondition: The language must be set before calling this method.
+         * </remarks>
          * 
-         * @param [in] filepath Path to the localization configuration file in XML format
-         * @param [in] merge Replaces the current localization mapping with the loaded one when @c false, 
-         *                   otherwise merges both (existing mappings are overridden with loaded ones).
+         * <exception cref="InvalidOperationException">Thrown when the language is not set.</exception>
+         * <exception cref="ParseException">Thrown when the input file cannot be parsed properly.</exception>
+         * 
+         * <param name="filepath">Path to the localization configuration file in XML format</param>
+         * <param name="merge">Replaces the current localization mapping with the loaded one when <c>false</c>,
+         *                     otherwise merges both (existing mappings are overridden with loaded ones).</param>
          */
         public void LoadXML( string filepath, bool merge = false )
         {
@@ -200,13 +253,20 @@ namespace I18N.Net
         }
 
         /**
+         * <summary>
          * Loads a localization configuration from a stream in XML format.
+         * </summary>
          * 
-         * @pre The language must be set before calling this method.
+         * <remarks>
+         * Precondition: The language must be set before calling this method.
+         * </remarks>
          * 
-         * @param [in] stream Stream with the localization configuration in XML format
-         * @param [in] merge Replaces the current localization mapping with the loaded one when @c false, 
-         *                   otherwise merges both (existing mappings are overridden with loaded ones).
+         * <exception cref="InvalidOperationException">Thrown when the language is not set.</exception>
+         * <exception cref="ParseException">Thrown when the input file cannot be parsed properly.</exception>
+         * 
+         * <param name="stream">Stream with the localization configuration in XML format</param>
+         * <param name="merge">Replaces the current localization mapping with the loaded one when <c>false</c>,
+         *                     otherwise merges both (existing mappings are overridden with loaded ones).</param>
          */
         public void LoadXML( Stream stream , bool merge = false )
         {
@@ -214,13 +274,20 @@ namespace I18N.Net
         }
 
         /**
+         * <summary>
          * Loads a localization configuration from a XML document.
+         * </summary>
          * 
-         * @pre The language must be set before calling this method.
+         * <remarks>
+         * Precondition: The language must be set before calling this method.
+         * </remarks>
          * 
-         * @param [in] doc XDocument with the localization configuration
-         * @param [in] merge Replaces the current localization mapping with the loaded one when @c false, 
-         *                   otherwise merges both (existing mappings are overridden with loaded ones).
+         * <exception cref="InvalidOperationException">Thrown when the language is not set.</exception>
+         * <exception cref="ParseException">Thrown when the input file cannot be parsed properly.</exception>
+         * 
+         * <param name="doc">XDocument with the localization configuration</param>
+         * <param name="merge">Replaces the current localization mapping with the loaded one when <c>false</c>,
+         *                     otherwise merges both (existing mappings are overridden with loaded ones).</param>
          */
         public void LoadXML( XDocument doc, bool merge = false )
         {

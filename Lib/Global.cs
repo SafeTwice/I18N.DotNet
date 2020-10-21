@@ -9,7 +9,9 @@ using System;
 namespace I18N.Net
 {
     /**
+     * <summary>
      * Utility class for convenient access to localization functions.
+     * </summary>
      */
     public static class Global
     {
@@ -18,7 +20,9 @@ namespace I18N.Net
          *===========================================================================*/
 
         /**
+         * <value>
          * Global localizer.
+         * </value>
          */
         public static Localizer Localizer { get; private set; } = new Localizer();
 
@@ -27,11 +31,14 @@ namespace I18N.Net
          *===========================================================================*/
 
         /**
-         * Converts the language-neutral string @p text to its corresponding language-specific localized value
-         * using the global localizer.
+         * <summary>
+         * Localizes a string.
+         * </summary>
          * 
-         * @param [in] text Language-neutral string
-         * @return Language-specific localized string if found, or @p text otherwise
+         * <seealso cref="Localizer.Localize(PlainString)"/>
+         * 
+         * <param name="text">Language-neutral string</param>
+         * <returns>Language-specific localized string if found, or <paramref name="text"/> otherwise</returns>
          */
         public static string Localize( PlainString text )
         {
@@ -39,13 +46,15 @@ namespace I18N.Net
         }
 
         /**
-         * Converts the composite format string of the language-neutral formattable string @p frmtText (e.g. an interpolated string) 
-         * to its corresponding language-specific localized composite format value using the global localizer, and then generates the 
-         * result by formatting the localized composite format value along with the @p frmtText arguments by using the formatting 
-         * conventions of the current culture.
+         * <summary>
+         * Localizes an interpolated string.
+         * </summary>
          * 
-         * @param [in] frmtText Language-neutral formattable string
-         * @return Formatted string generated from the language-specific localized format string if found, or generated from @p frmtText otherwise
+         * <seealso cref="Localizer.Localize(FormattableString)"/>
+         * 
+         * <param name="frmtText">Language-neutral formattable string</param>
+         * <returns>Formatted string generated from the language-specific localized format string if found, 
+         *          or generated from <paramref name="frmtText"/> otherwise</returns>
          */
         public static string Localize( FormattableString frmtText )
         {
@@ -53,13 +62,16 @@ namespace I18N.Net
         }
 
         /**
-         * Converts the language-neutral format string @p format to its corresponding language-specific localized format value
-         * using the global localizer, and then generates the result by formatting the localized format value along with the @p args 
-         * arguments by using the formatting conventions of the current culture.
+         * <summary>
+         * Localizes and then formats a string.
+         * </summary>
          * 
-         * @param [in] format Language-neutral format string
-         * @param [in] args Arguments for the format string
-         * @return Formatted string generated from the language-specific localized format string if found, or generated from @p format otherwise
+         * <seealso cref="Localizer.LocalizeFormat(string, object[])"/>
+         * 
+         * <param name="format">Language-neutral format string</param>
+         * <param name="args">Arguments for the format string</param>
+         * <returns>Formatted string generated from the language-specific localized format string if found,
+         *          or generated from <paramref name="format"/> otherwise</returns>
          */
         public static string LocalizeFormat( string format, params object[] args )
         {

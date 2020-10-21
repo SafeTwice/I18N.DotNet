@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -293,7 +294,7 @@ namespace I18N.Net
                         {
                             throw new ParseException( $"Line {( (IXmlLineInfo) childElement ).LineNumber}: Too many child '{childElement.Name}' XML elements" );
                         }
-                        key = childElement.Value;
+                        key = UnescapeEscapeCodes( childElement.Value );
                         break;
 
                     case "Value":
@@ -338,8 +339,36 @@ namespace I18N.Net
             }
             else
             {
-                return element.Value.Replace("\\n","\n");
+                return UnescapeEscapeCodes( element.Value );
             }
+        }
+
+        private static string UnescapeEscapeCodes( string text )
+        {
+            return Regex.Replace( text, @"\\([nrftvb\\]|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})", m =>
+            {
+                var payload = m.Groups[1].Value;
+                switch( payload )
+                {
+                    case "n":
+                        return "\n";
+                    case "r":
+                        return "\r";
+                    case "f":
+                        return "\f";
+                    case "t":
+                        return "\t";
+                    case "v":
+                        return "\v";
+                    case "b":
+                        return "\b";
+                    case "\\":
+                        return "\\";
+                    default:
+                        int charNum = Convert.ToInt32( payload.Substring( 1 ), 16 );
+                        return Convert.ToChar( charNum ).ToString();
+                }
+            } );
         }
 
         private void LoadContext( XElement element )

@@ -50,7 +50,7 @@ namespace I18N.Net.Test
                 "    <Value lang='fr-fr'>Clef simple 4</Value>\n" +
                 "  </Entry>\n" +
                 "  <Entry>\n" +
-                "    <Key>Format Key: {0}</Key>\n" +
+                "    <Key>Format Key: {0:X4}</Key>\n" +
                 "    <Value lang='es-es'>Clave de formato: {0}</Value>\n" +
                 "    <Value lang='fr-fr'>Clef de format: {0}</Value>\n" +
                 "  </Entry>\n" +
@@ -74,6 +74,10 @@ namespace I18N.Net.Test
                 "      </Entry>\n" +
                 "    </Context>\n" +
                 "  </Context>\n" +
+                "  <Entry>\n" +
+                "    <Key>Escaped:\\n\\r\\f&amp;\\t\\v\\b\\\\n\\xABC</Key>\n" +
+                "    <Value lang='es-es'>Escapado:\\n\\r\\f&amp;\\t\\v\\b\\\\n\\xABC</Value>\n" +
+                "  </Entry>\n" +
                 "</I18N>";
 
             return CreateStream( config );
@@ -114,7 +118,7 @@ namespace I18N.Net.Test
         public static IEnumerable<object[]> GetNeutralLanguageInterpolatedData()
         {
             int i = 1234;
-            yield return new object[] { (FormattableString) $"Format Key: {i}", $"Format Key: {i}" };
+            yield return new object[] { (FormattableString) $"Format Key: {i:X4}", $"Format Key: {i:X4}" };
             yield return new object[] { (FormattableString) $"Non-existent Format: {i}", $"Non-existent Format: {i}" };
         }
 
@@ -135,7 +139,7 @@ namespace I18N.Net.Test
         public static IEnumerable<object[]> GetSpecificLanguageInterpolatedData()
         {
             int i = 1234;
-            yield return new object[] { (FormattableString) $"Format Key: {i}", $"Clave de formato: {i}" };
+            yield return new object[] { (FormattableString) $"Format Key: {i:X4}", $"Clave de formato: {i}" };
             yield return new object[] { (FormattableString) $"Non-existent Format: {i}", $"Non-existent Format: {i}" };
         }
 
@@ -151,6 +155,19 @@ namespace I18N.Net.Test
             // Execute & Verify
 
             Assert.Equal( value, localizer.Localize( format ) );
+        }
+
+        [Fact]
+        public void Localize_EscapedChars()
+        {
+            // Prepare
+
+            var localizer = new Localizer();
+            localizer.SetBaseLanguage( "en-us" ).SetTargetLanguage( "es-es" ).LoadXML( GetConfigA() );
+
+            // Execute & Verify
+
+            Assert.Equal( "Escapado:\n\r\f&\t\v\b\\n\xABC", localizer.Localize( "Escaped:\n\r\f&\t\v\b\\n\xABC" ) );
         }
 
         [Theory]

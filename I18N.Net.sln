@@ -5,9 +5,11 @@ VisualStudioVersion = 16.0.31613.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "I18N.Net", "Lib\I18N.Net.csproj", "{0D615CC9-AEAA-4774-8F3C-FF3DCDA7289A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "I18N.Net.Test", "Test\I18N.Net.Test.csproj", "{72EA8946-DE8C-46D4-9A51-DC7779F4C945}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "I18N.Net.Test", "Lib.Test\I18N.Net.Test.csproj", "{72EA8946-DE8C-46D4-9A51-DC7779F4C945}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "I18N.Tool", "Tool\I18N.Tool.csproj", "{14B5C348-4DB8-4033-A129-6F8544B62D99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "I18N.Tool", "Tool\I18N.Tool.csproj", "{14B5C348-4DB8-4033-A129-6F8544B62D99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "I18N.Tool.Test", "Tool.Test\I18N.Tool.Test.csproj", "{8171418D-5A9A-492F-951D-F33277E16ECC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{14B5C348-4DB8-4033-A129-6F8544B62D99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14B5C348-4DB8-4033-A129-6F8544B62D99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14B5C348-4DB8-4033-A129-6F8544B62D99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8171418D-5A9A-492F-951D-F33277E16ECC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8171418D-5A9A-492F-951D-F33277E16ECC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8171418D-5A9A-492F-951D-F33277E16ECC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8171418D-5A9A-492F-951D-F33277E16ECC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

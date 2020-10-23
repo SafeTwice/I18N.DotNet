@@ -39,7 +39,7 @@ namespace I18N.Tool
             }
         }
 
-        public static XDocument GetDocument( string filepath, bool resetFoundings )
+        private static XDocument GetDocument( string filepath, bool resetFoundings )
         {
             if( File.Exists( filepath ) )
             {
@@ -47,7 +47,7 @@ namespace I18N.Tool
 
                 if( doc.Root.Name != ROOT_TAG )
                 {
-                    throw new ApplicationException( $"Invalid XML root element" );
+                    throw new ApplicationException( "Invalid XML root element" );
                 }
 
                 if( resetFoundings )
@@ -63,7 +63,7 @@ namespace I18N.Tool
             }
         }
 
-        public static void DeleteFoundings( XElement element )
+        private static void DeleteFoundings( XElement element )
         {
             List<XComment> commentsToRemove = new List<XComment>();
 
@@ -82,7 +82,7 @@ namespace I18N.Tool
             commentsToRemove.ForEach( xc => xc.Remove() );
         }
 
-        public static XElement GetEntry( XElement element, string key )
+        private static XElement GetEntry( XElement element, string key )
         {
             foreach( var entryElement in element.Elements( ENTRY_TAG ) )
             {
@@ -96,7 +96,7 @@ namespace I18N.Tool
             return null;
         }
 
-        public static void AddCommentIfNeeded( XElement entryElement, string comment )
+        private static void AddCommentIfNeeded( XElement entryElement, string comment )
         {
             foreach( var node in entryElement.Nodes() )
             {

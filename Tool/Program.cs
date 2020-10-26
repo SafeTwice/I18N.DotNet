@@ -6,8 +6,8 @@ namespace I18N.Tool
 {
     class Options
     {
-        [Option( 'd', Required = true, HelpText = "Input directory" )]
-        public string Directory { get; set; }
+        [Option( 'I', Required = true, HelpText = "Input directory" )]
+        public IEnumerable<string> Directories { get; set; }
 
         [Option( 'p', Default = "*.cs", HelpText = "Input files pattern" )]
         public string Pattern { get; set; }
@@ -18,7 +18,7 @@ namespace I18N.Tool
         [Option( 'z', Default = false, HelpText = "Reset founding comments in output file" )]
         public bool ResetFoundings { get; set; }
 
-        [Option( 'e', HelpText = "Extra functions to be parsed for strings to be localized" )]
+        [Option( 'e', HelpText = "Extra function to be parsed for strings to be localized" )]
         public IEnumerable<string> ExtraFunctions { get; set; }
 
         [Option( 'o', Required = true, HelpText = "Output file" )]
@@ -39,11 +39,14 @@ namespace I18N.Tool
 
         static int Run( Options options )
         {
-            var dirInfo = new DirectoryInfo( options.Directory );
-
             Dictionary<string, List<string>> keyMatches = new Dictionary<string, List<string>>();
 
-            ParseFilesInDirectory( dirInfo, options.Pattern, options.Recursive, options.ExtraFunctions, keyMatches );
+            foreach( var directory in options.Directories )
+            {
+                var dirInfo = new DirectoryInfo( directory );
+
+                ParseFilesInDirectory( dirInfo, options.Pattern, options.Recursive, options.ExtraFunctions, keyMatches );
+            }
 
             OutputFileGenerator.GenerateFile( options.OutputFile, options.ResetFoundings, keyMatches );
 

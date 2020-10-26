@@ -151,7 +151,7 @@ namespace I18N.Net
          * </para>
          * </remarks>
          * 
-         * <param name="section">Identifier of the context</param>
+         * <param name="contextId">Identifier of the context</param>
          * <returns>Localizer for the given context</returns>
          */
         public Localizer Context( string contextId )
@@ -247,7 +247,7 @@ namespace I18N.Net
          * <param name="merge">Replaces the current localization mapping with the loaded one when <c>false</c>,
          *                     otherwise merges both (existing mappings are overridden with loaded ones).</param>
          */
-        public void LoadXML( string filepath, bool merge = false )
+        public void LoadXML( string filepath, bool merge = true )
         {
             LoadXML( XDocument.Load( filepath, LoadOptions.SetLineInfo ), merge );
         }
@@ -268,7 +268,7 @@ namespace I18N.Net
          * <param name="merge">Replaces the current localization mapping with the loaded one when <c>false</c>,
          *                     otherwise merges both (existing mappings are overridden with loaded ones).</param>
          */
-        public void LoadXML( Stream stream , bool merge = false )
+        public void LoadXML( Stream stream , bool merge = true )
         {
             LoadXML( XDocument.Load( stream, LoadOptions.SetLineInfo ), merge );
         }
@@ -289,7 +289,7 @@ namespace I18N.Net
          * <param name="merge">Replaces the current localization mapping with the loaded one when <c>false</c>,
          *                     otherwise merges both (existing mappings are overridden with loaded ones).</param>
          */
-        public void LoadXML( XDocument doc, bool merge = false )
+        public void LoadXML( XDocument doc, bool merge = true )
         {
             if( m_targetLanguageFull == null )
             {
@@ -412,7 +412,7 @@ namespace I18N.Net
 
             if( value != null )
             {
-                m_localizations.Add( key, value );
+                m_localizations[key] = value;
             }
         }
 

@@ -91,12 +91,11 @@ namespace I18N.Net.Test
             // Prepare
 
             var localizer = new Localizer();
-            localizer.SetTargetLanguage("en-us").LoadXML( GetConfigA() );
+            localizer.SetTargetLanguage( "en-us" ).LoadXML( GetConfigA() );
 
             // Execute & Verify
 
             Assert.Equal( key, localizer.Localize( key ) );
-
         }
 
         [Theory]
@@ -112,7 +111,6 @@ namespace I18N.Net.Test
             // Execute & Verify
 
             Assert.Equal( value, localizer.Localize( key ) );
-
         }
 
         public static IEnumerable<object[]> GetNeutralLanguageInterpolatedData()
@@ -186,7 +184,6 @@ namespace I18N.Net.Test
             // Execute & Verify
 
             Assert.Equal( value, localizer.Context( "Level1" ).Localize( key ) );
-
         }
 
         [Theory]
@@ -204,8 +201,7 @@ namespace I18N.Net.Test
 
             // Execute & Verify
 
-            Assert.Equal( value, localizer.Context("Level1.Level2").Localize( key ) );
-
+            Assert.Equal( value, localizer.Context( "Level1.Level2" ).Localize( key ) );
         }
 
         [Theory]
@@ -224,7 +220,6 @@ namespace I18N.Net.Test
             // Execute & Verify
 
             Assert.Equal( value, localizer.Context( "Level1.Level2" ).Localize( key ) );
-
         }
 
         [Theory]
@@ -243,7 +238,6 @@ namespace I18N.Net.Test
             // Execute & Verify
 
             Assert.Equal( value, localizer.Context( "LevelX" ).Localize( key ) );
-
         }
 
         [Theory]
@@ -258,7 +252,6 @@ namespace I18N.Net.Test
             // Execute & Verify
 
             Assert.Equal( value, localizer.Context( "Level1" ).Localize( key ) );
-
         }
 
         [Fact]
@@ -421,6 +414,44 @@ namespace I18N.Net.Test
             var exception = Assert.Throws<Localizer.ParseException>( () => localizer.SetTargetLanguage( "x" ).LoadXML( data ) );
 
             Assert.Contains( "Missing attribute 'id' in 'Context' XML element", exception.Message );
+        }
+
+        [Fact]
+        public void LoadXML_Merge()
+        {
+            // Prepare
+
+            var localizer = new Localizer();
+            var configB = CreateStream( "<I18N><Entry><Key>Simple Key 1</Key><Value lang='es'>XYZ</Value></Entry></I18N>" );
+            localizer.SetTargetLanguage( "es-es" ).LoadXML( GetConfigA() );
+
+            // Execute
+
+            localizer.LoadXML( configB );
+
+            // Verify
+
+            Assert.Equal( "XYZ", localizer.Localize( "Simple Key 1" ) );
+            Assert.Equal( "Clave simple 2", localizer.Localize( "Simple Key 2" ) );
+        }
+
+        [Fact]
+        public void LoadXML_NoMerge()
+        {
+            // Prepare
+
+            var localizer = new Localizer();
+            var configB = CreateStream( "<I18N><Entry><Key>Simple Key 1</Key><Value lang='es'>XYZ</Value></Entry></I18N>" );
+            localizer.SetTargetLanguage( "es-es" ).LoadXML( GetConfigA() );
+
+            // Execute
+
+            localizer.LoadXML( configB, false );
+
+            // Verify
+
+            Assert.Equal( "XYZ", localizer.Localize( "Simple Key 1" ) );
+            Assert.Equal( "Simple Key 2", localizer.Localize( "Simple Key 2" ) );
         }
     }
 }

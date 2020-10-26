@@ -39,5 +39,13 @@ namespace I18N.Net.Test
 
             Assert.Equal( "Test 1234", Global.LocalizeFormat( "Test {0}", i ) );
         }
+
+        [Fact]
+        public void Context()
+        {
+            int i = 1234;
+
+            Assert.NotNull( Global.Context( "Context 1" ) );
+        }
     }
 }

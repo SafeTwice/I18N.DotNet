@@ -32,7 +32,7 @@ namespace I18N.Net
 
         /**
          * <summary>
-         * Localizes a string.
+         * Localizes a string using the global localizer.
          * </summary>
          * 
          * <seealso cref="Localizer.Localize(PlainString)"/>
@@ -47,7 +47,7 @@ namespace I18N.Net
 
         /**
          * <summary>
-         * Localizes an interpolated string.
+         * Localizes an interpolated string using the global localizer.
          * </summary>
          * 
          * <seealso cref="Localizer.Localize(FormattableString)"/>
@@ -63,7 +63,7 @@ namespace I18N.Net
 
         /**
          * <summary>
-         * Localizes and then formats a string.
+         * Localizes and then formats a string using the global localizer.
          * </summary>
          * 
          * <seealso cref="Localizer.LocalizeFormat(string, object[])"/>
@@ -77,5 +77,21 @@ namespace I18N.Net
         {
             return Localizer.LocalizeFormat( format, args );
         }
+
+        /**
+         * <summary>
+         * Gets a context in the global localizer.
+         * </summary>
+         * 
+         * <seealso cref="Localizer.Context(string)"/>
+         * 
+         * <param name="contextId">Identifier of the context</param>
+         * <returns>Localizer for the given context</returns>
+         */
+        public static Localizer Context( string contextId )
+        {
+            return Localizer.Context( contextId );
+        }
+
     }
 }

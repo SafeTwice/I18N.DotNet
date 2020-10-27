@@ -99,7 +99,7 @@ namespace I18N.Tool.Test
         }
 
         [Fact]
-        public void GenerateFile_Update_NoResetFoundings()
+        public void GenerateFile_Update_PreserveFoundingComments()
         {
             // Prepare
 
@@ -109,7 +109,7 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            OutputFileGenerator.GenerateFile( m_tempFile, false, keyMatches );
+            OutputFileGenerator.GenerateFile( m_tempFile, true, keyMatches );
 
             // Verify
 
@@ -135,7 +135,7 @@ namespace I18N.Tool.Test
         }
 
         [Fact]
-        public void GenerateFile_Update_ResetFoundings()
+        public void GenerateFile_Update_DeleteFoundingComments()
         {
             // Prepare
 
@@ -145,7 +145,7 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            OutputFileGenerator.GenerateFile( m_tempFile, true, keyMatches );
+            OutputFileGenerator.GenerateFile( m_tempFile, false, keyMatches );
 
             // Verify
 

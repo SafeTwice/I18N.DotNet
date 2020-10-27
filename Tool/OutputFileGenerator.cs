@@ -8,9 +8,9 @@ namespace I18N.Tool
 {
     static class OutputFileGenerator
     {
-        public static void GenerateFile( string filepath, bool resetFoundings, Dictionary<string, List<string>> keyMatches )
+        public static void GenerateFile( string filepath, bool preserveFoundingComments, Dictionary<string, List<string>> keyMatches )
         {
-            XDocument doc = GetDocument( filepath, resetFoundings );
+            XDocument doc = GetDocument( filepath, preserveFoundingComments );
 
             XElement root = doc.Root;            
 
@@ -39,7 +39,7 @@ namespace I18N.Tool
             }
         }
 
-        private static XDocument GetDocument( string filepath, bool resetFoundings )
+        private static XDocument GetDocument( string filepath, bool preserveFoundingComments )
         {
             if( File.Exists( filepath ) )
             {
@@ -50,9 +50,9 @@ namespace I18N.Tool
                     throw new ApplicationException( "Invalid XML root element" );
                 }
 
-                if( resetFoundings )
+                if( !preserveFoundingComments )
                 {
-                    DeleteFoundings( doc.Root );
+                    DeleteFoundingComments( doc.Root );
                 }
 
                 return doc;
@@ -63,7 +63,7 @@ namespace I18N.Tool
             }
         }
 
-        private static void DeleteFoundings( XElement element )
+        private static void DeleteFoundingComments( XElement element )
         {
             List<XComment> commentsToRemove = new List<XComment>();
 

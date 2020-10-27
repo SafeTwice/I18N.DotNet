@@ -43,8 +43,6 @@ namespace I18N.Net.Test
         [Fact]
         public void Context()
         {
-            int i = 1234;
-
             Assert.NotNull( Global.Context( "Context 1" ) );
         }
     }

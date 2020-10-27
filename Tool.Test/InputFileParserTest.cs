@@ -15,9 +15,11 @@ namespace I18N.Tool.Test
     {
         private string m_tempFile;
 
+        private const string TEMP_FILE_NAME = "Temp.cs";
+
         public InputFileParserTest()
         {
-            m_tempFile = Path.GetTempPath() + "\\Temp.cs";
+            m_tempFile = Path.GetTempPath() + $"\\{TEMP_FILE_NAME}";
         }
 
         public void Dispose()
@@ -71,16 +73,16 @@ namespace I18N.Tool.Test
 
             Assert.True( keyMatches.ContainsKey( plainStringKey ) );
             Assert.Equal( 2, keyMatches[plainStringKey].Count );
-            Assert.Equal( $"{m_tempFile} @ 3", keyMatches[plainStringKey][0] );
-            Assert.Equal( $"{m_tempFile} @ 10", keyMatches[plainStringKey][1] );
+            Assert.Contains( $"{TEMP_FILE_NAME} @ 3", keyMatches[plainStringKey][0] );
+            Assert.Contains( $"{TEMP_FILE_NAME} @ 10", keyMatches[plainStringKey][1] );
 
             Assert.True( keyMatches.ContainsKey( interpolatedStringKey ) );
             Assert.Single( keyMatches[interpolatedStringKey] );
-            Assert.Equal( $"{m_tempFile} @ 5", keyMatches[interpolatedStringKey][0] );
+            Assert.Contains( $"{TEMP_FILE_NAME} @ 5", keyMatches[interpolatedStringKey][0] );
 
             Assert.True( keyMatches.ContainsKey( formatStringKey ) );
             Assert.Single( keyMatches[formatStringKey] );
-            Assert.Equal( $"{m_tempFile} @ 9", keyMatches[formatStringKey][0] );
+            Assert.Contains( $"{TEMP_FILE_NAME} @ 9", keyMatches[formatStringKey][0] );
         }
 
         [Fact]
@@ -107,21 +109,21 @@ namespace I18N.Tool.Test
 
             Assert.True( keyMatches.ContainsKey( plainStringKey ) );
             Assert.Equal( 3, keyMatches[plainStringKey].Count );
-            Assert.Equal( $"{m_tempFile} @ 3", keyMatches[plainStringKey][0] );
-            Assert.Equal( $"{m_tempFile} @ 7", keyMatches[plainStringKey][1] );
-            Assert.Equal( $"{m_tempFile} @ 10", keyMatches[plainStringKey][2] );
+            Assert.Contains( $"{TEMP_FILE_NAME} @ 3", keyMatches[plainStringKey][0] );
+            Assert.Contains( $"{TEMP_FILE_NAME} @ 7", keyMatches[plainStringKey][1] );
+            Assert.Contains( $"{TEMP_FILE_NAME} @ 10", keyMatches[plainStringKey][2] );
 
             Assert.True( keyMatches.ContainsKey( interpolatedStringKey ) );
             Assert.Single( keyMatches[interpolatedStringKey] );
-            Assert.Equal( $"{m_tempFile} @ 5", keyMatches[interpolatedStringKey][0] );
+            Assert.Contains( $"{TEMP_FILE_NAME} @ 5", keyMatches[interpolatedStringKey][0] );
 
             Assert.True( keyMatches.ContainsKey( formatStringKey ) );
             Assert.Single( keyMatches[formatStringKey] );
-            Assert.Equal( $"{m_tempFile} @ 9", keyMatches[formatStringKey][0] );
+            Assert.Contains( $"{TEMP_FILE_NAME} @ 9", keyMatches[formatStringKey][0] );
 
             Assert.True( keyMatches.ContainsKey( anotherStringKey ) );
             Assert.Single( keyMatches[anotherStringKey] );
-            Assert.Equal( $"{m_tempFile} @ 8", keyMatches[anotherStringKey][0] );
+            Assert.Contains( $"{TEMP_FILE_NAME} @ 8", keyMatches[anotherStringKey][0] );
         }
     }
 }

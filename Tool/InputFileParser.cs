@@ -37,8 +37,13 @@ namespace I18N.Tool
                 }
 
                 int line = GetLine( match.Index, lineStartIndexes );
-                keyInfoList.Add( $"{filepath} @ {line}" );
+                keyInfoList.Add( $"{AbsoluteToRelativePath( filepath )} @ {line}" );
             }
+        }
+
+        private static string AbsoluteToRelativePath( string filePath )
+        {
+            return Path.GetRelativePath( Directory.GetCurrentDirectory() + "\\", filePath );
         }
 
         private static Regex GetLocatorRegex( IEnumerable<string> extraFunctions )

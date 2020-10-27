@@ -453,5 +453,36 @@ namespace I18N.Net.Test
             Assert.Equal( "XYZ", localizer.Localize( "Simple Key 1" ) );
             Assert.Equal( "Simple Key 2", localizer.Localize( "Simple Key 2" ) );
         }
+
+        [Fact]
+        public void LoadXML_File()
+        {
+            // Prepare
+
+            var tempFileName = Path.GetTempFileName();
+
+            try
+            {
+                using( var tempFile = File.Create( tempFileName ) )
+                {
+                    GetConfigA().CopyTo( tempFile );
+                }
+
+                // Execute
+
+                var localizer = new Localizer();
+                localizer.SetTargetLanguage( "es-es" ).LoadXML( tempFileName );
+
+                // Verify
+
+                Assert.Equal( "Clave simple 1", localizer.Localize( "Simple Key 1" ) );
+            }
+            finally
+            {
+                // Cleanup
+
+                File.Delete( tempFileName );
+            }
+        }
     }
 }

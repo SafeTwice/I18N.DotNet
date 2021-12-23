@@ -63,6 +63,23 @@ namespace I18N.Net
 
         /**
          * <summary>
+         * Localizes multiple strings.
+         * </summary>
+         * 
+         * <remarks>
+         * Converts the language-neutral strings in <paramref name="texts"/> to their corresponding language-specific localized values.
+         * </remarks>
+         * 
+         * <param name="texts">Array of language-neutral strings</param>
+         * <returns>Array with the language-specific localized strings if found, or the language-neutral string otherwise</returns>
+         */
+        public static string[] Localize( string[] texts )
+        {
+            return Localizer.Localize( texts );
+        }
+
+        /**
+         * <summary>
          * Localizes and then formats a string using the global localizer.
          * </summary>
          * 

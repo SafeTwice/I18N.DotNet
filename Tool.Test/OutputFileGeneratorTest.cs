@@ -66,14 +66,11 @@ namespace I18N.Tool.Test
             return keyMatches;
         }
 
-        [Fact]
-        public void GenerateFile_New()
+        private void Check_GenerateFile_New()
         {
             // Prepare
 
             var keyMatches = CreateKeyMatches();
-
-            File.Delete( m_tempFile );
 
             // Execute
 
@@ -87,7 +84,7 @@ namespace I18N.Tool.Test
 
             var keys = doc.XPathSelectElements( "I18N/Entry/Key" );
             Assert.Equal( 2, keys.Count() );
-            Assert.All( keys, element => Assert.Matches( "^Key [1A]$", element.Value ) ) ;
+            Assert.All( keys, element => Assert.Matches( "^Key [1A]$", element.Value ) );
 
             var key1Comments = Enumerable.Cast<XComment>( (IEnumerable<object>) doc.XPathEvaluate( "I18N/Entry[Key/text()='Key 1']/comment()" ) );
             Assert.Equal( 2, key1Comments.Count() );
@@ -96,6 +93,18 @@ namespace I18N.Tool.Test
             var keyAComments = Enumerable.Cast<XComment>( (IEnumerable<object>) doc.XPathEvaluate( "I18N/Entry[Key/text()='Key A']/comment()" ) );
             Assert.Single( keyAComments );
             Assert.All( keyAComments, comment => Assert.Matches( "^ Found in: Match B $", comment.Value ) );
+        }
+
+        [Fact]
+        public void GenerateFile_New()
+        {
+            // Prepare
+
+            File.Delete( m_tempFile );
+
+            // Execute & Verify
+
+            Check_GenerateFile_New();
         }
 
         [Fact]
@@ -183,7 +192,7 @@ namespace I18N.Tool.Test
 
             var exception = Assert.Throws<ApplicationException>( () => OutputFileGenerator.GenerateFile( m_tempFile, false, keyMatches ) );
 
-            Assert.Contains( "Invalid XML root element", exception.Message );
+            Assert.Contains( "Invalid XML root element in existing output file", exception.Message );
         }
 
         [Fact]
@@ -197,7 +206,33 @@ namespace I18N.Tool.Test
 
             // Execute & Verify
 
-            Assert.Throws<XmlException>( () => OutputFileGenerator.GenerateFile( m_tempFile, false, keyMatches ) );
+            var exception = Assert.Throws<ApplicationException>( () => OutputFileGenerator.GenerateFile( m_tempFile, false, keyMatches ) );
+
+            Assert.Contains( "Invalid XML format in existing output file", exception.Message );
+        }
+
+        [Fact]
+        public void GenerateFile_InitialFile_Blank()
+        {
+            // Prepare
+
+            WriteTempFile( "" );
+
+            // Execute & Verify
+
+            Check_GenerateFile_New();
+        }
+
+        [Fact]
+        public void GenerateFile_InitialFile_OnlyWhiteSpace()
+        {
+            // Prepare
+
+            WriteTempFile( " \n" );
+
+            // Execute & Verify
+
+            Check_GenerateFile_New();
         }
     }
 }

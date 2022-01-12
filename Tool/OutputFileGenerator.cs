@@ -41,26 +41,43 @@ namespace I18N.Tool
 
         private static XDocument GetDocument( string filepath, bool preserveFoundingComments )
         {
+            XDocument doc = null;
+
             if( File.Exists( filepath ) )
             {
-                var doc = XDocument.Load( filepath, LoadOptions.None );
+                try
+                {
+                    doc = XDocument.Load( filepath, LoadOptions.None );
+                }
+                catch( Exception )
+                {
+                    var text = File.ReadAllText( filepath );
 
+                    if( text.Trim().Length > 0 )
+                    {
+                        throw new ApplicationException( "Invalid XML format in existing output file" );
+                    }
+                }
+            }
+            
+            if( doc != null )
+            {
                 if( doc.Root.Name != ROOT_TAG )
                 {
-                    throw new ApplicationException( "Invalid XML root element" );
+                    throw new ApplicationException( "Invalid XML root element in existing output file" );
                 }
 
                 if( !preserveFoundingComments )
                 {
                     DeleteFoundingComments( doc.Root );
                 }
-
-                return doc;
             }
             else
             {
-                return new XDocument( new XElement( ROOT_TAG ) );
+                doc = new XDocument( new XElement( ROOT_TAG ) );
             }
+
+            return doc;
         }
 
         private static void DeleteFoundingComments( XElement element )

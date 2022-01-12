@@ -1,7 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -31,7 +30,8 @@ namespace I18N.Tool
             var localizerMatches = from localizerCall in root.DescendantNodes().OfType<InvocationExpressionSyntax>()
                                    where ( localizerCall.Expression is IdentifierNameSyntax id && localizerRegex.IsMatch( id.Identifier.ValueText ) ) ||
                                          ( localizerCall.Expression is MemberAccessExpressionSyntax method && localizerRegex.IsMatch( method.Name.Identifier.ValueText ) )
-                                   let firstArgument = localizerCall.ArgumentList.Arguments.First()?.Expression
+                                   where localizerCall.ArgumentList.Arguments.Count > 0
+                                   let firstArgument = localizerCall.ArgumentList.Arguments.First().Expression
                                    where firstArgument != null
                                    where firstArgument.IsKind( SyntaxKind.StringLiteralExpression ) || 
                                          firstArgument.IsKind( SyntaxKind.InterpolatedStringExpression )
@@ -116,25 +116,38 @@ namespace I18N.Tool
             return Regex.Replace( text, @"([\n\r\f\t\v\b\\])", m =>
             {
                 var payload = m.Groups[ 1 ].Value;
+                string result = payload;
                 switch( payload )
                 {
                     case "\n":
-                        return "\\n";
+                        result = "\\n";
+                        break;
+
                     case "\r":
-                        return "\\r";
+                        result = "\\r";
+                        break;
+
                     case "\f":
-                        return "\\f";
+                        result = "\\f";
+                        break;
+
                     case "\t":
-                        return "\\t";
+                        result = "\\t";
+                        break;
+
                     case "\v":
-                        return "\\v";
+                        result = "\\v";
+                        break;
+
                     case "\b":
-                        return "\\b";
+                        result = "\\b";
+                        break;
+
                     case "\\":
-                        return "\\\\";
-                    default:
-                        return payload;
+                        result = "\\\\";
+                        break;
                 }
+                return result;
             } );
         }
     }

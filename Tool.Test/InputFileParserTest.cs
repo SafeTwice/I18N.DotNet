@@ -39,12 +39,13 @@ namespace I18N.Tool.Test
                 "// This Localize should not be matched\n" +
                 "Localize ( \"Plain String\" );\n" +
                 "  \n" +
-                "  Localize( $\"Interpolated String {Whatever:F3} {SomethingElse} {Foo:X4}\" );\n" +
+                "  Localize( $\"Interpolated String {Whatever:F3} {SomethingElse} {Foo,5:X4}\" );\n" +
                 "\n" +
                 "CustomFunction(\"Plain String\");\n" +
                 "CustomFunction(\"Another String \\t\");\n" +
                 "  myLocalizer.LocalizeFormat( \"Format String {0:X4}\", param1 );\n" +
                 "\tLocalize(\"Plain String\"); // Again\n" +
+                "Localize(); // Ignored\n" +
                 "/* Last line */";
 
             WriteTempFile( contents );
@@ -66,7 +67,7 @@ namespace I18N.Tool.Test
             // Verify
 
             string plainStringKey = "Plain String";
-            string interpolatedStringKey = "Interpolated String {0:F3} {1} {2:X4}";
+            string interpolatedStringKey = "Interpolated String {0:F3} {1} {2,5:X4}";
             string formatStringKey = "Format String {0:X4}";
 
             Assert.Equal( 3, keyMatches.Count );
@@ -101,7 +102,7 @@ namespace I18N.Tool.Test
             // Verify
 
             string plainStringKey = "Plain String";
-            string interpolatedStringKey = "Interpolated String {0:F3} {1} {2:X4}";
+            string interpolatedStringKey = "Interpolated String {0:F3} {1} {2,5:X4}";
             string formatStringKey = "Format String {0:X4}";
             string anotherStringKey = "Another String \\t";
 
@@ -124,6 +125,31 @@ namespace I18N.Tool.Test
             Assert.True( keyMatches.ContainsKey( anotherStringKey ) );
             Assert.Single( keyMatches[anotherStringKey] );
             Assert.Contains( $"{TEMP_FILE_NAME} @ 8", keyMatches[anotherStringKey][0] );
+        }
+
+        [Fact]
+        public void ParseFile_EscapeCodes()
+        {
+            // Prepare
+
+            string contents =
+                "Localize(\"\\t\\r\\n\\v\\f\\b\\\\n\")";
+            WriteTempFile( contents );
+
+            Dictionary<string, List<string>> keyMatches = new Dictionary<string, List<string>>();
+
+            // Execute
+
+            InputFileParser.ParseFile( m_tempFile, null, keyMatches );
+
+            // Verify
+
+            string key = "\\t\\r\\n\\v\\f\\b\\\\n";
+            Assert.Single( keyMatches );
+
+            Assert.True( keyMatches.ContainsKey( key ) );
+            Assert.Single( keyMatches[ key ] );
+            Assert.Contains( $"{TEMP_FILE_NAME} @ 1", keyMatches[ key ][ 0 ] );
         }
     }
 }

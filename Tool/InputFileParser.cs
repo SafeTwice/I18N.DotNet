@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,21 +15,46 @@ namespace I18N.Tool
         {
             var text = File.ReadAllText( filepath );
 
-            var lineStartIndexes = GetLineStartIndexes( text );
+            var syntaxTree = CSharpSyntaxTree.ParseText( text );
 
-            ParseText( filepath, text, lineStartIndexes, GetLocatorRegex( extraFunctions ), keyMatches );
+            var localizerRegex = GetLocalizerRegex( extraFunctions );
+
+            var relativeFilePath = AbsoluteToRelativePath( filepath );
+
+            ParseSyntaxTree( syntaxTree, relativeFilePath, localizerRegex, keyMatches );
         }
 
-        private static void ParseText( string filepath, string text, List<int> lineStartIndexes, Regex locatorRegex, Dictionary<string, List<string>> keyMatches )
+        private static void ParseSyntaxTree( SyntaxTree tree, string filepath, Regex localizerRegex, Dictionary<string, List<string>> keyMatches )
         {
-            foreach( Match match in locatorRegex.Matches( text ) )
-            {
-                string key = match.Groups[2].Value;
+            var root = tree.GetCompilationUnitRoot();
 
-                if( match.Groups[1].Length > 0 )
+            var localizerMatches = from localizerCall in root.DescendantNodes().OfType<InvocationExpressionSyntax>()
+                                   where ( localizerCall.Expression is IdentifierNameSyntax id && localizerRegex.IsMatch( id.Identifier.ValueText ) ) ||
+                                         ( localizerCall.Expression is MemberAccessExpressionSyntax method && localizerRegex.IsMatch( method.Name.Identifier.ValueText ) )
+                                   let firstArgument = localizerCall.ArgumentList.Arguments.First()?.Expression
+                                   where firstArgument != null
+                                   where firstArgument.IsKind( SyntaxKind.StringLiteralExpression ) || 
+                                         firstArgument.IsKind( SyntaxKind.InterpolatedStringExpression )
+                                   select localizerCall;
+
+            foreach( var match in localizerMatches )
+            {
+                var firstArgument = match.ArgumentList.Arguments.First().Expression;
+
+                string key;
+
+                if( firstArgument.IsKind( SyntaxKind.InterpolatedStringExpression ) )
                 {
-                    key = ConvertToOrdinalFormat( key );
+                    var interpolatedString = firstArgument as InterpolatedStringExpressionSyntax;
+                    key = ConvertToOrdinalFormat( interpolatedString );
                 }
+                else
+                {
+                    var stringExpr = firstArgument as LiteralExpressionSyntax;
+                    key = stringExpr.Token.ValueText;
+                }
+
+                key = EscapeString( key );
 
                 List<string> keyInfoList;
                 if( !keyMatches.TryGetValue( key, out keyInfoList ) )
@@ -36,8 +64,8 @@ namespace I18N.Tool
                     keyMatches.Add( key, keyInfoList );
                 }
 
-                int line = GetLine( match.Index, lineStartIndexes );
-                keyInfoList.Add( $"{AbsoluteToRelativePath( filepath )} @ {line}" );
+                int line = ( match.Expression.GetLocation().GetLineSpan().StartLinePosition.Line + 1 );
+                keyInfoList.Add( $"{filepath} @ {line}" );
             }
         }
 
@@ -46,7 +74,7 @@ namespace I18N.Tool
             return Path.GetRelativePath( Directory.GetCurrentDirectory() + "\\", filePath );
         }
 
-        private static Regex GetLocatorRegex( IEnumerable<string> extraFunctions )
+        private static Regex GetLocalizerRegex( IEnumerable<string> extraFunctions )
         {
             string functionExpr = "Localize(?:Format)?";
             if( extraFunctions != null )
@@ -57,36 +85,57 @@ namespace I18N.Tool
                 }
             }
 
-            return new Regex( $"(?:{functionExpr})\\s*\\(\\s*(\\$?)\"((?:[^\"\\\\]|\\\\.)*)\"", RegexOptions.Multiline );
+            return new Regex( functionExpr, RegexOptions.Singleline );
         }
 
-        private static List<int> GetLineStartIndexes( string text )
+        private static string ConvertToOrdinalFormat( InterpolatedStringExpressionSyntax interpolatedString )
         {
-            var lineStartIndexes = new List<int>();
+            string result = "";
+            int placeholderIndex = 0;
 
-            var newLineRegex = new Regex( @"\n", RegexOptions.Multiline );
-
-            foreach( Match match in newLineRegex.Matches( text ) )
+            foreach( var item in interpolatedString.Contents )
             {
-                lineStartIndexes.Add( match.Index );
+                if( item.IsKind( SyntaxKind.InterpolatedStringText ) )
+                {
+                    var text = item as InterpolatedStringTextSyntax;
+                    result += text.TextToken.ValueText;
+                }
+                else
+                {
+                    var interpolation = item as InterpolationSyntax;
+                    result += $"{{{placeholderIndex}{interpolation.AlignmentClause?.ToString()}{interpolation.FormatClause?.ToString()}}}";
+                    placeholderIndex++;
+                }
             }
 
-            return lineStartIndexes;
+            return result;
         }
 
-        private static int GetLine( int index, List<int> lineStartIndexes )
+        private static string EscapeString( string text )
         {
-            return lineStartIndexes.Count( lineStartIndex => ( lineStartIndex < index ) ) + 1;
-        }
-
-        private static string ConvertToOrdinalFormat( string format )
-        {
-            int placeholderIndex = 0;
-            var placeholderRegex = new Regex( @"{[^:}]+(:[^}]+)?}" );
-
-            var x = placeholderRegex.Matches( format );
-
-            return placeholderRegex.Replace( format, new MatchEvaluator( new Func<Match, string>( m => $"{{{placeholderIndex++}{m.Groups[1]}}}" ) ) );
+            return Regex.Replace( text, @"([\n\r\f\t\v\b\\])", m =>
+            {
+                var payload = m.Groups[ 1 ].Value;
+                switch( payload )
+                {
+                    case "\n":
+                        return "\\n";
+                    case "\r":
+                        return "\\r";
+                    case "\f":
+                        return "\\f";
+                    case "\t":
+                        return "\\t";
+                    case "\v":
+                        return "\\v";
+                    case "\b":
+                        return "\\b";
+                    case "\\":
+                        return "\\\\";
+                    default:
+                        return payload;
+                }
+            } );
         }
     }
 }

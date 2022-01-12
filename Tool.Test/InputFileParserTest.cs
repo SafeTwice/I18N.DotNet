@@ -37,14 +37,14 @@ namespace I18N.Tool.Test
             string contents =
                 "/* First line */\n" +
                 "// This Localize should not be matched\n" +
-                "Localize ( \"Plain String\" )\n" +
+                "Localize ( \"Plain String\" );\n" +
                 "  \n" +
-                "  Localize( $\"Interpolated String {Whatever:F3} {SomethingElse} {Foo:X4}\" )\n" +
+                "  Localize( $\"Interpolated String {Whatever:F3} {SomethingElse} {Foo:X4}\" );\n" +
                 "\n" +
-                "CustomFunction(\"Plain String\")\n" +
-                "CustomFunction(\"Another String \\t\")\n" +
-                "  myLocalizer.LocalizeFormat( \"Format String {0:X4}\", param1 )\n" +
-                "\tLocalize(\"Plain String\") // Again\n" +
+                "CustomFunction(\"Plain String\");\n" +
+                "CustomFunction(\"Another String \\t\");\n" +
+                "  myLocalizer.LocalizeFormat( \"Format String {0:X4}\", param1 );\n" +
+                "\tLocalize(\"Plain String\"); // Again\n" +
                 "/* Last line */";
 
             WriteTempFile( contents );

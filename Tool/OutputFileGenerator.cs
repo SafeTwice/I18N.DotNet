@@ -123,6 +123,8 @@ namespace I18N.Tool
 
         private static XElement GetEntryElement( XElement parentElement, string key )
         {
+            XElement lastEntryElement = null;
+
             foreach( var entryElement in parentElement.Elements( ENTRY_TAG ) )
             {
                 var keyElement = entryElement.Element( KEY_TAG );
@@ -131,11 +133,21 @@ namespace I18N.Tool
                     entryElement.RemoveAnnotations<DeprecatedAnnotation>();
                     return entryElement;
                 }
+
+                lastEntryElement = entryElement;
             }
 
             var newEntryElement = new XElement( ENTRY_TAG );
             newEntryElement.Add( new XElement( KEY_TAG, key ) );
-            parentElement.Add( newEntryElement );
+
+            if( lastEntryElement != null )
+            {
+                lastEntryElement.AddAfterSelf( newEntryElement );
+            }
+            else
+            {
+                parentElement.AddFirst( newEntryElement );
+            }
 
             return newEntryElement;
         }

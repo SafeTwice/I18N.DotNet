@@ -1,4 +1,10 @@
-﻿using Microsoft.CodeAnalysis;
+﻿/**
+ * @file
+ * @copyright  Copyright (c) 2020-2022 SafeTwice S.L. All rights reserved.
+ * @license    MIT (https://opensource.org/licenses/MIT)
+ */
+
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Collections.Generic;
@@ -10,7 +16,7 @@ namespace I18N.Tool
 {
     static class InputFileParser
     {
-        public static void ParseFile( string filepath, IEnumerable<string> extraFunctions, Dictionary<string, List<string>> keyMatches )
+        public static void ParseFile( string filepath, IEnumerable<string> extraFunctions, Context rootContext )
         {
             var text = File.ReadAllText( filepath );
 
@@ -20,10 +26,10 @@ namespace I18N.Tool
 
             var relativeFilePath = AbsoluteToRelativePath( filepath );
 
-            ParseSyntaxTree( syntaxTree, relativeFilePath, localizerRegex, keyMatches );
+            ParseSyntaxTree( syntaxTree, relativeFilePath, localizerRegex, rootContext );
         }
 
-        private static void ParseSyntaxTree( SyntaxTree tree, string filepath, Regex localizerRegex, Dictionary<string, List<string>> keyMatches )
+        private static void ParseSyntaxTree( SyntaxTree tree, string filepath, Regex localizerRegex, Context rootContext )
         {
             var root = tree.GetCompilationUnitRoot();
 
@@ -46,7 +52,7 @@ namespace I18N.Tool
                 if( firstArgument.IsKind( SyntaxKind.InterpolatedStringExpression ) )
                 {
                     var interpolatedString = firstArgument as InterpolatedStringExpressionSyntax;
-                    key = ConvertToOrdinalFormat( interpolatedString );
+                    key = ConvertToKey( interpolatedString );
                 }
                 else
                 {
@@ -56,16 +62,61 @@ namespace I18N.Tool
 
                 key = EscapeString( key );
 
-                List<string> keyInfoList;
-                if( !keyMatches.TryGetValue( key, out keyInfoList ) )
-                {
-                    keyInfoList = new List<string>();
-
-                    keyMatches.Add( key, keyInfoList );
-                }
-
                 int line = ( match.Expression.GetLocation().GetLineSpan().StartLinePosition.Line + 1 );
-                keyInfoList.Add( $"{filepath} @ {line}" );
+                
+                var context = GetContext( match, rootContext );
+                context.AddKey( key, $"{filepath} @ {line}" );
+            }
+        }
+
+        private static Context GetContext( InvocationExpressionSyntax localizerCall, Context rootContext )
+        {
+            List<string> contextStack = new();
+
+            UpdateContextStack( localizerCall, contextStack );
+
+            return rootContext.GetContext( contextStack );
+        }
+
+        private static void UpdateContextStack( InvocationExpressionSyntax invocation, List<string> contextStack )
+        {
+            if( invocation.Expression is MemberAccessExpressionSyntax candidateContextObject )
+            {
+                if( candidateContextObject.Expression is InvocationExpressionSyntax candidateContextInvocation )
+                {
+                    string calledMethodName = null;
+                    bool isNested = false;
+
+                    if( candidateContextInvocation.Expression is IdentifierNameSyntax calledObjectId )
+                    {
+                        calledMethodName = calledObjectId.Identifier.ValueText;
+                    }
+                    else if( candidateContextInvocation.Expression is MemberAccessExpressionSyntax calledObjectMethod )
+                    {
+                        calledMethodName = calledObjectMethod.Name.Identifier.ValueText;
+                        isNested = true;
+                    }
+
+                    if( ( calledMethodName == "Context" ) &&
+                        ( candidateContextInvocation.ArgumentList.Arguments.Count == 1 ) )
+                    {
+                        var argument = candidateContextInvocation.ArgumentList.Arguments.First().Expression;
+                        if( argument.IsKind( SyntaxKind.StringLiteralExpression ) )
+                        {
+                            if( isNested )
+                            {
+                                UpdateContextStack( candidateContextInvocation, contextStack );
+                            }
+
+                            var contextName = ( argument as LiteralExpressionSyntax ).Token.ValueText;
+
+                            foreach( var splitContextName in contextName.Split( '.' ) )
+                            {
+                                contextStack.Add( splitContextName );
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -88,7 +139,7 @@ namespace I18N.Tool
             return new Regex( functionExpr, RegexOptions.Singleline );
         }
 
-        private static string ConvertToOrdinalFormat( InterpolatedStringExpressionSyntax interpolatedString )
+        private static string ConvertToKey( InterpolatedStringExpressionSyntax interpolatedString )
         {
             string result = "";
             int placeholderIndex = 0;

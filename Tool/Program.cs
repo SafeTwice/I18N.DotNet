@@ -1,4 +1,10 @@
-﻿using CommandLine;
+﻿/**
+ * @file
+ * @copyright  Copyright (c) 2020-2022 SafeTwice S.L. All rights reserved.
+ * @license    MIT (https://opensource.org/licenses/MIT)
+ */
+
+using CommandLine;
 using System.Collections.Generic;
 using System.IO;
 
@@ -39,32 +45,32 @@ namespace I18N.Tool
 
         private static int Run( Options options )
         {
-            Dictionary<string, List<string>> keyMatches = new Dictionary<string, List<string>>();
+            var rootContext = new Context();
 
             foreach( var directory in options.Directories )
             {
                 var dirInfo = new DirectoryInfo( directory );
 
-                ParseFilesInDirectory( dirInfo, options.Pattern, options.Recursive, options.ExtraFunctions, keyMatches );
+                ParseFilesInDirectory( dirInfo, options.Pattern, options.Recursive, options.ExtraFunctions, rootContext );
             }
 
-            OutputFileGenerator.GenerateFile( options.OutputFile, options.PreserveFoundingComments, keyMatches );
+            OutputFileGenerator.GenerateFile( options.OutputFile, options.PreserveFoundingComments, rootContext );
 
             return 0;
         }
 
-        private static void ParseFilesInDirectory( DirectoryInfo dirInfo, string pattern, bool recursive, IEnumerable<string> extraFunctions, Dictionary<string, List<string>> keyMatches )
+        private static void ParseFilesInDirectory( DirectoryInfo dirInfo, string pattern, bool recursive, IEnumerable<string> extraFunctions, Context rootContext )
         {
             foreach( var fileInfo in dirInfo.GetFiles( pattern ) )
             {
-                InputFileParser.ParseFile( fileInfo.FullName, extraFunctions, keyMatches );
+                InputFileParser.ParseFile( fileInfo.FullName, extraFunctions, rootContext );
             }
 
             if( recursive )
             {
                 foreach( var childDirInfo in dirInfo.GetDirectories() )
                 {
-                    ParseFilesInDirectory( childDirInfo, pattern, true, extraFunctions, keyMatches );
+                    ParseFilesInDirectory( childDirInfo, pattern, true, extraFunctions, rootContext );
                 }
             }
         }

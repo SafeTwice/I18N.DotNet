@@ -24,6 +24,9 @@ namespace I18N.Tool
         [Option( 'k', Default = false, HelpText = "Preserve founding comments in output file" )]
         public bool PreserveFoundingComments { get; set; }
 
+        [Option( 'd', Default = false, HelpText = "Mark deprecated entries" )]
+        public bool MarkDeprecated { get; set; }
+
         [Option( 'e', HelpText = "Extra methods to be parsed for strings to be localized" )]
         public IEnumerable<string> ExtraFunctions { get; set; }
 
@@ -54,7 +57,7 @@ namespace I18N.Tool
                 ParseFilesInDirectory( dirInfo, options.Pattern, options.Recursive, options.ExtraFunctions, rootContext );
             }
 
-            OutputFileGenerator.GenerateFile( options.OutputFile, options.PreserveFoundingComments, rootContext );
+            OutputFileGenerator.GenerateFile( options.OutputFile, options.PreserveFoundingComments, options.MarkDeprecated, rootContext );
 
             return 0;
         }

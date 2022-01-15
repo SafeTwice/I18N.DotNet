@@ -14,11 +14,16 @@ namespace I18N.Tool
 {
     static class OutputFileGenerator
     {
-        public static void GenerateFile( string filepath, bool preserveFoundingComments, Context rootContext )
+        public static void GenerateFile( string filepath, bool preserveFoundingComments, bool markDeprecated, Context rootContext )
         {
             XDocument doc = GetDocument( filepath, preserveFoundingComments );
 
             CreateEntries( doc.Root, rootContext );
+
+            if( markDeprecated )
+            {
+                CreateDeprecationComments( doc.Root );
+            }
 
             XmlWriterSettings xws = new XmlWriterSettings();
             xws.Indent = true;
@@ -37,7 +42,7 @@ namespace I18N.Tool
 
                 foreach( var keyInfo in context.KeyMatches[ key ] )
                 {
-                    AddCommentIfNeeded( entryElement, $" Found in: {keyInfo} " );
+                    AddCommentIfNeeded( entryElement, $" Found in: {keyInfo} ", true );
                 }
             }
 
@@ -87,6 +92,8 @@ namespace I18N.Tool
                 doc = new XDocument( new XElement( ROOT_TAG ) );
             }
 
+            AnnotateElement( doc.Root );
+
             return doc;
         }
 
@@ -121,6 +128,7 @@ namespace I18N.Tool
                 var keyElement = entryElement.Element( KEY_TAG );
                 if( ( keyElement != null ) && ( keyElement.Value == key ) ) 
                 {
+                    entryElement.RemoveAnnotations<DeprecatedAnnotation>();
                     return entryElement;
                 }
             }
@@ -150,7 +158,7 @@ namespace I18N.Tool
             return newContextElement;
         }
 
-        private static void AddCommentIfNeeded( XElement entryElement, string comment )
+        private static void AddCommentIfNeeded( XElement entryElement, string comment, bool beforeKey )
         {
             foreach( var node in entryElement.Nodes() )
             {
@@ -161,7 +169,49 @@ namespace I18N.Tool
                 }
             }
 
-            entryElement.Element( KEY_TAG ).AddBeforeSelf( new XComment( comment ) );
+            if( beforeKey )
+            {
+                entryElement.Element( KEY_TAG ).AddBeforeSelf( new XComment( comment ) );
+            }
+            else
+            {
+                entryElement.AddFirst( new XComment( comment ) );
+            }
+        }
+
+        private class DeprecatedAnnotation
+        {
+        }
+
+        private static DeprecatedAnnotation DEPRECATED_ANNOTATION = new DeprecatedAnnotation();
+
+        private static void AnnotateElement( XElement element )
+        {
+            foreach( var entryElement in element.Elements( ENTRY_TAG ) )
+            {
+                entryElement.AddAnnotation( DEPRECATED_ANNOTATION );
+            }
+
+            foreach( var contextElement in element.Elements( CONTEXT_TAG ) )
+            {
+                AnnotateElement( contextElement );
+            }
+        }
+
+        private static void CreateDeprecationComments( XElement element )
+        {
+            foreach( var entryElement in element.Elements( ENTRY_TAG ) )
+            {
+                if( entryElement.Annotation<DeprecatedAnnotation>() != null )
+                {
+                    AddCommentIfNeeded( entryElement, " DEPRECATED ", false );
+                }
+            }
+
+            foreach( var contextElement in element.Elements( CONTEXT_TAG ) )
+            {
+                CreateDeprecationComments( contextElement );
+            }
         }
 
         private const string ROOT_TAG = "I18N";

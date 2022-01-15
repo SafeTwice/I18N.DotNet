@@ -135,7 +135,7 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            OutputFileGenerator.GenerateFile( m_tempFile, false, rootContext );
+            OutputFileGenerator.GenerateFile( m_tempFile, false, false, rootContext );
 
             // Verify
 
@@ -229,7 +229,7 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            OutputFileGenerator.GenerateFile( m_tempFile, true, rootContext );
+            OutputFileGenerator.GenerateFile( m_tempFile, true, false, rootContext );
 
             // Verify
 
@@ -336,7 +336,7 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            OutputFileGenerator.GenerateFile( m_tempFile, false, rootContext );
+            OutputFileGenerator.GenerateFile( m_tempFile, false, false, rootContext );
 
             // Verify
 
@@ -431,6 +431,114 @@ namespace I18N.Tool.Test
             Assert.Empty( context22Contexts );
         }
 
+
+        [Fact]
+        public void GenerateFile_Update_MarkDeprecated()
+        {
+            // Prepare
+
+            var rootContext = CreateRootContext();
+
+            CreateInitialOutputFile();
+
+            // Execute
+
+            OutputFileGenerator.GenerateFile( m_tempFile, false, true, rootContext );
+
+            // Verify
+
+            Assert.True( File.Exists( m_tempFile ) );
+
+            var doc = ReadTempFileAsXML();
+
+            // Root Context
+
+            var rootKeys = doc.XPathSelectElements( "I18N/Entry/Key" );
+            Assert.Equal( 3, rootKeys.Count() );
+            Assert.All( rootKeys, element => Assert.Matches( "^Key [12A]$", element.Value ) );
+
+            var rootComments = doc.XPathSelectComments( "I18N/comment()" );
+            Assert.Empty( rootComments );
+
+            var key1Comments = doc.XPathSelectComments( "I18N/Entry[Key/text()='Key 1']/comment()" );
+            Assert.Equal( 2, key1Comments.Count() );
+            Assert.All( key1Comments, comment => Assert.Matches( "^ Found in: Match 1-[12] $", comment.Value ) );
+
+            var key2Comments = doc.XPathSelectComments( "I18N/Entry[Key/text()='Key 2']/comment()" );
+            Assert.Equal( 2, key2Comments.Count() );
+            Assert.All( key2Comments, comment => Assert.Matches( "^ (Non-Erasable Comment|DEPRECATED) $", comment.Value ) );
+
+            var keyAComments = doc.XPathSelectComments( "I18N/Entry[Key/text()='Key A']/comment()" );
+            Assert.Single( keyAComments );
+            Assert.All( keyAComments, comment => Assert.Matches( "^ Found in: Match A $", comment.Value ) );
+
+            var rootContexts = doc.XPathSelectElements( "I18N/Context" );
+            Assert.Equal( 2, rootContexts.Count() );
+            Assert.All( rootContexts, element => Assert.Matches( "^Context [12]$", element.Attribute( "name" ).Value ) );
+
+            // Context 1
+
+            var context1Comments = doc.XPathSelectComments( "I18N/Context[@name='Context 1']/comment()" );
+            Assert.Single( context1Comments );
+            Assert.All( context1Comments, comment => Assert.Matches( "^ Non-Erasable Comment $", comment.Value ) );
+
+            var context1Keys = doc.XPathSelectElements( "I18N/Context[@name='Context 1']/Entry/Key" );
+            Assert.Single( context1Keys );
+            Assert.Equal( "Key 3", context1Keys.First().Value );
+
+            var key3Comments = doc.XPathSelectComments( "I18N/Context[@name='Context 1']/Entry[Key/text()='Key 3']/comment()" );
+            Assert.Equal( 2, key3Comments.Count() );
+            Assert.All( key3Comments, comment => Assert.Matches( "^ Found in: Match 3-[12] $", comment.Value ) );
+
+            var context1Contexts = doc.XPathSelectElements( "I18N/Context[@name='Context 1']/Context" );
+            Assert.Single( context1Contexts );
+            Assert.All( context1Contexts, element => Assert.Matches( "^Context 11$", element.Attribute( "name" ).Value ) );
+
+            // Context 11
+
+            var context11Comments = doc.XPathSelectComments( "I18N//Context[@name='Context 1']/Context[@name='Context 11']/comment()" );
+            Assert.Empty( context11Comments );
+
+            var context11Keys = doc.XPathSelectElements( "I18N/Context[@name='Context 1']/Context[@name='Context 11']/Entry/Key" );
+            Assert.Single( context11Keys );
+            Assert.All( context11Keys, element => Assert.Matches( "^Key 9$", element.Value ) );
+
+            var key9Comments = doc.XPathSelectComments( "I18N/Context[@name='Context 1']/Context[@name='Context 11']/Entry[Key/text()='Key 9']/comment()" );
+            Assert.Single( key9Comments );
+            Assert.Equal( " DEPRECATED ", key9Comments.First().Value );
+
+            var context11Contexts = doc.XPathSelectElements( "I18N/Context[@name='Context 1']/Context[@name='Context 11']/Context" );
+            Assert.Empty( context11Contexts );
+
+            // Context 2
+
+            var context2Comments = doc.XPathSelectComments( "I18N//Context[@name='Context 2']/comment()" );
+            Assert.Empty( context2Comments );
+
+            var context2Keys = doc.XPathSelectElements( "I18N/Context[@name='Context 2']/Entry/Key" );
+            Assert.Empty( context2Keys );
+
+            var context2Contexts = doc.XPathSelectElements( "I18N/Context[@name='Context 2']/Context" );
+            Assert.Single( context2Contexts );
+            Assert.Equal( "Context 22", context2Contexts.First().Attribute( "name" ).Value );
+
+            // Context 22
+
+            var context22Comments = doc.XPathSelectComments( "I18N//Context[@name='Context 2']/Context[@name='Context 22']/comment()" );
+            Assert.Empty( context22Comments );
+
+            var context22Keys = doc.XPathSelectElements( "I18N/Context[@name='Context 2']/Context[@name='Context 22']/Entry/Key" );
+            Assert.Single( context22Keys );
+            Assert.Equal( "Key 3", context1Keys.First().Value );
+
+            var key4Comments = doc.XPathSelectComments( "I18N/Context[@name='Context 2']/Context[@name='Context 22']/Entry[Key/text()='Key 4']/comment()" );
+            Assert.Single( key4Comments );
+            Assert.Equal( " Found in: Match 4 ", key4Comments.First().Value );
+
+            var context22Contexts = doc.XPathSelectElements( "I18N/Context[@name='Context 2']/Context[@name='Context 22']/Context" );
+            Assert.Empty( context22Contexts );
+        }
+
         [Fact]
         public void GenerateFile_InitialFile_WrongRoot()
         {
@@ -442,7 +550,7 @@ namespace I18N.Tool.Test
 
             // Execute & Verify
 
-            var exception = Assert.Throws<ApplicationException>( () => OutputFileGenerator.GenerateFile( m_tempFile, false, rootContext ) );
+            var exception = Assert.Throws<ApplicationException>( () => OutputFileGenerator.GenerateFile( m_tempFile, false, false, rootContext ) );
 
             Assert.Contains( "Invalid XML root element in existing output file", exception.Message );
         }
@@ -458,7 +566,7 @@ namespace I18N.Tool.Test
 
             // Execute & Verify
 
-            var exception = Assert.Throws<ApplicationException>( () => OutputFileGenerator.GenerateFile( m_tempFile, false, rootContext ) );
+            var exception = Assert.Throws<ApplicationException>( () => OutputFileGenerator.GenerateFile( m_tempFile, false, false, rootContext ) );
 
             Assert.Contains( "Invalid XML format in existing output file", exception.Message );
         }
@@ -498,7 +606,7 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            OutputFileGenerator.GenerateFile( m_tempFile, true, rootContext );
+            OutputFileGenerator.GenerateFile( m_tempFile, true, false, rootContext );
 
             // Verify
 

@@ -176,6 +176,7 @@ If the output file already exists, the tool preserves the existing XML elements 
 | -p &lt;input-files-pattern>                | Input files name pattern (default: *.cs)               |
 | -r                                         | Scan in input directories recursively                  |
 | -k                                         | Preserve founding comments in output file              |
+| -d                                         | Mark deprecated entries                                |
 | -e &lt;func-name> _[&lt;func-name-2 ...>]_ | Extra methods to be parsed for strings to be localized |
 
 At least one input directory must be passed using the `-I` option, and the output file must be specified using the `-o` option.
@@ -185,3 +186,5 @@ Input directories are by default not scanned recursively navigating into nested 
 Internationalized strings are by default located by searching for plain strings and interpolated strings that are used as the first argument to methods named `Localize` or `LocalizeFormat`. If you define your own classes that define methods that wrap internationalization functionality (i.e., which internally call `Localizer` methods), then these additional methods can be also parsed using the `-e` option (as long as these methods take the strings to be localized as their first parameter).
 
 Existing "founding" comments in the output file that indicate where a key was found in the source code are not preserved by default. To avoid this behavior, use the option `-k` to keep all "founding" comments.
+
+Using the option `-d` a comment indicating that the entry is deprecated is added to previously existing entries in the output file which keys do not correspond to a key found in the source code.

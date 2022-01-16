@@ -51,14 +51,14 @@ namespace I18N.Tool.Test
                 "    <Key>Key 2</Key>\n" +
                 "    <!-- Non-Erasable Comment -->\n" +
                 "  </Entry>\n" +
-                "  <Context name=\"Context 1\">\n" +
+                "  <Context id=\"Context 1\">\n" +
                 "    <!-- Non-Erasable Comment -->\n" +
                 "    <Entry>\n" +
                 "      <!-- Found in: Match 3-Z -->\n" +
                 "      <!-- Found in: Match 3-1 -->\n" +
                 "      <Key>Key 3</Key>\n" +
                 "    </Entry>\n" +
-                "    <Context name=\"Context 11\">\n" +
+                "    <Context id=\"Context 11\">\n" +
                 "      <Entry>\n" +
                 "        <!-- Found in: Match 9-Z -->\n" +
                 "        <Key>Key 9</Key>\n" +
@@ -82,14 +82,14 @@ namespace I18N.Tool.Test
                 "    <Key>Key 2</Key>\n" +
                 "    <!-- Non-Erasable Comment -->\n" +
                 "  </Entry>\n" +
-                "  <Context name=\"Context 1\">\n" +
+                "  <Context id=\"Context 1\">\n" +
                 "    <!-- Non-Erasable Comment -->\n" +
                 "    <Entry>\n" +
                 "      <!-- Found in: Match 3-Z -->\n" +
                 "      <!-- Found in: Match 3-1 -->\n" +
                 "      <Key>Key 3</Key>\n" +
                 "    </Entry>\n" +
-                "    <Context name=\"Context 11\">\n" +
+                "    <Context id=\"Context 11\">\n" +
                 "      <Entry>\n" +
                 "        <!-- Found in: Match 9-Z -->\n" +
                 "        <Key>Key 9</Key>\n" +
@@ -159,50 +159,50 @@ namespace I18N.Tool.Test
 
             var rootContexts = doc.XPathSelectElements( "I18N/Context" );
             Assert.Equal( 2, rootContexts.Count() );
-            Assert.All( rootContexts, element => Assert.Matches( "^Context [12]$", element.Attribute( "name" ).Value ) );
+            Assert.All( rootContexts, element => Assert.Matches( "^Context [12]$", element.Attribute( "id" ).Value ) );
 
             // Context 1
 
-            var context1Comments = doc.XPathSelectComments( "I18N//Context[@name='Context 1']/comment()" );
+            var context1Comments = doc.XPathSelectComments( "I18N//Context[@id='Context 1']/comment()" );
             Assert.Empty( context1Comments );
 
-            var context1Keys = doc.XPathSelectElements( "I18N/Context[@name='Context 1']/Entry/Key" );
+            var context1Keys = doc.XPathSelectElements( "I18N/Context[@id='Context 1']/Entry/Key" );
             Assert.Single( context1Keys );
             Assert.All( context1Keys, element => Assert.Matches( "^Key 3$", element.Value ) );
 
-            var key3Comments = doc.XPathSelectComments( "I18N/Context[@name='Context 1']/Entry[Key/text()='Key 3']/comment()" );
+            var key3Comments = doc.XPathSelectComments( "I18N/Context[@id='Context 1']/Entry[Key/text()='Key 3']/comment()" );
             Assert.Equal( 2, key3Comments.Count() );
             Assert.All( key3Comments, comment => Assert.Matches( "^ Found in: Match 3-[12] $", comment.Value ) );
 
-            var context1Contexts = doc.XPathSelectElements( "I18N/Context[@name='Context 1']/Context" );
+            var context1Contexts = doc.XPathSelectElements( "I18N/Context[@id='Context 1']/Context" );
             Assert.Empty( context1Contexts );
 
             // Context 2
 
-            var context2Comments = doc.XPathSelectComments( "I18N//Context[@name='Context 2']/comment()" );
+            var context2Comments = doc.XPathSelectComments( "I18N//Context[@id='Context 2']/comment()" );
             Assert.Empty( context2Comments );
 
-            var context2Keys = doc.XPathSelectElements( "I18N/Context[@name='Context 2']/Entry/Key" );
+            var context2Keys = doc.XPathSelectElements( "I18N/Context[@id='Context 2']/Entry/Key" );
             Assert.Empty( context2Keys );
 
-            var context2Contexts = doc.XPathSelectElements( "I18N/Context[@name='Context 2']/Context" );
+            var context2Contexts = doc.XPathSelectElements( "I18N/Context[@id='Context 2']/Context" );
             Assert.Single( context2Contexts );
-            Assert.All( context2Contexts, element => Assert.Matches( "^Context 22$", element.Attribute( "name" ).Value ) );
+            Assert.All( context2Contexts, element => Assert.Matches( "^Context 22$", element.Attribute( "id" ).Value ) );
 
             // Context 22
 
-            var context22Comments = doc.XPathSelectComments( "I18N//Context[@name='Context 2']/Context[@name='Context 22']/comment()" );
+            var context22Comments = doc.XPathSelectComments( "I18N//Context[@id='Context 2']/Context[@id='Context 22']/comment()" );
             Assert.Empty( context22Comments );
 
-            var context22Keys = doc.XPathSelectElements( "I18N/Context[@name='Context 2']/Context[@name='Context 22']/Entry/Key" );
+            var context22Keys = doc.XPathSelectElements( "I18N/Context[@id='Context 2']/Context[@id='Context 22']/Entry/Key" );
             Assert.Single( context22Keys );
             Assert.All( context22Keys, element => Assert.Matches( "^Key 4$", element.Value ) );
 
-            var key4Comments = doc.XPathSelectComments( "I18N/Context[@name='Context 2']/Context[@name='Context 22']/Entry[Key/text()='Key 4']/comment()" );
+            var key4Comments = doc.XPathSelectComments( "I18N/Context[@id='Context 2']/Context[@id='Context 22']/Entry[Key/text()='Key 4']/comment()" );
             Assert.Single( key4Comments );
             Assert.All( key4Comments, comment => Assert.Matches( "^ Found in: Match 4 $", comment.Value ) );
 
-            var context22Contexts = doc.XPathSelectElements( "I18N/Context[@name='Context 2']/Context[@name='Context 22']/Context" );
+            var context22Contexts = doc.XPathSelectElements( "I18N/Context[@id='Context 2']/Context[@id='Context 22']/Context" );
             Assert.Empty( context22Contexts );
         }
 
@@ -260,68 +260,68 @@ namespace I18N.Tool.Test
 
             var rootContexts = doc.XPathSelectElements( "I18N/Context" );
             Assert.Equal( 2, rootContexts.Count() );
-            Assert.All( rootContexts, element => Assert.Matches( "^Context [12]$", element.Attribute( "name" ).Value ) );
+            Assert.All( rootContexts, element => Assert.Matches( "^Context [12]$", element.Attribute( "id" ).Value ) );
 
             // Context 1
 
-            var context1Comments = doc.XPathSelectComments( "I18N/Context[@name='Context 1']/comment()" );
+            var context1Comments = doc.XPathSelectComments( "I18N/Context[@id='Context 1']/comment()" );
             Assert.Single( context1Comments );
             Assert.All( context1Comments, comment => Assert.Matches( "^ Non-Erasable Comment $", comment.Value ) );
 
-            var context1Keys = doc.XPathSelectElements( "I18N/Context[@name='Context 1']/Entry/Key" );
+            var context1Keys = doc.XPathSelectElements( "I18N/Context[@id='Context 1']/Entry/Key" );
             Assert.Single( context1Keys );
             Assert.All( context1Keys, element => Assert.Matches( "^Key 3$", element.Value ) );
 
-            var key3Comments = doc.XPathSelectComments( "I18N/Context[@name='Context 1']/Entry[Key/text()='Key 3']/comment()" );
+            var key3Comments = doc.XPathSelectComments( "I18N/Context[@id='Context 1']/Entry[Key/text()='Key 3']/comment()" );
             Assert.Equal( 3, key3Comments.Count() );
             Assert.All( key3Comments, comment => Assert.Matches( "^ Found in: Match 3-[12Z] $", comment.Value ) );
 
-            var context1Contexts = doc.XPathSelectElements( "I18N/Context[@name='Context 1']/Context" );
+            var context1Contexts = doc.XPathSelectElements( "I18N/Context[@id='Context 1']/Context" );
             Assert.Single( context1Contexts );
-            Assert.All( context1Contexts, element => Assert.Matches( "^Context 11$", element.Attribute( "name" ).Value ) );
+            Assert.All( context1Contexts, element => Assert.Matches( "^Context 11$", element.Attribute( "id" ).Value ) );
 
             // Context 11
 
-            var context11Comments = doc.XPathSelectComments( "I18N//Context[@name='Context 1']/Context[@name='Context 11']/comment()" );
+            var context11Comments = doc.XPathSelectComments( "I18N//Context[@id='Context 1']/Context[@id='Context 11']/comment()" );
             Assert.Empty( context11Comments );
 
-            var context11Keys = doc.XPathSelectElements( "I18N/Context[@name='Context 1']/Context[@name='Context 11']/Entry/Key" );
+            var context11Keys = doc.XPathSelectElements( "I18N/Context[@id='Context 1']/Context[@id='Context 11']/Entry/Key" );
             Assert.Single( context11Keys );
             Assert.All( context11Keys, element => Assert.Matches( "^Key 9$", element.Value ) );
 
-            var key9Comments = doc.XPathSelectComments( "I18N/Context[@name='Context 1']/Context[@name='Context 11']/Entry[Key/text()='Key 9']/comment()" );
+            var key9Comments = doc.XPathSelectComments( "I18N/Context[@id='Context 1']/Context[@id='Context 11']/Entry[Key/text()='Key 9']/comment()" );
             Assert.Single( key9Comments );
             Assert.All( key9Comments, comment => Assert.Matches( "^ Found in: Match 9-Z $", comment.Value ) );
 
-            var context11Contexts = doc.XPathSelectElements( "I18N/Context[@name='Context 1']/Context[@name='Context 11']/Context" );
+            var context11Contexts = doc.XPathSelectElements( "I18N/Context[@id='Context 1']/Context[@id='Context 11']/Context" );
             Assert.Empty( context11Contexts );
 
             // Context 2
 
-            var context2Comments = doc.XPathSelectComments( "I18N//Context[@name='Context 2']/comment()" );
+            var context2Comments = doc.XPathSelectComments( "I18N//Context[@id='Context 2']/comment()" );
             Assert.Empty( context2Comments );
 
-            var context2Keys = doc.XPathSelectElements( "I18N/Context[@name='Context 2']/Entry/Key" );
+            var context2Keys = doc.XPathSelectElements( "I18N/Context[@id='Context 2']/Entry/Key" );
             Assert.Empty( context2Keys );
 
-            var context2Contexts = doc.XPathSelectElements( "I18N/Context[@name='Context 2']/Context" );
+            var context2Contexts = doc.XPathSelectElements( "I18N/Context[@id='Context 2']/Context" );
             Assert.Single( context2Contexts );
-            Assert.All( context2Contexts, element => Assert.Matches( "^Context 22$", element.Attribute( "name" ).Value ) );
+            Assert.All( context2Contexts, element => Assert.Matches( "^Context 22$", element.Attribute( "id" ).Value ) );
 
             // Context 22
 
-            var context22Comments = doc.XPathSelectComments( "I18N//Context[@name='Context 2']/Context[@name='Context 22']/comment()" );
+            var context22Comments = doc.XPathSelectComments( "I18N//Context[@id='Context 2']/Context[@id='Context 22']/comment()" );
             Assert.Empty( context22Comments );
 
-            var context22Keys = doc.XPathSelectElements( "I18N/Context[@name='Context 2']/Context[@name='Context 22']/Entry/Key" );
+            var context22Keys = doc.XPathSelectElements( "I18N/Context[@id='Context 2']/Context[@id='Context 22']/Entry/Key" );
             Assert.Single( context22Keys );
             Assert.All( context22Keys, element => Assert.Matches( "^Key 4$", element.Value ) );
 
-            var key4Comments = doc.XPathSelectComments( "I18N/Context[@name='Context 2']/Context[@name='Context 22']/Entry[Key/text()='Key 4']/comment()" );
+            var key4Comments = doc.XPathSelectComments( "I18N/Context[@id='Context 2']/Context[@id='Context 22']/Entry[Key/text()='Key 4']/comment()" );
             Assert.Single( key4Comments );
             Assert.All( key4Comments, comment => Assert.Matches( "^ Found in: Match 4 $", comment.Value ) );
 
-            var context22Contexts = doc.XPathSelectElements( "I18N/Context[@name='Context 2']/Context[@name='Context 22']/Context" );
+            var context22Contexts = doc.XPathSelectElements( "I18N/Context[@id='Context 2']/Context[@id='Context 22']/Context" );
             Assert.Empty( context22Contexts );
         }
 
@@ -367,67 +367,67 @@ namespace I18N.Tool.Test
 
             var rootContexts = doc.XPathSelectElements( "I18N/Context" );
             Assert.Equal( 2, rootContexts.Count() );
-            Assert.All( rootContexts, element => Assert.Matches( "^Context [12]$", element.Attribute( "name" ).Value ) );
+            Assert.All( rootContexts, element => Assert.Matches( "^Context [12]$", element.Attribute( "id" ).Value ) );
 
             // Context 1
 
-            var context1Comments = doc.XPathSelectComments( "I18N/Context[@name='Context 1']/comment()" );
+            var context1Comments = doc.XPathSelectComments( "I18N/Context[@id='Context 1']/comment()" );
             Assert.Single( context1Comments );
             Assert.All( context1Comments, comment => Assert.Matches( "^ Non-Erasable Comment $", comment.Value ) );
 
-            var context1Keys = doc.XPathSelectElements( "I18N/Context[@name='Context 1']/Entry/Key" );
+            var context1Keys = doc.XPathSelectElements( "I18N/Context[@id='Context 1']/Entry/Key" );
             Assert.Single( context1Keys );
             Assert.Equal( "Key 3", context1Keys.First().Value );
 
-            var key3Comments = doc.XPathSelectComments( "I18N/Context[@name='Context 1']/Entry[Key/text()='Key 3']/comment()" );
+            var key3Comments = doc.XPathSelectComments( "I18N/Context[@id='Context 1']/Entry[Key/text()='Key 3']/comment()" );
             Assert.Equal( 2, key3Comments.Count() );
             Assert.All( key3Comments, comment => Assert.Matches( "^ Found in: Match 3-[12] $", comment.Value ) );
 
-            var context1Contexts = doc.XPathSelectElements( "I18N/Context[@name='Context 1']/Context" );
+            var context1Contexts = doc.XPathSelectElements( "I18N/Context[@id='Context 1']/Context" );
             Assert.Single( context1Contexts );
-            Assert.All( context1Contexts, element => Assert.Matches( "^Context 11$", element.Attribute( "name" ).Value ) );
+            Assert.All( context1Contexts, element => Assert.Matches( "^Context 11$", element.Attribute( "id" ).Value ) );
 
             // Context 11
 
-            var context11Comments = doc.XPathSelectComments( "I18N//Context[@name='Context 1']/Context[@name='Context 11']/comment()" );
+            var context11Comments = doc.XPathSelectComments( "I18N//Context[@id='Context 1']/Context[@id='Context 11']/comment()" );
             Assert.Empty( context11Comments );
 
-            var context11Keys = doc.XPathSelectElements( "I18N/Context[@name='Context 1']/Context[@name='Context 11']/Entry/Key" );
+            var context11Keys = doc.XPathSelectElements( "I18N/Context[@id='Context 1']/Context[@id='Context 11']/Entry/Key" );
             Assert.Single( context11Keys );
             Assert.All( context11Keys, element => Assert.Matches( "^Key 9$", element.Value ) );
 
-            var key9Comments = doc.XPathSelectComments( "I18N/Context[@name='Context 1']/Context[@name='Context 11']/Entry[Key/text()='Key 9']/comment()" );
+            var key9Comments = doc.XPathSelectComments( "I18N/Context[@id='Context 1']/Context[@id='Context 11']/Entry[Key/text()='Key 9']/comment()" );
             Assert.Empty( key9Comments );
 
-            var context11Contexts = doc.XPathSelectElements( "I18N/Context[@name='Context 1']/Context[@name='Context 11']/Context" );
+            var context11Contexts = doc.XPathSelectElements( "I18N/Context[@id='Context 1']/Context[@id='Context 11']/Context" );
             Assert.Empty( context11Contexts );
 
             // Context 2
 
-            var context2Comments = doc.XPathSelectComments( "I18N//Context[@name='Context 2']/comment()" );
+            var context2Comments = doc.XPathSelectComments( "I18N//Context[@id='Context 2']/comment()" );
             Assert.Empty( context2Comments );
 
-            var context2Keys = doc.XPathSelectElements( "I18N/Context[@name='Context 2']/Entry/Key" );
+            var context2Keys = doc.XPathSelectElements( "I18N/Context[@id='Context 2']/Entry/Key" );
             Assert.Empty( context2Keys );
 
-            var context2Contexts = doc.XPathSelectElements( "I18N/Context[@name='Context 2']/Context" );
+            var context2Contexts = doc.XPathSelectElements( "I18N/Context[@id='Context 2']/Context" );
             Assert.Single( context2Contexts );
-            Assert.Equal( "Context 22", context2Contexts.First().Attribute( "name" ).Value );
+            Assert.Equal( "Context 22", context2Contexts.First().Attribute( "id" ).Value );
 
             // Context 22
 
-            var context22Comments = doc.XPathSelectComments( "I18N//Context[@name='Context 2']/Context[@name='Context 22']/comment()" );
+            var context22Comments = doc.XPathSelectComments( "I18N//Context[@id='Context 2']/Context[@id='Context 22']/comment()" );
             Assert.Empty( context22Comments );
 
-            var context22Keys = doc.XPathSelectElements( "I18N/Context[@name='Context 2']/Context[@name='Context 22']/Entry/Key" );
+            var context22Keys = doc.XPathSelectElements( "I18N/Context[@id='Context 2']/Context[@id='Context 22']/Entry/Key" );
             Assert.Single( context22Keys );
             Assert.Equal( "Key 3", context1Keys.First().Value );
 
-            var key4Comments = doc.XPathSelectComments( "I18N/Context[@name='Context 2']/Context[@name='Context 22']/Entry[Key/text()='Key 4']/comment()" );
+            var key4Comments = doc.XPathSelectComments( "I18N/Context[@id='Context 2']/Context[@id='Context 22']/Entry[Key/text()='Key 4']/comment()" );
             Assert.Single( key4Comments );
             Assert.Equal( " Found in: Match 4 ", key4Comments.First().Value );
 
-            var context22Contexts = doc.XPathSelectElements( "I18N/Context[@name='Context 2']/Context[@name='Context 22']/Context" );
+            var context22Contexts = doc.XPathSelectElements( "I18N/Context[@id='Context 2']/Context[@id='Context 22']/Context" );
             Assert.Empty( context22Contexts );
         }
 
@@ -474,68 +474,68 @@ namespace I18N.Tool.Test
 
             var rootContexts = doc.XPathSelectElements( "I18N/Context" );
             Assert.Equal( 2, rootContexts.Count() );
-            Assert.All( rootContexts, element => Assert.Matches( "^Context [12]$", element.Attribute( "name" ).Value ) );
+            Assert.All( rootContexts, element => Assert.Matches( "^Context [12]$", element.Attribute( "id" ).Value ) );
 
             // Context 1
 
-            var context1Comments = doc.XPathSelectComments( "I18N/Context[@name='Context 1']/comment()" );
+            var context1Comments = doc.XPathSelectComments( "I18N/Context[@id='Context 1']/comment()" );
             Assert.Single( context1Comments );
             Assert.All( context1Comments, comment => Assert.Matches( "^ Non-Erasable Comment $", comment.Value ) );
 
-            var context1Keys = doc.XPathSelectElements( "I18N/Context[@name='Context 1']/Entry/Key" );
+            var context1Keys = doc.XPathSelectElements( "I18N/Context[@id='Context 1']/Entry/Key" );
             Assert.Single( context1Keys );
             Assert.Equal( "Key 3", context1Keys.First().Value );
 
-            var key3Comments = doc.XPathSelectComments( "I18N/Context[@name='Context 1']/Entry[Key/text()='Key 3']/comment()" );
+            var key3Comments = doc.XPathSelectComments( "I18N/Context[@id='Context 1']/Entry[Key/text()='Key 3']/comment()" );
             Assert.Equal( 2, key3Comments.Count() );
             Assert.All( key3Comments, comment => Assert.Matches( "^ Found in: Match 3-[12] $", comment.Value ) );
 
-            var context1Contexts = doc.XPathSelectElements( "I18N/Context[@name='Context 1']/Context" );
+            var context1Contexts = doc.XPathSelectElements( "I18N/Context[@id='Context 1']/Context" );
             Assert.Single( context1Contexts );
-            Assert.All( context1Contexts, element => Assert.Matches( "^Context 11$", element.Attribute( "name" ).Value ) );
+            Assert.All( context1Contexts, element => Assert.Matches( "^Context 11$", element.Attribute( "id" ).Value ) );
 
             // Context 11
 
-            var context11Comments = doc.XPathSelectComments( "I18N//Context[@name='Context 1']/Context[@name='Context 11']/comment()" );
+            var context11Comments = doc.XPathSelectComments( "I18N//Context[@id='Context 1']/Context[@id='Context 11']/comment()" );
             Assert.Empty( context11Comments );
 
-            var context11Keys = doc.XPathSelectElements( "I18N/Context[@name='Context 1']/Context[@name='Context 11']/Entry/Key" );
+            var context11Keys = doc.XPathSelectElements( "I18N/Context[@id='Context 1']/Context[@id='Context 11']/Entry/Key" );
             Assert.Single( context11Keys );
             Assert.All( context11Keys, element => Assert.Matches( "^Key 9$", element.Value ) );
 
-            var key9Comments = doc.XPathSelectComments( "I18N/Context[@name='Context 1']/Context[@name='Context 11']/Entry[Key/text()='Key 9']/comment()" );
+            var key9Comments = doc.XPathSelectComments( "I18N/Context[@id='Context 1']/Context[@id='Context 11']/Entry[Key/text()='Key 9']/comment()" );
             Assert.Single( key9Comments );
             Assert.Equal( " DEPRECATED ", key9Comments.First().Value );
 
-            var context11Contexts = doc.XPathSelectElements( "I18N/Context[@name='Context 1']/Context[@name='Context 11']/Context" );
+            var context11Contexts = doc.XPathSelectElements( "I18N/Context[@id='Context 1']/Context[@id='Context 11']/Context" );
             Assert.Empty( context11Contexts );
 
             // Context 2
 
-            var context2Comments = doc.XPathSelectComments( "I18N//Context[@name='Context 2']/comment()" );
+            var context2Comments = doc.XPathSelectComments( "I18N//Context[@id='Context 2']/comment()" );
             Assert.Empty( context2Comments );
 
-            var context2Keys = doc.XPathSelectElements( "I18N/Context[@name='Context 2']/Entry/Key" );
+            var context2Keys = doc.XPathSelectElements( "I18N/Context[@id='Context 2']/Entry/Key" );
             Assert.Empty( context2Keys );
 
-            var context2Contexts = doc.XPathSelectElements( "I18N/Context[@name='Context 2']/Context" );
+            var context2Contexts = doc.XPathSelectElements( "I18N/Context[@id='Context 2']/Context" );
             Assert.Single( context2Contexts );
-            Assert.Equal( "Context 22", context2Contexts.First().Attribute( "name" ).Value );
+            Assert.Equal( "Context 22", context2Contexts.First().Attribute( "id" ).Value );
 
             // Context 22
 
-            var context22Comments = doc.XPathSelectComments( "I18N//Context[@name='Context 2']/Context[@name='Context 22']/comment()" );
+            var context22Comments = doc.XPathSelectComments( "I18N//Context[@id='Context 2']/Context[@id='Context 22']/comment()" );
             Assert.Empty( context22Comments );
 
-            var context22Keys = doc.XPathSelectElements( "I18N/Context[@name='Context 2']/Context[@name='Context 22']/Entry/Key" );
+            var context22Keys = doc.XPathSelectElements( "I18N/Context[@id='Context 2']/Context[@id='Context 22']/Entry/Key" );
             Assert.Single( context22Keys );
             Assert.Equal( "Key 3", context1Keys.First().Value );
 
-            var key4Comments = doc.XPathSelectComments( "I18N/Context[@name='Context 2']/Context[@name='Context 22']/Entry[Key/text()='Key 4']/comment()" );
+            var key4Comments = doc.XPathSelectComments( "I18N/Context[@id='Context 2']/Context[@id='Context 22']/Entry[Key/text()='Key 4']/comment()" );
             Assert.Single( key4Comments );
             Assert.Equal( " Found in: Match 4 ", key4Comments.First().Value );
 
-            var context22Contexts = doc.XPathSelectElements( "I18N/Context[@name='Context 2']/Context[@name='Context 22']/Context" );
+            var context22Contexts = doc.XPathSelectElements( "I18N/Context[@id='Context 2']/Context[@id='Context 22']/Context" );
             Assert.Empty( context22Contexts );
         }
 
@@ -638,70 +638,70 @@ namespace I18N.Tool.Test
             var rootContexts = doc.XPathSelectElements( "I18N/Context" );
             Assert.Equal( 3, rootContexts.Count() );
 
-            var rootContextsNames = doc.XPathSelectAttributes( "I18N/Context/@name" );
+            var rootContextsNames = doc.XPathSelectAttributes( "I18N/Context/@id" );
             Assert.Equal( 2, rootContextsNames.Count() );
             Assert.All( rootContextsNames, attribute => Assert.Matches( "^Context [12]$", attribute.Value ) );
 
             // Context 1
 
-            var context1Comments = doc.XPathSelectComments( "I18N/Context[@name='Context 1']/comment()" );
+            var context1Comments = doc.XPathSelectComments( "I18N/Context[@id='Context 1']/comment()" );
             Assert.Single( context1Comments );
             Assert.All( context1Comments, comment => Assert.Matches( "^ Non-Erasable Comment $", comment.Value ) );
 
-            var context1Keys = doc.XPathSelectElements( "I18N/Context[@name='Context 1']/Entry/Key" );
+            var context1Keys = doc.XPathSelectElements( "I18N/Context[@id='Context 1']/Entry/Key" );
             Assert.Single( context1Keys );
             Assert.All( context1Keys, element => Assert.Matches( "^Key 3$", element.Value ) );
 
-            var key3Comments = doc.XPathSelectComments( "I18N/Context[@name='Context 1']/Entry[Key/text()='Key 3']/comment()" );
+            var key3Comments = doc.XPathSelectComments( "I18N/Context[@id='Context 1']/Entry[Key/text()='Key 3']/comment()" );
             Assert.Equal( 3, key3Comments.Count() );
             Assert.All( key3Comments, comment => Assert.Matches( "^ Found in: Match 3-[12Z] $", comment.Value ) );
 
-            var context1Contexts = doc.XPathSelectElements( "I18N/Context[@name='Context 1']/Context" );
+            var context1Contexts = doc.XPathSelectElements( "I18N/Context[@id='Context 1']/Context" );
             Assert.Single( context1Contexts );
-            Assert.All( context1Contexts, element => Assert.Matches( "^Context 11$", element.Attribute( "name" ).Value ) );
+            Assert.All( context1Contexts, element => Assert.Matches( "^Context 11$", element.Attribute( "id" ).Value ) );
 
             // Context 11
 
-            var context11Comments = doc.XPathSelectComments( "I18N//Context[@name='Context 1']/Context[@name='Context 11']/comment()" );
+            var context11Comments = doc.XPathSelectComments( "I18N//Context[@id='Context 1']/Context[@id='Context 11']/comment()" );
             Assert.Empty( context11Comments );
 
-            var context11Keys = doc.XPathSelectElements( "I18N/Context[@name='Context 1']/Context[@name='Context 11']/Entry/Key" );
+            var context11Keys = doc.XPathSelectElements( "I18N/Context[@id='Context 1']/Context[@id='Context 11']/Entry/Key" );
             Assert.Single( context11Keys );
             Assert.All( context11Keys, element => Assert.Matches( "^Key 9$", element.Value ) );
 
-            var key9Comments = doc.XPathSelectComments( "I18N/Context[@name='Context 1']/Context[@name='Context 11']/Entry[Key/text()='Key 9']/comment()" );
+            var key9Comments = doc.XPathSelectComments( "I18N/Context[@id='Context 1']/Context[@id='Context 11']/Entry[Key/text()='Key 9']/comment()" );
             Assert.Single( key9Comments );
             Assert.All( key9Comments, comment => Assert.Matches( "^ Found in: Match 9-Z $", comment.Value ) );
 
-            var context11Contexts = doc.XPathSelectElements( "I18N/Context[@name='Context 1']/Context[@name='Context 11']/Context" );
+            var context11Contexts = doc.XPathSelectElements( "I18N/Context[@id='Context 1']/Context[@id='Context 11']/Context" );
             Assert.Empty( context11Contexts );
 
             // Context 2
 
-            var context2Comments = doc.XPathSelectComments( "I18N//Context[@name='Context 2']/comment()" );
+            var context2Comments = doc.XPathSelectComments( "I18N//Context[@id='Context 2']/comment()" );
             Assert.Empty( context2Comments );
 
-            var context2Keys = doc.XPathSelectElements( "I18N/Context[@name='Context 2']/Entry/Key" );
+            var context2Keys = doc.XPathSelectElements( "I18N/Context[@id='Context 2']/Entry/Key" );
             Assert.Empty( context2Keys );
 
-            var context2Contexts = doc.XPathSelectElements( "I18N/Context[@name='Context 2']/Context" );
+            var context2Contexts = doc.XPathSelectElements( "I18N/Context[@id='Context 2']/Context" );
             Assert.Single( context2Contexts );
-            Assert.All( context2Contexts, element => Assert.Matches( "^Context 22$", element.Attribute( "name" ).Value ) );
+            Assert.All( context2Contexts, element => Assert.Matches( "^Context 22$", element.Attribute( "id" ).Value ) );
 
             // Context 22
 
-            var context22Comments = doc.XPathSelectComments( "I18N//Context[@name='Context 2']/Context[@name='Context 22']/comment()" );
+            var context22Comments = doc.XPathSelectComments( "I18N//Context[@id='Context 2']/Context[@id='Context 22']/comment()" );
             Assert.Empty( context22Comments );
 
-            var context22Keys = doc.XPathSelectElements( "I18N/Context[@name='Context 2']/Context[@name='Context 22']/Entry/Key" );
+            var context22Keys = doc.XPathSelectElements( "I18N/Context[@id='Context 2']/Context[@id='Context 22']/Entry/Key" );
             Assert.Single( context22Keys );
             Assert.All( context22Keys, element => Assert.Matches( "^Key 4$", element.Value ) );
 
-            var key4Comments = doc.XPathSelectComments( "I18N/Context[@name='Context 2']/Context[@name='Context 22']/Entry[Key/text()='Key 4']/comment()" );
+            var key4Comments = doc.XPathSelectComments( "I18N/Context[@id='Context 2']/Context[@id='Context 22']/Entry[Key/text()='Key 4']/comment()" );
             Assert.Single( key4Comments );
             Assert.All( key4Comments, comment => Assert.Matches( "^ Found in: Match 4 $", comment.Value ) );
 
-            var context22Contexts = doc.XPathSelectElements( "I18N/Context[@name='Context 2']/Context[@name='Context 22']/Context" );
+            var context22Contexts = doc.XPathSelectElements( "I18N/Context[@id='Context 2']/Context[@id='Context 22']/Context" );
             Assert.Empty( context22Contexts );
         }
     }

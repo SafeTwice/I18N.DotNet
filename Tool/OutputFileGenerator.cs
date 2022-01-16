@@ -156,7 +156,7 @@ namespace I18N.Tool
         {
             foreach( var contextElement in parentElement.Elements( CONTEXT_TAG ) )
             {
-                var nameAttr = contextElement.Attribute( CONTEXT_NAME_ATTR );
+                var nameAttr = contextElement.Attribute( CONTEXT_ID_ATTR );
                 if( ( nameAttr != null ) && ( nameAttr.Value == contextName ) )
                 {
                     return contextElement;
@@ -164,7 +164,7 @@ namespace I18N.Tool
             }
 
             var newContextElement = new XElement( CONTEXT_TAG );
-            newContextElement.Add( new XAttribute( CONTEXT_NAME_ATTR, contextName ) );
+            newContextElement.Add( new XAttribute( CONTEXT_ID_ATTR, contextName ) );
             parentElement.Add( newContextElement );
 
             return newContextElement;
@@ -230,6 +230,6 @@ namespace I18N.Tool
         private const string ENTRY_TAG = "Entry";
         private const string KEY_TAG = "Key";
         private const string CONTEXT_TAG = "Context";
-        private const string CONTEXT_NAME_ATTR = "name";
+        private const string CONTEXT_ID_ATTR = "id";
     }
 }

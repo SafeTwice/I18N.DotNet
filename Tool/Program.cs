@@ -39,10 +39,10 @@ namespace I18N.Tool
     [Verb( "analyze", HelpText = "Analyze an I18N file." )]
     class AnalyzeOptions
     {
-        [Option( 'i', Required = true, HelpText = "Input file path." )]
+        [Option( 'i', "input", Required = true, HelpText = "Input file path." )]
         public string InputFile { get; set; }
 
-        [Option( 'l', SetName = "language", HelpText = "(Default: *) Warn on entries without translation for a language." )]
+        [Option( 'l', "language", SetName = "language", HelpText = "(Default: *) Warn on entries without translation for a language." )]
         public string Language { get; set; }
 
         [Option( "ignore-deprecated", HelpText = "Skip warning on deprecated entries." )]

@@ -22,7 +22,7 @@ namespace I18N.Tool
             {
                 try
                 {
-                    m_doc = XDocument.Load( filepath, LoadOptions.None );
+                    m_doc = XDocument.Load( filepath, LoadOptions.SetLineInfo );
                 }
                 catch( Exception )
                 {
@@ -48,7 +48,7 @@ namespace I18N.Tool
                 m_doc = new XDocument( new XElement( ROOT_TAG ) );
             }
 
-            AnnotatePreexistingEntries( m_doc.Root );
+            PreparePreexistingEntries( m_doc.Root );
         }
 
         public void DeleteFoundingComments()
@@ -74,6 +74,16 @@ namespace I18N.Tool
             using( XmlWriter xw = XmlWriter.Create( filepath, xws ) )
             {
                 m_doc.WriteTo( xw );
+            }
+        }
+
+        public IEnumerable<(int line, string context, string key)> GetDeprecatedEntries()
+        {
+            foreach( var element in GetDeprecatedEntries( m_doc.Root ) )
+            {
+                int line = ( (IXmlLineInfo) element ).LineNumber;
+                string key = element.Element( KEY_TAG )?.Value;
+                yield return ( line, GetContext( element ), key);
             }
         }
 
@@ -106,9 +116,9 @@ namespace I18N.Tool
                 foreach( var node in entryElement.Nodes() )
                 {
                     var commentNode = node as XComment;
-                    if( ( commentNode != null ) && commentNode.Value.StartsWith( " Found in:" ) )
+                    if( commentNode?.Value.StartsWith( " Found in:" ) ?? false )
                     {
-                        commentsToRemove.Add( commentNode ); ;
+                        commentsToRemove.Add( commentNode );
                     }
                 }
             }
@@ -121,6 +131,22 @@ namespace I18N.Tool
             }
         }
 
+        private static void DeleteDeprecatedComments( XElement element )
+        {
+            List<XComment> commentsToRemove = new List<XComment>();
+
+            foreach( var node in element.Nodes() )
+            {
+                var commentNode = node as XComment;
+                if( commentNode?.Value == DEPRECATED_COMMENT )
+                {
+                    commentsToRemove.Add( commentNode );
+                }
+            }
+
+            commentsToRemove.ForEach( xc => xc.Remove() );
+        }
+
         private static XElement GetEntryElement( XElement parentElement, string key )
         {
             XElement lastEntryElement = null;
@@ -128,7 +154,7 @@ namespace I18N.Tool
             foreach( var entryElement in parentElement.Elements( ENTRY_TAG ) )
             {
                 var keyElement = entryElement.Element( KEY_TAG );
-                if( ( keyElement != null ) && ( keyElement.Value == key ) ) 
+                if( keyElement?.Value == key )
                 {
                     entryElement.RemoveAnnotations<PreexistingEntryAnnotation>();
                     return entryElement;
@@ -157,7 +183,7 @@ namespace I18N.Tool
             foreach( var contextElement in parentElement.Elements( CONTEXT_TAG ) )
             {
                 var nameAttr = contextElement.Attribute( CONTEXT_ID_ATTR );
-                if( ( nameAttr != null ) && ( nameAttr.Value == contextName ) )
+                if( nameAttr?.Value == contextName )
                 {
                     return contextElement;
                 }
@@ -197,7 +223,7 @@ namespace I18N.Tool
 
         private static PreexistingEntryAnnotation PREEXISTING_ENTRY_ANNOTATION = new PreexistingEntryAnnotation();
 
-        private static void AnnotatePreexistingEntries( XElement element )
+        private static void PreparePreexistingEntries( XElement element )
         {
             foreach( var entryElement in element.Elements( ENTRY_TAG ) )
             {
@@ -206,7 +232,7 @@ namespace I18N.Tool
 
             foreach( var contextElement in element.Elements( CONTEXT_TAG ) )
             {
-                AnnotatePreexistingEntries( contextElement );
+                PreparePreexistingEntries( contextElement );
             }
         }
 
@@ -214,9 +240,11 @@ namespace I18N.Tool
         {
             foreach( var entryElement in element.Elements( ENTRY_TAG ) )
             {
+                DeleteDeprecatedComments( entryElement );
+
                 if( entryElement.Annotation<PreexistingEntryAnnotation>() != null )
                 {
-                    AddCommentIfNeeded( entryElement, " DEPRECATED ", false );
+                    AddCommentIfNeeded( entryElement, DEPRECATED_COMMENT, false );
                 }
             }
 
@@ -226,11 +254,53 @@ namespace I18N.Tool
             }
         }
 
+        private static IEnumerable<XElement> GetDeprecatedEntries( XElement element )
+        {
+            foreach( var entryElement in element.Elements( ENTRY_TAG ) )
+            {
+                foreach( var node in entryElement.Nodes() )
+                {
+                    var commentNode = node as XComment;
+                    if( commentNode?.Value == DEPRECATED_COMMENT )
+                    {
+                        yield return entryElement;
+                    }
+                }
+            }
+
+            foreach( var contextElement in element.Elements( CONTEXT_TAG ) )
+            {
+                foreach( var entryElement in GetDeprecatedEntries( contextElement ) )
+                {
+                    yield return entryElement;
+                }
+            }
+        }
+
+        private static string GetContext( XElement element )
+        {
+            string context = "/";
+
+            while( element != null )
+            {
+                if( element.Name == CONTEXT_TAG )
+                {
+                    context = $"/{element.Attribute( CONTEXT_ID_ATTR )?.Value}{context}";
+                }
+
+                element = element.Parent;
+            }
+
+            return context;
+        }
+
         private const string ROOT_TAG = "I18N";
         private const string ENTRY_TAG = "Entry";
         private const string KEY_TAG = "Key";
         private const string CONTEXT_TAG = "Context";
         private const string CONTEXT_ID_ATTR = "id";
+
+        private const string DEPRECATED_COMMENT = " DEPRECATED ";
 
         private XDocument m_doc;
     }

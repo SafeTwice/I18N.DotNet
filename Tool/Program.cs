@@ -5,75 +5,138 @@
  */
 
 using CommandLine;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
 namespace I18N.Tool
 {
-    class Options
+    [Verb( "generate", HelpText = "Generate an I18N file." )]
+    class GenerateOptions
     {
-        [Option( 'I', Required = true, HelpText = "Input directories paths" )]
+        [Option( 'I', Required = true, HelpText = "Input directories paths." )]
         public IEnumerable<string> Directories { get; set; }
 
-        [Option( 'p', Default = "*.cs", HelpText = "Input files name pattern" )]
+        [Option( 'p', Default = "*.cs", HelpText = "Input files name pattern." )]
         public string Pattern { get; set; }
 
-        [Option( 'r', Default = false, HelpText = "Scan in input directories recursively" )]
+        [Option( 'r', Default = false, HelpText = "Scan in input directories recursively." )]
         public bool Recursive { get; set; }
 
-        [Option( 'k', Default = false, HelpText = "Preserve founding comments in output file" )]
+        [Option( 'k', Default = false, HelpText = "Preserve founding comments in output file." )]
         public bool PreserveFoundingComments { get; set; }
 
-        [Option( 'd', Default = false, HelpText = "Mark deprecated entries" )]
+        [Option( 'd', Default = false, HelpText = "Mark deprecated entries." )]
         public bool MarkDeprecated { get; set; }
 
-        [Option( 'e', HelpText = "Extra methods to be parsed for strings to be localized" )]
+        [Option( 'e', HelpText = "Extra methods to be parsed for strings to be localized." )]
         public IEnumerable<string> ExtraFunctions { get; set; }
 
-        [Option( 'o', Required = true, HelpText = "Output file path" )]
+        [Option( 'o', Required = true, HelpText = "Output file path." )]
         public string OutputFile { get; set; }
+    }
+
+    [Verb( "analyze", HelpText = "Analyze an I18N file." )]
+    class AnalyzeOptions
+    {
+        [Option( 'i', Required = true, HelpText = "Input file path." )]
+        public string InputFile { get; set; }
+
+        [Option( "ignore-deprecated", HelpText = "Skip warning on deprecated entries." )]
+        public bool IgnoreDeprecated { get; set; }
     }
 
     class Program
     {
         static void Main( string[] args )
         {
-            var parserResult = Parser.Default.ParseArguments<Options>( args );
+            var parserResult = Parser.Default.ParseArguments<GenerateOptions, AnalyzeOptions>( args );
 
             parserResult.MapResult(
-                opts => Run( opts ),
+                ( GenerateOptions opts ) => Generate( opts ),
+                ( AnalyzeOptions opts ) => Analyze( opts ),
                 errs => 1
                 );
         }
 
-        private static int Run( Options options )
+        private static int Generate( GenerateOptions options )
         {
-            var rootContext = new Context();
-
-            foreach( var directory in options.Directories )
+            try
             {
-                var dirInfo = new DirectoryInfo( directory );
+                var rootContext = new Context();
 
-                ParseFilesInDirectory( dirInfo, options.Pattern, options.Recursive, options.ExtraFunctions, rootContext );
+                foreach( var directory in options.Directories )
+                {
+                    var dirInfo = new DirectoryInfo( directory );
+
+                    ParseFilesInDirectory( dirInfo, options.Pattern, options.Recursive, options.ExtraFunctions, rootContext );
+                }
+
+                var outputFile = new OutputFile( options.OutputFile );
+
+                if( !options.PreserveFoundingComments )
+                {
+                    outputFile.DeleteFoundingComments();
+                }
+
+                outputFile.CreateEntries( rootContext );
+
+                if( options.MarkDeprecated )
+                {
+                    outputFile.CreateDeprecationComments();
+                }
+
+                outputFile.WriteToFile( options.OutputFile );
+
+                Console.WriteLine( $"File generated successfully" );
+
+                return 0;
+            }
+            catch( ApplicationException e )
+            {
+                Console.WriteLine( $"ERROR: {e.Message}" );
+            }
+            catch( Exception e )
+            {
+                Console.WriteLine( $"UNEXPECTED ERROR: {e}" );
             }
 
-            var outputFile = new OutputFile( options.OutputFile );
+            return 1;
+        }
 
-            if( !options.PreserveFoundingComments )
+        private static int Analyze( AnalyzeOptions options )
+        {
+            try
             {
-                outputFile.DeleteFoundingComments();
+                var inputFile = new OutputFile( options.InputFile );
+
+                if( !options.IgnoreDeprecated )
+                {
+                    foreach( (int line, string context, string key) in inputFile.GetDeprecatedEntries() )
+                    {
+                        if( key != null )
+                        {
+                            Console.WriteLine( $"WARNING: Deprecated entry at line {line} (Context = {context}, Key = '{key}')" );
+                        }
+                        else
+                        {
+                            Console.WriteLine( $"WARNING: Deprecated entry at line {line} (Context = {context}, No key)" );
+                        }
+                    }
+                }
+
+                return 0;
+            }
+            catch( ApplicationException e )
+            {
+                Console.WriteLine( $"ERROR: {e.Message}" );
+            }
+            catch( Exception e )
+            {
+                Console.WriteLine( $"UNEXPECTED ERROR: {e}" );
             }
 
-            outputFile.CreateEntries( rootContext );
-
-            if( options.MarkDeprecated )
-            {
-                outputFile.CreateDeprecationComments();
-            }
-
-            outputFile.WriteToFile( options.OutputFile );
-
-            return 0;
+            return 1;
         }
 
         private static void ParseFilesInDirectory( DirectoryInfo dirInfo, string pattern, bool recursive, IEnumerable<string> extraFunctions, Context rootContext )

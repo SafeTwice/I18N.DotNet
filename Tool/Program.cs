@@ -57,7 +57,21 @@ namespace I18N.Tool
                 ParseFilesInDirectory( dirInfo, options.Pattern, options.Recursive, options.ExtraFunctions, rootContext );
             }
 
-            OutputFileGenerator.GenerateFile( options.OutputFile, options.PreserveFoundingComments, options.MarkDeprecated, rootContext );
+            var outputFile = new OutputFile( options.OutputFile );
+
+            if( !options.PreserveFoundingComments )
+            {
+                outputFile.DeleteFoundingComments();
+            }
+
+            outputFile.CreateEntries( rootContext );
+
+            if( options.MarkDeprecated )
+            {
+                outputFile.CreateDeprecationComments();
+            }
+
+            outputFile.WriteToFile( options.OutputFile );
 
             return 0;
         }

@@ -135,7 +135,9 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            OutputFileGenerator.GenerateFile( m_tempFile, false, false, rootContext );
+            var outputFile = new OutputFile( m_tempFile );
+            outputFile.CreateEntries( rootContext );
+            outputFile.WriteToFile( m_tempFile );
 
             // Verify
 
@@ -229,7 +231,9 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            OutputFileGenerator.GenerateFile( m_tempFile, true, false, rootContext );
+            var outputFile = new OutputFile( m_tempFile );
+            outputFile.CreateEntries( rootContext );
+            outputFile.WriteToFile( m_tempFile );
 
             // Verify
 
@@ -336,7 +340,10 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            OutputFileGenerator.GenerateFile( m_tempFile, false, false, rootContext );
+            var outputFile = new OutputFile( m_tempFile );
+            outputFile.DeleteFoundingComments();
+            outputFile.CreateEntries( rootContext );
+            outputFile.WriteToFile( m_tempFile );
 
             // Verify
 
@@ -443,7 +450,11 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            OutputFileGenerator.GenerateFile( m_tempFile, false, true, rootContext );
+            var outputFile = new OutputFile( m_tempFile );
+            outputFile.DeleteFoundingComments();
+            outputFile.CreateEntries( rootContext );
+            outputFile.CreateDeprecationComments();
+            outputFile.WriteToFile( m_tempFile );
 
             // Verify
 
@@ -550,7 +561,7 @@ namespace I18N.Tool.Test
 
             // Execute & Verify
 
-            var exception = Assert.Throws<ApplicationException>( () => OutputFileGenerator.GenerateFile( m_tempFile, false, false, rootContext ) );
+            var exception = Assert.Throws<ApplicationException>( () => new OutputFile( m_tempFile ) );
 
             Assert.Contains( "Invalid XML root element in existing output file", exception.Message );
         }
@@ -566,7 +577,7 @@ namespace I18N.Tool.Test
 
             // Execute & Verify
 
-            var exception = Assert.Throws<ApplicationException>( () => OutputFileGenerator.GenerateFile( m_tempFile, false, false, rootContext ) );
+            var exception = Assert.Throws<ApplicationException>( () => new OutputFile( m_tempFile ) );
 
             Assert.Contains( "Invalid XML format in existing output file", exception.Message );
         }
@@ -606,7 +617,9 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            OutputFileGenerator.GenerateFile( m_tempFile, true, false, rootContext );
+            var outputFile = new OutputFile( m_tempFile );
+            outputFile.CreateEntries( rootContext );
+            outputFile.WriteToFile( m_tempFile );
 
             // Verify
 

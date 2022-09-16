@@ -12,25 +12,68 @@ using System.Xml.Linq;
 
 namespace I18N.Tool
 {
-    static class OutputFileGenerator
+    public class OutputFile
     {
-        public static void GenerateFile( string filepath, bool preserveFoundingComments, bool markDeprecated, Context rootContext )
+        public OutputFile( string filepath )
         {
-            XDocument doc = GetDocument( filepath, preserveFoundingComments );
+            m_doc = null;
 
-            CreateEntries( doc.Root, rootContext );
-
-            if( markDeprecated )
+            if( File.Exists( filepath ) )
             {
-                CreateDeprecationComments( doc.Root );
+                try
+                {
+                    m_doc = XDocument.Load( filepath, LoadOptions.None );
+                }
+                catch( Exception )
+                {
+                    var text = File.ReadAllText( filepath );
+
+                    if( text.Trim().Length > 0 )
+                    {
+                        throw new ApplicationException( "Invalid XML format in existing output file" );
+                    }
+                }
             }
 
+            if( m_doc != null )
+            {
+                if( m_doc.Root.Name != ROOT_TAG )
+                {
+                    throw new ApplicationException( "Invalid XML root element in existing output file" );
+                }
+
+            }
+            else
+            {
+                m_doc = new XDocument( new XElement( ROOT_TAG ) );
+            }
+
+            AnnotatePreexistingEntries( m_doc.Root );
+        }
+
+        public void DeleteFoundingComments()
+        {
+            DeleteFoundingComments( m_doc.Root );
+        }
+
+        public void CreateEntries( Context rootContext )
+        {
+            CreateEntries( m_doc.Root, rootContext );
+        }
+
+        public void CreateDeprecationComments()
+        {
+            CreateDeprecationComments( m_doc.Root );
+        }
+
+        public void WriteToFile( string filepath )
+        {
             XmlWriterSettings xws = new XmlWriterSettings();
             xws.Indent = true;
 
             using( XmlWriter xw = XmlWriter.Create( filepath, xws ) )
             {
-                doc.WriteTo( xw );
+                m_doc.WriteTo( xw );
             }
         }
 
@@ -52,49 +95,6 @@ namespace I18N.Tool
 
                 CreateEntries( nestedContextElement, nestedContext.Value );
             }
-        }
-
-        private static XDocument GetDocument( string filepath, bool preserveFoundingComments )
-        {
-            XDocument doc = null;
-
-            if( File.Exists( filepath ) )
-            {
-                try
-                {
-                    doc = XDocument.Load( filepath, LoadOptions.None );
-                }
-                catch( Exception )
-                {
-                    var text = File.ReadAllText( filepath );
-
-                    if( text.Trim().Length > 0 )
-                    {
-                        throw new ApplicationException( "Invalid XML format in existing output file" );
-                    }
-                }
-            }
-            
-            if( doc != null )
-            {
-                if( doc.Root.Name != ROOT_TAG )
-                {
-                    throw new ApplicationException( "Invalid XML root element in existing output file" );
-                }
-
-                if( !preserveFoundingComments )
-                {
-                    DeleteFoundingComments( doc.Root );
-                }
-            }
-            else
-            {
-                doc = new XDocument( new XElement( ROOT_TAG ) );
-            }
-
-            AnnotateElement( doc.Root );
-
-            return doc;
         }
 
         private static void DeleteFoundingComments( XElement element )
@@ -130,7 +130,7 @@ namespace I18N.Tool
                 var keyElement = entryElement.Element( KEY_TAG );
                 if( ( keyElement != null ) && ( keyElement.Value == key ) ) 
                 {
-                    entryElement.RemoveAnnotations<DeprecatedAnnotation>();
+                    entryElement.RemoveAnnotations<PreexistingEntryAnnotation>();
                     return entryElement;
                 }
 
@@ -175,7 +175,7 @@ namespace I18N.Tool
             foreach( var node in entryElement.Nodes() )
             {
                 var commentNode = node as XComment;
-                if( ( commentNode != null ) && commentNode.Value == comment )
+                if( commentNode?.Value == comment )
                 {
                     return;
                 }
@@ -191,22 +191,22 @@ namespace I18N.Tool
             }
         }
 
-        private class DeprecatedAnnotation
+        private class PreexistingEntryAnnotation
         {
         }
 
-        private static DeprecatedAnnotation DEPRECATED_ANNOTATION = new DeprecatedAnnotation();
+        private static PreexistingEntryAnnotation PREEXISTING_ENTRY_ANNOTATION = new PreexistingEntryAnnotation();
 
-        private static void AnnotateElement( XElement element )
+        private static void AnnotatePreexistingEntries( XElement element )
         {
             foreach( var entryElement in element.Elements( ENTRY_TAG ) )
             {
-                entryElement.AddAnnotation( DEPRECATED_ANNOTATION );
+                entryElement.AddAnnotation( PREEXISTING_ENTRY_ANNOTATION );
             }
 
             foreach( var contextElement in element.Elements( CONTEXT_TAG ) )
             {
-                AnnotateElement( contextElement );
+                AnnotatePreexistingEntries( contextElement );
             }
         }
 
@@ -214,7 +214,7 @@ namespace I18N.Tool
         {
             foreach( var entryElement in element.Elements( ENTRY_TAG ) )
             {
-                if( entryElement.Annotation<DeprecatedAnnotation>() != null )
+                if( entryElement.Annotation<PreexistingEntryAnnotation>() != null )
                 {
                     AddCommentIfNeeded( entryElement, " DEPRECATED ", false );
                 }
@@ -231,5 +231,7 @@ namespace I18N.Tool
         private const string KEY_TAG = "Key";
         private const string CONTEXT_TAG = "Context";
         private const string CONTEXT_ID_ATTR = "id";
+
+        private XDocument m_doc;
     }
 }

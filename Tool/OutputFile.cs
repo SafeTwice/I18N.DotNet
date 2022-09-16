@@ -87,6 +87,16 @@ namespace I18N.Tool
             }
         }
 
+        public IEnumerable<(int line, string context, string key)> GetNoTranslationEntries( string language )
+        {
+            foreach( var element in GetNoTranslationEntries( m_doc.Root, language ) )
+            {
+                int line = ( (IXmlLineInfo) element ).LineNumber;
+                string key = element.Element( KEY_TAG )?.Value;
+                yield return (line, GetContext(element), key);
+            }
+        }
+
         private static void CreateEntries( XElement parentElement, Context context )
         {
             foreach( var key in context.KeyMatches.Keys )
@@ -277,6 +287,40 @@ namespace I18N.Tool
             }
         }
 
+        private static IEnumerable<XElement> GetNoTranslationEntries( XElement element, string language )
+        {
+            foreach( var entryElement in element.Elements( ENTRY_TAG ) )
+            {
+                bool found = false;
+                foreach( var valueElement in entryElement.Elements( VALUE_TAG ) )
+                {
+                    string valueLanguage = valueElement.Attribute( LANG_ATTR )?.Value;
+                    if( valueLanguage != null )
+                    {
+                        if( ( language == "*" ) || ( language == valueLanguage ) )
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+
+                if( !found )
+                {
+                    yield return entryElement;
+                }
+            }
+
+            foreach( var contextElement in element.Elements( CONTEXT_TAG ) )
+            {
+                var childContext = contextElement.Attribute( CONTEXT_ID_ATTR )?.Value;
+                foreach( var entryElement in GetNoTranslationEntries( contextElement, language ) )
+                {
+                    yield return entryElement;
+                }
+            }
+        }
+
         private static string GetContext( XElement element )
         {
             string context = "/";
@@ -297,8 +341,10 @@ namespace I18N.Tool
         private const string ROOT_TAG = "I18N";
         private const string ENTRY_TAG = "Entry";
         private const string KEY_TAG = "Key";
+        private const string VALUE_TAG = "Value";
         private const string CONTEXT_TAG = "Context";
         private const string CONTEXT_ID_ATTR = "id";
+        private const string LANG_ATTR = "lang";
 
         private const string DEPRECATED_COMMENT = " DEPRECATED ";
 

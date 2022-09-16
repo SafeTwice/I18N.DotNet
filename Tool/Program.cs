@@ -42,8 +42,14 @@ namespace I18N.Tool
         [Option( 'i', Required = true, HelpText = "Input file path." )]
         public string InputFile { get; set; }
 
+        [Option( 'l', SetName = "language", HelpText = "(Default: *) Warn on entries without translation for a language." )]
+        public string Language { get; set; }
+
         [Option( "ignore-deprecated", HelpText = "Skip warning on deprecated entries." )]
         public bool IgnoreDeprecated { get; set; }
+
+        [Option( "ignore-no-translation", SetName = "no-language", HelpText = "Skip warning on empty without translation." )]
+        public bool IgnoreNoTranslation { get; set; }
     }
 
     class Program
@@ -121,6 +127,21 @@ namespace I18N.Tool
                         else
                         {
                             Console.WriteLine( $"WARNING: Deprecated entry at line {line} (Context = {context}, No key)" );
+                        }
+                    }
+                }
+
+                if( !options.IgnoreNoTranslation )
+                {
+                    foreach( (int line, string context, string key) in inputFile.GetNoTranslationEntries( options.Language ?? "*" ) )
+                    {
+                        if( key != null )
+                        {
+                            Console.WriteLine( $"WARNING: Entry without translation at line {line} (Context = {context}, Key = '{key}')" );
+                        }
+                        else
+                        {
+                            Console.WriteLine( $"WARNING: Entry without translation at line {line} (Context = {context}, No key)" );
                         }
                     }
                 }

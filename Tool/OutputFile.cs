@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
@@ -92,9 +93,9 @@ namespace I18N.Tool
             }
         }
 
-        public IEnumerable<(int line, string context, string key)> GetNoTranslationEntries( string language, Regex[] includeContexts, Regex[] excludeContexts )
+        public IEnumerable<(int line, string context, string key)> GetNoTranslationEntries( string[] languages, Regex[] includeContexts, Regex[] excludeContexts )
         {
-            foreach( var element in GetNoTranslationEntries( m_doc.Root, language ) )
+            foreach( var element in GetNoTranslationEntries( m_doc.Root, languages ) )
             {
                 int line = ( (IXmlLineInfo) element ).LineNumber;
                 string key = element.Element( KEY_TAG )?.Value;
@@ -325,34 +326,48 @@ namespace I18N.Tool
             }
         }
 
-        private static IEnumerable<XElement> GetNoTranslationEntries( XElement element, string language )
+        private static IEnumerable<XElement> GetNoTranslationEntries( XElement element, string[] languages )
         {
             foreach( var entryElement in element.Elements( ENTRY_TAG ) )
             {
-                bool found = false;
-                foreach( var valueElement in entryElement.Elements( VALUE_TAG ) )
+                if( languages.Length == 0 )
                 {
-                    string valueLanguage = valueElement.Attribute( LANG_ATTR )?.Value;
-                    if( valueLanguage != null )
+                    if( !entryElement.Elements( VALUE_TAG ).Any( value => value.Attribute( LANG_ATTR )?.Value != null ) )
                     {
-                        if( ( language == "*" ) || ( language == valueLanguage ) )
-                        {
-                            found = true;
-                            break;
-                        }
+                        yield return entryElement;
                     }
                 }
-
-                if( !found )
+                else
                 {
-                    yield return entryElement;
+                    int found = 0;
+
+                    foreach( var valueElement in entryElement.Elements( VALUE_TAG ) )
+                    {
+                        string valueLanguage = valueElement.Attribute( LANG_ATTR )?.Value;
+                        if( valueLanguage != null )
+                        {
+                            if( languages.Any( l => ( l == valueLanguage ) ) )
+                            {
+                                found++;
+                                if( found >= languages.Length )
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    if( found < languages.Length )
+                    {
+                        yield return entryElement;
+                    }
                 }
             }
 
             foreach( var contextElement in element.Elements( CONTEXT_TAG ) )
             {
                 var childContext = contextElement.Attribute( CONTEXT_ID_ATTR )?.Value;
-                foreach( var entryElement in GetNoTranslationEntries( contextElement, language ) )
+                foreach( var entryElement in GetNoTranslationEntries( contextElement, languages ) )
                 {
                     yield return entryElement;
                 }

@@ -44,8 +44,8 @@ namespace I18N.Tool
         [Option( 'i', "input", Required = true, HelpText = "Input file path." )]
         public string InputFile { get; set; }
 
-        [Option( 'l', "language", SetName = "language", HelpText = "(Default: *) Warn on entries without translation for a language." )]
-        public string Language { get; set; }
+        [Option( 'l', "language", SetName = "language", HelpText = "Warn on entries without translation for a language." )]
+        public IEnumerable<string> Languages { get; set; }
 
         [Option( "ignore-deprecated", HelpText = "Skip warning on deprecated entries." )]
         public bool IgnoreDeprecated { get; set; }
@@ -144,7 +144,7 @@ namespace I18N.Tool
 
                 if( !options.IgnoreNoTranslation )
                 {
-                    foreach( (int line, string context, string key) in inputFile.GetNoTranslationEntries( options.Language ?? "*", includeContexts, excludeContexts ) )
+                    foreach( (int line, string context, string key) in inputFile.GetNoTranslationEntries( options.Languages.ToArray(), includeContexts, excludeContexts ) )
                     {
                         if( key != null )
                         {

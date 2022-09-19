@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -77,24 +78,61 @@ namespace I18N.Tool
             }
         }
 
-        public IEnumerable<(int line, string context, string key)> GetDeprecatedEntries()
+        public IEnumerable<(int line, string context, string key)> GetDeprecatedEntries( Regex[] includeContexts, Regex[] excludeContexts )
         {
             foreach( var element in GetDeprecatedEntries( m_doc.Root ) )
             {
                 int line = ( (IXmlLineInfo) element ).LineNumber;
                 string key = element.Element( KEY_TAG )?.Value;
-                yield return ( line, GetContext( element ), key);
+                string context = GetContext( element );
+                if( MatchesContexts( context, includeContexts, excludeContexts ) )
+                {
+                    yield return (line, context, key);
+                }
             }
         }
 
-        public IEnumerable<(int line, string context, string key)> GetNoTranslationEntries( string language )
+        public IEnumerable<(int line, string context, string key)> GetNoTranslationEntries( string language, Regex[] includeContexts, Regex[] excludeContexts )
         {
             foreach( var element in GetNoTranslationEntries( m_doc.Root, language ) )
             {
                 int line = ( (IXmlLineInfo) element ).LineNumber;
                 string key = element.Element( KEY_TAG )?.Value;
-                yield return (line, GetContext(element), key);
+                string context = GetContext( element );
+                if( MatchesContexts( context, includeContexts, excludeContexts ) )
+                {
+                    yield return (line, context, key);
+                }
             }
+        }
+
+        private static bool MatchesContexts( string context, Regex[] includeContexts, Regex[] excludeContexts )
+        {
+            bool includeMatch = ( includeContexts.Length == 0 );
+
+            foreach( var includeContext in includeContexts )
+            {
+                if( includeContext.IsMatch( context ) )
+                {
+                    includeMatch = true;
+                    break;
+                }
+            }
+
+            if( !includeMatch )
+            {
+                return false;
+            }
+
+            foreach( var excludeMatch in excludeContexts )
+            {
+                if( excludeMatch.IsMatch( context ) )
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private static void CreateEntries( XElement parentElement, Context context )

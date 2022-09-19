@@ -8,6 +8,8 @@ using CommandLine;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace I18N.Tool
 {
@@ -50,6 +52,12 @@ namespace I18N.Tool
 
         [Option( "ignore-no-translation", SetName = "no-language", HelpText = "Skip warning on empty without translation." )]
         public bool IgnoreNoTranslation { get; set; }
+
+        [Option( 'c', "include-context", HelpText = "Context to include in analysis." )]
+        public IEnumerable<string> IncludeContexts { get; set; }
+
+        [Option( 'e', "exclude-context", HelpText = "Context to exclude from analysis." )]
+        public IEnumerable<string> ExcludeContexts { get; set; }
     }
 
     class Program
@@ -116,9 +124,12 @@ namespace I18N.Tool
             {
                 var inputFile = new OutputFile( options.InputFile );
 
+                var includeContexts = options.IncludeContexts.Select( s => ContextSpecToRegex( s ) ).ToArray();
+                var excludeContexts = options.ExcludeContexts.Select( s => ContextSpecToRegex( s ) ).ToArray();
+
                 if( !options.IgnoreDeprecated )
                 {
-                    foreach( (int line, string context, string key) in inputFile.GetDeprecatedEntries() )
+                    foreach( (int line, string context, string key) in inputFile.GetDeprecatedEntries( includeContexts, excludeContexts ) )
                     {
                         if( key != null )
                         {
@@ -133,7 +144,7 @@ namespace I18N.Tool
 
                 if( !options.IgnoreNoTranslation )
                 {
-                    foreach( (int line, string context, string key) in inputFile.GetNoTranslationEntries( options.Language ?? "*" ) )
+                    foreach( (int line, string context, string key) in inputFile.GetNoTranslationEntries( options.Language ?? "*", includeContexts, excludeContexts ) )
                     {
                         if( key != null )
                         {
@@ -175,5 +186,21 @@ namespace I18N.Tool
                 }
             }
         }
+
+        private static Regex ContextSpecToRegex( string contextSpec )
+        {
+            if( contextSpec.StartsWith( '@' ) )
+            {
+                return new Regex( contextSpec.Substring( 1 ) );
+            }
+            else
+            {
+                var escapedSpec = Regex.Escape( contextSpec );
+                var transformedSpec = WILDCARD_REGEX.Replace( escapedSpec, ".*" );
+                return new Regex( $"^{transformedSpec}/?$" );
+            }
+        }
+
+        private static readonly Regex WILDCARD_REGEX = new Regex( @"(?<!\\)\\\*" );
     }
 }

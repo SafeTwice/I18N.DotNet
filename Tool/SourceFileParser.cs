@@ -14,7 +14,7 @@ using System.Text.RegularExpressions;
 
 namespace I18N.Tool
 {
-    static class InputFileParser
+    static class SourceFileParser
     {
         public static void ParseFile( string filepath, IEnumerable<string> extraFunctions, Context rootContext )
         {

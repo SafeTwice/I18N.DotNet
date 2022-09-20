@@ -83,7 +83,7 @@ namespace I18N.Tool
                     ParseFilesInDirectory( dirInfo, options.Pattern, options.Recursive, options.ExtraFunctions, rootContext );
                 }
 
-                var outputFile = new OutputFile( options.OutputFile );
+                var outputFile = new I18NFile( options.OutputFile );
 
                 if( !options.PreserveFoundingComments )
                 {
@@ -119,7 +119,7 @@ namespace I18N.Tool
         {
             try
             {
-                var inputFile = new OutputFile( options.InputFile );
+                var inputFile = new I18NFile( options.InputFile );
 
                 var includeContexts = options.IncludeContexts.Select( s => ContextSpecToRegex( s ) ).ToArray();
                 var excludeContexts = options.ExcludeContexts.Select( s => ContextSpecToRegex( s ) ).ToArray();
@@ -187,7 +187,7 @@ namespace I18N.Tool
         {
             foreach( var fileInfo in dirInfo.GetFiles( pattern ) )
             {
-                InputFileParser.ParseFile( fileInfo.FullName, extraFunctions, rootContext );
+                SourceFileParser.ParseFile( fileInfo.FullName, extraFunctions, rootContext );
             }
 
             if( recursive )

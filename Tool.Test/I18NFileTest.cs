@@ -15,11 +15,11 @@ using Xunit;
 
 namespace I18N.Tool.Test
 {
-    public class OutputFileTest : IDisposable
+    public class I18NFileTest : IDisposable
     {
         private string m_tempFile;
 
-        public OutputFileTest()
+        public I18NFileTest()
         {
             m_tempFile = Path.GetTempPath() + "\\Temp.xml";
         }
@@ -115,7 +115,7 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            var outputFile = new OutputFile( m_tempFile );
+            var outputFile = new I18NFile( m_tempFile );
             outputFile.CreateEntries( rootContext );
             outputFile.WriteToFile( m_tempFile );
 
@@ -181,7 +181,7 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            var outputFile = new OutputFile( m_tempFile );
+            var outputFile = new I18NFile( m_tempFile );
             outputFile.CreateEntries( rootContext );
             outputFile.WriteToFile( m_tempFile );
 
@@ -258,7 +258,7 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            var outputFile = new OutputFile( m_tempFile );
+            var outputFile = new I18NFile( m_tempFile );
             outputFile.DeleteFoundingComments();
             outputFile.CreateEntries( rootContext );
             outputFile.WriteToFile( m_tempFile );
@@ -333,7 +333,7 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            var outputFile = new OutputFile( m_tempFile );
+            var outputFile = new I18NFile( m_tempFile );
             outputFile.DeleteFoundingComments();
             outputFile.CreateEntries( rootContext );
             outputFile.CreateDeprecationComments();
@@ -410,7 +410,7 @@ namespace I18N.Tool.Test
 
             // Execute & Verify
 
-            var exception = Assert.Throws<ApplicationException>( () => new OutputFile( m_tempFile ) );
+            var exception = Assert.Throws<ApplicationException>( () => new I18NFile( m_tempFile ) );
 
             Assert.Contains( "Invalid XML root element in existing output file", exception.Message );
         }
@@ -426,7 +426,7 @@ namespace I18N.Tool.Test
 
             // Execute & Verify
 
-            var exception = Assert.Throws<ApplicationException>( () => new OutputFile( m_tempFile ) );
+            var exception = Assert.Throws<ApplicationException>( () => new I18NFile( m_tempFile ) );
 
             Assert.Contains( "Invalid XML format in existing output file", exception.Message );
         }
@@ -501,7 +501,7 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            var outputFile = new OutputFile( m_tempFile );
+            var outputFile = new I18NFile( m_tempFile );
             outputFile.CreateEntries( rootContext );
             outputFile.WriteToFile( m_tempFile );
 
@@ -568,7 +568,7 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            var outputFile = new OutputFile( m_tempFile );
+            var outputFile = new I18NFile( m_tempFile );
             var actualResults = outputFile.GetDeprecatedEntries( new Regex[ 0 ], new Regex[ 0 ] ).ToArray();
 
             // Verify
@@ -591,7 +591,7 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            var outputFile = new OutputFile( m_tempFile );
+            var outputFile = new I18NFile( m_tempFile );
             var actualResults = outputFile.GetDeprecatedEntries( new Regex[] { new Regex( "^/Context.*$" ) }, new Regex[ 0 ] ).ToArray();
 
             // Verify
@@ -613,7 +613,7 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            var outputFile = new OutputFile( m_tempFile );
+            var outputFile = new I18NFile( m_tempFile );
             var actualResults = outputFile.GetDeprecatedEntries( new Regex[ 0 ], new Regex[] { new Regex( "^/Context.*$" ) } ).ToArray();
 
             // Verify
@@ -635,7 +635,7 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            var outputFile = new OutputFile( m_tempFile );
+            var outputFile = new I18NFile( m_tempFile );
             var actualResults = outputFile.GetNoTranslationEntries( new string[ 0 ], new Regex[ 0 ], new Regex[ 0 ] ).ToArray();
 
             // Verify
@@ -659,7 +659,7 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            var outputFile = new OutputFile( m_tempFile );
+            var outputFile = new I18NFile( m_tempFile );
             var actualResults = outputFile.GetNoTranslationEntries( new string[] { "fr" }, new Regex[ 0 ], new Regex[ 0 ] ).ToArray();
 
             // Verify
@@ -684,7 +684,7 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            var outputFile = new OutputFile( m_tempFile );
+            var outputFile = new I18NFile( m_tempFile );
             var actualResults = outputFile.GetNoTranslationEntries( new string[] { "fr", "es" }, new Regex[ 0 ], new Regex[ 0 ] ).ToArray();
 
             // Verify

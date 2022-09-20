@@ -11,13 +11,13 @@ using Xunit;
 
 namespace I18N.Tool.Test
 {
-    public class InputFileParserTest : IDisposable
+    public class SourceFileParserTest : IDisposable
     {
         private string m_tempFile;
 
         private const string TEMP_FILE_NAME = "Temp.cs";
 
-        public InputFileParserTest()
+        public SourceFileParserTest()
         {
             m_tempFile = Path.GetTempPath() + $"\\{TEMP_FILE_NAME}";
         }
@@ -62,7 +62,7 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            InputFileParser.ParseFile( m_tempFile, null, rootContext );
+            SourceFileParser.ParseFile( m_tempFile, null, rootContext );
 
             // Verify
 
@@ -98,7 +98,7 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            InputFileParser.ParseFile( m_tempFile, new List<string>() { "CustomFunction" }, rootContext );
+            SourceFileParser.ParseFile( m_tempFile, new List<string>() { "CustomFunction" }, rootContext );
 
             // Verify
 
@@ -142,7 +142,7 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            InputFileParser.ParseFile( m_tempFile, null, rootContext );
+            SourceFileParser.ParseFile( m_tempFile, null, rootContext );
 
             // Verify
 
@@ -180,7 +180,7 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            InputFileParser.ParseFile( m_tempFile, null, rootContext );
+            SourceFileParser.ParseFile( m_tempFile, null, rootContext );
 
             // Verify
 

@@ -44,14 +44,11 @@ namespace I18N.Tool
         [Option( 'i', "input", Required = true, HelpText = "Input file path." )]
         public string InputFile { get; set; }
 
-        [Option( 'l', "language", SetName = "language", HelpText = "Warn on entries without translation for a language." )]
-        public IEnumerable<string> Languages { get; set; }
+        [Option( 'd', "check-deprecated", HelpText = "Check presence of deprecated entries." )]
+        public bool CheckDeprecated { get; set; }
 
-        [Option( "ignore-deprecated", HelpText = "Skip warning on deprecated entries." )]
-        public bool IgnoreDeprecated { get; set; }
-
-        [Option( "ignore-no-translation", SetName = "no-language", HelpText = "Skip warning on empty without translation." )]
-        public bool IgnoreNoTranslation { get; set; }
+        [Option( 'l', "check-language", HelpText = "Check for entries without translation for one or more languages ('*' for any)." )]
+        public IEnumerable<string> CheckTranslationForLanguages { get; set; }
 
         [Option( 'c', "include-context", HelpText = "Context to include in analysis." )]
         public IEnumerable<string> IncludeContexts { get; set; }
@@ -127,7 +124,17 @@ namespace I18N.Tool
                 var includeContexts = options.IncludeContexts.Select( s => ContextSpecToRegex( s ) ).ToArray();
                 var excludeContexts = options.ExcludeContexts.Select( s => ContextSpecToRegex( s ) ).ToArray();
 
-                if( !options.IgnoreDeprecated )
+                var languagesToCheck = options.CheckTranslationForLanguages.ToArray();
+                bool checkLanguages = ( languagesToCheck.Length > 0 );
+
+                if( !options.CheckDeprecated && !checkLanguages )
+                {
+                    // No check options => use default check options
+                    options.CheckDeprecated = true;
+                    checkLanguages = true;
+                }
+
+                if( options.CheckDeprecated )
                 {
                     foreach( (int line, string context, string key) in inputFile.GetDeprecatedEntries( includeContexts, excludeContexts ) )
                     {
@@ -142,9 +149,14 @@ namespace I18N.Tool
                     }
                 }
 
-                if( !options.IgnoreNoTranslation )
+                if( checkLanguages )
                 {
-                    foreach( (int line, string context, string key) in inputFile.GetNoTranslationEntries( options.Languages.ToArray(), includeContexts, excludeContexts ) )
+                    if( languagesToCheck.Contains( "*" ) )
+                    {
+                        languagesToCheck = new string[ 0 ];
+                    }
+
+                    foreach( (int line, string context, string key) in inputFile.GetNoTranslationEntries( languagesToCheck, includeContexts, excludeContexts ) )
                     {
                         if( key != null )
                         {

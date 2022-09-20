@@ -14,9 +14,9 @@ using System.Text.RegularExpressions;
 
 namespace I18N.Tool
 {
-    static class SourceFileParser
+    public class SourceFileParser : ISourceFileParser
     {
-        public static void ParseFile( string filepath, IEnumerable<string> extraFunctions, Context rootContext )
+        public void ParseFile( string filepath, IEnumerable<string> extraFunctions, Context rootContext )
         {
             var text = File.ReadAllText( filepath );
 
@@ -39,7 +39,7 @@ namespace I18N.Tool
                                    where localizerCall.ArgumentList.Arguments.Count > 0
                                    let firstArgument = localizerCall.ArgumentList.Arguments.First().Expression
                                    where firstArgument != null
-                                   where firstArgument.IsKind( SyntaxKind.StringLiteralExpression ) || 
+                                   where firstArgument.IsKind( SyntaxKind.StringLiteralExpression ) ||
                                          firstArgument.IsKind( SyntaxKind.InterpolatedStringExpression )
                                    select localizerCall;
 
@@ -63,7 +63,7 @@ namespace I18N.Tool
                 key = EscapeString( key );
 
                 int line = ( match.Expression.GetLocation().GetLineSpan().StartLinePosition.Line + 1 );
-                
+
                 var context = GetContext( match, rootContext );
                 context.AddKey( key, $"{filepath} @ {line}" );
             }

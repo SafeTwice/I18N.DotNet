@@ -64,13 +64,13 @@ namespace I18N.Tool
             var parserResult = Parser.Default.ParseArguments<GenerateOptions, AnalyzeOptions>( args );
 
             parserResult.MapResult(
-                ( GenerateOptions opts ) => Generate( opts, new I18NFile() ),
+                ( GenerateOptions opts ) => Generate( opts, new I18NFile(), new SourceFileParser() ),
                 ( AnalyzeOptions opts ) => Analyze( opts, new I18NFile() ),
                 errs => 1
                 );
         }
 
-        internal static int Generate( GenerateOptions options, II18NFile outputFile )
+        internal static int Generate( GenerateOptions options, II18NFile outputFile, ISourceFileParser sourceFileParser )
         {
             try
             {
@@ -80,7 +80,7 @@ namespace I18N.Tool
                 {
                     var dirInfo = new DirectoryInfo( directory );
 
-                    ParseFilesInDirectory( dirInfo, options.Pattern, options.Recursive, options.ExtraFunctions, rootContext );
+                    ParseFilesInDirectory( sourceFileParser, dirInfo, options.Pattern, options.Recursive, options.ExtraFunctions, rootContext );
                 }
 
                 outputFile.Load( options.OutputFile );
@@ -183,18 +183,18 @@ namespace I18N.Tool
             return 1;
         }
 
-        private static void ParseFilesInDirectory( DirectoryInfo dirInfo, string pattern, bool recursive, IEnumerable<string> extraFunctions, Context rootContext )
+        private static void ParseFilesInDirectory( ISourceFileParser sourceFileParser, DirectoryInfo dirInfo, string pattern, bool recursive, IEnumerable<string> extraFunctions, Context rootContext )
         {
             foreach( var fileInfo in dirInfo.GetFiles( pattern ) )
             {
-                SourceFileParser.ParseFile( fileInfo.FullName, extraFunctions, rootContext );
+                sourceFileParser.ParseFile( fileInfo.FullName, extraFunctions, rootContext );
             }
 
             if( recursive )
             {
                 foreach( var childDirInfo in dirInfo.GetDirectories() )
                 {
-                    ParseFilesInDirectory( childDirInfo, pattern, true, extraFunctions, rootContext );
+                    ParseFilesInDirectory( sourceFileParser, childDirInfo, pattern, true, extraFunctions, rootContext );
                 }
             }
         }

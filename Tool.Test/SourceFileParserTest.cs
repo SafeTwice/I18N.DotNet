@@ -62,7 +62,8 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            SourceFileParser.ParseFile( m_tempFile, null, rootContext );
+            var sourceFileParser = new SourceFileParser();
+            sourceFileParser.ParseFile( m_tempFile, null, rootContext );
 
             // Verify
 
@@ -98,7 +99,8 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            SourceFileParser.ParseFile( m_tempFile, new List<string>() { "CustomFunction" }, rootContext );
+            var sourceFileParser = new SourceFileParser();
+            sourceFileParser.ParseFile( m_tempFile, new List<string>() { "CustomFunction" }, rootContext );
 
             // Verify
 
@@ -142,7 +144,8 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            SourceFileParser.ParseFile( m_tempFile, null, rootContext );
+            var sourceFileParser = new SourceFileParser();
+            sourceFileParser.ParseFile( m_tempFile, null, rootContext );
 
             // Verify
 
@@ -180,7 +183,8 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            SourceFileParser.ParseFile( m_tempFile, null, rootContext );
+            var sourceFileParser = new SourceFileParser();
+            sourceFileParser.ParseFile( m_tempFile, null, rootContext );
 
             // Verify
 

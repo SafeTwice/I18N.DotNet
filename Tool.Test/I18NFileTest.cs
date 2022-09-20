@@ -115,9 +115,10 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            var outputFile = new I18NFile( m_tempFile );
-            outputFile.CreateEntries( rootContext );
-            outputFile.WriteToFile( m_tempFile );
+            var i18nFile = new I18NFile();
+            i18nFile.Load( m_tempFile );
+            i18nFile.CreateEntries( rootContext );
+            i18nFile.WriteToFile( m_tempFile );
 
             // Verify
 
@@ -181,9 +182,10 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            var outputFile = new I18NFile( m_tempFile );
-            outputFile.CreateEntries( rootContext );
-            outputFile.WriteToFile( m_tempFile );
+            var i18nFile = new I18NFile();
+            i18nFile.Load( m_tempFile );
+            i18nFile.CreateEntries( rootContext );
+            i18nFile.WriteToFile( m_tempFile );
 
             // Verify
 
@@ -258,10 +260,11 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            var outputFile = new I18NFile( m_tempFile );
-            outputFile.DeleteFoundingComments();
-            outputFile.CreateEntries( rootContext );
-            outputFile.WriteToFile( m_tempFile );
+            var i18nFile = new I18NFile();
+            i18nFile.Load( m_tempFile );
+            i18nFile.DeleteFoundingComments();
+            i18nFile.CreateEntries( rootContext );
+            i18nFile.WriteToFile( m_tempFile );
 
             // Verify
 
@@ -333,11 +336,12 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            var outputFile = new I18NFile( m_tempFile );
-            outputFile.DeleteFoundingComments();
-            outputFile.CreateEntries( rootContext );
-            outputFile.CreateDeprecationComments();
-            outputFile.WriteToFile( m_tempFile );
+            var i18nFile = new I18NFile();
+            i18nFile.Load( m_tempFile );
+            i18nFile.DeleteFoundingComments();
+            i18nFile.CreateEntries( rootContext );
+            i18nFile.CreateDeprecationComments();
+            i18nFile.WriteToFile( m_tempFile );
 
             // Verify
 
@@ -410,7 +414,8 @@ namespace I18N.Tool.Test
 
             // Execute & Verify
 
-            var exception = Assert.Throws<ApplicationException>( () => new I18NFile( m_tempFile ) );
+            var i18nFile = new I18NFile();
+            var exception = Assert.Throws<ApplicationException>( () => i18nFile.Load( m_tempFile ) );
 
             Assert.Contains( "Invalid XML root element in existing output file", exception.Message );
         }
@@ -426,7 +431,8 @@ namespace I18N.Tool.Test
 
             // Execute & Verify
 
-            var exception = Assert.Throws<ApplicationException>( () => new I18NFile( m_tempFile ) );
+            var i18nFile = new I18NFile();
+            var exception = Assert.Throws<ApplicationException>( () => i18nFile.Load( m_tempFile ) );
 
             Assert.Contains( "Invalid XML format in existing output file", exception.Message );
         }
@@ -501,9 +507,10 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            var outputFile = new I18NFile( m_tempFile );
-            outputFile.CreateEntries( rootContext );
-            outputFile.WriteToFile( m_tempFile );
+            var i18nFile = new I18NFile();
+            i18nFile.Load( m_tempFile );
+            i18nFile.CreateEntries( rootContext );
+            i18nFile.WriteToFile( m_tempFile );
 
             // Verify
 
@@ -568,8 +575,9 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            var outputFile = new I18NFile( m_tempFile );
-            var actualResults = outputFile.GetDeprecatedEntries( new Regex[ 0 ], new Regex[ 0 ] ).ToArray();
+            var i18nFile = new I18NFile();
+            i18nFile.Load( m_tempFile );
+            var actualResults = i18nFile.GetDeprecatedEntries( new Regex[ 0 ], new Regex[ 0 ] ).ToArray();
 
             // Verify
 
@@ -591,8 +599,9 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            var outputFile = new I18NFile( m_tempFile );
-            var actualResults = outputFile.GetDeprecatedEntries( new Regex[] { new Regex( "^/Context.*$" ) }, new Regex[ 0 ] ).ToArray();
+            var i18nFile = new I18NFile();
+            i18nFile.Load( m_tempFile );
+            var actualResults = i18nFile.GetDeprecatedEntries( new Regex[] { new Regex( "^/Context.*$" ) }, new Regex[ 0 ] ).ToArray();
 
             // Verify
 
@@ -613,8 +622,9 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            var outputFile = new I18NFile( m_tempFile );
-            var actualResults = outputFile.GetDeprecatedEntries( new Regex[ 0 ], new Regex[] { new Regex( "^/Context.*$" ) } ).ToArray();
+            var i18nFile = new I18NFile();
+            i18nFile.Load( m_tempFile );
+            var actualResults = i18nFile.GetDeprecatedEntries( new Regex[ 0 ], new Regex[] { new Regex( "^/Context.*$" ) } ).ToArray();
 
             // Verify
 
@@ -635,8 +645,9 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            var outputFile = new I18NFile( m_tempFile );
-            var actualResults = outputFile.GetNoTranslationEntries( new string[ 0 ], new Regex[ 0 ], new Regex[ 0 ] ).ToArray();
+            var i18nFile = new I18NFile();
+            i18nFile.Load( m_tempFile );
+            var actualResults = i18nFile.GetNoTranslationEntries( new string[ 0 ], new Regex[ 0 ], new Regex[ 0 ] ).ToArray();
 
             // Verify
 
@@ -659,8 +670,9 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            var outputFile = new I18NFile( m_tempFile );
-            var actualResults = outputFile.GetNoTranslationEntries( new string[] { "fr" }, new Regex[ 0 ], new Regex[ 0 ] ).ToArray();
+            var i18nFile = new I18NFile();
+            i18nFile.Load( m_tempFile );
+            var actualResults = i18nFile.GetNoTranslationEntries( new string[] { "fr" }, new Regex[ 0 ], new Regex[ 0 ] ).ToArray();
 
             // Verify
 
@@ -684,8 +696,9 @@ namespace I18N.Tool.Test
 
             // Execute
 
-            var outputFile = new I18NFile( m_tempFile );
-            var actualResults = outputFile.GetNoTranslationEntries( new string[] { "fr", "es" }, new Regex[ 0 ], new Regex[ 0 ] ).ToArray();
+            var i18nFile = new I18NFile();
+            i18nFile.Load( m_tempFile );
+            var actualResults = i18nFile.GetNoTranslationEntries( new string[] { "fr", "es" }, new Regex[ 0 ], new Regex[ 0 ] ).ToArray();
 
             // Verify
 

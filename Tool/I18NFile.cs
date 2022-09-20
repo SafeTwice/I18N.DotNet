@@ -14,9 +14,9 @@ using System.Xml.Linq;
 
 namespace I18N.Tool
 {
-    public class I18NFile
+    public class I18NFile : II18NFile
     {
-        public I18NFile( string filepath )
+        public void Load( string filepath )
         {
             m_doc = null;
 

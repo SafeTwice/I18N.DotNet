@@ -64,13 +64,13 @@ namespace I18N.Tool
             var parserResult = Parser.Default.ParseArguments<GenerateOptions, AnalyzeOptions>( args );
 
             parserResult.MapResult(
-                ( GenerateOptions opts ) => Generate( opts ),
-                ( AnalyzeOptions opts ) => Analyze( opts ),
+                ( GenerateOptions opts ) => Generate( opts, new I18NFile() ),
+                ( AnalyzeOptions opts ) => Analyze( opts, new I18NFile() ),
                 errs => 1
                 );
         }
 
-        private static int Generate( GenerateOptions options )
+        internal static int Generate( GenerateOptions options, II18NFile outputFile )
         {
             try
             {
@@ -83,7 +83,7 @@ namespace I18N.Tool
                     ParseFilesInDirectory( dirInfo, options.Pattern, options.Recursive, options.ExtraFunctions, rootContext );
                 }
 
-                var outputFile = new I18NFile( options.OutputFile );
+                outputFile.Load( options.OutputFile );
 
                 if( !options.PreserveFoundingComments )
                 {
@@ -115,11 +115,11 @@ namespace I18N.Tool
             return 1;
         }
 
-        private static int Analyze( AnalyzeOptions options )
+        internal static int Analyze( AnalyzeOptions options, II18NFile inputFile )
         {
             try
             {
-                var inputFile = new I18NFile( options.InputFile );
+                inputFile.Load( options.InputFile );
 
                 var includeContexts = options.IncludeContexts.Select( s => ContextSpecToRegex( s ) ).ToArray();
                 var excludeContexts = options.ExcludeContexts.Select( s => ContextSpecToRegex( s ) ).ToArray();

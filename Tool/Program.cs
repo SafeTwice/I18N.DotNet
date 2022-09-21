@@ -64,13 +64,13 @@ namespace I18N.Tool
             var parserResult = Parser.Default.ParseArguments<GenerateOptions, AnalyzeOptions>( args );
 
             parserResult.MapResult(
-                ( GenerateOptions opts ) => Generate( opts, new I18NFile(), new SourceFileParser() ),
-                ( AnalyzeOptions opts ) => Analyze( opts, new I18NFile() ),
+                ( GenerateOptions opts ) => Generate( opts, new I18NFile(), new SourceFileParser(), new TextConsole() ),
+                ( AnalyzeOptions opts ) => Analyze( opts, new I18NFile(), new TextConsole() ),
                 errs => 1
                 );
         }
 
-        internal static int Generate( GenerateOptions options, II18NFile outputFile, ISourceFileParser sourceFileParser )
+        internal static int Generate( GenerateOptions options, II18NFile outputFile, ISourceFileParser sourceFileParser, ITextConsole textConsole )
         {
             try
             {
@@ -99,23 +99,23 @@ namespace I18N.Tool
 
                 outputFile.WriteToFile( options.OutputFile );
 
-                Console.WriteLine( $"File generated successfully" );
+                textConsole.WriteLine( $"File generated successfully" );
 
                 return 0;
             }
             catch( ApplicationException e )
             {
-                Console.WriteLine( $"ERROR: {e.Message}" );
+                textConsole.WriteLine( $"ERROR: {e.Message}" );
             }
             catch( Exception e )
             {
-                Console.WriteLine( $"UNEXPECTED ERROR: {e}" );
+                textConsole.WriteLine( $"UNEXPECTED ERROR: {e}" );
             }
 
             return 1;
         }
 
-        internal static int Analyze( AnalyzeOptions options, II18NFile inputFile )
+        internal static int Analyze( AnalyzeOptions options, II18NFile inputFile, ITextConsole textConsole )
         {
             try
             {
@@ -140,11 +140,11 @@ namespace I18N.Tool
                     {
                         if( key != null )
                         {
-                            Console.WriteLine( $"WARNING: Deprecated entry at line {line} (Context = {context}, Key = '{key}')" );
+                            textConsole.WriteLine( $"WARNING: Deprecated entry at line {line} (Context = {context}, Key = '{key}')" );
                         }
                         else
                         {
-                            Console.WriteLine( $"WARNING: Deprecated entry at line {line} (Context = {context}, No key)" );
+                            textConsole.WriteLine( $"WARNING: Deprecated entry at line {line} (Context = {context}, No key)" );
                         }
                     }
                 }
@@ -160,11 +160,11 @@ namespace I18N.Tool
                     {
                         if( key != null )
                         {
-                            Console.WriteLine( $"WARNING: Entry without translation at line {line} (Context = {context}, Key = '{key}')" );
+                            textConsole.WriteLine( $"WARNING: Entry without translation at line {line} (Context = {context}, Key = '{key}')" );
                         }
                         else
                         {
-                            Console.WriteLine( $"WARNING: Entry without translation at line {line} (Context = {context}, No key)" );
+                            textConsole.WriteLine( $"WARNING: Entry without translation at line {line} (Context = {context}, No key)" );
                         }
                     }
                 }
@@ -173,11 +173,11 @@ namespace I18N.Tool
             }
             catch( ApplicationException e )
             {
-                Console.WriteLine( $"ERROR: {e.Message}" );
+                textConsole.WriteLine( $"ERROR: {e.Message}" );
             }
             catch( Exception e )
             {
-                Console.WriteLine( $"UNEXPECTED ERROR: {e}" );
+                textConsole.WriteLine( $"UNEXPECTED ERROR: {e}" );
             }
 
             return 1;

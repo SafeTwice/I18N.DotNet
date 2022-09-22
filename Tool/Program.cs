@@ -32,7 +32,7 @@ namespace I18N.Tool
         [Option( 'd', Default = false, HelpText = "Mark deprecated entries." )]
         public bool MarkDeprecated { get; set; }
 
-        [Option( 'e', HelpText = "Extra methods to be parsed for strings to be localized." )]
+        [Option( 'E', HelpText = "Extra methods to be parsed for strings to be localized." )]
         public IEnumerable<string> ExtraLocalizationFunctions { get; set; }
 
         [Option( 'o', Required = true, HelpText = "Output file path." )]
@@ -48,13 +48,13 @@ namespace I18N.Tool
         [Option( 'd', "check-deprecated", HelpText = "Check presence of deprecated entries." )]
         public bool CheckDeprecated { get; set; }
 
-        [Option( 'l', "check-language", HelpText = "Check for entries without translation for one or more languages ('*' for any)." )]
+        [Option( 'L', "check-language", HelpText = "Check for entries without translation for one or more languages ('*' for any)." )]
         public IEnumerable<string> CheckTranslationForLanguages { get; set; }
 
-        [Option( 'c', "include-context", HelpText = "Context to include in analysis." )]
+        [Option( 'C', "include-context", HelpText = "Context to include in analysis." )]
         public IEnumerable<string> IncludeContexts { get; set; }
 
-        [Option( 'e', "exclude-context", HelpText = "Context to exclude from analysis." )]
+        [Option( 'E', "exclude-context", HelpText = "Context to exclude from analysis." )]
         public IEnumerable<string> ExcludeContexts { get; set; }
     }
 

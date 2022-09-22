@@ -144,7 +144,7 @@ namespace I18N.Tool
 
                 foreach( var keyInfo in context.KeyMatches[ key ] )
                 {
-                    AddCommentIfNeeded( entryElement, $" Found in: {keyInfo} ", true );
+                    AddCommentIfNeeded( entryElement, $"{FOUNDING_HEADING} {keyInfo} ", true );
                 }
             }
 
@@ -165,7 +165,7 @@ namespace I18N.Tool
                 foreach( var node in entryElement.Nodes() )
                 {
                     var commentNode = node as XComment;
-                    if( commentNode?.Value.StartsWith( " Found in:" ) ?? false )
+                    if( commentNode?.Value.StartsWith( FOUNDING_HEADING ) ?? false )
                     {
                         commentsToRemove.Add( commentNode );
                     }
@@ -307,13 +307,29 @@ namespace I18N.Tool
         {
             foreach( var entryElement in element.Elements( ENTRY_TAG ) )
             {
+                bool deprecated = false;
+                bool hasFoundings = false;
+
                 foreach( var node in entryElement.Nodes() )
                 {
-                    var commentNode = node as XComment;
-                    if( commentNode?.Value == DEPRECATED_COMMENT )
+                    if( node is XComment commentNode )
                     {
-                        yield return entryElement;
+                        var commentValue = commentNode?.Value;
+                        if( commentValue == DEPRECATED_COMMENT )
+                        {
+                            deprecated = true;
+                            break;
+                        }
+                        else if( commentValue?.StartsWith( FOUNDING_HEADING ) ?? false )
+                        {
+                            hasFoundings = true;
+                        }
                     }
+                }
+
+                if( deprecated || !hasFoundings )
+                {
+                    yield return entryElement;
                 }
             }
 
@@ -400,6 +416,8 @@ namespace I18N.Tool
         private const string LANG_ATTR = "lang";
 
         private const string DEPRECATED_COMMENT = " DEPRECATED ";
+
+        private const string FOUNDING_HEADING = " Found in:";
 
         private XDocument m_doc;
     }

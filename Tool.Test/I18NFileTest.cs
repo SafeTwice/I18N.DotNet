@@ -583,6 +583,7 @@ namespace I18N.Tool.Test
 
             var expectedResults = new (int line, string context, string key)[]
             {
+                ( 9, "/", "Key 2" ),
                 ( 34, "/", "Key 6" ),
                 ( 22, "/Context 1/", "Key 5" ),
             };
@@ -630,6 +631,7 @@ namespace I18N.Tool.Test
 
             var expectedResults = new (int line, string context, string key)[]
             {
+                ( 9, "/", "Key 2" ),
                 ( 34, "/", "Key 6" ),
             };
 

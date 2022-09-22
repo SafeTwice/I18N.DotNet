@@ -3,9 +3,11 @@
 /// @license    See LICENSE.txt
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace I18N.Tool
 {
+    [ExcludeFromCodeCoverage]
     public class TextConsole : ITextConsole
     {
         public void WriteLine( string text )

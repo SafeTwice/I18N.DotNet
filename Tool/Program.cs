@@ -7,6 +7,7 @@
 using CommandLine;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -59,6 +60,7 @@ namespace I18N.Tool
 
     class Program
     {
+        [ExcludeFromCodeCoverage]
         static void Main( string[] args )
         {
             var parserResult = Parser.Default.ParseArguments<GenerateOptions, AnalyzeOptions>( args );

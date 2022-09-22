@@ -17,10 +17,10 @@ namespace I18N.Tool
     class GenerateOptions
     {
         [Option( 'I', Required = true, HelpText = "Input directories paths." )]
-        public IEnumerable<string> Directories { get; set; }
+        public IEnumerable<string> InputDirectories { get; set; }
 
         [Option( 'p', Default = "*.cs", HelpText = "Input files name pattern." )]
-        public string Pattern { get; set; }
+        public string InputFilesPattern { get; set; }
 
         [Option( 'r', Default = false, HelpText = "Scan in input directories recursively." )]
         public bool Recursive { get; set; }
@@ -32,7 +32,7 @@ namespace I18N.Tool
         public bool MarkDeprecated { get; set; }
 
         [Option( 'e', HelpText = "Extra methods to be parsed for strings to be localized." )]
-        public IEnumerable<string> ExtraFunctions { get; set; }
+        public IEnumerable<string> ExtraLocalizationFunctions { get; set; }
 
         [Option( 'o', Required = true, HelpText = "Output file path." )]
         public string OutputFile { get; set; }
@@ -76,11 +76,11 @@ namespace I18N.Tool
             {
                 var rootContext = new Context();
 
-                foreach( var directory in options.Directories )
+                foreach( var directory in options.InputDirectories )
                 {
                     var dirInfo = new DirectoryInfo( directory );
 
-                    ParseFilesInDirectory( sourceFileParser, dirInfo, options.Pattern, options.Recursive, options.ExtraFunctions, rootContext );
+                    ParseFilesInDirectory( sourceFileParser, dirInfo, options.InputFilesPattern, options.Recursive, options.ExtraLocalizationFunctions, rootContext );
                 }
 
                 outputFile.Load( options.OutputFile );
@@ -209,7 +209,7 @@ namespace I18N.Tool
             {
                 var escapedSpec = Regex.Escape( contextSpec );
                 var transformedSpec = WILDCARD_REGEX.Replace( escapedSpec, ".*" );
-                return new Regex( $"^{transformedSpec}/?$" );
+                return new Regex( $"^/?{transformedSpec}/?$" );
             }
         }
 

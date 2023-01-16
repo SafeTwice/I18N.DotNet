@@ -168,6 +168,19 @@ namespace I18N.Net.Test
             Assert.Equal( "Escapado:\n\r\f&\t\v\b\\n\xABC", localizer.Localize( "Escaped:\n\r\f&\t\v\b\\n\xABC" ) );
         }
 
+        [Fact]
+        public void Localize_MultipleKeys()
+        {
+            // Prepare
+
+            var localizer = new Localizer();
+            localizer.SetTargetLanguage( "fr-fr" ).LoadXML( GetConfigA() );
+
+            // Execute & Verify
+
+            Assert.Equal( new string[] { "Non-existant Key", "Clef simple 1" }, localizer.Localize( new string[] { "Non-existant Key", "Simple Key 1" } ) );
+        }
+
         [Theory]
         [InlineData( "Non-existant Key", "Non-existant Key" )]
         [InlineData( "Simple Key 1", "Clef simple 1" )]

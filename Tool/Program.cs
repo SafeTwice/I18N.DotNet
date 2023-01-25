@@ -82,7 +82,7 @@ namespace I18N.Tool
                 {
                     var dirInfo = new DirectoryInfo( directory );
 
-                    ParseFilesInDirectory( sourceFileParser, dirInfo, options.InputFilesPattern, options.Recursive, options.ExtraLocalizationFunctions, rootContext );
+                    ParseFilesInDirectory( sourceFileParser, dirInfo, options.InputFilesPattern, options.Recursive, options.ExtraLocalizationFunctions, rootContext, textConsole );
                 }
 
                 outputFile.Load( options.OutputFile );
@@ -185,18 +185,19 @@ namespace I18N.Tool
             return 1;
         }
 
-        private static void ParseFilesInDirectory( ISourceFileParser sourceFileParser, DirectoryInfo dirInfo, string pattern, bool recursive, IEnumerable<string> extraFunctions, Context rootContext )
+        private static void ParseFilesInDirectory( ISourceFileParser sourceFileParser, DirectoryInfo dirInfo, string pattern, bool recursive, 
+                                                   IEnumerable<string> extraFunctions, Context rootContext, ITextConsole textConsole )
         {
             foreach( var fileInfo in dirInfo.GetFiles( pattern ) )
             {
-                sourceFileParser.ParseFile( fileInfo.FullName, extraFunctions, rootContext );
+                sourceFileParser.ParseFile( fileInfo.FullName, extraFunctions, rootContext, textConsole );
             }
 
             if( recursive )
             {
                 foreach( var childDirInfo in dirInfo.GetDirectories() )
                 {
-                    ParseFilesInDirectory( sourceFileParser, childDirInfo, pattern, true, extraFunctions, rootContext );
+                    ParseFilesInDirectory( sourceFileParser, childDirInfo, pattern, true, extraFunctions, rootContext, textConsole );
                 }
             }
         }

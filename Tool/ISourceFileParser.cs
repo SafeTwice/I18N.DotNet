@@ -10,6 +10,6 @@ namespace I18N.Tool
 {
     public interface ISourceFileParser
     {
-        void ParseFile( string filepath, IEnumerable<string> extraFunctions, Context rootContext );
+        void ParseFile( string filepath, IEnumerable<string> extraFunctions, Context rootContext, ITextConsole textConsole );
     }
 }

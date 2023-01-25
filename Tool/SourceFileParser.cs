@@ -16,7 +16,7 @@ namespace I18N.Tool
 {
     public class SourceFileParser : ISourceFileParser
     {
-        public void ParseFile( string filepath, IEnumerable<string> extraFunctions, Context rootContext )
+        public void ParseFile( string filepath, IEnumerable<string> extraFunctions, Context rootContext, ITextConsole textConsole )
         {
             var text = File.ReadAllText( filepath );
 
@@ -26,21 +26,18 @@ namespace I18N.Tool
 
             var relativeFilePath = AbsoluteToRelativePath( filepath );
 
-            ParseSyntaxTree( syntaxTree, relativeFilePath, localizerRegex, rootContext );
+            ParseSyntaxTree( syntaxTree, relativeFilePath, localizerRegex, rootContext, textConsole );
         }
 
-        private static void ParseSyntaxTree( SyntaxTree tree, string filepath, Regex localizerRegex, Context rootContext )
+        private static void ParseSyntaxTree( SyntaxTree tree, string filepath, Regex localizerRegex, Context rootContext, ITextConsole textConsole )
         {
             var root = tree.GetCompilationUnitRoot();
 
             var localizerMatches = from localizerCall in root.DescendantNodes().OfType<InvocationExpressionSyntax>()
                                    where ( localizerCall.Expression is IdentifierNameSyntax id && localizerRegex.IsMatch( id.Identifier.ValueText ) ) ||
                                          ( localizerCall.Expression is MemberAccessExpressionSyntax method && localizerRegex.IsMatch( method.Name.Identifier.ValueText ) )
-                                   where localizerCall.ArgumentList.Arguments.Count > 0
-                                   let firstArgument = localizerCall.ArgumentList.Arguments.First().Expression
-                                   where firstArgument != null
-                                   where firstArgument.IsKind( SyntaxKind.StringLiteralExpression ) ||
-                                         firstArgument.IsKind( SyntaxKind.InterpolatedStringExpression )
+                                   where ( localizerCall.ArgumentList.Arguments.Count > 0 ) &&
+                                         ( localizerCall.ArgumentList.Arguments.First().Expression != null )
                                    select localizerCall;
 
             foreach( var match in localizerMatches )
@@ -49,20 +46,25 @@ namespace I18N.Tool
 
                 string key;
 
+                int line = ( match.Expression.GetLocation().GetLineSpan().StartLinePosition.Line + 1 );
+
                 if( firstArgument.IsKind( SyntaxKind.InterpolatedStringExpression ) )
                 {
                     var interpolatedString = firstArgument as InterpolatedStringExpressionSyntax;
                     key = ConvertToKey( interpolatedString );
                 }
-                else
+                else if( firstArgument.IsKind( SyntaxKind.StringLiteralExpression ) )
                 {
                     var stringExpr = firstArgument as LiteralExpressionSyntax;
                     key = stringExpr.Token.ValueText;
                 }
+                else
+                {
+                    textConsole.WriteLine( $"WARNING: Non-literal localization method argument at line {line} of file '{filepath}'" );
+                    continue;
+                }
 
                 key = EscapeString( key );
-
-                int line = ( match.Expression.GetLocation().GetLineSpan().StartLinePosition.Line + 1 );
 
                 var context = GetContext( match, rootContext );
                 context.AddKey( key, $"{filepath} @ {line}" );

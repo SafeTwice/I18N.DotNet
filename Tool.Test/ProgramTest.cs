@@ -89,8 +89,10 @@ namespace I18N.Tool.Test
 
             var callSequence = new MockSequence();
 
+            var textConsoleMock = new Mock<ITextConsole>();
+
             var sourceFileParserMock = new Mock<ISourceFileParser>();
-            sourceFileParserMock.InSequence( callSequence ).Setup( sfp => sfp.ParseFile( It.IsAny<string>(), options.ExtraLocalizationFunctions, It.IsAny<Context>() ) )
+            sourceFileParserMock.InSequence( callSequence ).Setup( sfp => sfp.ParseFile( It.IsAny<string>(), options.ExtraLocalizationFunctions, It.IsAny<Context>(), textConsoleMock.Object ) )
                 .Callback<string, IEnumerable<string>, Context>( ( _, _, context ) => { if( internalContext == null ) { internalContext = context; } } );
 
             var i18nFileMock = new Mock<II18NFile>();
@@ -99,7 +101,6 @@ namespace I18N.Tool.Test
             i18nFileMock.InSequence( callSequence ).Setup( f => f.CreateEntries( It.Is<Context>( ctx => ctx == internalContext ) ) );
             i18nFileMock.InSequence( callSequence ).Setup( f => f.WriteToFile( options.OutputFile ) );
 
-            var textConsoleMock = new Mock<ITextConsole>();
             textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>() ) );
 
             // Execute

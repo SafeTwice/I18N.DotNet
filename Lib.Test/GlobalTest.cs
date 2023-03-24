@@ -43,8 +43,6 @@ namespace I18N.Net.Test
         [Fact]
         public void Localize_Multiple()
         {
-            int i = 1234;
-
             Assert.Equal( new string[] { "ABC", "123" }, Global.Localize( new string[] { "ABC", "123" } ) );
         }
 

@@ -1,0 +1,71 @@
+name: Build, Test & Publish
+
+on:
+  workflow_dispatch:  # Allow running the workflow manually from the GitHub UI
+  push: # Run the workflow when pushing to the main branch
+  pull_request:  # Run the workflow for all pull requests
+  release:
+    types: [ published ]  # Run the workflow when a new GitHub release is published
+    
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_NOLOGO: true
+  NuGetDirectory: ${{ github.workspace }}/nuget
+    
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore -c Release
+    - name: Test
+      run: dotnet test --no-build --verbosity normal -c Release
+    - name: Pack
+      run: dotnet pack --no-build --verbosity normal -c Release -o ${{ env.NuGetDirectory }}
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: nuget
+        if-no-files-found: error
+        retention-days: 7
+        path: ${{ env.NuGetDirectory }}/*.nupkg
+
+  validate-nuget:
+    runs-on: windows-latest
+    needs: [ build ]
+    steps:
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+      - name: Install Meziantou NuGet validator
+        run: dotnet tool update Meziantou.Framework.NuGetPackageValidation.Tool --global
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: nuget
+          path: ${{ env.NuGetDirectory }}
+      - name: Validate package
+        run: meziantou.validate-nuget-package (Get-ChildItem "${{ env.NuGetDirectory }}/*.nupkg") --excluded-rule-ids 32
+
+  publish:
+    if: github.event_name == 'release'
+    runs-on: windows-latest
+    needs: [ validate-nuget ]
+    steps:
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: nuget
+          path: ${{ env.NuGetDirectory }}
+      - name: Publish NuGet package
+        run: |
+          foreach($file in (Get-ChildItem "${{ env.NuGetDirectory }}" -Recurse -Include *.nupkg)) {
+              dotnet nuget push $file --api-key "${{ secrets.NUGET_APIKEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
+          }

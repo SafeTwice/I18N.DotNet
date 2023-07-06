@@ -3,7 +3,6 @@
 /// @license    See LICENSE.txt
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace I18N.Net
@@ -31,7 +30,7 @@ namespace I18N.Net
         /// Localizes an interpolated string.
         /// </summary>
         /// <remarks>
-        /// Converts the composite format string of the language-neutral formattable string <paramref name = "frmtText" /> ( e.g.an interpolated string) 
+        /// Converts the composite format string of the language-neutral formattable string <paramref name="frmtText"/> ( e.g.an interpolated string) 
         /// to its corresponding language-specific localized composite format value, and then generates the result by formatting the 
         /// localized composite format value along with the<paramref name="frmtText"/> arguments by using the formatting conventions of the current culture.
         /// </remarks>
@@ -44,14 +43,14 @@ namespace I18N.Net
         /// Localizes and then formats a string.
         /// </summary>
         /// <remarks>
-        /// Converts the language-neutral format string <paramref name = "format" /> to its corresponding language-specific localized format value,
+        /// Converts the language-neutral format string <paramref name="format"/> to its corresponding language-specific localized format value,
         /// and then generates the result by formatting the localized format value along with the<paramref name= "args" /> arguments by using the formatting
         /// conventions of the current culture.
         /// </remarks>
         /// <param name="format">Language-neutral format string</param>
         /// <param name="args">Arguments for the format string</param>
         /// <returns>Formatted string generated from the language-specific localized format string if found,
-        ///          or generated from<paramref name="frmtText"/> otherwise</returns>
+        ///          or generated from<paramref name="format"/> otherwise</returns>
         string LocalizeFormat( string format, params object[] args );
 
         /// <summary>

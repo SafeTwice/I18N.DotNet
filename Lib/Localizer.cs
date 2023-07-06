@@ -25,6 +25,10 @@ namespace I18N.Net
         /// </summary>
         public class ParseException : ApplicationException
         {
+            /// <summary>
+            /// Constructor.
+            /// </summary>
+            /// <param name="message">A message that describes the error.</param>
             public ParseException( string message ) : base( message ) { }
         }
 
@@ -43,6 +47,7 @@ namespace I18N.Net
          *                            PUBLIC METHODS
          *===========================================================================*/
 
+        /// <inheritdoc/>
         public string Localize( PlainString text )
         {
             string localizedText;
@@ -60,11 +65,13 @@ namespace I18N.Net
             }
         }
 
+        /// <inheritdoc/>
         public string Localize( FormattableString frmtText )
         {
             return LocalizeFormat( frmtText.Format, frmtText.GetArguments() );
         }
 
+        /// <inheritdoc/>
         public string LocalizeFormat( string format, params object[] args )
         {
             string localizedFormat;
@@ -82,6 +89,7 @@ namespace I18N.Net
             }
         }
 
+        /// <inheritdoc/>
         public IEnumerable<string> Localize( IEnumerable<string> texts )
         {
             var result = new List<string>();

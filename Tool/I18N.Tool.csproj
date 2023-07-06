@@ -3,11 +3,44 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>dotnet-i18n-tool</ToolCommandName>
+    <Version>1.1.0</Version>
+    <DebugType>embedded</DebugType>
+    <NoWarn>CS1587</NoWarn>
+    <EnablePackageValidation>true</EnablePackageValidation>
+    <Title>$(AssemblyName)</Title>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Authors>SafeTwice S.L.</Authors>
+    <PackageProjectUrl>https://github.com/SafeTwice/I18N.Net</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SafeTwice/I18N.Net.git</RepositoryUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl> 
+    <PackageTags>i18n;translation;internationalization;localization;l10n</PackageTags>
+    <Company>www.safetwice.com</Company>
+    <Description>Tool for management of localization files for the I18N.Net library</Description>
+    <Copyright>Copyright © 2022-2023 SafeTwice S.L.</Copyright>
+    <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
   </PropertyGroup>
 
-  <ItemGroup>
+    <ItemGroup>
+        <None Include="..\README.md">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.3.0" />
+    <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.1.1">
+      <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+      </PackageReference>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 	
   <ItemGroup>

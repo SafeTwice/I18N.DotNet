@@ -3,13 +3,13 @@
   [
     {
       "src":
-	  [
+      [
         {
           "files":
-		  [
+          [
             "*.csproj"
           ],
-		  "src": "../Lib"
+          "src": ".."
         }
       ],
       "dest": "api",
@@ -25,33 +25,33 @@
   "build":
   {
     "content":
-	[
+    [
       {
         "files":
-		[
+        [
           "api/**.yml",
           "api/index.md"
         ]
       },
       {
         "files":
-		[
+        [
           "toc.yml",
-		  "index.md"
+          "index.md"
         ]
       }
     ],
     "output": "_site",
-	"globalMetadata":
-	{
-		"_appTitle": "I18N.Net"
-	},
+    "globalMetadata":
+    {
+      "_appTitle": "I18N.DotNet"
+    },
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template":
-	[
-      "default",
-      "modern"
+    [
+        "default",
+        "modern"
     ],
     "postProcessors": [],
     "keepFileLink": false,

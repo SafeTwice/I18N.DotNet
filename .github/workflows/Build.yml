@@ -91,7 +91,7 @@ jobs:
           path: Lib/docfx/_site
 
   publish-docs:
-    if: github.event_name == 'release'
+    if: github.ref == 'refs/heads/main'
     runs-on: windows-latest
     needs: [ generate-docs ]
     steps:
@@ -104,4 +104,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ${{ env.DocsDirectory }}/_site
+          publish_dir: ${{ env.DocsDirectory }}

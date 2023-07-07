@@ -11,30 +11,31 @@ env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
   NuGetDirectory: ${{ github.workspace }}/nuget
+  DocsDirectory: ${{ github.workspace }}/docs
     
 jobs:
   build:
     runs-on: windows-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore -c Release
-    - name: Test
-      run: dotnet test --no-build --verbosity normal -c Release
-    - name: Pack
-      run: dotnet pack --no-build --verbosity normal -c Release -o ${{ env.NuGetDirectory }}
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: nuget
-        if-no-files-found: error
-        retention-days: 7
-        path: ${{ env.NuGetDirectory }}/*.nupkg
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore -c Release
+      - name: Test
+        run: dotnet test --no-build --verbosity normal -c Release
+      - name: Pack
+        run: dotnet pack --no-build --verbosity normal -c Release -o ${{ env.NuGetDirectory }}
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: nuget
+          if-no-files-found: error
+          retention-days: 7
+          path: ${{ env.NuGetDirectory }}/*.nupkg
 
   validate-nuget:
     runs-on: windows-latest
@@ -52,7 +53,7 @@ jobs:
       - name: Validate package
         run: meziantou.validate-nuget-package (Get-ChildItem "${{ env.NuGetDirectory }}/*.nupkg") --excluded-rule-ids 32
 
-  publish:
+  publish-nuget:
     if: github.event_name == 'release'
     runs-on: windows-latest
     needs: [ validate-nuget ]
@@ -69,3 +70,38 @@ jobs:
           foreach($file in (Get-ChildItem "${{ env.NuGetDirectory }}" -Recurse -Include *.nupkg)) {
               dotnet nuget push $file --api-key "${{ secrets.NUGET_APIKEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
           }
+
+  generate-docs:
+    runs-on: windows-latest
+    steps:
+      - name: Chekout
+        uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+      - name: Install docfx
+        run: dotnet tool update docfx --global
+      - name: Run docfx
+        run: docfx Lib/docfx/docfx.json
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: docs
+          if-no-files-found: error
+          retention-days: 7
+          path: Lib/docfx/_site
+
+  publish-docs:
+    if: github.event_name == 'release'
+    runs-on: windows-latest
+    needs: [ generate-docs ]
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: docs
+          path: ${{ env.DocsDirectory }}
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ${{ env.DocsDirectory }}/_site

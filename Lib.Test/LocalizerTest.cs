@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using Xunit;
 
-namespace I18N.Net.Test
+namespace I18N.DotNet.Test
 {
     public class LocalizerTest
     {

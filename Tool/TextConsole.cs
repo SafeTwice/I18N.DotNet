@@ -5,7 +5,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace I18N.Tool
+namespace I18N.DotNet.Tool
 {
     [ExcludeFromCodeCoverage]
     public class TextConsole : ITextConsole

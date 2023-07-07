@@ -1,9 +1,9 @@
-I18N.Net
+I18N.DotNet
 ========
 
 ## About
 
-I18N.NET is a .NET library written in C# to enable simple internationalization (I18N) / localization (L10N) (i.e. translation to different languages) of .NET applications and libraries.
+I18N.DotNet is a .NET library written in C# to enable simple internationalization (I18N) / localization (L10N) (i.e. translation to different languages) of .NET applications and libraries.
 
 ## Getting Started
 
@@ -13,14 +13,14 @@ Source code must be adapted following two simple steps:
 
 1) The first step consists in adding a couple of calls during initialization of the program (before any translated string is used):
 
-  1. Call `I18N.Net.Global.Localizer.SetTargetLanguage()` to set the language to which strings will be translated.
-  2. Call `I18N.Net.Global.Localizer.LoadXML()` to load the file that contains the translations.
+  1. Call `I18N.DotNet.Global.Localizer.SetTargetLanguage()` to set the language to which strings will be translated.
+  2. Call `I18N.DotNet.Global.Localizer.LoadXML()` to load the file that contains the translations.
 
-2) The second step consists in adapting the source code in order to wrap the strings to be translated with a call to `I18N.Net.Global.Localize()`.
+2) The second step consists in adapting the source code in order to wrap the strings to be translated with a call to `I18N.DotNet.Global.Localize()`.
 
 ###### Example
 ``` CS
-using static I18N.Net.Global;
+using static I18N.DotNet.Global;
 using System;
 using System.IO;
 using System.Reflection;
@@ -86,7 +86,7 @@ It is therefore recommended to:
 
 ### String Format
 
-Calls to `String.Format()` where the format string has to be internationalized can be replaced by a call to `I18N.Net.Global.LocalizeFormat()` (or `Localizer.LocalizeFormat()`, see [Global and Local Localizers](#global-and-local-localizers)).
+Calls to `String.Format()` where the format string has to be internationalized can be replaced by a call to `I18N.DotNet.Global.LocalizeFormat()` (or `Localizer.LocalizeFormat()`, see [Global and Local Localizers](#global-and-local-localizers)).
 
 ###### Example
 ``` CS
@@ -99,7 +99,7 @@ LocalizeFormat( "Format string to be translated with value {0}", myVar );
 
 Instances of the `Localizer` class are responsible for loading string translations and then providing localization functionality (i.e. perform string translations) for software components.
 
-The static class `I18N.Net.Global` has the property `Localizer` which contains the global localizer. This instance is shared and can be conveniently used by all software components. In fact all the methods exposed by the `I18N.Net.Global` class are just convenience wrappers that call the global localizer.
+The static class `I18N.DotNet.Global` has the property `Localizer` which contains the global localizer. This instance is shared and can be conveniently used by all software components. In fact all the methods exposed by the `I18N.DotNet.Global` class are just convenience wrappers that call the global localizer.
 
 If necessary, additional instances of the `Localizer` class can be created (local localizers), loaded with string translations, and then passed to software components for being used instead of the global localizer. Nevertheless, for most cases using the global localizer is just enough.
 
@@ -111,7 +111,7 @@ Since the source language key is the same in both cases, context partitioning mu
 
 ##### Context Partitioning in Source Code (I18N)
 
-In source code, the context of the key can be explicitly indicated when the string is being internationalized by calling `I18N.Net.Global.Context()` (or `Localizer.Context()`, see [Global and Local Localizers](#global-and-local-localizers)) and passing it the context identifier, and then calling the localization methods on the returned context `Localizer`.
+In source code, the context of the key can be explicitly indicated when the string is being internationalized by calling `I18N.DotNet.Global.Context()` (or `Localizer.Context()`, see [Global and Local Localizers](#global-and-local-localizers)) and passing it the context identifier, and then calling the localization methods on the returned context `Localizer`.
 
 Contexts can be nested. A chain of successively nested contexts can be identified by joining their identifiers using the dot character ('.') as a composite context identifier.
 

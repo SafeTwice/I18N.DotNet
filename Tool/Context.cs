@@ -6,7 +6,7 @@
 
 using System.Collections.Generic;
 
-namespace I18N.Tool
+namespace I18N.DotNet.Tool
 {
     public class Context
     {

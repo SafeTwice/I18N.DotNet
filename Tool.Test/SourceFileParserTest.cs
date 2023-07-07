@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using Xunit;
 
-namespace I18N.Tool.Test
+namespace I18N.DotNet.Tool.Test
 {
     public class SourceFileParserTest : IDisposable
     {

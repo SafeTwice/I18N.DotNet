@@ -9,11 +9,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Xml.Linq;
-using System.Xml.XPath;
 using Xunit;
 
-namespace I18N.Tool.Test
+namespace I18N.DotNet.Tool.Test
 {
     public class I18NFileTest : IDisposable
     {

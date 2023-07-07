@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace I18N.Net
+namespace I18N.DotNet
 {
     /// <summary>
     /// Converter of strings from a language-neutral value to its corresponding language-specific localization.

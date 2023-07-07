@@ -9,8 +9,8 @@
     <Title>$(AssemblyName)</Title>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <Authors>SafeTwice S.L.</Authors>
-    <PackageProjectUrl>https://github.com/SafeTwice/I18N.Net</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/SafeTwice/I18N.Net.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/SafeTwice/I18N.DotNet</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SafeTwice/I18N.DotNet.git</RepositoryUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl> 
     <PackageTags>i18n;translation;internationalization;localization;l10n</PackageTags>
     <Company>www.safetwice.com</Company>

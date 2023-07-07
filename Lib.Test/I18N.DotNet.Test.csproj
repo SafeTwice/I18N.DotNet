@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Lib\I18N.Net.csproj" />
+    <ProjectReference Include="..\Lib\I18N.DotNet.csproj" />
   </ItemGroup>
 
 </Project>

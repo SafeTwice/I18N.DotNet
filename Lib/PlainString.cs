@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace I18N.Net
+namespace I18N.DotNet
 {
     /// <summary>
     /// Represents just a string. This class is used to allow interpolated strings to preferably be passed as FormattableString 

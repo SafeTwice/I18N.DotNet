@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Tool\I18N.Tool.csproj" />
+    <ProjectReference Include="..\Tool\I18N.DotNet.Tool.csproj" />
   </ItemGroup>
 
 </Project>

@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Xunit;
 
-namespace I18N.Tool.Test
+namespace I18N.DotNet.Tool.Test
 {
     public class ProgramTest : IDisposable
     {

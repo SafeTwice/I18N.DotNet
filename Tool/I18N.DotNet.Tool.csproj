@@ -12,12 +12,12 @@
     <Title>$(AssemblyName)</Title>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <Authors>SafeTwice S.L.</Authors>
-    <PackageProjectUrl>https://github.com/SafeTwice/I18N.Net</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/SafeTwice/I18N.Net.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/SafeTwice/I18N.DotNet</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SafeTwice/I18N.DotNet.git</RepositoryUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl> 
     <PackageTags>i18n;translation;internationalization;localization;l10n</PackageTags>
     <Company>www.safetwice.com</Company>
-    <Description>Tool for management of localization files for the I18N.Net library</Description>
+    <Description>Tool for management of localization files for the I18N.DotNet library</Description>
     <Copyright>Copyright © 2022-2023 SafeTwice S.L.</Copyright>
     <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
@@ -45,7 +45,7 @@
 	
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-      <_Parameter1>I18N.Tool.Test</_Parameter1>
+      <_Parameter1>I18N.DotNet.Tool.Test</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
 

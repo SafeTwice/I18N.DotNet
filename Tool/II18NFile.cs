@@ -7,7 +7,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace I18N.Tool
+namespace I18N.DotNet.Tool
 {
     public interface II18NFile
     {

@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace I18N.Net
+namespace I18N.DotNet
 {
     /// <summary>
     /// Utility class for convenient access to localization functions.

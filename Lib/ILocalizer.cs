@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace I18N.Net
+namespace I18N.DotNet
 {
     /// <summary>
     /// Converter of strings from a language-neutral value to its corresponding language-specific localization.

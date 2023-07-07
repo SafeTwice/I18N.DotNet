@@ -12,7 +12,7 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace I18N.Tool
+namespace I18N.DotNet.Tool
 {
     public class I18NFile : II18NFile
     {

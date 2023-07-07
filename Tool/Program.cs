@@ -12,7 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace I18N.Tool
+namespace I18N.DotNet.Tool
 {
     [Verb( "generate", HelpText = "Generate an I18N file." )]
     class GenerateOptions

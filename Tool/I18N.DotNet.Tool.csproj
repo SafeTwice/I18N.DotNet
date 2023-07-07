@@ -5,7 +5,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>dotnet-i18n-tool</ToolCommandName>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <DebugType>embedded</DebugType>
     <NoWarn>CS1587</NoWarn>
     <EnablePackageValidation>true</EnablePackageValidation>
@@ -23,14 +23,14 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
   </PropertyGroup>
 
-    <ItemGroup>
-        <None Include="..\README.md">
-            <Pack>True</Pack>
-            <PackagePath>\</PackagePath>
-        </None>
-    </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
-    <ItemGroup>
+  <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.3.0" />
     <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.1.1">

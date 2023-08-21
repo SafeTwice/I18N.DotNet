@@ -2,6 +2,7 @@ I18N.DotNet
 ========
 
 [![Build](https://github.com/SafeTwice/I18N.DotNet/actions/workflows/Build.yml/badge.svg)](https://github.com/SafeTwice/I18N.DotNet/actions/workflows/Build.yml)
+[![Coverage Status](https://coveralls.io/repos/github/SafeTwice/I18N.DotNet/badge.svg)](https://coveralls.io/github/SafeTwice/I18N.DotNet)
 
 ## About
 

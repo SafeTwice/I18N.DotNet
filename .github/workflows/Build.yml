@@ -26,16 +26,22 @@ jobs:
       - name: Build
         run: dotnet build --no-restore -c Release
       - name: Test
-        run: dotnet test --no-build --verbosity normal -c Release
+        run: dotnet test --no-build --verbosity normal -c Release -p:CollectCoverage=true -p:CoverletOutputFormat=lcov -p:CoverletOutput=Coverage/
       - name: Pack
         run: dotnet pack --no-build --verbosity normal -c Release -o ${{ env.NuGetDirectory }}
-      - name: Upload artifacts
+      - name: Upload NuGets
         uses: actions/upload-artifact@v3
         with:
           name: nuget
           if-no-files-found: error
           retention-days: 7
           path: ${{ env.NuGetDirectory }}/*.nupkg
+      - name: Publish coverage results
+        uses: coverallsapp/github-action@v2.2.1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          format: lcov
+          files: Lib.Test/Coverage/coverage.info Tool.Test/Coverage/coverage.info
 
   validate-nuget:
     runs-on: windows-latest
@@ -45,7 +51,7 @@ jobs:
         uses: actions/setup-dotnet@v3
       - name: Install Meziantou NuGet validator
         run: dotnet tool update Meziantou.Framework.NuGetPackageValidation.Tool --global
-      - name: Download artifacts
+      - name: Download NuGets
         uses: actions/download-artifact@v3
         with:
           name: nuget
@@ -60,7 +66,7 @@ jobs:
     steps:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
-      - name: Download artifacts
+      - name: Download NuGets
         uses: actions/download-artifact@v3
         with:
           name: nuget
@@ -82,7 +88,7 @@ jobs:
         run: dotnet tool update docfx --global
       - name: Run docfx
         run: docfx Lib/docfx/docfx.json
-      - name: Upload artifacts
+      - name: Upload documentation
         uses: actions/upload-artifact@v3
         with:
           name: docs
@@ -95,7 +101,7 @@ jobs:
     runs-on: windows-latest
     needs: [ generate-docs ]
     steps:
-      - name: Download artifacts
+      - name: Download documentation
         uses: actions/download-artifact@v3
         with:
           name: docs

@@ -17,12 +17,10 @@ The easiest way to install I18N.DotNet is using the NuGet package: https://www.n
 
 Source code must be adapted following two simple steps:
 
-1) The first step consists in adding a couple of calls during initialization of the program (before any translated string is used):
-
-  1. Call `I18N.DotNet.Global.Localizer.SetTargetLanguage()` to set the language to which strings will be translated.
-  2. Call `I18N.DotNet.Global.Localizer.LoadXML()` to load the file that contains the translations.
-
-2) The second step consists in adapting the source code in order to wrap the strings to be translated with a call to `I18N.DotNet.Global.Localize()`.
+- The first step consists in adding a couple of calls during initialization of the program (before any translated string is used):
+  - Call `I18N.DotNet.Global.Localizer.SetTargetLanguage()` to set the language to which strings will be translated.
+  - Call `I18N.DotNet.Global.Localizer.LoadXML()` to load the file that contains the translations.
+- The second step consists in adapting the source code in order to wrap the strings to be translated with a call to `I18N.DotNet.Global.Localize()`.
 
 ###### Example
 ``` CS

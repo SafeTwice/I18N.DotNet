@@ -23,6 +23,10 @@ jobs:
         uses: actions/setup-dotnet@v3
       - name: Restore dependencies
         run: dotnet restore
+      - name: Patch source documentation
+        run: |
+          $SkipCount = ( Get-Content README.md | Select-String -Pattern "About" | Select-Object -First 1 ).LineNumber - 1
+          ( Get-Content README.md | Select-Object -Skip $SkipCount ) | Set-Content README.md
       - name: Build
         run: dotnet build --no-restore -c Release
       - name: Test
@@ -86,6 +90,10 @@ jobs:
         uses: actions/setup-dotnet@v3
       - name: Install docfx
         run: dotnet tool update docfx --global
+      - name: Patch source documentation
+        run: |
+          $SkipCount = ( Get-Content README.md | Select-String -Pattern "About" | Select-Object -First 1 ).LineNumber - 1
+          ( Get-Content README.md | Select-Object -Skip $SkipCount ) | Set-Content README.md
       - name: Run docfx
         run: docfx Lib/docfx/docfx.json
       - name: Upload documentation

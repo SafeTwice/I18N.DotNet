@@ -1,10 +1,10 @@
 var indexSectionsWithContent =
 {
-  0: "cilopsv",
-  1: "ilp",
+  0: "cgilopsv",
+  1: "gilp",
   2: "i",
   3: "clops",
-  4: "v",
+  4: "lv",
   5: "i"
 };
 

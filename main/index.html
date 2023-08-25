@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@6a8ff5</span>
+   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@ab9fd6</span>
    </div>
   </td>
  </tr>
@@ -91,7 +91,7 @@ Adapting Source Code (I18N)</h2>
 <li>Call <code>I18N.DotNet.Global.Localizer.LoadXML()</code> to load the file that contains the translations.</li>
 </ul>
 </li>
-<li>The second step consists in adapting the source code in order to wrap the strings to be translated with a call to <code>I18N.DotNet.Global.Localize()</code>.</li>
+<li>The second step consists in adapting the source code in order to wrap the strings to be translated with a call to <code><a class="el" href="classI18N_1_1DotNet_1_1Global.html#a75a861e41bbca8dae718bf3e67c7c988" title="Localizes a string using the global localizer.">I18N.DotNet.Global.Localize()</a></code>.</li>
 </ul>
 <h5>Example</h5>
 <div class="fragment"><div class="line">using static I18N.DotNet.Global;</div>
@@ -150,7 +150,7 @@ Language Identifiers &amp; Variants</h2>
 </ul>
 <h2><a class="anchor" id="autotoc_md8"></a>
 String Format</h2>
-<p >Calls to <code>String.Format()</code> where the format string has to be internationalized can be replaced by a call to <code>I18N.DotNet.Global.LocalizeFormat()</code> (or <code>Localizer.LocalizeFormat()</code>, see Global and Local Localizers).</p>
+<p >Calls to <code>String.Format()</code> where the format string has to be internationalized can be replaced by a call to <code><a class="el" href="classI18N_1_1DotNet_1_1Global.html#adcf99559166519298dc697938fe7988d" title="Localizes and then formats a string using the global localizer.">I18N.DotNet.Global.LocalizeFormat()</a></code> (or <code>Localizer.LocalizeFormat()</code>, see Global and Local Localizers).</p>
 <h5>Example</h5>
 <div class="fragment"><div class="line">String.Format( Localize( &quot;Format string to be translated with value {0}&quot; ), myVar );</div>
 <div class="line">// is equivalent to</div>
@@ -158,7 +158,7 @@ String Format</h2>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md9"></a>
 Global and Local Localizers</h2>
 <p >Instances of the <code>Localizer</code> class are responsible for loading string translations and then providing localization functionality (i.e. perform string translations) for software components.</p>
-<p >The static class <code>I18N.DotNet.Global</code> has the property <code>Localizer</code> which contains the global localizer. This instance is shared and can be conveniently used by all software components. In fact all the methods exposed by the <code>I18N.DotNet.Global</code> class are just convenience wrappers that call the global localizer.</p>
+<p >The static class <code><a class="el" href="classI18N_1_1DotNet_1_1Global.html" title="Utility class for convenient access to localization functions.">I18N.DotNet.Global</a></code> has the property <code>Localizer</code> which contains the global localizer. This instance is shared and can be conveniently used by all software components. In fact all the methods exposed by the <code><a class="el" href="classI18N_1_1DotNet_1_1Global.html" title="Utility class for convenient access to localization functions.">I18N.DotNet.Global</a></code> class are just convenience wrappers that call the global localizer.</p>
 <p >If necessary, additional instances of the <code>Localizer</code> class can be created (local localizers), loaded with string translations, and then passed to software components for being used instead of the global localizer. Nevertheless, for most cases using the global localizer is just enough.</p>
 <h2><a class="anchor" id="autotoc_md10"></a>
 Contexts</h2>
@@ -166,7 +166,7 @@ Contexts</h2>
 <p >Since the source language key is the same in both cases, context partitioning must be used, which affects the source code side and the translations file side.</p>
 <h4><a class="anchor" id="autotoc_md11"></a>
 Context Partitioning in Source Code (I18N)</h4>
-<p >In source code, the context of the key can be explicitly indicated when the string is being internationalized by calling <code>I18N.DotNet.Global.Context()</code> (or <code>Localizer.Context()</code>, see Global and Local Localizers) and passing it the context identifier, and then calling the localization methods on the returned context <code>Localizer</code>.</p>
+<p >In source code, the context of the key can be explicitly indicated when the string is being internationalized by calling <code><a class="el" href="classI18N_1_1DotNet_1_1Global.html#ac5535631b956276defccc0a32ad401a6" title="Gets a context in the global localizer.">I18N.DotNet.Global.Context()</a></code> (or <code>Localizer.Context()</code>, see Global and Local Localizers) and passing it the context identifier, and then calling the localization methods on the returned context <code>Localizer</code>.</p>
 <p >Contexts can be nested. A chain of successively nested contexts can be identified by joining their identifiers using the dot character ('.') as a composite context identifier.</p>
 <p >Translations in a context are searched hierarchically: if a translation is not found for the target language in is context (neither for the language variant nor the primary language), then a translation is searched again on its parent context (if it exists).</p>
 <h5>Example</h5>

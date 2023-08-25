@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['loadxml_0',['LoadXML',['../classI18N_1_1DotNet_1_1Localizer.html#ad2e6b2a3195684060da28134d501f572',1,'I18N.DotNet.Localizer.LoadXML(string filepath, bool merge=true)'],['../classI18N_1_1DotNet_1_1Localizer.html#a242f4c8e13afb9495b3324e2ba12d888',1,'I18N.DotNet.Localizer.LoadXML(Stream stream, bool merge=true)'],['../classI18N_1_1DotNet_1_1Localizer.html#a9e27df54118ec354638312c287d4b09c',1,'I18N.DotNet.Localizer.LoadXML(XDocument doc, bool merge=true)']]],
-  ['localize_1',['Localize',['../interfaceI18N_1_1DotNet_1_1ILocalizer.html#ada22a224e5a85fd1589101df66e1d0f2',1,'I18N.DotNet.ILocalizer.Localize(PlainString text)'],['../interfaceI18N_1_1DotNet_1_1ILocalizer.html#a7499982383540c50c9c8af4ca77b148a',1,'I18N.DotNet.ILocalizer.Localize(FormattableString frmtText)'],['../interfaceI18N_1_1DotNet_1_1ILocalizer.html#a3579424af7a27438a10c409e974bcdbf',1,'I18N.DotNet.ILocalizer.Localize(IEnumerable&lt; string &gt; texts)'],['../classI18N_1_1DotNet_1_1Localizer.html#ada22a224e5a85fd1589101df66e1d0f2',1,'I18N.DotNet.Localizer.Localize(PlainString text)'],['../classI18N_1_1DotNet_1_1Localizer.html#a7499982383540c50c9c8af4ca77b148a',1,'I18N.DotNet.Localizer.Localize(FormattableString frmtText)'],['../classI18N_1_1DotNet_1_1Localizer.html#a3579424af7a27438a10c409e974bcdbf',1,'I18N.DotNet.Localizer.Localize(IEnumerable&lt; string &gt; texts)']]],
-  ['localizeformat_2',['LocalizeFormat',['../interfaceI18N_1_1DotNet_1_1ILocalizer.html#a0f19386626945b60ec58ca38a91b7d35',1,'I18N.DotNet.ILocalizer.LocalizeFormat()'],['../classI18N_1_1DotNet_1_1Localizer.html#a0f19386626945b60ec58ca38a91b7d35',1,'I18N.DotNet.Localizer.LocalizeFormat()']]],
-  ['localizer_3',['Localizer',['../classI18N_1_1DotNet_1_1Localizer.html',1,'Localizer'],['../classI18N_1_1DotNet_1_1Localizer.html#acd672c9d3494c0206ca23d2ad8ef6f82',1,'I18N.DotNet.Localizer.Localizer()']]]
+  ['dotnet_0',['DotNet',['../namespaceI18N_1_1DotNet.html',1,'I18N']]],
+  ['i18n_1',['I18N',['../namespaceI18N.html',1,'']]],
+  ['i18n_2edotnet_2',['I18N.DotNet',['../index.html',1,'']]],
+  ['ilocalizer_3',['ILocalizer',['../interfaceI18N_1_1DotNet_1_1ILocalizer.html',1,'I18N::DotNet']]]
 ];

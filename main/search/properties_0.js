@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['value_0',['Value',['../classI18N_1_1DotNet_1_1PlainString.html#af7b88db799d8f791f785e437bc6099d2',1,'I18N::DotNet::PlainString']]]
+  ['localizer_0',['Localizer',['../classI18N_1_1DotNet_1_1Global.html#a900be687e98d23206a688616f05d2b21',1,'I18N::DotNet::Global']]]
 ];

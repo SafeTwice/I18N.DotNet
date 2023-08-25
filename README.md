@@ -162,3 +162,9 @@ Context partitioning is performed in the translations XML file using `Context` e
 ### Embedding the Translations File
 
 Instead of using translation files installed on the filesystem during the installation procedure for the application, these files can be embedded inside an executable assembly. Embedded resource files can then be accessed as `Stream` objects which are passed to `Localizer.LoadXML`.
+
+## Full API Documentation
+
+You can browse the full API documentation for:
+ - [The last release (stable)](https://safetwice.github.io/I18N.DotNet/stable)
+ - [Main branch (unstable)](https://safetwice.github.io/I18N.DotNet/main)

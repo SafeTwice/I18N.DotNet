@@ -2,6 +2,17 @@ name: Build, Test & Publish
 
 on:
   workflow_dispatch:  # Allow running the workflow manually from the GitHub UI
+    inputs:
+      publish_docs:
+        description: 'Publish documentation'
+        type: boolean
+        required: false
+        default: false
+      publish_docs_as_stable:
+        description: 'Publish documentation as stable'
+        type: boolean
+        required: false
+        default: false
   push: # Run the workflow when pushing to the main branch
   pull_request:  # Run the workflow for all pull requests
   release:
@@ -93,12 +104,18 @@ jobs:
         run: |
           awk -i inplace 'BEGIN {p=0}; NR<3 {print}; /^## About/ {p=1}; /^## Full API Documentation/ {p=0}; p==1 {print}' README.md
           sed -i "3i Documentation in PDF format is available [here](./${{ env.PROJECT_NAME }}.pdf)." README.md
-      - name: Set library version in documentation (tag)
-        if: github.ref_type == 'tag'
-        run: sed -i -E 's/(PROJECT_NUMBER\s*=) \w*/\1 v'$GITHUB_REF_NAME'/' Lib/docs/Doxyfile
-      - name: Set library version in documentation (branch)
-        if: github.ref_type != 'tag'
-        run: sed -i -E 's/(PROJECT_NUMBER\s*=) \w*/\1 '$GITHUB_REF_NAME'@'${GITHUB_SHA:0:6}'/' Lib/docs/Doxyfile
+      - name: Set library version in documentation
+        env:
+          PUBLISH_DOCS_STABLE: ${{ ( github.ref_type == 'tag' || inputs.publish_docs_as_stable ) && 'true' || 'false' }}
+        run: |
+          LIB_VERSION=$GITHUB_REF_NAME
+          if [[ $LIB_VERSION =~ ^[[:digit:]] ]]; then
+            LIB_VERSION='v'$LIB_VERSION
+          fi
+          if [[ $PUBLISH_DOCS_STABLE == "false" ]]; then
+            LIB_VERSION=$LIB_VERSION'@'${GITHUB_SHA:0:6}
+          fi
+          sed -i -E 's/(PROJECT_NUMBER\s*=) \w*/\1 '$LIB_VERSION'/' Lib/docs/Doxyfile
       - name: Generate documentation using Doxygen
         uses: mattnotmitt/doxygen-action@v1.9.5
         with:
@@ -116,7 +133,7 @@ jobs:
           path: Lib/html
 
   publish-docs:
-    if: github.ref == 'refs/heads/main' || github.event_name == 'release'
+    if: github.ref == 'refs/heads/main' || github.event_name == 'release' || inputs.publish_docs || inputs.publish_docs_as_stable
     runs-on: ubuntu-latest
     needs: [ generate-docs ]
     steps:
@@ -133,7 +150,7 @@ jobs:
           destination_dir: ${{ github.ref_name }}
 
   update-stable-docs:
-    if: github.event_name == 'release'
+    if: github.event_name == 'release' || inputs.publish_docs_as_stable
     runs-on: ubuntu-latest
     needs: [ publish-docs ]
     steps:
@@ -142,13 +159,10 @@ jobs:
         with:
           ref: gh-pages
       - name: Redirect stable to new release
-        if: github.event_name == 'release'
-        run: |
-          ln -sf $GITHUB_REF_NAME stable
-          git add stable
-          git commit -m "Update stable documentation to $GITHUB_REF_NAME"
-      - name: Push changes
-        uses: ad-m/github-push-action@master
+        run: ln -sf $GITHUB_REF_NAME stable
+      - name: Commit and push changes
+        uses: EndBug/add-and-commit@v9
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: gh-pages
+          add: stable
+          message: 'Update stable documentation to ${{ github.ref_name }}'
+          push: true

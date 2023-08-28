@@ -8,6 +8,7 @@ on:
     types: [ published ]  # Run the workflow when a new GitHub release is published
     
 env:
+  PROJECT_NAME: I18N.DotNet
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
   NUGET_DIR: ${{ github.workspace }}/nuget
@@ -89,23 +90,27 @@ jobs:
       - name: Chekout
         uses: actions/checkout@v3
       - name: Patch source documentation
-        run:  awk -i inplace 'BEGIN {p=0}; NR<3 {print}; /^## About/ {p=1}; /^## Full API Documentation/ {p=0}; p==1 {print}' README.md
+        run: |
+          awk -i inplace 'BEGIN {p=0}; NR<3 {print}; /^## About/ {p=1}; /^## Full API Documentation/ {p=0}; p==1 {print}' README.md
+          sed -i "3i Documentation in PDF format is available [here](./${{ env.PROJECT_NAME }}.pdf)." README.md
       - name: Set library version in documentation (tag)
         if: github.ref_type == 'tag'
-        run:  sed -i -E 's/(PROJECT_NUMBER\s*=) \w*/\1 v'$GITHUB_REF_NAME'/' Lib/docs/Doxyfile
+        run: sed -i -E 's/(PROJECT_NUMBER\s*=) \w*/\1 v'$GITHUB_REF_NAME'/' Lib/docs/Doxyfile
       - name: Set library version in documentation (branch)
         if: github.ref_type != 'tag'
-        run:  sed -i -E 's/(PROJECT_NUMBER\s*=) \w*/\1 '$GITHUB_REF_NAME'@'${GITHUB_SHA:0:6}'/' Lib/docs/Doxyfile
+        run: sed -i -E 's/(PROJECT_NUMBER\s*=) \w*/\1 '$GITHUB_REF_NAME'@'${GITHUB_SHA:0:6}'/' Lib/docs/Doxyfile
       - name: Generate documentation using Doxygen
         uses: mattnotmitt/doxygen-action@v1.9.5
         with:
           working-directory: Lib/
           doxyfile-path: docs/Doxyfile
           enable-latex: true
-      - name: Upload HTML documentation
+      - name: Copy PDF documentation
+        run: sudo cp Lib/latex/refman.pdf Lib/html/${{ env.PROJECT_NAME }}.pdf
+      - name: Upload documentation
         uses: actions/upload-artifact@v3
         with:
-          name: html-docs
+          name: docs
           if-no-files-found: error
           retention-days: 7
           path: Lib/html
@@ -118,7 +123,7 @@ jobs:
       - name: Download documentation
         uses: actions/download-artifact@v3
         with:
-          name: html-docs
+          name: docs
           path: ${{ env.DOCS_DIR }}
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3

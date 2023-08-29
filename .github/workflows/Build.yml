@@ -13,8 +13,14 @@ on:
         type: boolean
         required: false
         default: false
+      analyze:
+        description: 'Perform analysis'
+        type: boolean
+        required: false
+        default: false
   push: # Run the workflow when pushing to the main branch
-  pull_request:  # Run the workflow for all pull requests
+  pull_request: 
+    types: [ opened, reopened, synchronize ] # Run the workflow for all pull requests
   release:
     types: [ published ]  # Run the workflow when a new GitHub release is published
     
@@ -77,10 +83,31 @@ jobs:
       - name: Validate package
         run: meziantou.validate-nuget-package (Get-ChildItem "${{ env.NUGET_DIR }}/*.nupkg") --excluded-rule-ids 32
 
+  analyze:
+    if: github.ref == 'refs/heads/main' || github.event_name == 'pull_request' || github.event_name == 'release' || inputs.analyze
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: csharp
+      - name: Build
+        run: dotnet build --no-restore -c Release
+      - name: CodeQL analysis
+        uses: github/codeql-action/analyze@v2
+        with:
+          category: "/language:csharp"
+
   publish-nuget:
     if: github.event_name == 'release'
     runs-on: windows-latest
-    needs: [ validate-nuget ]
+    needs: [ validate-nuget, analyze ]
     steps:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3

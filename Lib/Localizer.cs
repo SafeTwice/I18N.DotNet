@@ -1,5 +1,5 @@
 ﻿/// @file
-/// @copyright  Copyright (c) 2022-2023 SafeTwice S.L. All rights reserved.
+/// @copyright  Copyright (c) 2020-2023 SafeTwice S.L. All rights reserved.
 /// @license    See LICENSE.txt
 
 using System;
@@ -23,7 +23,7 @@ namespace I18N.DotNet
         /// <summary>
         /// Exception thrown when a localization file cannot be parsed properly. 
         /// </summary>
-        public class ParseException : ApplicationException
+        public class ParseException : Exception
         {
             /// <summary>
             /// Constructor.
@@ -43,15 +43,14 @@ namespace I18N.DotNet
         {
         }
 
-        /*===========================================================================
-         *                            PUBLIC METHODS
-         *===========================================================================*/
+        //===========================================================================
+        //                            PUBLIC METHODS
+        //===========================================================================
 
         /// <inheritdoc/>
         public string Localize( PlainString text )
         {
-            string localizedText;
-            if( m_localizations.TryGetValue( text.Value, out localizedText ) )
+            if( m_localizations.TryGetValue( text.Value, out var localizedText ) )
             {
                 return localizedText;
             }
@@ -72,10 +71,9 @@ namespace I18N.DotNet
         }
 
         /// <inheritdoc/>
-        public string LocalizeFormat( string format, params object[] args )
+        public string LocalizeFormat( string format, params object?[] args )
         {
-            string localizedFormat;
-            if( m_localizations.TryGetValue( format, out localizedFormat ) )
+            if( m_localizations.TryGetValue( format, out var localizedFormat ) )
             {
                 return String.Format( localizedFormat, args );
             }
@@ -137,7 +135,7 @@ namespace I18N.DotNet
         {
             string leftContextId = splitContextIds.Current.Trim();
 
-            Localizer localizer;
+            Localizer? localizer;
             if( !m_nestedContexts.TryGetValue( leftContextId, out localizer ) )
             {
                 localizer = new Localizer( this, m_targetLanguageFull, m_targetLanguagePrimary );
@@ -194,7 +192,7 @@ namespace I18N.DotNet
         /// </remarks>
         /// <param name="filepath" > Path to the localization configuration file in XML format</param>
         /// <param name="merge"> Replaces the current localization mapping with the loaded one when<c>false</c>,
-        ///                      otherwise merges both (existing mappings are overridden with loaded ones ).</param>
+        ///                      otherwise merges both (existing mappings are overridden with loaded ones).</param>
         /// <exception cref="InvalidOperationException">Thrown when the language is not set.</exception>
         /// <exception cref="ParseException">Thrown when the input file cannot be parsed properly.</exception>
         public void LoadXML( string filepath, bool merge = true )
@@ -210,7 +208,7 @@ namespace I18N.DotNet
         /// </remarks>
         /// <param name="stream">Stream with the localization configuration in XML format</param>
         /// <param name="merge"> Replaces the current localization mapping with the loaded one when<c>false</c>,
-        ///                      otherwise merges both (existing mappings are overridden with loaded ones ).</param>
+        ///                      otherwise merges both (existing mappings are overridden with loaded ones).</param>
         /// <exception cref="InvalidOperationException">Thrown when the language is not set.</exception>
         /// <exception cref="ParseException">Thrown when the input file cannot be parsed properly.</exception>
         public void LoadXML( Stream stream , bool merge = true )
@@ -226,7 +224,7 @@ namespace I18N.DotNet
         /// </remarks>
         /// <param name="doc">XML document with the localization configuration</param>
         /// <param name="merge"> Replaces the current localization mapping with the loaded one when<c>false</c>,
-        ///                       otherwise merges both (existing mappings are overridden with loaded ones ).</param>
+        ///                       otherwise merges both (existing mappings are overridden with loaded ones).</param>
         /// <exception cref="InvalidOperationException">Thrown when the language is not set.</exception>
         /// <exception cref="ParseException">Thrown when the input file cannot be parsed properly.</exception>
         public void LoadXML( XDocument doc, bool merge = true )
@@ -242,7 +240,7 @@ namespace I18N.DotNet
                 m_nestedContexts.Clear();
             }
 
-            XElement rootElement = doc.Root;
+            var rootElement = doc.Root ?? throw new ParseException( $"XML has no root element" );
 
             if( rootElement.Name != "I18N" )
             {
@@ -256,7 +254,7 @@ namespace I18N.DotNet
         //                          PRIVATE CONSTRUCTORS
         //===========================================================================
 
-        private Localizer( Localizer parent, string targetLanguageFull, string targetLanguagePrimary )
+        private Localizer( Localizer parent, string? targetLanguageFull, string? targetLanguagePrimary )
         {
             m_parentContext = parent;
 
@@ -301,9 +299,9 @@ namespace I18N.DotNet
 
         private void LoadEntry( XElement element )
         {
-            string key = null;
-            string valueFull = null;
-            string valuePrimary = null;
+            string? key = null;
+            string? valueFull = null;
+            string? valuePrimary = null;
 
             foreach( var childElement in element.Elements() )
             {
@@ -318,7 +316,7 @@ namespace I18N.DotNet
                         break;
 
                     case "Value":
-                        string loadedValue;
+                        string? loadedValue;
                         var loadedValueType = LoadValue( childElement, out loadedValue );
                         if( loadedValueType == EValueType.FULL )
                         {
@@ -348,7 +346,7 @@ namespace I18N.DotNet
                 throw new ParseException( $"Line {( (IXmlLineInfo) element ).LineNumber}: Missing child 'Key' XML element" );
             }
 
-            string value = ( valueFull ?? valuePrimary );
+            var value = ( valueFull ?? valuePrimary );
 
             if( value != null )
             {
@@ -356,9 +354,9 @@ namespace I18N.DotNet
             }
         }
 
-        private EValueType LoadValue( XElement element, out string value )
+        private EValueType LoadValue( XElement element, out string? value )
         {
-            string lang = element.Attribute( "lang" )?.Value.ToLower();
+            string? lang = element.Attribute( "lang" )?.Value.ToLower();
             if( lang == null )
             {
                 throw new ParseException( $"Line {( (IXmlLineInfo) element ).LineNumber}: Missing attribute 'lang' in '{element.Name}' XML element" );
@@ -411,7 +409,7 @@ namespace I18N.DotNet
 
         private void LoadContext( XElement element )
         {
-            string contextId = element.Attribute( "id" )?.Value;
+            string? contextId = element.Attribute( "id" )?.Value;
             if( contextId == null )
             {
                 throw new ParseException( $"Line {( (IXmlLineInfo) element ).LineNumber}: Missing attribute 'id' in '{element.Name}' XML element" );
@@ -424,10 +422,11 @@ namespace I18N.DotNet
         //                           PRIVATE ATTRIBUTES
         //===========================================================================
 
-        private Localizer m_parentContext = null;
-        private string m_targetLanguageFull = null;
-        private string m_targetLanguagePrimary = null;
-        private Dictionary<string, string> m_localizations = new Dictionary<string, string>();
-        private Dictionary<string, Localizer> m_nestedContexts = new Dictionary<string, Localizer>();
+        private readonly Localizer? m_parentContext = null;
+        private readonly Dictionary<string, string> m_localizations = new();
+        private readonly Dictionary<string, Localizer> m_nestedContexts = new();
+
+        private string? m_targetLanguageFull = null;
+        private string? m_targetLanguagePrimary = null;
     }
 }

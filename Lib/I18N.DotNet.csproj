@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net472;net48;net5.0;net6.0</TargetFrameworks>
-    <Version>1.1.1</Version>
+    <TargetFrameworks>net472;net48;net6.0;net7.0;net8.0</TargetFrameworks>
+    <Version>1.2</Version>
     <DebugType>embedded</DebugType>
     <NoWarn>NETSDK1138;CS1587</NoWarn>
     <EnablePackageValidation>true</EnablePackageValidation>
@@ -19,6 +19,8 @@
     <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <LangVersion>10</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,7 +35,7 @@
       <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       </PackageReference>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

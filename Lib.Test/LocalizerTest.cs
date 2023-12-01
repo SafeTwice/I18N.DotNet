@@ -1,22 +1,21 @@
-/**
- * @file
- * @copyright  Copyright (c) 2020 SafeTwice S.L. All rights reserved.
- * @license    MIT (https://opensource.org/licenses/MIT)
- */
+/// @file
+/// @copyright  Copyright (c) 2020-2023 SafeTwice S.L. All rights reserved.
+/// @license    See LICENSE.txt
 
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using Xunit;
 
 namespace I18N.DotNet.Test
 {
     public class LocalizerTest
     {
-        private Stream CreateStream( string data )
+        private static Stream CreateStream( string data )
         {
             var stream = new MemoryStream();
-            var writer = new StreamWriter( stream, leaveOpen: true );
+            var writer = new StreamWriter( stream, Encoding.UTF8, 1024, true );
 
             writer.Write( data );
             writer.Flush();
@@ -25,7 +24,7 @@ namespace I18N.DotNet.Test
             return stream;
         }
 
-        private Stream GetConfigA()
+        private static Stream GetConfigA()
         {
             string config =
                 "<I18N>\n" +

@@ -1,5 +1,5 @@
 ﻿/// @file
-/// @copyright  Copyright (c) 2022-2023 SafeTwice S.L. All rights reserved.
+/// @copyright  Copyright (c) 2020-2023 SafeTwice S.L. All rights reserved.
 /// @license    See LICENSE.txt
 
 using System;
@@ -19,7 +19,7 @@ namespace I18N.DotNet
         /// <value>
         /// Global localizer.
         /// </value>
-        public static Localizer Localizer { get; private set; } = new Localizer();
+        public static Localizer Localizer { get; } = new Localizer();
 
         //===========================================================================
         //                            PUBLIC METHODS
@@ -28,7 +28,7 @@ namespace I18N.DotNet
         /// <summary>
         /// Localizes a string using the global localizer.
         /// </summary>
-        /// <seealso cref="Localizer.Localize(PlainString)"/>
+        /// <seealso cref="ILocalizer.Localize(PlainString)"/>
         /// <param name="text">Language-neutral string</param>
         /// <returns>Language-specific localized string if found, or <paramref name="text"/> otherwise</returns>
         public static string Localize( PlainString text )
@@ -39,7 +39,7 @@ namespace I18N.DotNet
         /// <summary>
         /// Localizes an interpolated string using the global localizer.
         /// </summary>
-        /// <seealso cref="Localizer.Localize(FormattableString)"/>
+        /// <seealso cref="ILocalizer.Localize(FormattableString)"/>
         /// <param name="frmtText">Language-neutral formattable string</param>
         /// <returns>Formatted string generated from the language-specific localized format string if found, 
         ///          or generated from <paramref name="frmtText"/> otherwise</returns>
@@ -51,9 +51,7 @@ namespace I18N.DotNet
         /// <summary>
         /// Localizes multiple strings.
         /// </summary>
-        /// <remarks>
-        /// Converts the language-neutral strings in <paramref name="texts"/> to their corresponding language-specific localized values.
-        /// </remarks>
+        /// <seealso cref="ILocalizer.Localize(IEnumerable{string})"/>
         /// <param name="texts">Array of language-neutral strings</param>
         /// <returns>Array with the language-specific localized strings if found, or the language-neutral string otherwise</returns>
         public static IEnumerable<string> Localize( IEnumerable<string> texts )
@@ -64,7 +62,7 @@ namespace I18N.DotNet
         /// <summary>
         /// Localizes and then formats a string using the global localizer.
         /// </summary>
-        /// <seealso cref="Localizer.LocalizeFormat(string, object[])"/>
+        /// <seealso cref="ILocalizer.LocalizeFormat(string, object[])"/>
         /// <param name="format">Language-neutral format string</param>
         /// <param name="args">Arguments for the format string</param>
         /// <returns>Formatted string generated from the language-specific localized format string if found,
@@ -84,6 +82,5 @@ namespace I18N.DotNet
         {
             return Localizer.Context( contextId );
         }
-
     }
 }

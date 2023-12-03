@@ -62,5 +62,33 @@ namespace I18N.DotNet
         /// <param name="texts">Language-neutral strings</param>
         /// <returns></returns>
         IEnumerable<string> Localize( IEnumerable<string> texts );
+
+        /// <summary>
+        /// Gets the localizer for a context in the current localizer.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// Contexts are used to disambiguate the conversion of the same language-neutral string to different
+        /// language-specific strings depending on the context where the conversion is performed.
+        /// </para>
+        /// <para>
+        /// Contexts can be nested. The context identifier can identify a chain of nested contexts by separating
+        /// their identifiers with the '.' character (left = outermost / right = innermost).
+        /// </para>
+        /// </remarks>
+        /// <param name="contextId">Identifier of the context</param>
+        /// <returns>Localizer for the given context</returns>
+        ILocalizer Context( string contextId );
+
+        /// <summary>
+        /// Gets the localizer for a context in the current localizer.
+        /// </summary>
+        /// <remarks>
+        /// Contexts are used to disambiguate the conversion of the same language-neutral string to different
+        /// language-specific strings depending on the context where the conversion is performed.
+        /// </remarks>
+        /// <param name="splitContextIds">Chain of context identifiers in split form</param>
+        /// <returns>Localizer for the given context</returns>
+        ILocalizer Context( IEnumerable<string> splitContextIds );
     }
 }

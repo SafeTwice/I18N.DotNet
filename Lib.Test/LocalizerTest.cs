@@ -236,6 +236,24 @@ namespace I18N.DotNet.Test
 
         [Theory]
         [InlineData( "Non-existant Key", "Non-existant Key" )]
+        [InlineData( "Simple Key 1", "Clave simple 1 en contexto L2" )]
+        [InlineData( "Simple Key 2", "Clave simple 2 en contexto L1" )]
+        [InlineData( "Simple Key 3", "Clave simple 3" )]
+        [InlineData( "Simple Key 4", "Clave simple 4" )]
+        public void Context_ExistingContextL2B_Split( string key, string value )
+        {
+            // Prepare
+
+            var localizer = new Localizer();
+            localizer.SetTargetLanguage( "es-es" ).LoadXML( GetConfigA() );
+
+            // Execute & Verify
+
+            Assert.Equal( value, localizer.Context( new string[] { "Level1", "Level2" } ).Localize( key ) );
+        }
+
+        [Theory]
+        [InlineData( "Non-existant Key", "Non-existant Key" )]
         [InlineData( "Simple Key 1", "Clef simple 1" )]
         [InlineData( "Simple Key 2", "Clef simple 2" )]
         [InlineData( "Simple Key 3", "Clef simple 3" )]

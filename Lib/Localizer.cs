@@ -100,56 +100,16 @@ namespace I18N.DotNet
             return result;
         }
 
-        /// <summary>
-        /// Gets the localizer for a context in the current localizer.
-        /// </summary>
-        /// <remarks>
-        /// <para>
-        /// Contexts are used to disambiguate the conversion of the same language-neutral string to different
-        /// language-specific strings depending on the context where the conversion is performed.
-        /// </para>
-        /// <para>
-        /// Contexts can be nested.The context identifier can identify a chain of nested contexts by separating
-        /// their identifiers with the '.' character (left = outermost / right = innermost ).
-        /// </para>
-        /// </remarks>
-        /// <param name="contextId">Identifier of the context</param>
-        /// <returns>Localizer for the given context</returns>
-        public Localizer Context( string contextId )
+        /// <inheritdoc/>
+        public ILocalizer Context( string contextId )
         {
-            var contextEnumerator = ((IEnumerable<string>) contextId.Split( '.' )).GetEnumerator();
-            contextEnumerator.MoveNext();
-            return Context( contextEnumerator );
+            return GetContext( contextId );
         }
 
-        /// <summary>
-        /// Gets the localizer for a context in the current localizer.
-        /// </summary>
-        /// <remarks>
-        /// Contexts are used to disambiguate the conversion of the same language-neutral string to different
-        /// language-specific strings depending on the context where the conversion is performed.
-        /// </remarks>
-        /// <param name="splitContextIds">Chain of context identifiers in split form</param>
-        /// <returns>Localizer for the given context</returns>
-        public Localizer Context( IEnumerator<string> splitContextIds )
+        /// <inheritdoc/>
+        public ILocalizer Context( IEnumerable<string> splitContextIds )
         {
-            string leftContextId = splitContextIds.Current.Trim();
-
-            Localizer? localizer;
-            if( !m_nestedContexts.TryGetValue( leftContextId, out localizer ) )
-            {
-                localizer = new Localizer( this, m_targetLanguageFull, m_targetLanguagePrimary );
-                m_nestedContexts.Add( leftContextId, localizer );
-            }
-
-            if( splitContextIds.MoveNext() )
-            {
-                return localizer.Context( splitContextIds );
-            }
-            else
-            {
-                return localizer;
-            }
+            return GetContext( splitContextIds );
         }
 
         /// <summary>
@@ -415,7 +375,38 @@ namespace I18N.DotNet
                 throw new ParseException( $"Line {( (IXmlLineInfo) element ).LineNumber}: Missing attribute 'id' in '{element.Name}' XML element" );
             }
 
-            Context( contextId ).Load( element );
+            GetContext( contextId ).Load( element );
+        }
+
+        private Localizer GetContext( string contextId )
+        {
+            return GetContext( contextId.Split( '.' ) );
+        }
+
+        private Localizer GetContext( IEnumerable<string> splitContextIds )
+        {
+            return GetContext( splitContextIds.GetEnumerator() );
+        }
+
+        private Localizer GetContext( IEnumerator<string> splitContextIds )
+        {
+            if( splitContextIds.MoveNext() )
+            {
+                string leftContextId = splitContextIds.Current.Trim();
+
+                Localizer? localizer;
+                if( !m_nestedContexts.TryGetValue( leftContextId, out localizer ) )
+                {
+                    localizer = new Localizer( this, m_targetLanguageFull, m_targetLanguagePrimary );
+                    m_nestedContexts.Add( leftContextId, localizer );
+                }
+
+                return localizer.GetContext( splitContextIds );
+            }
+            else
+            {
+                return this;
+            }
         }
 
         //===========================================================================

@@ -75,10 +75,10 @@ namespace I18N.DotNet
         /// <summary>
         /// Gets a context in the global localizer.
         /// </summary>
-        /// <seealso cref="Localizer.Context(string)"/>
+        /// <seealso cref="ILocalizer.Context(string)"/>
         /// <param name="contextId">Identifier of the context</param>
         /// <returns>Localizer for the given context</returns>
-        public static Localizer Context( string contextId )
+        public static ILocalizer Context( string contextId )
         {
             return Localizer.Context( contextId );
         }

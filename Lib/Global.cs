@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 
 namespace I18N.DotNet
 {
@@ -24,7 +23,7 @@ namespace I18N.DotNet
         {
             get
             {
-                g_localizer ??= new Localizer( CultureInfo.CurrentUICulture.Name );
+                g_localizer ??= new Localizer();
                 return g_localizer;
             }
 

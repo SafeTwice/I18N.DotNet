@@ -9,6 +9,22 @@ namespace I18N.DotNet.Test
     public class GlobalTest
     {
         [Fact]
+        public void Localizer_Setter()
+        {
+            // Prepare
+
+            var localizer = new Localizer( "foo");
+
+            // Execute
+
+            Global.Localizer = localizer;
+
+            // Verify
+
+            Assert.Same( localizer, Global.Localizer );
+        }
+
+        [Fact]
         public void Localizer()
         {
             // Verify

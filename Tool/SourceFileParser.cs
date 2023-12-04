@@ -65,7 +65,7 @@ namespace I18N.DotNet.Tool
                 int line = ( match.Expression.GetLocation().GetLineSpan().StartLinePosition.Line + 1 );
 
                 var context = GetContext( match, rootContext );
-                context.AddKey( key, $"{filepath} @ {line}" );
+                context.AddKey( key, filepath, line );
             }
         }
 

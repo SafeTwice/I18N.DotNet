@@ -8,21 +8,33 @@ namespace I18N.DotNet.Tool
 {
     public class Context
     {
-        public Dictionary<string, List<string>> KeyMatches = new();
+        public class KeyInfo
+        {
+            public string File { get; }
+            public int Line { get; }
+
+            public KeyInfo( string file, int line )
+            {
+                File = file;
+                Line = line;
+            }
+        }
+
+        public Dictionary<string, List<KeyInfo>> KeyMatches = new();
 
         public Dictionary<string, Context> NestedContexts = new();
 
-        public void AddKey( string key, string keyInfo )
+        public void AddKey( string key, string file, int line )
         {
-            List<string> keyInfoList;
+            List<KeyInfo> keyInfoList;
             if( !KeyMatches.TryGetValue( key, out keyInfoList ) )
             {
-                keyInfoList = new List<string>();
+                keyInfoList = new List<KeyInfo>();
 
                 KeyMatches.Add( key, keyInfoList );
             }
 
-            keyInfoList.Add( keyInfo );
+            keyInfoList.Add( new KeyInfo( file, line ) );
         }
 
         public Context GetContext( List<string> contextStack )

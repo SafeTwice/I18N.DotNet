@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using Xunit;
@@ -82,6 +83,28 @@ namespace I18N.DotNet.Test
                 "</I18N>";
 
             return CreateStream( config );
+        }
+
+        [Fact]
+        public void DefaultConstructor()
+        {
+            // Prepare
+
+            var oldUICulture = CultureInfo.CurrentUICulture;
+            CultureInfo.CurrentUICulture = CultureInfo.CreateSpecificCulture( "es-ES" );
+
+            // Execute & Verify
+
+            var localizer = new Localizer();
+            localizer.LoadXML( GetConfigA() );
+
+            // Verify
+
+            Assert.Equal( "Clave simple 1", localizer.Localize( "Simple Key 1" ) );
+
+            // Cleanup
+
+            CultureInfo.CurrentUICulture = oldUICulture;
         }
 
         [Theory]

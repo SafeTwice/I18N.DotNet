@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -37,6 +38,17 @@ namespace I18N.DotNet
         //===========================================================================
 
         /// <summary>
+        /// Default constructor.
+        /// </summary>
+        /// <remarks>
+        /// The target languange of translations is set to the current UI language (obtained from <see cref="CultureInfo.CurrentUICulture"/>).
+        /// </remarks>
+        public Localizer() : this( CultureInfo.CurrentUICulture.Name )
+        {
+        }
+
+
+        /// <summary>
         /// Constructor for a specific language.
         /// </summary>
         /// <remarks>
@@ -46,10 +58,10 @@ namespace I18N.DotNet
         /// <para>
         /// Any arbitrary string can be used for identifying languages, but when using language identifiers formed
         /// by a primary code and a variant code separated by an hyphen( e.g., "en-us") if a localized conversion
-        /// for the "full" language is not found then a conversion for the primary(base) language is tried too.
+        /// for the "full" language is not found then a conversion for the primary (base) language is tried too.
         /// </para>
         /// </remarks>
-        /// <param name="language">Name, code or identifier for the language</param>
+        /// <param name="language">Name, code or identifier for the target language of translations</param>
         public Localizer( string language )
         {
             m_language = new Language( language );
@@ -151,7 +163,7 @@ namespace I18N.DotNet
         ///                      otherwise merges both (existing mappings are overridden with loaded ones).</param>
         /// <exception cref="InvalidOperationException">Thrown when the language is not set.</exception>
         /// <exception cref="ParseException">Thrown when the input file cannot be parsed properly.</exception>
-        public void LoadXML( Stream stream , bool merge = true )
+        public void LoadXML( Stream stream, bool merge = true )
         {
             LoadXML( XDocument.Load( stream, LoadOptions.SetLineInfo ), merge );
         }
@@ -304,7 +316,7 @@ namespace I18N.DotNet
 
             if( value != null )
             {
-                m_localizations[key] = value;
+                m_localizations[ key ] = value;
             }
         }
 
@@ -337,7 +349,7 @@ namespace I18N.DotNet
         {
             return Regex.Replace( text, @"\\([nrftvb\\]|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})", m =>
             {
-                var payload = m.Groups[1].Value;
+                var payload = m.Groups[ 1 ].Value;
                 switch( payload )
                 {
                     case "n":

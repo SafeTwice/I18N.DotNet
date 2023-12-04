@@ -21,6 +21,8 @@
     <Copyright>Copyright © 2022-2023 SafeTwice S.L.</Copyright>
     <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <LangVersion>10</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

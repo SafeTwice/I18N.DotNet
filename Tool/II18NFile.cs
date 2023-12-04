@@ -10,7 +10,7 @@ namespace I18N.DotNet.Tool
     public interface II18NFile
     {
         // Common
-        public void Load( string filepath );
+        public void LoadFromFile( string filepath );
 
         // Generation
 
@@ -21,7 +21,7 @@ namespace I18N.DotNet.Tool
 
         // Analysis
 
-        IEnumerable<(int line, string context, string key)> GetDeprecatedEntries( Regex[] includeContexts, Regex[] excludeContexts );
-        IEnumerable<(int line, string context, string key)> GetNoTranslationEntries( string[] languages, Regex[] includeContexts, Regex[] excludeContexts );
+        IEnumerable<(int line, string context, string? key)> GetDeprecatedEntries( Regex[] includeContexts, Regex[] excludeContexts );
+        IEnumerable<(int line, string context, string? key)> GetNoTranslationEntries( string[] languages, Regex[] includeContexts, Regex[] excludeContexts );
     }
 }

@@ -16,7 +16,7 @@ namespace I18N.DotNet.Tool
 {
     public class SourceFileParser : ISourceFileParser
     {
-        public void ParseFile( string filepath, IEnumerable<string> extraFunctions, Context rootContext )
+        public void ParseFile( string filepath, IEnumerable<string>? extraFunctions, Context rootContext )
         {
             var text = File.ReadAllText( filepath );
 
@@ -51,12 +51,12 @@ namespace I18N.DotNet.Tool
 
                 if( firstArgument.IsKind( SyntaxKind.InterpolatedStringExpression ) )
                 {
-                    var interpolatedString = firstArgument as InterpolatedStringExpressionSyntax;
+                    var interpolatedString = (InterpolatedStringExpressionSyntax) firstArgument;
                     key = ConvertToKey( interpolatedString );
                 }
                 else
                 {
-                    var stringExpr = firstArgument as LiteralExpressionSyntax;
+                    var stringExpr = (LiteralExpressionSyntax) firstArgument;
                     key = stringExpr.Token.ValueText;
                 }
 
@@ -84,7 +84,7 @@ namespace I18N.DotNet.Tool
             {
                 if( candidateContextObject.Expression is InvocationExpressionSyntax candidateContextInvocation )
                 {
-                    string calledMethodName = null;
+                    string? calledMethodName = null;
                     bool isNested = false;
 
                     if( candidateContextInvocation.Expression is IdentifierNameSyntax calledObjectId )
@@ -108,7 +108,7 @@ namespace I18N.DotNet.Tool
                                 UpdateContextStack( candidateContextInvocation, contextStack );
                             }
 
-                            var contextName = ( argument as LiteralExpressionSyntax ).Token.ValueText;
+                            var contextName = ( (LiteralExpressionSyntax) argument ).Token.ValueText;
 
                             foreach( var splitContextName in contextName.Split( '.' ) )
                             {
@@ -125,7 +125,7 @@ namespace I18N.DotNet.Tool
             return Path.GetRelativePath( Directory.GetCurrentDirectory() + "\\", filePath );
         }
 
-        private static Regex GetLocalizerRegex( IEnumerable<string> extraFunctions )
+        private static Regex GetLocalizerRegex( IEnumerable<string>? extraFunctions )
         {
             string functionExpr = "Localize(?:Format)?";
             if( extraFunctions != null )
@@ -148,12 +148,12 @@ namespace I18N.DotNet.Tool
             {
                 if( item.IsKind( SyntaxKind.InterpolatedStringText ) )
                 {
-                    var text = item as InterpolatedStringTextSyntax;
+                    var text = (InterpolatedStringTextSyntax) item;
                     result += text.TextToken.ValueText;
                 }
                 else
                 {
-                    var interpolation = item as InterpolationSyntax;
+                    var interpolation = (InterpolationSyntax) item;
                     result += $"{{{placeholderIndex}{interpolation.AlignmentClause?.ToString()}{interpolation.FormatClause?.ToString()}}}";
                     placeholderIndex++;
                 }

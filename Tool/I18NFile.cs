@@ -14,7 +14,11 @@ namespace I18N.DotNet.Tool
 {
     public class I18NFile : II18NFile
     {
-        public void Load( string filepath )
+        //===========================================================================
+        //                            PUBLIC METHODS
+        //===========================================================================
+
+        public void LoadFromFile( string filepath )
         {
             m_doc = null;
 
@@ -35,55 +39,54 @@ namespace I18N.DotNet.Tool
                 }
             }
 
-            if( m_doc != null )
-            {
-                if( m_doc.Root.Name != ROOT_TAG )
-                {
-                    throw new ApplicationException( "Invalid XML root element in existing output file" );
-                }
-
-            }
-            else
+            if( m_doc == null )
             {
                 m_doc = new XDocument( new XElement( ROOT_TAG ) );
             }
+            else if( m_doc.Root!.Name != ROOT_TAG )
+            {
+                throw new ApplicationException( "Invalid XML root element in existing output file" );
+            }
 
-            PreparePreexistingEntries( m_doc.Root );
+            PreparePreexistingEntries( Root );
         }
 
         public void DeleteFoundingComments()
         {
-            DeleteFoundingComments( m_doc.Root );
+            DeleteFoundingComments( Root );
         }
 
         public void CreateEntries( Context rootContext )
         {
-            CreateEntries( m_doc.Root, rootContext );
+            CreateEntries( Root, rootContext );
         }
 
         public void CreateDeprecationComments()
         {
-            CreateDeprecationComments( m_doc.Root );
+            CreateDeprecationComments( Root );
         }
 
         public void WriteToFile( string filepath )
         {
-            var xws = new XmlWriterSettings();
-            xws.Indent = true;
-
-            using( XmlWriter xw = XmlWriter.Create( filepath, xws ) )
+            if( m_doc == null )
             {
-                m_doc.WriteTo( xw );
+                throw new InvalidOperationException( "Not initialized" );
             }
+
+            var xws = new XmlWriterSettings() { Indent = true };
+
+            using XmlWriter xw = XmlWriter.Create( filepath, xws );
+
+            m_doc.WriteTo( xw );
         }
 
-        public IEnumerable<(int line, string context, string key)> GetDeprecatedEntries( Regex[] includeContexts, Regex[] excludeContexts )
+        public IEnumerable<(int line, string context, string? key)> GetDeprecatedEntries( Regex[] includeContexts, Regex[] excludeContexts )
         {
-            foreach( var element in GetDeprecatedEntries( m_doc.Root ) )
+            foreach( var element in GetDeprecatedEntries( Root ) )
             {
-                int line = ( (IXmlLineInfo) element ).LineNumber;
-                string key = element.Element( KEY_TAG )?.Value;
-                string context = GetContext( element );
+                var line = ( (IXmlLineInfo) element ).LineNumber;
+                var key = element.Element( KEY_TAG )?.Value;
+                var context = GetContext( element );
                 if( MatchesContexts( context, includeContexts, excludeContexts ) )
                 {
                     yield return (line, context, key);
@@ -91,19 +94,37 @@ namespace I18N.DotNet.Tool
             }
         }
 
-        public IEnumerable<(int line, string context, string key)> GetNoTranslationEntries( string[] languages, Regex[] includeContexts, Regex[] excludeContexts )
+        public IEnumerable<(int line, string context, string? key)> GetNoTranslationEntries( string[] languages, Regex[] includeContexts, Regex[] excludeContexts )
         {
-            foreach( var element in GetNoTranslationEntries( m_doc.Root, languages ) )
+            foreach( var element in GetNoTranslationEntries( Root, languages ) )
             {
-                int line = ( (IXmlLineInfo) element ).LineNumber;
-                string key = element.Element( KEY_TAG )?.Value;
-                string context = GetContext( element );
+                var line = ( (IXmlLineInfo) element ).LineNumber;
+                var key = element.Element( KEY_TAG )?.Value;
+                var context = GetContext( element );
                 if( MatchesContexts( context, includeContexts, excludeContexts ) )
                 {
                     yield return (line, context, key);
                 }
             }
         }
+
+        //===========================================================================
+        //                          PRIVATE NESTED TYPES
+        //===========================================================================
+
+        private class PreexistingEntryAnnotation
+        {
+        }
+
+        //===========================================================================
+        //                           PRIVATE PROPERTIES
+        //===========================================================================
+
+        private XElement Root => m_doc?.Root ?? throw new InvalidOperationException( "Not initialized" );
+
+        //===========================================================================
+        //                            PRIVATE METHODS
+        //===========================================================================
 
         private static bool MatchesContexts( string context, Regex[] includeContexts, Regex[] excludeContexts )
         {
@@ -196,7 +217,7 @@ namespace I18N.DotNet.Tool
 
         private static XElement GetEntryElement( XElement parentElement, string key )
         {
-            XElement lastEntryElement = null;
+            XElement? lastEntryElement = null;
 
             foreach( var entryElement in parentElement.Elements( ENTRY_TAG ) )
             {
@@ -256,19 +277,13 @@ namespace I18N.DotNet.Tool
 
             if( beforeKey )
             {
-                entryElement.Element( KEY_TAG ).AddBeforeSelf( new XComment( comment ) );
+                entryElement.Element( KEY_TAG )!.AddBeforeSelf( new XComment( comment ) );
             }
             else
             {
                 entryElement.AddFirst( new XComment( comment ) );
             }
         }
-
-        private class PreexistingEntryAnnotation
-        {
-        }
-
-        private static readonly PreexistingEntryAnnotation PREEXISTING_ENTRY_ANNOTATION = new();
 
         private static void PreparePreexistingEntries( XElement element )
         {
@@ -312,13 +327,13 @@ namespace I18N.DotNet.Tool
                 {
                     if( node is XComment commentNode )
                     {
-                        var commentValue = commentNode?.Value;
+                        var commentValue = commentNode.Value;
                         if( commentValue == DEPRECATED_COMMENT )
                         {
                             deprecated = true;
                             break;
                         }
-                        else if( commentValue?.StartsWith( FOUNDING_HEADING ) ?? false )
+                        else if( commentValue.StartsWith( FOUNDING_HEADING ) )
                         {
                             hasFoundings = true;
                         }
@@ -357,7 +372,7 @@ namespace I18N.DotNet.Tool
 
                     foreach( var valueElement in entryElement.Elements( VALUE_TAG ) )
                     {
-                        string valueLanguage = valueElement.Attribute( LANG_ATTR )?.Value;
+                        var valueLanguage = valueElement.Attribute( LANG_ATTR )?.Value;
                         if( valueLanguage != null )
                         {
                             if( languages.Any( l => ( l == valueLanguage ) ) )
@@ -391,19 +406,26 @@ namespace I18N.DotNet.Tool
         private static string GetContext( XElement element )
         {
             string context = "/";
+            var currentElement = element;
 
-            while( element != null )
+            while( currentElement != null )
             {
-                if( element.Name == CONTEXT_TAG )
+                if( currentElement.Name == CONTEXT_TAG )
                 {
-                    context = $"/{element.Attribute( CONTEXT_ID_ATTR )?.Value}{context}";
+                    context = $"/{currentElement.Attribute( CONTEXT_ID_ATTR )?.Value}{context}";
                 }
 
-                element = element.Parent;
+                currentElement = currentElement.Parent;
             }
 
             return context;
         }
+
+        //===========================================================================
+        //                           PRIVATE CONSTANTS
+        //===========================================================================
+
+        private static readonly PreexistingEntryAnnotation PREEXISTING_ENTRY_ANNOTATION = new();
 
         private const string ROOT_TAG = "I18N";
         private const string ENTRY_TAG = "Entry";
@@ -417,6 +439,10 @@ namespace I18N.DotNet.Tool
 
         private const string FOUNDING_HEADING = " Found in:";
 
-        private XDocument m_doc;
+        //===========================================================================
+        //                           PRIVATE ATTRIBUTES
+        //===========================================================================
+
+        private XDocument? m_doc;
     }
 }

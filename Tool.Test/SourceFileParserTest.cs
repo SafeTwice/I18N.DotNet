@@ -13,7 +13,7 @@ namespace I18N.DotNet.Tool.Test
 {
     public class SourceFileParserTest : IDisposable
     {
-        private string m_tempFile;
+        private readonly string m_tempFile;
 
         private const string TEMP_FILE_NAME = "Temp.cs";
 

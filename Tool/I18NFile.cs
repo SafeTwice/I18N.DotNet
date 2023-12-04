@@ -56,9 +56,9 @@ namespace I18N.DotNet.Tool
             DeleteFoundingComments( Root );
         }
 
-        public void CreateEntries( Context rootContext )
+        public void CreateEntries( Context rootContext, bool reportLines )
         {
-            CreateEntries( Root, rootContext );
+            CreateEntries( Root, rootContext, reportLines );
         }
 
         public void CreateDeprecationComments()
@@ -155,7 +155,7 @@ namespace I18N.DotNet.Tool
             return true;
         }
 
-        private static void CreateEntries( XElement parentElement, Context context )
+        private static void CreateEntries( XElement parentElement, Context context, bool reportLines )
         {
             foreach( var key in context.KeyMatches.Keys )
             {
@@ -163,7 +163,12 @@ namespace I18N.DotNet.Tool
 
                 foreach( var keyInfo in context.KeyMatches[ key ] )
                 {
-                    AddCommentIfNeeded( entryElement, $"{FOUNDING_HEADING} {keyInfo.File} @ {keyInfo.Line} ", true );
+                    var comment = $"{FOUNDING_HEADING} {keyInfo.File} ";
+                    if( reportLines )
+                    {
+                        comment += $"@ {keyInfo.Line} ";
+                    }
+                    AddCommentIfNeeded( entryElement, comment, true );
                 }
             }
 
@@ -171,7 +176,7 @@ namespace I18N.DotNet.Tool
             {
                 var nestedContextElement = GetContextElement( parentElement, nestedContext.Key );
 
-                CreateEntries( nestedContextElement, nestedContext.Value );
+                CreateEntries( nestedContextElement, nestedContext.Value, reportLines );
             }
         }
 

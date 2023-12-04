@@ -78,6 +78,7 @@ namespace I18N.DotNet.Tool.Test
                 InputFilesPattern = "*.foo",
                 MarkDeprecated = false,
                 PreserveFoundingComments = false,
+                LineIndicationInFoundingComments = false,
                 OutputFile = "bar.xml",
                 ExtraLocalizationFunctions = Array.Empty<string>(),
             };
@@ -100,7 +101,7 @@ namespace I18N.DotNet.Tool.Test
             var i18nFileMock = new Mock<II18NFile>();
             i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( options.OutputFile ) );
             i18nFileMock.InSequence( callSequence ).Setup( f => f.DeleteFoundingComments() );
-            i18nFileMock.InSequence( callSequence ).Setup( f => f.CreateEntries( It.Is<Context>( ctx => ctx == internalContext ) ) );
+            i18nFileMock.InSequence( callSequence ).Setup( f => f.CreateEntries( It.Is<Context>( ctx => ctx == internalContext ), false ) );
             i18nFileMock.InSequence( callSequence ).Setup( f => f.WriteToFile( options.OutputFile ) );
 
             var textConsoleMock = new Mock<ITextConsole>();
@@ -124,7 +125,7 @@ namespace I18N.DotNet.Tool.Test
 
             i18nFileMock.Verify( f => f.LoadFromFile( options.OutputFile ), Times.Once );
             i18nFileMock.Verify( f => f.DeleteFoundingComments(), Times.Once );
-            i18nFileMock.Verify( f => f.CreateEntries( internalContext ), Times.Once );
+            i18nFileMock.Verify( f => f.CreateEntries( internalContext, false ), Times.Once );
             i18nFileMock.Verify( f => f.CreateDeprecationComments(), Times.Never );
             i18nFileMock.Verify( f => f.WriteToFile( options.OutputFile ), Times.Once );
 
@@ -149,6 +150,7 @@ namespace I18N.DotNet.Tool.Test
                 InputFilesPattern = "*.foo",
                 MarkDeprecated = false,
                 PreserveFoundingComments = false,
+                LineIndicationInFoundingComments = false,
                 OutputFile = "bar.xml",
                 ExtraLocalizationFunctions = Array.Empty<string>(),
             };
@@ -172,7 +174,7 @@ namespace I18N.DotNet.Tool.Test
             var i18nFileMock = new Mock<II18NFile>();
             i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( options.OutputFile ) );
             i18nFileMock.InSequence( callSequence ).Setup( f => f.DeleteFoundingComments() );
-            i18nFileMock.InSequence( callSequence ).Setup( f => f.CreateEntries( It.Is<Context>( ctx => ctx == internalContext ) ) );
+            i18nFileMock.InSequence( callSequence ).Setup( f => f.CreateEntries( It.Is<Context>( ctx => ctx == internalContext ), false ) );
             i18nFileMock.InSequence( callSequence ).Setup( f => f.WriteToFile( options.OutputFile ) );
 
             var textConsoleMock = new Mock<ITextConsole>();
@@ -196,7 +198,7 @@ namespace I18N.DotNet.Tool.Test
 
             i18nFileMock.Verify( f => f.LoadFromFile( options.OutputFile ), Times.Once );
             i18nFileMock.Verify( f => f.DeleteFoundingComments(), Times.Once );
-            i18nFileMock.Verify( f => f.CreateEntries( internalContext ), Times.Once );
+            i18nFileMock.Verify( f => f.CreateEntries( internalContext, false ), Times.Once );
             i18nFileMock.Verify( f => f.CreateDeprecationComments(), Times.Never );
             i18nFileMock.Verify( f => f.WriteToFile( options.OutputFile ), Times.Once );
 
@@ -221,6 +223,7 @@ namespace I18N.DotNet.Tool.Test
                 InputFilesPattern = "*.bar",
                 MarkDeprecated = false,
                 PreserveFoundingComments = false,
+                LineIndicationInFoundingComments = false,
                 OutputFile = "bar.xml",
                 ExtraLocalizationFunctions = Array.Empty<string>(),
             };
@@ -242,7 +245,7 @@ namespace I18N.DotNet.Tool.Test
             var i18nFileMock = new Mock<II18NFile>();
             i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( options.OutputFile ) );
             i18nFileMock.InSequence( callSequence ).Setup( f => f.DeleteFoundingComments() );
-            i18nFileMock.InSequence( callSequence ).Setup( f => f.CreateEntries( It.Is<Context>( ctx => ctx == internalContext ) ) );
+            i18nFileMock.InSequence( callSequence ).Setup( f => f.CreateEntries( It.Is<Context>( ctx => ctx == internalContext ), false ) );
             i18nFileMock.InSequence( callSequence ).Setup( f => f.WriteToFile( options.OutputFile ) );
 
             var textConsoleMock = new Mock<ITextConsole>();
@@ -266,7 +269,7 @@ namespace I18N.DotNet.Tool.Test
 
             i18nFileMock.Verify( f => f.LoadFromFile( options.OutputFile ), Times.Once );
             i18nFileMock.Verify( f => f.DeleteFoundingComments(), Times.Once );
-            i18nFileMock.Verify( f => f.CreateEntries( internalContext ), Times.Once );
+            i18nFileMock.Verify( f => f.CreateEntries( internalContext, false ), Times.Once );
             i18nFileMock.Verify( f => f.CreateDeprecationComments(), Times.Never );
             i18nFileMock.Verify( f => f.WriteToFile( options.OutputFile ), Times.Once );
 
@@ -291,6 +294,7 @@ namespace I18N.DotNet.Tool.Test
                 InputFilesPattern = "*.foo",
                 MarkDeprecated = true,
                 PreserveFoundingComments = false,
+                LineIndicationInFoundingComments = false,
                 OutputFile = "bar.xml",
                 ExtraLocalizationFunctions = Array.Empty<string>(),
             };
@@ -313,7 +317,7 @@ namespace I18N.DotNet.Tool.Test
             var i18nFileMock = new Mock<II18NFile>();
             i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( options.OutputFile ) );
             i18nFileMock.InSequence( callSequence ).Setup( f => f.DeleteFoundingComments() );
-            i18nFileMock.InSequence( callSequence ).Setup( f => f.CreateEntries( It.Is<Context>( ctx => ctx == internalContext ) ) );
+            i18nFileMock.InSequence( callSequence ).Setup( f => f.CreateEntries( It.Is<Context>( ctx => ctx == internalContext ), false ) );
             i18nFileMock.InSequence( callSequence ).Setup( f => f.CreateDeprecationComments() );
             i18nFileMock.InSequence( callSequence ).Setup( f => f.WriteToFile( options.OutputFile ) );
 
@@ -338,7 +342,7 @@ namespace I18N.DotNet.Tool.Test
 
             i18nFileMock.Verify( f => f.LoadFromFile( options.OutputFile ), Times.Once );
             i18nFileMock.Verify( f => f.DeleteFoundingComments(), Times.Once );
-            i18nFileMock.Verify( f => f.CreateEntries( internalContext ), Times.Once );
+            i18nFileMock.Verify( f => f.CreateEntries( internalContext, false ), Times.Once );
             i18nFileMock.Verify( f => f.CreateDeprecationComments(), Times.Once );
             i18nFileMock.Verify( f => f.WriteToFile( options.OutputFile ), Times.Once );
 
@@ -363,6 +367,7 @@ namespace I18N.DotNet.Tool.Test
                 InputFilesPattern = "*.foo",
                 MarkDeprecated = false,
                 PreserveFoundingComments = true,
+                LineIndicationInFoundingComments = false,
                 OutputFile = "bar.xml",
                 ExtraLocalizationFunctions = Array.Empty<string>(),
             };
@@ -384,7 +389,7 @@ namespace I18N.DotNet.Tool.Test
 
             var i18nFileMock = new Mock<II18NFile>();
             i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( options.OutputFile ) );
-            i18nFileMock.InSequence( callSequence ).Setup( f => f.CreateEntries( It.Is<Context>( ctx => ctx == internalContext ) ) );
+            i18nFileMock.InSequence( callSequence ).Setup( f => f.CreateEntries( It.Is<Context>( ctx => ctx == internalContext ), false ) );
             i18nFileMock.InSequence( callSequence ).Setup( f => f.WriteToFile( options.OutputFile ) );
 
             var textConsoleMock = new Mock<ITextConsole>();
@@ -408,7 +413,7 @@ namespace I18N.DotNet.Tool.Test
 
             i18nFileMock.Verify( f => f.LoadFromFile( options.OutputFile ), Times.Once );
             i18nFileMock.Verify( f => f.DeleteFoundingComments(), Times.Never );
-            i18nFileMock.Verify( f => f.CreateEntries( internalContext ), Times.Once );
+            i18nFileMock.Verify( f => f.CreateEntries( internalContext, false ), Times.Once );
             i18nFileMock.Verify( f => f.CreateDeprecationComments(), Times.Never );
             i18nFileMock.Verify( f => f.WriteToFile( options.OutputFile ), Times.Once );
 
@@ -433,6 +438,7 @@ namespace I18N.DotNet.Tool.Test
                 InputFilesPattern = "*.foo",
                 MarkDeprecated = false,
                 PreserveFoundingComments = false,
+                LineIndicationInFoundingComments = false,
                 OutputFile = "bar.xml",
                 ExtraLocalizationFunctions = new string[] { "foo", "bar" },
             };
@@ -455,7 +461,7 @@ namespace I18N.DotNet.Tool.Test
             var i18nFileMock = new Mock<II18NFile>();
             i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( options.OutputFile ) );
             i18nFileMock.InSequence( callSequence ).Setup( f => f.DeleteFoundingComments() );
-            i18nFileMock.InSequence( callSequence ).Setup( f => f.CreateEntries( It.Is<Context>( ctx => ctx == internalContext ) ) );
+            i18nFileMock.InSequence( callSequence ).Setup( f => f.CreateEntries( It.Is<Context>( ctx => ctx == internalContext ), false ) );
             i18nFileMock.InSequence( callSequence ).Setup( f => f.CreateDeprecationComments() );
             i18nFileMock.InSequence( callSequence ).Setup( f => f.WriteToFile( options.OutputFile ) );
 
@@ -480,7 +486,79 @@ namespace I18N.DotNet.Tool.Test
 
             i18nFileMock.Verify( f => f.LoadFromFile( options.OutputFile ), Times.Once );
             i18nFileMock.Verify( f => f.DeleteFoundingComments(), Times.Once );
-            i18nFileMock.Verify( f => f.CreateEntries( internalContext ), Times.Once );
+            i18nFileMock.Verify( f => f.CreateEntries( internalContext, false ), Times.Once );
+            i18nFileMock.Verify( f => f.CreateDeprecationComments(), Times.Never );
+            i18nFileMock.Verify( f => f.WriteToFile( options.OutputFile ), Times.Once );
+
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "success" ) ) ), Times.Once );
+
+            sourceFileParserMock.VerifyNoOtherCalls();
+            i18nFileMock.VerifyNoOtherCalls();
+            textConsoleMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public void Generate_NoLinesInFoundingComments()
+        {
+            // Prepare
+
+            CreateTempFiles();
+
+            var options = new GenerateOptions()
+            {
+                InputDirectories = new string[] { Path.GetTempPath() + @"\TempDir1", Path.GetTempPath() + @"\TempDir2" },
+                Recursive = false,
+                InputFilesPattern = "*.foo",
+                MarkDeprecated = false,
+                PreserveFoundingComments = false,
+                LineIndicationInFoundingComments = true,
+                OutputFile = "bar.xml",
+                ExtraLocalizationFunctions = Array.Empty<string>(),
+            };
+
+            Context? internalContext = null;
+
+            string[] expectedParsedFiles =
+            {
+                @"TempDir1\TempFile1.foo",
+                @"TempDir2\TempFile3.foo",
+                @"TempDir2\TempFile4.foo",
+            };
+
+            var callSequence = new MockSequence();
+
+            var sourceFileParserMock = new Mock<ISourceFileParser>();
+            sourceFileParserMock.InSequence( callSequence ).Setup( sfp => sfp.ParseFile( It.IsAny<string>(), options.ExtraLocalizationFunctions, It.IsAny<Context>() ) )
+                .Callback<string, IEnumerable<string>, Context>( ( _, _, context ) => { if( internalContext == null ) { internalContext = context; } } );
+
+            var i18nFileMock = new Mock<II18NFile>();
+            i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( options.OutputFile ) );
+            i18nFileMock.InSequence( callSequence ).Setup( f => f.DeleteFoundingComments() );
+            i18nFileMock.InSequence( callSequence ).Setup( f => f.CreateEntries( It.Is<Context>( ctx => ctx == internalContext ), true ) );
+            i18nFileMock.InSequence( callSequence ).Setup( f => f.WriteToFile( options.OutputFile ) );
+
+            var textConsoleMock = new Mock<ITextConsole>();
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>() ) );
+
+            // Execute
+
+            int ret = Program.Generate( options, i18nFileMock.Object, sourceFileParserMock.Object, textConsoleMock.Object );
+
+            // Verify
+
+            Assert.Equal( 0, ret );
+
+            Assert.NotNull( internalContext );
+
+            foreach( var relParsedFileName in expectedParsedFiles )
+            {
+                var absParsedFileName = Path.GetTempPath() + relParsedFileName;
+                sourceFileParserMock.Verify( sfp => sfp.ParseFile( absParsedFileName, options.ExtraLocalizationFunctions, internalContext ), Times.Once );
+            }
+
+            i18nFileMock.Verify( f => f.LoadFromFile( options.OutputFile ), Times.Once );
+            i18nFileMock.Verify( f => f.DeleteFoundingComments(), Times.Once );
+            i18nFileMock.Verify( f => f.CreateEntries( internalContext, true ), Times.Once );
             i18nFileMock.Verify( f => f.CreateDeprecationComments(), Times.Never );
             i18nFileMock.Verify( f => f.WriteToFile( options.OutputFile ), Times.Once );
 
@@ -505,6 +583,7 @@ namespace I18N.DotNet.Tool.Test
                 InputFilesPattern = "*.foo",
                 MarkDeprecated = false,
                 PreserveFoundingComments = false,
+                LineIndicationInFoundingComments = false,
                 OutputFile = "bar.xml",
                 ExtraLocalizationFunctions = Array.Empty<string>(),
             };
@@ -550,6 +629,7 @@ namespace I18N.DotNet.Tool.Test
                 InputFilesPattern = "*.foo",
                 MarkDeprecated = false,
                 PreserveFoundingComments = false,
+                LineIndicationInFoundingComments = false,
                 OutputFile = "bar.xml",
                 ExtraLocalizationFunctions = Array.Empty<string>(),
             };

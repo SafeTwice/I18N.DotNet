@@ -105,7 +105,7 @@ namespace I18N.DotNet.Tool.Test
             return rootContext;
         }
 
-        private void Check_Generate_NewFile()
+        private void Check_Generate_NewFile_WithLines()
         {
             // Prepare
 
@@ -115,7 +115,7 @@ namespace I18N.DotNet.Tool.Test
 
             var i18nFile = new I18NFile();
             i18nFile.LoadFromFile( m_tempFile );
-            i18nFile.CreateEntries( rootContext );
+            i18nFile.CreateEntries( rootContext, true );
             i18nFile.WriteToFile( m_tempFile );
 
             // Verify
@@ -157,8 +157,58 @@ namespace I18N.DotNet.Tool.Test
             Assert.Equal( expectedContents, actualContents );
         }
 
+        private void Check_Generate_NewFile_WithoutLines()
+        {
+            // Prepare
+
+            var rootContext = CreateRootContext();
+
+            // Execute
+
+            var i18nFile = new I18NFile();
+            i18nFile.LoadFromFile( m_tempFile );
+            i18nFile.CreateEntries( rootContext, false );
+            i18nFile.WriteToFile( m_tempFile );
+
+            // Verify
+
+            string expectedContents =
+                "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
+                "<I18N>\n" +
+                "  <Entry>\n" +
+                "    <!-- Found in: Match 1 -->\n" +
+                "    <Key>Key 1</Key>\n" +
+                "  </Entry>\n" +
+                "  <Entry>\n" +
+                "    <!-- Found in: Match 6 -->\n" +
+                "    <Key>Key 6</Key>\n" +
+                "  </Entry>\n" +
+                "  <Entry>\n" +
+                "    <!-- Found in: Match A -->\n" +
+                "    <Key>Key A</Key>\n" +
+                "  </Entry>\n" +
+                "  <Context id=\"Context 1\">\n" +
+                "    <Entry>\n" +
+                "      <!-- Found in: Match 3 -->\n" +
+                "      <Key>Key 3</Key>\n" +
+                "    </Entry>\n" +
+                "  </Context>\n" +
+                "  <Context id=\"Context 2\">\n" +
+                "    <Context id=\"Context 22\">\n" +
+                "      <Entry>\n" +
+                "        <!-- Found in: Match 4 -->\n" +
+                "        <Key>Key 4</Key>\n" +
+                "      </Entry>\n" +
+                "    </Context>\n" +
+                "  </Context>\n" +
+                "</I18N>";
+
+            string actualContents = ReadTempFile();
+            Assert.Equal( expectedContents, actualContents );
+        }
+
         [Fact]
-        public void Generate_NewFile()
+        public void Generate_NewFile_WithLines()
         {
             // Prepare
 
@@ -166,7 +216,19 @@ namespace I18N.DotNet.Tool.Test
 
             // Execute & Verify
 
-            Check_Generate_NewFile();
+            Check_Generate_NewFile_WithLines();
+        }
+
+        [Fact]
+        public void Generate_NewFile_WithoutLines()
+        {
+            // Prepare
+
+            File.Delete( m_tempFile );
+
+            // Execute & Verify
+
+            Check_Generate_NewFile_WithoutLines();
         }
 
         [Fact]
@@ -182,7 +244,7 @@ namespace I18N.DotNet.Tool.Test
 
             var i18nFile = new I18NFile();
             i18nFile.LoadFromFile( m_tempFile );
-            i18nFile.CreateEntries( rootContext );
+            i18nFile.CreateEntries( rootContext, true );
             i18nFile.WriteToFile( m_tempFile );
 
             // Verify
@@ -261,7 +323,7 @@ namespace I18N.DotNet.Tool.Test
             var i18nFile = new I18NFile();
             i18nFile.LoadFromFile( m_tempFile );
             i18nFile.DeleteFoundingComments();
-            i18nFile.CreateEntries( rootContext );
+            i18nFile.CreateEntries( rootContext, true );
             i18nFile.WriteToFile( m_tempFile );
 
             // Verify
@@ -337,7 +399,7 @@ namespace I18N.DotNet.Tool.Test
             var i18nFile = new I18NFile();
             i18nFile.LoadFromFile( m_tempFile );
             i18nFile.DeleteFoundingComments();
-            i18nFile.CreateEntries( rootContext );
+            i18nFile.CreateEntries( rootContext, true );
             i18nFile.CreateDeprecationComments();
             i18nFile.WriteToFile( m_tempFile );
 
@@ -444,7 +506,7 @@ namespace I18N.DotNet.Tool.Test
 
             // Execute & Verify
 
-            Check_Generate_NewFile();
+            Check_Generate_NewFile_WithLines();
         }
 
         [Fact]
@@ -456,7 +518,7 @@ namespace I18N.DotNet.Tool.Test
 
             // Execute & Verify
 
-            Check_Generate_NewFile();
+            Check_Generate_NewFile_WithLines();
         }
 
         private void CreateExistingOutputFileMalformed()
@@ -511,7 +573,7 @@ namespace I18N.DotNet.Tool.Test
 
             var i18nFile = new I18NFile();
             i18nFile.LoadFromFile( m_tempFile );
-            i18nFile.CreateEntries( rootContext );
+            i18nFile.CreateEntries( rootContext, true );
             i18nFile.WriteToFile( m_tempFile );
 
             // Verify

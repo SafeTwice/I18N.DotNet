@@ -34,6 +34,9 @@ namespace I18N.DotNet.Tool
         [Option( 'd', Default = false, HelpText = "Mark deprecated entries." )]
         public bool MarkDeprecated { get; set; }
 
+        [Option( 'l', Default = false, HelpText = "Indicate lines in founding comments." )]
+        public bool LineIndicationInFoundingComments { get; set; }
+
         [Option( 'E', HelpText = "Extra methods to be parsed for strings to be localized." )]
         public IEnumerable<string> ExtraLocalizationFunctions { get; set; } = new List<string>();
 
@@ -94,7 +97,7 @@ namespace I18N.DotNet.Tool
                     outputFile.DeleteFoundingComments();
                 }
 
-                outputFile.CreateEntries( rootContext );
+                outputFile.CreateEntries( rootContext, options.LineIndicationInFoundingComments );
 
                 if( options.MarkDeprecated )
                 {

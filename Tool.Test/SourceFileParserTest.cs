@@ -75,17 +75,17 @@ namespace I18N.DotNet.Tool.Test
             Assert.Empty( rootContext.NestedContexts );
 
             Assert.True( rootContext.KeyMatches.ContainsKey( plainStringKey ) );
-            Assert.Equal( 2, rootContext.KeyMatches[plainStringKey].Count );
-            Assert.Contains( $"{TEMP_FILE_NAME} @ 3", rootContext.KeyMatches[plainStringKey][0] );
-            Assert.Contains( $"{TEMP_FILE_NAME} @ 10", rootContext.KeyMatches[plainStringKey][1] );
+            Assert.Equal( 2, rootContext.KeyMatches[ plainStringKey ].Count );
+            Assert.Contains( $"{TEMP_FILE_NAME} @ 3", rootContext.KeyMatches[ plainStringKey ][ 0 ] );
+            Assert.Contains( $"{TEMP_FILE_NAME} @ 10", rootContext.KeyMatches[ plainStringKey ][ 1 ] );
 
             Assert.True( rootContext.KeyMatches.ContainsKey( interpolatedStringKey ) );
-            Assert.Single( rootContext.KeyMatches[interpolatedStringKey] );
-            Assert.Contains( $"{TEMP_FILE_NAME} @ 5", rootContext.KeyMatches[interpolatedStringKey][0] );
+            Assert.Single( rootContext.KeyMatches[ interpolatedStringKey ] );
+            Assert.Contains( $"{TEMP_FILE_NAME} @ 5", rootContext.KeyMatches[ interpolatedStringKey ][ 0 ] );
 
             Assert.True( rootContext.KeyMatches.ContainsKey( formatStringKey ) );
-            Assert.Single( rootContext.KeyMatches[formatStringKey] );
-            Assert.Contains( $"{TEMP_FILE_NAME} @ 9", rootContext.KeyMatches[formatStringKey][0] );
+            Assert.Single( rootContext.KeyMatches[ formatStringKey ] );
+            Assert.Contains( $"{TEMP_FILE_NAME} @ 9", rootContext.KeyMatches[ formatStringKey ][ 0 ] );
         }
 
         [Fact]
@@ -113,22 +113,22 @@ namespace I18N.DotNet.Tool.Test
             Assert.Empty( rootContext.NestedContexts );
 
             Assert.True( rootContext.KeyMatches.ContainsKey( plainStringKey ) );
-            Assert.Equal( 3, rootContext.KeyMatches[plainStringKey].Count );
-            Assert.Contains( $"{TEMP_FILE_NAME} @ 3", rootContext.KeyMatches[plainStringKey][0] );
-            Assert.Contains( $"{TEMP_FILE_NAME} @ 7", rootContext.KeyMatches[plainStringKey][1] );
-            Assert.Contains( $"{TEMP_FILE_NAME} @ 10", rootContext.KeyMatches[plainStringKey][2] );
+            Assert.Equal( 3, rootContext.KeyMatches[ plainStringKey ].Count );
+            Assert.Contains( $"{TEMP_FILE_NAME} @ 3", rootContext.KeyMatches[ plainStringKey ][ 0 ] );
+            Assert.Contains( $"{TEMP_FILE_NAME} @ 7", rootContext.KeyMatches[ plainStringKey ][ 1 ] );
+            Assert.Contains( $"{TEMP_FILE_NAME} @ 10", rootContext.KeyMatches[ plainStringKey ][ 2 ] );
 
             Assert.True( rootContext.KeyMatches.ContainsKey( interpolatedStringKey ) );
-            Assert.Single( rootContext.KeyMatches[interpolatedStringKey] );
-            Assert.Contains( $"{TEMP_FILE_NAME} @ 5", rootContext.KeyMatches[interpolatedStringKey][0] );
+            Assert.Single( rootContext.KeyMatches[ interpolatedStringKey ] );
+            Assert.Contains( $"{TEMP_FILE_NAME} @ 5", rootContext.KeyMatches[ interpolatedStringKey ][ 0 ] );
 
             Assert.True( rootContext.KeyMatches.ContainsKey( formatStringKey ) );
-            Assert.Single( rootContext.KeyMatches[formatStringKey] );
-            Assert.Contains( $"{TEMP_FILE_NAME} @ 9", rootContext.KeyMatches[formatStringKey][0] );
+            Assert.Single( rootContext.KeyMatches[ formatStringKey ] );
+            Assert.Contains( $"{TEMP_FILE_NAME} @ 9", rootContext.KeyMatches[ formatStringKey ][ 0 ] );
 
             Assert.True( rootContext.KeyMatches.ContainsKey( anotherStringKey ) );
-            Assert.Single( rootContext.KeyMatches[anotherStringKey] );
-            Assert.Contains( $"{TEMP_FILE_NAME} @ 8", rootContext.KeyMatches[anotherStringKey][0] );
+            Assert.Single( rootContext.KeyMatches[ anotherStringKey ] );
+            Assert.Contains( $"{TEMP_FILE_NAME} @ 8", rootContext.KeyMatches[ anotherStringKey ][ 0 ] );
         }
 
         [Fact]

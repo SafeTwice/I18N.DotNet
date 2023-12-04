@@ -19,9 +19,7 @@ The easiest way to install I18N.DotNet is using the NuGet package: https://www.n
 
 Source code must be adapted following two simple steps:
 
-- The first step consists in adding a couple of calls during initialization of the program (before any translated string is used):
-  - Call `I18N.DotNet.Global.Localizer.SetTargetLanguage()` to set the language to which strings will be translated.
-  - Call `I18N.DotNet.Global.Localizer.LoadXML()` to load the file that contains the translations.
+- The first step consists in calling during initialization of the program (before any translated string is used) `I18N.DotNet.Global.Localizer.LoadXML()` to load the file that contains the translations,
 - The second step consists in adapting the source code in order to wrap the strings to be translated with a call to `I18N.DotNet.Global.Localize()`.
 
 ###### Example
@@ -38,7 +36,7 @@ public class Program
     var programPath = Path.GetDirectoryName( Assembly.GetExecutingAssembly().Location );
     int i = 0x555;
 
-    Localizer.SetTargetLanguage( CultureInfo.CurrentUICulture.Name ).LoadXML( programPath + "/I18N.xml" );
+    Localizer.LoadXML( programPath + "/I18N.xml" );
 
     Console.WriteLine( Localize( "Plain string to be translated" ) );
     Console.WriteLine( Localize( $"Interpolated string to be translated with value {i:X4}" ) );
@@ -76,23 +74,60 @@ The companion utility [I18N.DotNet Tool](Tool/) can be used to ease the creation
 
 ## Advanced Usage
 
+### Specifying the Translation Target Language
+
+Instances of the `Localizer` class are responsible for loading string translations for a single target language and then providing localization functionality (i.e. perform string translations) for software components.
+
+The default `Localizer` constructor sets the target language for translations to the current UI language (obtained from `System.Globalization.CultureInfo.CurrentUICulture`).
+
+To specify a different target language use the `Localizer` constructor that accepts a language identifier as a parameter.
+
+###### Example
+``` CS
+var localizerForCurrentLanguage = new Localizer();
+var localizerForFrenchLanguage = new Localizer( "fr-fr" );
+```
+
 ### Language Identifiers & Variants
 
-Any arbitrary string can be used for identifying languages, and they are processed as case-insensitive.
+Any arbitrary string can be used for identifying languages, although it is recommended to use identifiers formed by a ISO 639-1 alpha-2 language name (2-letter language codes, e.g., _"en"_, _"es"_), additionally followed by an hyphen and a ISO 3166-1 alpha-2 country/region name (e.g., _"en-EN"_, _"es-ES"_).
+
+Language identifiers are processed as case-insensitive (i.e., _"fr-FR"_ is equivalent to _"fr-fr"_).
 
 When using language identifiers formed by a primary code and a variant code separated by an hyphen (e.g., _"en-us"_, _"es-es"_), if a localized conversion for the language variant is not found then a conversion for the primary (base) language is tried too.
 
-For example, if `"en-gb"` is passed to `Localizer.SetTargetLanguage()`, then for each string to be translated a translation for the language _"en-gb"_ will be searched first, and if not found then a translation for the language _"en"_ will be searched next.
+For example, when loading the translations on a `Localizer` created for the`"en-gb"` language, for each string to be translated a translation for the language _"en-gb"_ will be searched first, and if not found then a translation for the language _"en"_ will be searched next.
 
 It is therefore recommended to:
 
-- Use primary-variant code (e.g., _"en-us"_, _"es-es"_) as target language identifiers (i.e., as arguments to `Localizer.SetTargetLanguage()`).
+- Use primary-variant code (e.g., _"en-us"_, _"es-es"_) as target language identifiers (i.e., as arguments to the `Localizer` constructor).
 - Use primary code (e.g., _"en"_, _"fr"_) as translation language identifiers (i.e, as the `lang` attribute values of XML `I18N.Entry.Value` entries) for generic (non variant-specific) translations.
 - Use primary code-variant (e.g., _"en-gb"_, _"es-ar"_) as translation language identifiers (i.e, as the `lang` attribute values of XML `I18N.Entry.Value` entries) for variant-specific translations.
 
+### Global Localizer
+
+The static class `Global` has the property `Localizer` which contains the global localizer. This instance is shared and can be conveniently used by all software components. In fact all the methods exposed by the `Global` class are just convenience wrappers that call the global localizer.
+
+The instance of `Global.Localizer` is created automatically with a default `Localizer` (i.e., with the target language set to the current UI language) when not having been set previously. This is just right for most use cases, but `Global.Localizer` can be set with a different localizer during application startup (e.g., to use a different language than the current UI language).
+
+###### Example
+``` CS
+void SetupI18N( string language, string programPath )
+{
+  Global.Localizer = new Localizer( language );
+  Global.Localizer.LoadXML( programPath + "/I18N.xml" );
+}
+```
+
+### Local Localizers
+
+If necessary, additional instances of the `Localizer` class can be created (local localizers), loaded with string translations, and then passed to software components for being used instead of the global localizer.
+
+Nevertheless, for most cases using the global localizer (and optionally [Contexts](#contexts)) is just enough.
+
 ### String Format
 
-Calls to `String.Format()` where the format string has to be internationalized can be replaced by a call to `I18N.DotNet.Global.LocalizeFormat()` (or `Localizer.LocalizeFormat()`, see [Global and Local Localizers](#global-and-local-localizers)).
+Calls to `String.Format()` where the format string has to be internationalized can be replaced by a call to `Global.LocalizeFormat()` (see [Global Localizer](#global-localizer)) or `Localizer.LocalizeFormat()` (see [Local Localizers](#local-localizers)).
 
 ###### Example
 ``` CS
@@ -100,14 +135,6 @@ String.Format( Localize( "Format string to be translated with value {0}" ), myVa
 // is equivalent to
 LocalizeFormat( "Format string to be translated with value {0}", myVar );
 ```
-
-### Global and Local Localizers
-
-Instances of the `Localizer` class are responsible for loading string translations and then providing localization functionality (i.e. perform string translations) for software components.
-
-The static class `I18N.DotNet.Global` has the property `Localizer` which contains the global localizer. This instance is shared and can be conveniently used by all software components. In fact all the methods exposed by the `I18N.DotNet.Global` class are just convenience wrappers that call the global localizer.
-
-If necessary, additional instances of the `Localizer` class can be created (local localizers), loaded with string translations, and then passed to software components for being used instead of the global localizer. Nevertheless, for most cases using the global localizer is just enough.
 
 ### Contexts
 
@@ -117,7 +144,7 @@ Since the source language key is the same in both cases, context partitioning mu
 
 ##### Context Partitioning in Source Code (I18N)
 
-In source code, the context of the key can be explicitly indicated when the string is being internationalized by calling `I18N.DotNet.Global.Context()` (or `Localizer.Context()`, see [Global and Local Localizers](#global-and-local-localizers)) and passing it the context identifier, and then calling the localization methods on the returned context `Localizer`.
+In source code, the context of the key can be explicitly indicated when the string is being internationalized by calling `Global.Context()` (see [Global Localizer](#global-localizer)) or `Localizer.Context()` (see [Local Localizers](#local-localizers)) and passing it the context identifier, and then calling the localization methods on the returned context `Localizer`.
 
 Contexts can be nested. A chain of successively nested contexts can be identified by joining their identifiers using the dot character ('.') as a composite context identifier.
 

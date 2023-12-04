@@ -1,8 +1,6 @@
-﻿/**
- * @file
- * @copyright  Copyright (c) 2020-2022 SafeTwice S.L. All rights reserved.
- * @license    MIT (https://opensource.org/licenses/MIT)
- */
+﻿/// @file
+/// @copyright  Copyright (c) 2022-2023 SafeTwice S.L. All rights reserved.
+/// @license    See LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -70,7 +68,7 @@ namespace I18N.DotNet.Tool
 
         public void WriteToFile( string filepath )
         {
-            XmlWriterSettings xws = new XmlWriterSettings();
+            var xws = new XmlWriterSettings();
             xws.Indent = true;
 
             using( XmlWriter xw = XmlWriter.Create( filepath, xws ) )
@@ -158,7 +156,7 @@ namespace I18N.DotNet.Tool
 
         private static void DeleteFoundingComments( XElement element )
         {
-            List<XComment> commentsToRemove = new List<XComment>();
+            var commentsToRemove = new List<XComment>();
 
             foreach( var entryElement in element.Elements( ENTRY_TAG ) )
             {
@@ -182,7 +180,7 @@ namespace I18N.DotNet.Tool
 
         private static void DeleteDeprecatedComments( XElement element )
         {
-            List<XComment> commentsToRemove = new List<XComment>();
+            var commentsToRemove = new List<XComment>();
 
             foreach( var node in element.Nodes() )
             {
@@ -270,7 +268,7 @@ namespace I18N.DotNet.Tool
         {
         }
 
-        private static PreexistingEntryAnnotation PREEXISTING_ENTRY_ANNOTATION = new PreexistingEntryAnnotation();
+        private static readonly PreexistingEntryAnnotation PREEXISTING_ENTRY_ANNOTATION = new();
 
         private static void PreparePreexistingEntries( XElement element )
         {

@@ -20,14 +20,13 @@ namespace I18N.DotNet.Tool
             }
         }
 
-        public Dictionary<string, List<KeyInfo>> KeyMatches = new();
+        public Dictionary<string, List<KeyInfo>> KeyMatches { get; } = new();
 
-        public Dictionary<string, Context> NestedContexts = new();
+        public Dictionary<string, Context> NestedContexts { get; } = new();
 
         public void AddKey( string key, string file, int line )
         {
-            List<KeyInfo> keyInfoList;
-            if( !KeyMatches.TryGetValue( key, out keyInfoList ) )
+            if( !KeyMatches.TryGetValue( key, out var keyInfoList ) )
             {
                 keyInfoList = new List<KeyInfo>();
 
@@ -49,9 +48,7 @@ namespace I18N.DotNet.Tool
                 return this;
             }
 
-            Context nestedContext;
-
-            if( !NestedContexts.TryGetValue( contextStack[ index ], out nestedContext ) )
+            if( !NestedContexts.TryGetValue( contextStack[ index ], out var nestedContext ) )
             {
                 nestedContext = new();
                 NestedContexts.Add( contextStack[ index ], nestedContext );

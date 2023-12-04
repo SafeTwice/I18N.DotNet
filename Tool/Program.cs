@@ -12,16 +12,18 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
+#pragma warning disable IDE0042
+
 namespace I18N.DotNet.Tool
 {
     [Verb( "generate", HelpText = "Generate an I18N file." )]
     class GenerateOptions
     {
         [Option( 'I', Required = true, HelpText = "Input directories paths." )]
-        public IEnumerable<string> InputDirectories { get; set; }
+        public IEnumerable<string> InputDirectories { get; set; } = new List<string>();
 
         [Option( 'p', Default = "*.cs", HelpText = "Input files name pattern." )]
-        public string InputFilesPattern { get; set; }
+        public string InputFilesPattern { get; set; } = string.Empty;
 
         [Option( 'r', Default = false, HelpText = "Scan in input directories recursively." )]
         public bool Recursive { get; set; }
@@ -33,29 +35,29 @@ namespace I18N.DotNet.Tool
         public bool MarkDeprecated { get; set; }
 
         [Option( 'E', HelpText = "Extra methods to be parsed for strings to be localized." )]
-        public IEnumerable<string> ExtraLocalizationFunctions { get; set; }
+        public IEnumerable<string> ExtraLocalizationFunctions { get; set; } = new List<string>();
 
         [Option( 'o', Required = true, HelpText = "Output file path." )]
-        public string OutputFile { get; set; }
+        public string OutputFile { get; set; } = string.Empty;
     }
 
     [Verb( "analyze", HelpText = "Analyze an I18N file." )]
     class AnalyzeOptions
     {
         [Option( 'i', "input", Required = true, HelpText = "Input file path." )]
-        public string InputFile { get; set; }
+        public string InputFile { get; set; } = string.Empty;
 
         [Option( 'd', "check-deprecated", HelpText = "Check presence of deprecated entries." )]
         public bool CheckDeprecated { get; set; }
 
         [Option( 'L', "check-language", HelpText = "Check for entries without translation for one or more languages ('*' for any)." )]
-        public IEnumerable<string> CheckTranslationForLanguages { get; set; }
+        public IEnumerable<string> CheckTranslationForLanguages { get; set; } = new List<string>();
 
         [Option( 'C', "include-context", HelpText = "Context to include in analysis." )]
-        public IEnumerable<string> IncludeContexts { get; set; }
+        public IEnumerable<string> IncludeContexts { get; set; } = new List<string>();
 
         [Option( 'E', "exclude-context", HelpText = "Context to exclude from analysis." )]
-        public IEnumerable<string> ExcludeContexts { get; set; }
+        public IEnumerable<string> ExcludeContexts { get; set; } = new List<string>();
     }
 
     class Program
@@ -85,7 +87,7 @@ namespace I18N.DotNet.Tool
                     ParseFilesInDirectory( sourceFileParser, dirInfo, options.InputFilesPattern, options.Recursive, options.ExtraLocalizationFunctions, rootContext );
                 }
 
-                outputFile.Load( options.OutputFile );
+                outputFile.LoadFromFile( options.OutputFile );
 
                 if( !options.PreserveFoundingComments )
                 {
@@ -121,7 +123,7 @@ namespace I18N.DotNet.Tool
         {
             try
             {
-                inputFile.Load( options.InputFile );
+                inputFile.LoadFromFile( options.InputFile );
 
                 var includeContexts = options.IncludeContexts.Select( s => ContextSpecToRegex( s ) ).ToArray();
                 var excludeContexts = options.ExcludeContexts.Select( s => ContextSpecToRegex( s ) ).ToArray();
@@ -138,15 +140,15 @@ namespace I18N.DotNet.Tool
 
                 if( options.CheckDeprecated )
                 {
-                    foreach( (int line, string context, string key) in inputFile.GetDeprecatedEntries( includeContexts, excludeContexts ) )
+                    foreach( var result in inputFile.GetDeprecatedEntries( includeContexts, excludeContexts ) )
                     {
-                        if( key != null )
+                        if( result.key != null )
                         {
-                            textConsole.WriteLine( $"WARNING: Deprecated entry at line {line} (Context = {context}, Key = '{key}')" );
+                            textConsole.WriteLine( $"WARNING: Deprecated entry at line {result.line} (Context = {result.context}, Key = '{result.key}')" );
                         }
                         else
                         {
-                            textConsole.WriteLine( $"WARNING: Deprecated entry at line {line} (Context = {context}, No key)" );
+                            textConsole.WriteLine( $"WARNING: Deprecated entry at line {result.line} (Context = {result.context}, No key)" );
                         }
                     }
                 }
@@ -155,18 +157,18 @@ namespace I18N.DotNet.Tool
                 {
                     if( languagesToCheck.Contains( "*" ) )
                     {
-                        languagesToCheck = new string[ 0 ];
+                        languagesToCheck = Array.Empty<string>();
                     }
 
-                    foreach( (int line, string context, string key) in inputFile.GetNoTranslationEntries( languagesToCheck, includeContexts, excludeContexts ) )
+                    foreach( var result in inputFile.GetNoTranslationEntries( languagesToCheck, includeContexts, excludeContexts ) )
                     {
-                        if( key != null )
+                        if( result.key != null )
                         {
-                            textConsole.WriteLine( $"WARNING: Entry without translation at line {line} (Context = {context}, Key = '{key}')" );
+                            textConsole.WriteLine( $"WARNING: Entry without translation at line {result.line} (Context = {result.context}, Key = '{result.key}')" );
                         }
                         else
                         {
-                            textConsole.WriteLine( $"WARNING: Entry without translation at line {line} (Context = {context}, No key)" );
+                            textConsole.WriteLine( $"WARNING: Entry without translation at line {result.line} (Context = {result.context}, No key)" );
                         }
                     }
                 }
@@ -205,7 +207,7 @@ namespace I18N.DotNet.Tool
         {
             if( contextSpec.StartsWith( '@' ) )
             {
-                return new Regex( contextSpec.Substring( 1 ) );
+                return new Regex( contextSpec[ 1.. ] );
             }
             else
             {
@@ -215,6 +217,6 @@ namespace I18N.DotNet.Tool
             }
         }
 
-        private static readonly Regex WILDCARD_REGEX = new Regex( @"(?<!\\)\\\*" );
+        private static readonly Regex WILDCARD_REGEX = new( @"(?<!\\)\\\*" );
     }
 }

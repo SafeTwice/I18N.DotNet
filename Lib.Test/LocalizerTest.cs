@@ -8,6 +8,8 @@ using System.IO;
 using System.Text;
 using Xunit;
 
+#pragma warning disable CA1861, CA1859
+
 namespace I18N.DotNet.Test
 {
     public class LocalizerTest
@@ -89,8 +91,8 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
-            var localizer = new Localizer();
-            localizer.SetTargetLanguage( "en-us" ).LoadXML( GetConfigA() );
+            var localizer = new Localizer( "en-us" );
+            localizer.LoadXML( GetConfigA() );
 
             // Execute & Verify
 
@@ -104,8 +106,8 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
-            var localizer = new Localizer();
-            localizer.SetTargetLanguage( "fr-fr" ).LoadXML( GetConfigA() );
+            var localizer = new Localizer( "fr-fr" );
+            localizer.LoadXML( GetConfigA() );
 
             // Execute & Verify
 
@@ -125,8 +127,8 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
-            var localizer = new Localizer();
-            localizer.SetTargetLanguage( "en-us" ).LoadXML( GetConfigA() );
+            var localizer = new Localizer( "en-us" );
+            localizer.LoadXML( GetConfigA() );
 
             // Execute & Verify
 
@@ -146,8 +148,8 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
-            var localizer = new Localizer();
-            localizer.SetTargetLanguage( "es-es" ).LoadXML( GetConfigA() );
+            var localizer = new Localizer( "es-es" );
+            localizer.LoadXML( GetConfigA() );
 
             // Execute & Verify
 
@@ -159,8 +161,8 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
-            var localizer = new Localizer();
-            localizer.SetTargetLanguage( "es-es" ).LoadXML( GetConfigA() );
+            var localizer = new Localizer( "es-es" );
+            localizer.LoadXML( GetConfigA() );
 
             // Execute & Verify
 
@@ -172,8 +174,8 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
-            var localizer = new Localizer();
-            localizer.SetTargetLanguage( "fr-fr" ).LoadXML( GetConfigA() );
+            var localizer = new Localizer( "fr-fr" );
+            localizer.LoadXML( GetConfigA() );
 
             // Execute & Verify
 
@@ -190,8 +192,8 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
-            var localizer = new Localizer();
-            localizer.SetTargetLanguage( "fr-fr" ).LoadXML( GetConfigA() );
+            var localizer = new Localizer( "fr-fr" );
+            localizer.LoadXML( GetConfigA() );
 
             // Execute & Verify
 
@@ -208,8 +210,8 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
-            var localizer = new Localizer();
-            localizer.SetTargetLanguage( "fr-fr" ).LoadXML( GetConfigA() );
+            var localizer = new Localizer( "fr-fr" );
+            localizer.LoadXML( GetConfigA() );
 
             // Execute & Verify
 
@@ -226,8 +228,8 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
-            var localizer = new Localizer();
-            localizer.SetTargetLanguage( "es-es" ).LoadXML( GetConfigA() );
+            var localizer = new Localizer( "es-es" );
+            localizer.LoadXML( GetConfigA() );
 
             // Execute & Verify
 
@@ -244,8 +246,8 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
-            var localizer = new Localizer();
-            localizer.SetTargetLanguage( "es-es" ).LoadXML( GetConfigA() );
+            var localizer = new Localizer( "es-es" );
+            localizer.LoadXML( GetConfigA() );
 
             // Execute & Verify
 
@@ -262,8 +264,8 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
-            var localizer = new Localizer();
-            localizer.SetTargetLanguage( "fr-fr" ).LoadXML( GetConfigA() );
+            var localizer = new Localizer( "fr-fr" );
+            localizer.LoadXML( GetConfigA() );
 
             // Execute & Verify
 
@@ -276,8 +278,8 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
-            var localizer = new Localizer();
-            localizer.SetTargetLanguage( "es-es" ).LoadXML( GetConfigA() );
+            var localizer = new Localizer( "es-es" );
+            localizer.LoadXML( GetConfigA() );
 
             // Execute & Verify
 
@@ -285,30 +287,16 @@ namespace I18N.DotNet.Test
         }
 
         [Fact]
-        public void LoadXML_LanguageNotSet()
-        {
-            // Prepare
-
-            var localizer = new Localizer();
-
-            // Execute & Verify
-
-            var exception = Assert.Throws<InvalidOperationException>( () => localizer.LoadXML( GetConfigA() ) );
-
-            Assert.Contains( "Language must be set before loading localization files", exception.Message );
-        }
-
-        [Fact]
         public void LoadXML_InvalidFormat()
         {
             // Prepare
 
-            var localizer = new Localizer();
+            var localizer = new Localizer( "es-es" );
             var data = CreateStream( "<I18N>" );
 
             // Execute & Verify
 
-            var exception = Assert.Throws<System.Xml.XmlException>( () => localizer.SetTargetLanguage( "es-es" ).LoadXML( data ) );
+            var exception = Assert.Throws<System.Xml.XmlException>( () => localizer.LoadXML( data ) );
         }
 
         [Fact]
@@ -316,12 +304,12 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
-            var localizer = new Localizer();
+            var localizer = new Localizer( "es-es" );
             var data = CreateStream( "<L10N></L10N>" );
 
             // Execute & Verify
 
-            var exception = Assert.Throws<Localizer.ParseException>( () => localizer.SetTargetLanguage( "es-es" ).LoadXML( data ) );
+            var exception = Assert.Throws<Localizer.ParseException>( () => localizer.LoadXML( data ) );
 
             Assert.Contains( "Invalid XML root element", exception.Message );
         }
@@ -331,12 +319,12 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
-            var localizer = new Localizer();
+            var localizer = new Localizer( "es-es" );
             var data = CreateStream( "<I18N><X/></I18N>" );
 
             // Execute & Verify
 
-            var exception = Assert.Throws<Localizer.ParseException>( () => localizer.SetTargetLanguage( "es-es" ).LoadXML( data ) );
+            var exception = Assert.Throws<Localizer.ParseException>( () => localizer.LoadXML( data ) );
 
             Assert.Contains( "Invalid XML element", exception.Message );
         }
@@ -346,12 +334,12 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
-            var localizer = new Localizer();
+            var localizer = new Localizer( "x" );
             var data = CreateStream( "<I18N><Entry><Value lang='x'>X</Value></Entry></I18N>" );
 
             // Execute & Verify
 
-            var exception = Assert.Throws<Localizer.ParseException>( () => localizer.SetTargetLanguage( "x" ).LoadXML( data ) );
+            var exception = Assert.Throws<Localizer.ParseException>( () => localizer.LoadXML( data ) );
 
             Assert.Contains( "Missing child 'Key' XML element", exception.Message );
         }
@@ -361,12 +349,12 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
-            var localizer = new Localizer();
+            var localizer = new Localizer( "x" );
             var data = CreateStream( "<I18N><Entry><Key>X</Key><Value lang='x'>X</Value><Key>Y</Key></Entry></I18N>" );
 
             // Execute & Verify
 
-            var exception = Assert.Throws<Localizer.ParseException>( () => localizer.SetTargetLanguage( "x" ).LoadXML( data ) );
+            var exception = Assert.Throws<Localizer.ParseException>( () => localizer.LoadXML( data ) );
 
             Assert.Contains( "Too many child 'Key' XML elements", exception.Message );
         }
@@ -376,12 +364,12 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
-            var localizer = new Localizer();
+            var localizer = new Localizer( "x" );
             var data = CreateStream( "<I18N><Entry><Key>X</Key><Value lang='x'>X</Value><Value lang='x'>Y</Value></Entry></I18N>" );
 
             // Execute & Verify
 
-            var exception = Assert.Throws<Localizer.ParseException>( () => localizer.SetTargetLanguage( "x" ).LoadXML( data ) );
+            var exception = Assert.Throws<Localizer.ParseException>( () => localizer.LoadXML( data ) );
 
             Assert.Contains( "Too many child 'Value' XML elements with the same 'lang' attribute", exception.Message );
         }
@@ -391,12 +379,12 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
-            var localizer = new Localizer();
+            var localizer = new Localizer( "en-GB" );
             var data = CreateStream( "<I18N><Entry><Key>X</Key><Value lang='en'>X</Value><Value lang='en'>Y</Value><Value lang='en-gb'>Z</Value></Entry></I18N>" );
 
             // Execute & Verify
 
-            var exception = Assert.Throws<Localizer.ParseException>( () => localizer.SetTargetLanguage( "en-GB" ).LoadXML( data ) );
+            var exception = Assert.Throws<Localizer.ParseException>( () => localizer.LoadXML( data ) );
 
             Assert.Contains( "Too many child 'Value' XML elements with the same 'lang' attribute", exception.Message );
         }
@@ -406,12 +394,12 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
-            var localizer = new Localizer();
+            var localizer = new Localizer( "x" );
             var data = CreateStream( "<I18N><Entry><Key>X</Key><Value>X</Value></Entry></I18N>" );
 
             // Execute & Verify
 
-            var exception = Assert.Throws<Localizer.ParseException>( () => localizer.SetTargetLanguage( "x" ).LoadXML( data ) );
+            var exception = Assert.Throws<Localizer.ParseException>( () => localizer.LoadXML( data ) );
 
             Assert.Contains( "Missing attribute 'lang' in 'Value' XML element", exception.Message );
         }
@@ -421,12 +409,12 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
-            var localizer = new Localizer();
+            var localizer = new Localizer( "x" );
             var data = CreateStream( "<I18N><Entry><Kay>X</Kay><Value lang='x'>X</Value></Entry></I18N>" );
 
             // Execute & Verify
 
-            var exception = Assert.Throws<Localizer.ParseException>( () => localizer.SetTargetLanguage( "x" ).LoadXML( data ) );
+            var exception = Assert.Throws<Localizer.ParseException>( () => localizer.LoadXML( data ) );
 
             Assert.Contains( "Invalid XML element", exception.Message );
         }
@@ -436,12 +424,12 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
-            var localizer = new Localizer();
+            var localizer = new Localizer( "x" );
             var data = CreateStream( "<I18N><Context></Context></I18N>" );
 
             // Execute & Verify
 
-            var exception = Assert.Throws<Localizer.ParseException>( () => localizer.SetTargetLanguage( "x" ).LoadXML( data ) );
+            var exception = Assert.Throws<Localizer.ParseException>( () => localizer.LoadXML( data ) );
 
             Assert.Contains( "Missing attribute 'id' in 'Context' XML element", exception.Message );
         }
@@ -451,9 +439,9 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
-            var localizer = new Localizer();
+            var localizer = new Localizer( "es-es" );
             var configB = CreateStream( "<I18N><Entry><Key>Simple Key 1</Key><Value lang='es'>XYZ</Value></Entry></I18N>" );
-            localizer.SetTargetLanguage( "es-es" ).LoadXML( GetConfigA() );
+            localizer.LoadXML( GetConfigA() );
 
             // Execute
 
@@ -470,9 +458,9 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
-            var localizer = new Localizer();
+            var localizer = new Localizer( "es-es" );
             var configB = CreateStream( "<I18N><Entry><Key>Simple Key 1</Key><Value lang='es'>XYZ</Value></Entry></I18N>" );
-            localizer.SetTargetLanguage( "es-es" ).LoadXML( GetConfigA() );
+            localizer.LoadXML( GetConfigA() );
 
             // Execute
 
@@ -500,8 +488,8 @@ namespace I18N.DotNet.Test
 
                 // Execute
 
-                var localizer = new Localizer();
-                localizer.SetTargetLanguage( "es-es" ).LoadXML( tempFileName );
+                var localizer = new Localizer( "es-es" );
+                localizer.LoadXML( tempFileName );
 
                 // Verify
 

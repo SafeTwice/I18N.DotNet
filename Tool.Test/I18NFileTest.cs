@@ -42,8 +42,8 @@ namespace I18N.DotNet.Tool.Test
             string contents =
                 "<I18N>\n" +
                 "  <Entry>\n" +
-                "    <!-- Found in: Match 1-1 -->\n" +
-                "    <!-- Found in: Match 1-Z -->\n" +
+                "    <!-- Found in: Match 1 @ 1 -->\n" +
+                "    <!-- Found in: Match 1 @ 11 -->\n" +
                 "    <Key>Key 1</Key>\n" +
                 "    <Value lang='de'>Schlüssel 1</Value>\n" +
                 "    <Value lang='fr'>Clef 1</Value>\n" +
@@ -57,8 +57,8 @@ namespace I18N.DotNet.Tool.Test
                 "  <Context id=\"Context 1\">\n" +
                 "    <!-- Non-Erasable Comment -->\n" +
                 "    <Entry>\n" +
-                "      <!-- Found in: Match 3-Z -->\n" +
-                "      <!-- Found in: Match 3-1 -->\n" +
+                "      <!-- Found in: Match 3 @ 33 -->\n" +
+                "      <!-- Found in: Match 3 @ 1 -->\n" +
                 "      <Key>Key 3</Key>\n" +
                 "    </Entry>\n" +
                 "    <Entry>\n" +
@@ -67,7 +67,7 @@ namespace I18N.DotNet.Tool.Test
                 "    </Entry>\n" +
                 "    <Context id=\"Context 11\">\n" +
                 "      <Entry>\n" +
-                "        <!-- Found in: Match 9-Z -->\n" +
+                "        <!-- Found in: Match 9 @ 99 -->\n" +
                 "        <Key>Key 9</Key>\n" +
                 "        <Value lang='es'>Clave 9</Value>\n" +
                 "      </Entry>\n" +
@@ -85,14 +85,14 @@ namespace I18N.DotNet.Tool.Test
         {
             var rootContext = new Context();
 
-            rootContext.KeyMatches.Add( "Key 1", new List<string> { "Match 1-1", "Match 1-2" } );
-            rootContext.KeyMatches.Add( "Key 6", new List<string> { "Match 6" } );
-            rootContext.KeyMatches.Add( "Key A", new List<string> { "Match A" } );
+            rootContext.KeyMatches.Add( "Key 1", new List<Context.KeyInfo> { new Context.KeyInfo( "Match 1", 1 ), new Context.KeyInfo( "Match 1", 2 ) } );
+            rootContext.KeyMatches.Add( "Key 6", new List<Context.KeyInfo> { new Context.KeyInfo( "Match 6", 0 ) } );
+            rootContext.KeyMatches.Add( "Key A", new List<Context.KeyInfo> { new Context.KeyInfo( "Match A", 0 ) } );
 
             var nestedContext1 = new Context();
             rootContext.NestedContexts.Add( "Context 1", nestedContext1 );
 
-            nestedContext1.KeyMatches.Add( "Key 3", new List<string> { "Match 3-1", "Match 3-2" } );
+            nestedContext1.KeyMatches.Add( "Key 3", new List<Context.KeyInfo> { new Context.KeyInfo( "Match 3", 1 ), new Context.KeyInfo( "Match 3", 2 ) } );
 
             var nestedContext2 = new Context();
             rootContext.NestedContexts.Add( "Context 2", nestedContext2 );
@@ -100,7 +100,7 @@ namespace I18N.DotNet.Tool.Test
             var nestedContext22 = new Context();
             nestedContext2.NestedContexts.Add( "Context 22", nestedContext22 );
 
-            nestedContext22.KeyMatches.Add( "Key 4", new List<string> { "Match 4" } );
+            nestedContext22.KeyMatches.Add( "Key 4", new List<Context.KeyInfo> { new Context.KeyInfo( "Match 4", 0 ) } );
 
             return rootContext;
         }
@@ -124,29 +124,29 @@ namespace I18N.DotNet.Tool.Test
                 "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
                 "<I18N>\n" +
                 "  <Entry>\n" +
-                "    <!-- Found in: Match 1-1 -->\n" +
-                "    <!-- Found in: Match 1-2 -->\n" +
+                "    <!-- Found in: Match 1 @ 1 -->\n" +
+                "    <!-- Found in: Match 1 @ 2 -->\n" +
                 "    <Key>Key 1</Key>\n" +
                 "  </Entry>\n" +
                 "  <Entry>\n" +
-                "    <!-- Found in: Match 6 -->\n" +
+                "    <!-- Found in: Match 6 @ 0 -->\n" +
                 "    <Key>Key 6</Key>\n" +
                 "  </Entry>\n" +
                 "  <Entry>\n" +
-                "    <!-- Found in: Match A -->\n" +
+                "    <!-- Found in: Match A @ 0 -->\n" +
                 "    <Key>Key A</Key>\n" +
                 "  </Entry>\n" +
                 "  <Context id=\"Context 1\">\n" +
                 "    <Entry>\n" +
-                "      <!-- Found in: Match 3-1 -->\n" +
-                "      <!-- Found in: Match 3-2 -->\n" +
+                "      <!-- Found in: Match 3 @ 1 -->\n" +
+                "      <!-- Found in: Match 3 @ 2 -->\n" +
                 "      <Key>Key 3</Key>\n" +
                 "    </Entry>\n" +
                 "  </Context>\n" +
                 "  <Context id=\"Context 2\">\n" +
                 "    <Context id=\"Context 22\">\n" +
                 "      <Entry>\n" +
-                "        <!-- Found in: Match 4 -->\n" +
+                "        <!-- Found in: Match 4 @ 0 -->\n" +
                 "        <Key>Key 4</Key>\n" +
                 "      </Entry>\n" +
                 "    </Context>\n" +
@@ -191,9 +191,9 @@ namespace I18N.DotNet.Tool.Test
                 "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
                 "<I18N>\n" +
                 "  <Entry>\n" +
-                "    <!-- Found in: Match 1-1 -->\n" +
-                "    <!-- Found in: Match 1-Z -->\n" +
-                "    <!-- Found in: Match 1-2 -->\n" +
+                "    <!-- Found in: Match 1 @ 1 -->\n" +
+                "    <!-- Found in: Match 1 @ 11 -->\n" +
+                "    <!-- Found in: Match 1 @ 2 -->\n" +
                 "    <Key>Key 1</Key>\n" +
                 "    <Value lang=\"de\">Schlüssel 1</Value>\n" +
                 "    <Value lang=\"fr\">Clef 1</Value>\n" +
@@ -207,9 +207,9 @@ namespace I18N.DotNet.Tool.Test
                 "  <Context id=\"Context 1\">\n" +
                 "    <!-- Non-Erasable Comment -->\n" +
                 "    <Entry>\n" +
-                "      <!-- Found in: Match 3-Z -->\n" +
-                "      <!-- Found in: Match 3-1 -->\n" +
-                "      <!-- Found in: Match 3-2 -->\n" +
+                "      <!-- Found in: Match 3 @ 33 -->\n" +
+                "      <!-- Found in: Match 3 @ 1 -->\n" +
+                "      <!-- Found in: Match 3 @ 2 -->\n" +
                 "      <Key>Key 3</Key>\n" +
                 "    </Entry>\n" +
                 "    <Entry>\n" +
@@ -218,7 +218,7 @@ namespace I18N.DotNet.Tool.Test
                 "    </Entry>\n" +
                 "    <Context id=\"Context 11\">\n" +
                 "      <Entry>\n" +
-                "        <!-- Found in: Match 9-Z -->\n" +
+                "        <!-- Found in: Match 9 @ 99 -->\n" +
                 "        <Key>Key 9</Key>\n" +
                 "        <Value lang=\"es\">Clave 9</Value>\n" +
                 "      </Entry>\n" +
@@ -226,17 +226,17 @@ namespace I18N.DotNet.Tool.Test
                 "  </Context>\n" +
                 "  <Entry>\n" +
                 "    <!-- DEPRECATED -->\n" +
-                "    <!-- Found in: Match 6 -->\n" +
+                "    <!-- Found in: Match 6 @ 0 -->\n" +
                 "    <Key>Key 6</Key>\n" +
                 "  </Entry>\n" +
                 "  <Entry>\n" +
-                "    <!-- Found in: Match A -->\n" +
+                "    <!-- Found in: Match A @ 0 -->\n" +
                 "    <Key>Key A</Key>\n" +
                 "  </Entry>\n" +
                 "  <Context id=\"Context 2\">\n" +
                 "    <Context id=\"Context 22\">\n" +
                 "      <Entry>\n" +
-                "        <!-- Found in: Match 4 -->\n" +
+                "        <!-- Found in: Match 4 @ 0 -->\n" +
                 "        <Key>Key 4</Key>\n" +
                 "      </Entry>\n" +
                 "    </Context>\n" +
@@ -270,8 +270,8 @@ namespace I18N.DotNet.Tool.Test
                 "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
                 "<I18N>\n" +
                 "  <Entry>\n" +
-                "    <!-- Found in: Match 1-1 -->\n" +
-                "    <!-- Found in: Match 1-2 -->\n" +
+                "    <!-- Found in: Match 1 @ 1 -->\n" +
+                "    <!-- Found in: Match 1 @ 2 -->\n" +
                 "    <Key>Key 1</Key>\n" +
                 "    <Value lang=\"de\">Schlüssel 1</Value>\n" +
                 "    <Value lang=\"fr\">Clef 1</Value>\n" +
@@ -285,8 +285,8 @@ namespace I18N.DotNet.Tool.Test
                 "  <Context id=\"Context 1\">\n" +
                 "    <!-- Non-Erasable Comment -->\n" +
                 "    <Entry>\n" +
-                "      <!-- Found in: Match 3-1 -->\n" +
-                "      <!-- Found in: Match 3-2 -->\n" +
+                "      <!-- Found in: Match 3 @ 1 -->\n" +
+                "      <!-- Found in: Match 3 @ 2 -->\n" +
                 "      <Key>Key 3</Key>\n" +
                 "    </Entry>\n" +
                 "    <Entry>\n" +
@@ -302,17 +302,17 @@ namespace I18N.DotNet.Tool.Test
                 "  </Context>\n" +
                 "  <Entry>\n" +
                 "    <!-- DEPRECATED -->\n" +
-                "    <!-- Found in: Match 6 -->\n" +
+                "    <!-- Found in: Match 6 @ 0 -->\n" +
                 "    <Key>Key 6</Key>\n" +
                 "  </Entry>\n" +
                 "  <Entry>\n" +
-                "    <!-- Found in: Match A -->\n" +
+                "    <!-- Found in: Match A @ 0 -->\n" +
                 "    <Key>Key A</Key>\n" +
                 "  </Entry>\n" +
                 "  <Context id=\"Context 2\">\n" +
                 "    <Context id=\"Context 22\">\n" +
                 "      <Entry>\n" +
-                "        <!-- Found in: Match 4 -->\n" +
+                "        <!-- Found in: Match 4 @ 0 -->\n" +
                 "        <Key>Key 4</Key>\n" +
                 "      </Entry>\n" +
                 "    </Context>\n" +
@@ -347,8 +347,8 @@ namespace I18N.DotNet.Tool.Test
                 "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
                 "<I18N>\n" +
                 "  <Entry>\n" +
-                "    <!-- Found in: Match 1-1 -->\n" +
-                "    <!-- Found in: Match 1-2 -->\n" +
+                "    <!-- Found in: Match 1 @ 1 -->\n" +
+                "    <!-- Found in: Match 1 @ 2 -->\n" +
                 "    <Key>Key 1</Key>\n" +
                 "    <Value lang=\"de\">Schlüssel 1</Value>\n" +
                 "    <Value lang=\"fr\">Clef 1</Value>\n" +
@@ -363,8 +363,8 @@ namespace I18N.DotNet.Tool.Test
                 "  <Context id=\"Context 1\">\n" +
                 "    <!-- Non-Erasable Comment -->\n" +
                 "    <Entry>\n" +
-                "      <!-- Found in: Match 3-1 -->\n" +
-                "      <!-- Found in: Match 3-2 -->\n" +
+                "      <!-- Found in: Match 3 @ 1 -->\n" +
+                "      <!-- Found in: Match 3 @ 2 -->\n" +
                 "      <Key>Key 3</Key>\n" +
                 "    </Entry>\n" +
                 "    <Entry>\n" +
@@ -380,17 +380,17 @@ namespace I18N.DotNet.Tool.Test
                 "    </Context>\n" +
                 "  </Context>\n" +
                 "  <Entry>\n" +
-                "    <!-- Found in: Match 6 -->\n" +
+                "    <!-- Found in: Match 6 @ 0 -->\n" +
                 "    <Key>Key 6</Key>\n" +
                 "  </Entry>\n" +
                 "  <Entry>\n" +
-                "    <!-- Found in: Match A -->\n" +
+                "    <!-- Found in: Match A @ 0 -->\n" +
                 "    <Key>Key A</Key>\n" +
                 "  </Entry>\n" +
                 "  <Context id=\"Context 2\">\n" +
                 "    <Context id=\"Context 22\">\n" +
                 "      <Entry>\n" +
-                "        <!-- Found in: Match 4 -->\n" +
+                "        <!-- Found in: Match 4 @ 0 -->\n" +
                 "        <Key>Key 4</Key>\n" +
                 "      </Entry>\n" +
                 "    </Context>\n" +
@@ -464,8 +464,8 @@ namespace I18N.DotNet.Tool.Test
             string contents =
                 "<I18N>\n" +
                 "  <Entry>\n" +
-                "    <!-- Found in: Match 1-1 -->\n" +
-                "    <!-- Found in: Match 1-Z -->\n" +
+                "    <!-- Found in: Match 1 @ 1 -->\n" +
+                "    <!-- Found in: Match 1 @ 11 -->\n" +
                 "    <Key>Key 1</Key>\n" +
                 "  </Entry>\n" +
                 "  <Entry>\n" +
@@ -475,13 +475,13 @@ namespace I18N.DotNet.Tool.Test
                 "  <Context id=\"Context 1\">\n" +
                 "    <!-- Non-Erasable Comment -->\n" +
                 "    <Entry>\n" +
-                "      <!-- Found in: Match 3-Z -->\n" +
-                "      <!-- Found in: Match 3-1 -->\n" +
+                "      <!-- Found in: Match 3 @ 33 -->\n" +
+                "      <!-- Found in: Match 3 @ 1 -->\n" +
                 "      <Key>Key 3</Key>\n" +
                 "    </Entry>\n" +
                 "    <Context id=\"Context 11\">\n" +
                 "      <Entry>\n" +
-                "        <!-- Found in: Match 9-Z -->\n" +
+                "        <!-- Found in: Match 9 @ 99 -->\n" +
                 "        <Key>Key 9</Key>\n" +
                 "      </Entry>\n" +
                 "    </Context>\n" +
@@ -516,9 +516,9 @@ namespace I18N.DotNet.Tool.Test
                 "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
                 "<I18N>\n" +
                 "  <Entry>\n" +
-                "    <!-- Found in: Match 1-1 -->\n" +
-                "    <!-- Found in: Match 1-Z -->\n" +
-                "    <!-- Found in: Match 1-2 -->\n" +
+                "    <!-- Found in: Match 1 @ 1 -->\n" +
+                "    <!-- Found in: Match 1 @ 11 -->\n" +
+                "    <!-- Found in: Match 1 @ 2 -->\n" +
                 "    <Key>Key 1</Key>\n" +
                 "  </Entry>\n" +
                 "  <Entry>\n" +
@@ -528,32 +528,32 @@ namespace I18N.DotNet.Tool.Test
                 "  <Context id=\"Context 1\">\n" +
                 "    <!-- Non-Erasable Comment -->\n" +
                 "    <Entry>\n" +
-                "      <!-- Found in: Match 3-Z -->\n" +
-                "      <!-- Found in: Match 3-1 -->\n" +
-                "      <!-- Found in: Match 3-2 -->\n" +
+                "      <!-- Found in: Match 3 @ 33 -->\n" +
+                "      <!-- Found in: Match 3 @ 1 -->\n" +
+                "      <!-- Found in: Match 3 @ 2 -->\n" +
                 "      <Key>Key 3</Key>\n" +
                 "    </Entry>\n" +
                 "    <Context id=\"Context 11\">\n" +
                 "      <Entry>\n" +
-                "        <!-- Found in: Match 9-Z -->\n" +
+                "        <!-- Found in: Match 9 @ 99 -->\n" +
                 "        <Key>Key 9</Key>\n" +
                 "      </Entry>\n" +
                 "    </Context>\n" +
                 "  </Context>\n" +
                 "  <Entry></Entry>\n" +
                 "  <Entry>\n" +
-                "    <!-- Found in: Match 6 -->\n" +
+                "    <!-- Found in: Match 6 @ 0 -->\n" +
                 "    <Key>Key 6</Key>\n" +
                 "  </Entry>\n" +
                 "  <Entry>\n" +
-                "    <!-- Found in: Match A -->\n" +
+                "    <!-- Found in: Match A @ 0 -->\n" +
                 "    <Key>Key A</Key>\n" +
                 "  </Entry>\n" +
                 "  <Context></Context>\n" +
                 "  <Context id=\"Context 2\">\n" +
                 "    <Context id=\"Context 22\">\n" +
                 "      <Entry>\n" +
-                "        <!-- Found in: Match 4 -->\n" +
+                "        <!-- Found in: Match 4 @ 0 -->\n" +
                 "        <Key>Key 4</Key>\n" +
                 "      </Entry>\n" +
                 "    </Context>\n" +

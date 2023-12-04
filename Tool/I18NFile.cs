@@ -142,7 +142,7 @@ namespace I18N.DotNet.Tool
 
                 foreach( var keyInfo in context.KeyMatches[ key ] )
                 {
-                    AddCommentIfNeeded( entryElement, $"{FOUNDING_HEADING} {keyInfo} ", true );
+                    AddCommentIfNeeded( entryElement, $"{FOUNDING_HEADING} {keyInfo.File} @ {keyInfo.Line} ", true );
                 }
             }
 

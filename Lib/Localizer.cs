@@ -37,10 +37,22 @@ namespace I18N.DotNet
         //===========================================================================
 
         /// <summary>
-        /// Default constructor.
+        /// Constructor for a specific language.
         /// </summary>
-        public Localizer()
+        /// <remarks>
+        /// <para>
+        /// Language matching is case-insensitive.
+        /// </para>
+        /// <para>
+        /// Any arbitrary string can be used for identifying languages, but when using language identifiers formed
+        /// by a primary code and a variant code separated by an hyphen( e.g., "en-us") if a localized conversion
+        /// for the "full" language is not found then a conversion for the primary(base) language is tried too.
+        /// </para>
+        /// </remarks>
+        /// <param name="language">Name, code or identifier for the language</param>
+        public Localizer( string language )
         {
+            m_language = new Language( language );
         }
 
         //===========================================================================
@@ -113,38 +125,6 @@ namespace I18N.DotNet
         }
 
         /// <summary>
-        /// Sets the localized language to which conversion will be performed.
-        /// </summary>
-        /// <remarks>
-        /// <para>
-        /// Language matching is case-insensitive.
-        /// </para>
-        /// <para>
-        /// Any arbitrary string can be used for identifying languages, but when using language identifiers formed
-        /// by a primary code and a variant code separated by an hyphen( e.g., "en-us") if a localized conversion
-        /// for the "full" language is not found then a conversion for the primary(base) language is tried too.
-        /// </para>
-        /// </remarks>
-        /// <param name="language">Name, code or identifier for the language</param>
-        /// <returns></returns>
-        public Localizer SetTargetLanguage( string language )
-        {
-            m_targetLanguageFull = language.ToLower();
-
-            var splitLanguage = m_targetLanguageFull.Split( new char[] { '-' }, 2 );
-            if( splitLanguage.Length > 1 )
-            {
-                m_targetLanguagePrimary = splitLanguage[0];
-            }
-            else
-            {
-                m_targetLanguagePrimary = null;
-            }
-
-            return this;
-        }
-
-        /// <summary>
         /// Loads a localization configuration from a file in XML format.
         /// </summary>
         /// <remarks>
@@ -189,11 +169,6 @@ namespace I18N.DotNet
         /// <exception cref="ParseException">Thrown when the input file cannot be parsed properly.</exception>
         public void LoadXML( XDocument doc, bool merge = true )
         {
-            if( m_targetLanguageFull == null )
-            {
-                throw new InvalidOperationException( "Language must be set before loading localization files" );
-            }
-
             if( !merge )
             {
                 m_localizations.Clear();
@@ -211,15 +186,34 @@ namespace I18N.DotNet
         }
 
         //===========================================================================
+        //                          PRIVATE NESTED TYPES
+        //===========================================================================
+
+        private class Language
+        {
+            public string Full { get; }
+            public string? Primary { get; }
+
+            public Language( string language )
+            {
+                Full = language.ToLower();
+
+                var splitLanguage = Full.Split( new char[] { '-' }, 2 );
+                if( splitLanguage.Length > 1 )
+                {
+                    Primary = splitLanguage[ 0 ];
+                }
+            }
+        }
+
+        //===========================================================================
         //                          PRIVATE CONSTRUCTORS
         //===========================================================================
 
-        private Localizer( Localizer parent, string? targetLanguageFull, string? targetLanguagePrimary )
+        private Localizer( Localizer parent, Language language )
         {
             m_parentContext = parent;
-
-            m_targetLanguageFull = targetLanguageFull;
-            m_targetLanguagePrimary = targetLanguagePrimary;
+            m_language = language;
         }
 
         //===========================================================================
@@ -322,12 +316,12 @@ namespace I18N.DotNet
                 throw new ParseException( $"Line {( (IXmlLineInfo) element ).LineNumber}: Missing attribute 'lang' in '{element.Name}' XML element" );
             }
 
-            if( lang == m_targetLanguageFull )
+            if( lang == m_language.Full )
             {
                 value = UnescapeEscapeCodes( element.Value );
                 return EValueType.FULL;
             }
-            else if( lang == m_targetLanguagePrimary )
+            else if( lang == m_language.Primary )
             {
                 value = UnescapeEscapeCodes( element.Value );
                 return EValueType.PRIMARY;
@@ -397,7 +391,7 @@ namespace I18N.DotNet
                 Localizer? localizer;
                 if( !m_nestedContexts.TryGetValue( leftContextId, out localizer ) )
                 {
-                    localizer = new Localizer( this, m_targetLanguageFull, m_targetLanguagePrimary );
+                    localizer = new Localizer( this, m_language );
                     m_nestedContexts.Add( leftContextId, localizer );
                 }
 
@@ -414,10 +408,9 @@ namespace I18N.DotNet
         //===========================================================================
 
         private readonly Localizer? m_parentContext = null;
+        private readonly Language m_language;
+
         private readonly Dictionary<string, string> m_localizations = new();
         private readonly Dictionary<string, Localizer> m_nestedContexts = new();
-
-        private string? m_targetLanguageFull = null;
-        private string? m_targetLanguagePrimary = null;
     }
 }

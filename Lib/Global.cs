@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace I18N.DotNet
 {
@@ -19,7 +20,19 @@ namespace I18N.DotNet
         /// <value>
         /// Global localizer.
         /// </value>
-        public static Localizer Localizer { get; } = new Localizer();
+        public static Localizer Localizer
+        {
+            get
+            {
+                g_localizer ??= new Localizer( CultureInfo.CurrentUICulture.Name );
+                return g_localizer;
+            }
+
+            set
+            {
+                g_localizer = value;
+            }
+        }
 
         //===========================================================================
         //                            PUBLIC METHODS
@@ -82,5 +95,11 @@ namespace I18N.DotNet
         {
             return Localizer.Context( contextId );
         }
+
+        //===========================================================================
+        //                           PRIVATE ATTRIBUTES
+        //===========================================================================
+
+        private static Localizer? g_localizer;
     }
 }

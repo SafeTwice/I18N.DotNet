@@ -1,9 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net472;net48;net6.0;net7.0;net8.0</TargetFrameworks>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\I18N.xml" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="coverlet.msbuild" Version="6.0.0">

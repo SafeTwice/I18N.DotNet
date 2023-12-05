@@ -509,9 +509,10 @@ namespace I18N.DotNet.Test
                     GetConfigA().CopyTo( tempFile );
                 }
 
+                var localizer = new Localizer( "es-es" );
+
                 // Execute
 
-                var localizer = new Localizer( "es-es" );
                 localizer.LoadXML( tempFileName );
 
                 // Verify
@@ -524,6 +525,54 @@ namespace I18N.DotNet.Test
 
                 File.Delete( tempFileName );
             }
+        }
+
+        [Fact]
+        public void LoadXML_EmbeddedResource_PartialName()
+        {
+            // Prepare
+
+            var localizer = new Localizer( "es-es" );
+
+            // Execute
+
+            localizer.LoadXML( typeof( LocalizerTest ).Assembly, "Resources.I18N.xml" );
+
+            // Verify
+
+            Assert.Equal( "Clave simple 1", localizer.Localize( "Simple Key 1" ) );
+        }
+
+        [Fact]
+        public void LoadXML_EmbeddedResource_FullName()
+        {
+            // Prepare
+
+            var localizer = new Localizer( "es-es" );
+
+            // Execute
+
+            localizer.LoadXML( typeof( LocalizerTest ).Assembly, "I18N.DotNet.Test.Resources.I18N.xml" );
+
+            // Verify
+
+            Assert.Equal( "Clave simple 1", localizer.Localize( "Simple Key 1" ) );
+        }
+
+        [Fact]
+        public void LoadXML_EmbeddedResource_NotExisting()
+        {
+            // Prepare
+
+            var localizer = new Localizer( "es-es" );
+
+            // Execute
+
+            var ex = Assert.Throws<InvalidOperationException>( () => localizer.LoadXML( typeof( LocalizerTest ).Assembly, "NotExisting.xml" ) );
+
+            // Verify
+
+            Assert.Contains( "Cannot find resource", ex.Message );
         }
     }
 }

@@ -136,13 +136,14 @@ jobs:
         env:
           PUBLISH_DOCS_STABLE: ${{ ( github.ref_type == 'tag' || inputs.publish_docs_as_stable ) && 'true' || 'false' }}
         run: |
-          LIB_VERSION=$GITHUB_REF_NAME
+          LIB_VERSION=${GITHUB_REF_NAME//\//-}
           if [[ $LIB_VERSION =~ ^[[:digit:]] ]]; then
             LIB_VERSION='v'$LIB_VERSION
           fi
           if [[ $PUBLISH_DOCS_STABLE == "false" ]]; then
             LIB_VERSION=$LIB_VERSION'@'${GITHUB_SHA:0:6}
           fi
+          echo LIB_VERSION = $LIB_VERSION
           sed -i -E 's/(PROJECT_NUMBER\s*=) \w*/\1 '$LIB_VERSION'/' Lib/docs/Doxyfile
       - name: Generate documentation using Doxygen
         uses: mattnotmitt/doxygen-action@v1.9.5

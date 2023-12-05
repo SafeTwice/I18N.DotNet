@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<I18N>
+    <Entry>
+        <Key>Simple Key 1</Key>
+        <Value lang='es-es'>Clave simple 1</Value>
+        <Value lang='fr-fr'>Clef simple 1</Value>
+    </Entry>
+</I18N>

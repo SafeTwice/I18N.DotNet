@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
@@ -145,7 +146,6 @@ namespace I18N.DotNet
         /// <param name="filepath" > Path to the localization configuration file in XML format</param>
         /// <param name="merge"> Replaces the current localization mapping with the loaded one when<c>false</c>,
         ///                      otherwise merges both (existing mappings are overridden with loaded ones).</param>
-        /// <exception cref="InvalidOperationException">Thrown when the language is not set.</exception>
         /// <exception cref="ParseException">Thrown when the input file cannot be parsed properly.</exception>
         public void LoadXML( string filepath, bool merge = true )
         {
@@ -161,7 +161,6 @@ namespace I18N.DotNet
         /// <param name="stream">Stream with the localization configuration in XML format</param>
         /// <param name="merge"> Replaces the current localization mapping with the loaded one when<c>false</c>,
         ///                      otherwise merges both (existing mappings are overridden with loaded ones).</param>
-        /// <exception cref="InvalidOperationException">Thrown when the language is not set.</exception>
         /// <exception cref="ParseException">Thrown when the input file cannot be parsed properly.</exception>
         public void LoadXML( Stream stream, bool merge = true )
         {
@@ -177,7 +176,6 @@ namespace I18N.DotNet
         /// <param name="doc">XML document with the localization configuration</param>
         /// <param name="merge"> Replaces the current localization mapping with the loaded one when<c>false</c>,
         ///                       otherwise merges both (existing mappings are overridden with loaded ones).</param>
-        /// <exception cref="InvalidOperationException">Thrown when the language is not set.</exception>
         /// <exception cref="ParseException">Thrown when the input file cannot be parsed properly.</exception>
         public void LoadXML( XDocument doc, bool merge = true )
         {
@@ -195,6 +193,39 @@ namespace I18N.DotNet
             }
 
             Load( rootElement );
+        }
+
+        /// <summary>
+        /// Loads a localization configuration from an XML text embedded as a resource in the given assembly.
+        /// </summary>
+        /// <param name="assembly">Assembly that contains the embedded XML text</param>
+        /// <param name="resourceName">Name of the embedded resource for the XML text</param>
+        /// <param name="merge"> Replaces the current localization mapping with the loaded one when<c>false</c>,
+        ///                       otherwise merges both (existing mappings are overridden with loaded ones).</param>
+        /// <exception cref="ParseException">Thrown when the input file cannot be parsed properly.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when the embedded resource could not be found in the given assembly</exception>
+        public void LoadXML( Assembly assembly, string resourceName, bool merge = true )
+        {
+            var assemblyName = assembly.GetName().Name;
+            string usedResourceName;
+
+            if( ( assemblyName != null ) && !resourceName.StartsWith( assemblyName ) )
+            {
+                usedResourceName = assemblyName + "." + resourceName;
+            }
+            else
+            {
+                usedResourceName = resourceName;
+            }
+
+            using var stream = assembly.GetManifestResourceStream( usedResourceName );
+
+            if( stream == null )
+            {
+                throw new InvalidOperationException( $"Cannot find resource '{usedResourceName}'");
+            }
+
+            LoadXML( stream, merge );
         }
 
         //===========================================================================

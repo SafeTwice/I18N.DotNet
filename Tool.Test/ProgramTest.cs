@@ -20,12 +20,12 @@ namespace I18N.DotNet.Tool.Test
 
         private static readonly string[] TEMP_FILE_NAMES = 
         {
-            @"TempDir1\TempFile1.foo",
+            @"TempDir1\TempFile1.cs",
             @"TempDir1\TempFile2.bar",
-            @"TempDir2\TempFile3.foo",
-            @"TempDir2\TempFile4.foo",
+            @"TempDir2\TempFile3.cs",
+            @"TempDir2\TempFile4.cs",
             @"TempDir2\TempFile5.bar",
-            @"TempDir2\TempDir22\TempFile6.foo",
+            @"TempDir2\TempDir22\TempFile6.cs",
             @"TempDir2\TempDir22\TempFile7.bar",
         };
 
@@ -71,32 +71,26 @@ namespace I18N.DotNet.Tool.Test
 
             CreateTempFiles();
 
-            var options = new GenerateOptions()
+            var options = new ParseSourcesOptions()
             {
-                InputDirectories = new string[] { Path.GetTempPath() + @"\TempDir1", Path.GetTempPath() + @"\TempDir2" },
-                Recursive = false,
-                InputFilesPattern = "*.foo",
-                MarkDeprecated = false,
-                PreserveFoundingComments = false,
-                LineIndicationInFoundingComments = false,
+                SourcesDirectories = new string[] { Path.GetTempPath() + @"\TempDir1", Path.GetTempPath() + @"\TempDir2" },
                 OutputFile = "bar.xml",
-                ExtraLocalizationFunctions = Array.Empty<string>(),
             };
 
             Context? internalContext = null;
 
             string[] expectedParsedFiles =
             {
-                @"TempDir1\TempFile1.foo",
-                @"TempDir2\TempFile3.foo",
-                @"TempDir2\TempFile4.foo",
+                @"TempDir1\TempFile1.cs",
+                @"TempDir2\TempFile3.cs",
+                @"TempDir2\TempFile4.cs",
             };
 
             var callSequence = new MockSequence();
 
             var sourceFileParserMock = new Mock<ISourceFileParser>();
             sourceFileParserMock.InSequence( callSequence ).Setup( sfp => sfp.ParseFile( It.IsAny<string>(), options.ExtraLocalizationFunctions, It.IsAny<Context>() ) )
-                .Callback<string, IEnumerable<string>, Context>( ( _, _, context ) => { if( internalContext == null ) { internalContext = context; } } );
+                .Callback<string, IEnumerable<string>, Context>( ( _, _, context ) => { internalContext ??= context; } );
 
             var i18nFileMock = new Mock<II18NFile>();
             i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( options.OutputFile ) );
@@ -109,7 +103,7 @@ namespace I18N.DotNet.Tool.Test
 
             // Execute
 
-            int ret = Program.Generate( options, i18nFileMock.Object, sourceFileParserMock.Object, textConsoleMock.Object );
+            int ret = Program.ParseSources( options, i18nFileMock.Object, sourceFileParserMock.Object, textConsoleMock.Object );
 
             // Verify
 
@@ -143,33 +137,28 @@ namespace I18N.DotNet.Tool.Test
 
             CreateTempFiles();
 
-            var options = new GenerateOptions()
+            var options = new ParseSourcesOptions()
             {
-                InputDirectories = new string[] { Path.GetTempPath() + @"\TempDir1", Path.GetTempPath() + @"\TempDir2" },
-                Recursive = true,
-                InputFilesPattern = "*.foo",
-                MarkDeprecated = false,
-                PreserveFoundingComments = false,
-                LineIndicationInFoundingComments = false,
+                SourcesDirectories = new string[] { Path.GetTempPath() + @"\TempDir1", Path.GetTempPath() + @"\TempDir2" },
                 OutputFile = "bar.xml",
-                ExtraLocalizationFunctions = Array.Empty<string>(),
+                Recursive = true,
             };
 
             Context? internalContext = null;
 
             string[] expectedParsedFiles =
             {
-                @"TempDir1\TempFile1.foo",
-                @"TempDir2\TempFile3.foo",
-                @"TempDir2\TempFile4.foo",
-                @"TempDir2\TempDir22\TempFile6.foo",
+                @"TempDir1\TempFile1.cs",
+                @"TempDir2\TempFile3.cs",
+                @"TempDir2\TempFile4.cs",
+                @"TempDir2\TempDir22\TempFile6.cs",
             };
 
             var callSequence = new MockSequence();
 
             var sourceFileParserMock = new Mock<ISourceFileParser>();
             sourceFileParserMock.InSequence( callSequence ).Setup( sfp => sfp.ParseFile( It.IsAny<string>(), options.ExtraLocalizationFunctions, It.IsAny<Context>() ) )
-                .Callback<string, IEnumerable<string>, Context>( ( _, _, context ) => { if( internalContext == null ) { internalContext = context; } } );
+                .Callback<string, IEnumerable<string>, Context>( ( _, _, context ) => { internalContext ??= context; } );
 
             var i18nFileMock = new Mock<II18NFile>();
             i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( options.OutputFile ) );
@@ -182,7 +171,7 @@ namespace I18N.DotNet.Tool.Test
 
             // Execute
 
-            int ret = Program.Generate( options, i18nFileMock.Object, sourceFileParserMock.Object, textConsoleMock.Object );
+            int ret = Program.ParseSources( options, i18nFileMock.Object, sourceFileParserMock.Object, textConsoleMock.Object );
 
             // Verify
 
@@ -216,16 +205,11 @@ namespace I18N.DotNet.Tool.Test
 
             CreateTempFiles();
 
-            var options = new GenerateOptions()
+            var options = new ParseSourcesOptions()
             {
-                InputDirectories = new string[] { Path.GetTempPath() + @"\TempDir1", Path.GetTempPath() + @"\TempDir2" },
-                Recursive = false,
-                InputFilesPattern = "*.bar",
-                MarkDeprecated = false,
-                PreserveFoundingComments = false,
-                LineIndicationInFoundingComments = false,
+                SourcesDirectories = new string[] { Path.GetTempPath() + @"\TempDir1", Path.GetTempPath() + @"\TempDir2" },
                 OutputFile = "bar.xml",
-                ExtraLocalizationFunctions = Array.Empty<string>(),
+                SourceFilesPattern = "*.bar",
             };
 
             Context? internalContext = null;
@@ -240,7 +224,7 @@ namespace I18N.DotNet.Tool.Test
 
             var sourceFileParserMock = new Mock<ISourceFileParser>();
             sourceFileParserMock.InSequence( callSequence ).Setup( sfp => sfp.ParseFile( It.IsAny<string>(), options.ExtraLocalizationFunctions, It.IsAny<Context>() ) )
-                .Callback<string, IEnumerable<string>, Context>( ( _, _, context ) => { if( internalContext == null ) { internalContext = context; } } );
+                .Callback<string, IEnumerable<string>, Context>( ( _, _, context ) => { internalContext ??= context; } );
 
             var i18nFileMock = new Mock<II18NFile>();
             i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( options.OutputFile ) );
@@ -253,7 +237,7 @@ namespace I18N.DotNet.Tool.Test
 
             // Execute
 
-            int ret = Program.Generate( options, i18nFileMock.Object, sourceFileParserMock.Object, textConsoleMock.Object );
+            int ret = Program.ParseSources( options, i18nFileMock.Object, sourceFileParserMock.Object, textConsoleMock.Object );
 
             // Verify
 
@@ -287,32 +271,27 @@ namespace I18N.DotNet.Tool.Test
 
             CreateTempFiles();
 
-            var options = new GenerateOptions()
+            var options = new ParseSourcesOptions()
             {
-                InputDirectories = new string[] { Path.GetTempPath() + @"\TempDir1", Path.GetTempPath() + @"\TempDir2" },
-                Recursive = false,
-                InputFilesPattern = "*.foo",
-                MarkDeprecated = true,
-                PreserveFoundingComments = false,
-                LineIndicationInFoundingComments = false,
+                SourcesDirectories = new string[] { Path.GetTempPath() + @"\TempDir1", Path.GetTempPath() + @"\TempDir2" },
                 OutputFile = "bar.xml",
-                ExtraLocalizationFunctions = Array.Empty<string>(),
+                MarkDeprecated = true,
             };
 
             Context? internalContext = null;
 
             string[] expectedParsedFiles =
             {
-                @"TempDir1\TempFile1.foo",
-                @"TempDir2\TempFile3.foo",
-                @"TempDir2\TempFile4.foo",
+                @"TempDir1\TempFile1.cs",
+                @"TempDir2\TempFile3.cs",
+                @"TempDir2\TempFile4.cs",
             };
 
             var callSequence = new MockSequence();
 
             var sourceFileParserMock = new Mock<ISourceFileParser>();
             sourceFileParserMock.InSequence( callSequence ).Setup( sfp => sfp.ParseFile( It.IsAny<string>(), options.ExtraLocalizationFunctions, It.IsAny<Context>() ) )
-                .Callback<string, IEnumerable<string>, Context>( ( _, _, context ) => { if( internalContext == null ) { internalContext = context; } } );
+                .Callback<string, IEnumerable<string>, Context>( ( _, _, context ) => { internalContext ??= context; } );
 
             var i18nFileMock = new Mock<II18NFile>();
             i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( options.OutputFile ) );
@@ -326,7 +305,7 @@ namespace I18N.DotNet.Tool.Test
 
             // Execute
 
-            int ret = Program.Generate( options, i18nFileMock.Object, sourceFileParserMock.Object, textConsoleMock.Object );
+            int ret = Program.ParseSources( options, i18nFileMock.Object, sourceFileParserMock.Object, textConsoleMock.Object );
 
             // Verify
 
@@ -360,32 +339,27 @@ namespace I18N.DotNet.Tool.Test
 
             CreateTempFiles();
 
-            var options = new GenerateOptions()
+            var options = new ParseSourcesOptions()
             {
-                InputDirectories = new string[] { Path.GetTempPath() + @"\TempDir1", Path.GetTempPath() + @"\TempDir2" },
-                Recursive = false,
-                InputFilesPattern = "*.foo",
-                MarkDeprecated = false,
-                PreserveFoundingComments = true,
-                LineIndicationInFoundingComments = false,
+                SourcesDirectories = new string[] { Path.GetTempPath() + @"\TempDir1", Path.GetTempPath() + @"\TempDir2" },
                 OutputFile = "bar.xml",
-                ExtraLocalizationFunctions = Array.Empty<string>(),
+                PreserveFoundingComments = true,
             };
 
             Context? internalContext = null;
 
             string[] expectedParsedFiles =
             {
-                @"TempDir1\TempFile1.foo",
-                @"TempDir2\TempFile3.foo",
-                @"TempDir2\TempFile4.foo",
+                @"TempDir1\TempFile1.cs",
+                @"TempDir2\TempFile3.cs",
+                @"TempDir2\TempFile4.cs",
             };
 
             var callSequence = new MockSequence();
 
             var sourceFileParserMock = new Mock<ISourceFileParser>();
             sourceFileParserMock.InSequence( callSequence ).Setup( sfp => sfp.ParseFile( It.IsAny<string>(), options.ExtraLocalizationFunctions, It.IsAny<Context>() ) )
-                .Callback<string, IEnumerable<string>, Context>( ( _, _, context ) => { if( internalContext == null ) { internalContext = context; } } );
+                .Callback<string, IEnumerable<string>, Context>( ( _, _, context ) => { internalContext ??= context; } );
 
             var i18nFileMock = new Mock<II18NFile>();
             i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( options.OutputFile ) );
@@ -397,7 +371,7 @@ namespace I18N.DotNet.Tool.Test
 
             // Execute
 
-            int ret = Program.Generate( options, i18nFileMock.Object, sourceFileParserMock.Object, textConsoleMock.Object );
+            int ret = Program.ParseSources( options, i18nFileMock.Object, sourceFileParserMock.Object, textConsoleMock.Object );
 
             // Verify
 
@@ -431,11 +405,11 @@ namespace I18N.DotNet.Tool.Test
 
             CreateTempFiles();
 
-            var options = new GenerateOptions()
+            var options = new ParseSourcesOptions()
             {
-                InputDirectories = new string[] { Path.GetTempPath() + @"\TempDir1", Path.GetTempPath() + @"\TempDir2" },
+                SourcesDirectories = new string[] { Path.GetTempPath() + @"\TempDir1", Path.GetTempPath() + @"\TempDir2" },
                 Recursive = false,
-                InputFilesPattern = "*.foo",
+                SourceFilesPattern = "*.cs",
                 MarkDeprecated = false,
                 PreserveFoundingComments = false,
                 LineIndicationInFoundingComments = false,
@@ -447,16 +421,16 @@ namespace I18N.DotNet.Tool.Test
 
             string[] expectedParsedFiles =
             {
-                @"TempDir1\TempFile1.foo",
-                @"TempDir2\TempFile3.foo",
-                @"TempDir2\TempFile4.foo",
+                @"TempDir1\TempFile1.cs",
+                @"TempDir2\TempFile3.cs",
+                @"TempDir2\TempFile4.cs",
             };
 
             var callSequence = new MockSequence();
 
             var sourceFileParserMock = new Mock<ISourceFileParser>();
             sourceFileParserMock.InSequence( callSequence ).Setup( sfp => sfp.ParseFile( It.IsAny<string>(), options.ExtraLocalizationFunctions, It.IsAny<Context>() ) )
-                .Callback<string, IEnumerable<string>, Context>( ( _, _, context ) => { if( internalContext == null ) { internalContext = context; } } );
+                .Callback<string, IEnumerable<string>, Context>( ( _, _, context ) => { internalContext ??= context; } );
 
             var i18nFileMock = new Mock<II18NFile>();
             i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( options.OutputFile ) );
@@ -470,7 +444,7 @@ namespace I18N.DotNet.Tool.Test
 
             // Execute
 
-            int ret = Program.Generate( options, i18nFileMock.Object, sourceFileParserMock.Object, textConsoleMock.Object );
+            int ret = Program.ParseSources( options, i18nFileMock.Object, sourceFileParserMock.Object, textConsoleMock.Object );
 
             // Verify
 
@@ -498,38 +472,33 @@ namespace I18N.DotNet.Tool.Test
         }
 
         [Fact]
-        public void Generate_NoLinesInFoundingComments()
+        public void Generate_LineIndicationInFoundingComments()
         {
             // Prepare
 
             CreateTempFiles();
 
-            var options = new GenerateOptions()
+            var options = new ParseSourcesOptions()
             {
-                InputDirectories = new string[] { Path.GetTempPath() + @"\TempDir1", Path.GetTempPath() + @"\TempDir2" },
-                Recursive = false,
-                InputFilesPattern = "*.foo",
-                MarkDeprecated = false,
-                PreserveFoundingComments = false,
-                LineIndicationInFoundingComments = true,
+                SourcesDirectories = new string[] { Path.GetTempPath() + @"\TempDir1", Path.GetTempPath() + @"\TempDir2" },
                 OutputFile = "bar.xml",
-                ExtraLocalizationFunctions = Array.Empty<string>(),
+                LineIndicationInFoundingComments = true,
             };
 
             Context? internalContext = null;
 
             string[] expectedParsedFiles =
             {
-                @"TempDir1\TempFile1.foo",
-                @"TempDir2\TempFile3.foo",
-                @"TempDir2\TempFile4.foo",
+                @"TempDir1\TempFile1.cs",
+                @"TempDir2\TempFile3.cs",
+                @"TempDir2\TempFile4.cs",
             };
 
             var callSequence = new MockSequence();
 
             var sourceFileParserMock = new Mock<ISourceFileParser>();
             sourceFileParserMock.InSequence( callSequence ).Setup( sfp => sfp.ParseFile( It.IsAny<string>(), options.ExtraLocalizationFunctions, It.IsAny<Context>() ) )
-                .Callback<string, IEnumerable<string>, Context>( ( _, _, context ) => { if( internalContext == null ) { internalContext = context; } } );
+                .Callback<string, IEnumerable<string>, Context>( ( _, _, context ) => { internalContext ??= context; } );
 
             var i18nFileMock = new Mock<II18NFile>();
             i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( options.OutputFile ) );
@@ -542,7 +511,7 @@ namespace I18N.DotNet.Tool.Test
 
             // Execute
 
-            int ret = Program.Generate( options, i18nFileMock.Object, sourceFileParserMock.Object, textConsoleMock.Object );
+            int ret = Program.ParseSources( options, i18nFileMock.Object, sourceFileParserMock.Object, textConsoleMock.Object );
 
             // Verify
 
@@ -576,16 +545,10 @@ namespace I18N.DotNet.Tool.Test
 
             CreateTempFiles();
 
-            var options = new GenerateOptions()
+            var options = new ParseSourcesOptions()
             {
-                InputDirectories = new string[] { Path.GetTempPath() + @"\TempDir1", Path.GetTempPath() + @"\TempDir2" },
-                Recursive = false,
-                InputFilesPattern = "*.foo",
-                MarkDeprecated = false,
-                PreserveFoundingComments = false,
-                LineIndicationInFoundingComments = false,
+                SourcesDirectories = new string[] { Path.GetTempPath() + @"\TempDir1", Path.GetTempPath() + @"\TempDir2" },
                 OutputFile = "bar.xml",
-                ExtraLocalizationFunctions = Array.Empty<string>(),
             };
 
             var callSequence = new MockSequence();
@@ -600,7 +563,7 @@ namespace I18N.DotNet.Tool.Test
 
             // Execute
 
-            int ret = Program.Generate( options, i18nFileMock.Object, sourceFileParserMock.Object, textConsoleMock.Object );
+            int ret = Program.ParseSources( options, i18nFileMock.Object, sourceFileParserMock.Object, textConsoleMock.Object );
 
             // Verify
 
@@ -622,16 +585,10 @@ namespace I18N.DotNet.Tool.Test
 
             CreateTempFiles();
 
-            var options = new GenerateOptions()
+            var options = new ParseSourcesOptions()
             {
-                InputDirectories = new string[] { Path.GetTempPath() + @"\TempDir1", Path.GetTempPath() + @"\TempDir2" },
-                Recursive = false,
-                InputFilesPattern = "*.foo",
-                MarkDeprecated = false,
-                PreserveFoundingComments = false,
-                LineIndicationInFoundingComments = false,
+                SourcesDirectories = new string[] { Path.GetTempPath() + @"\TempDir1", Path.GetTempPath() + @"\TempDir2" },
                 OutputFile = "bar.xml",
-                ExtraLocalizationFunctions = Array.Empty<string>(),
             };
 
             var callSequence = new MockSequence();
@@ -647,7 +604,7 @@ namespace I18N.DotNet.Tool.Test
 
             // Execute
 
-            int ret = Program.Generate( options, i18nFileMock.Object, sourceFileParserMock.Object, textConsoleMock.Object );
+            int ret = Program.ParseSources( options, i18nFileMock.Object, sourceFileParserMock.Object, textConsoleMock.Object );
 
             // Verify
 
@@ -673,9 +630,6 @@ namespace I18N.DotNet.Tool.Test
             {
                 InputFile = inputFilePath,
                 CheckDeprecated = true,
-                CheckTranslationForLanguages = Array.Empty<string>(),
-                IncludeContexts = Array.Empty<string>(),
-                ExcludeContexts = Array.Empty<string>(),
             };
 
             var includeContext = Array.Empty<Regex>();
@@ -725,10 +679,7 @@ namespace I18N.DotNet.Tool.Test
             var options = new AnalyzeOptions()
             {
                 InputFile = inputFilePath,
-                CheckDeprecated = false,
                 CheckTranslationForLanguages = new string[] { "es", "en", "fr" },
-                IncludeContexts = Array.Empty<string>(),
-                ExcludeContexts = Array.Empty<string>(),
             };
 
             var includeContext = Array.Empty<Regex>();
@@ -779,10 +730,7 @@ namespace I18N.DotNet.Tool.Test
             var options = new AnalyzeOptions()
             {
                 InputFile = inputFilePath,
-                CheckDeprecated = false,
                 CheckTranslationForLanguages = new string[] { "*", "en", "fr" },
-                IncludeContexts = Array.Empty<string>(),
-                ExcludeContexts = Array.Empty<string>(),
             };
 
             var includeContext = Array.Empty<Regex>();
@@ -825,10 +773,6 @@ namespace I18N.DotNet.Tool.Test
             var options = new AnalyzeOptions()
             {
                 InputFile = inputFilePath,
-                CheckDeprecated = false,
-                CheckTranslationForLanguages = Array.Empty<string>(),
-                IncludeContexts = Array.Empty<string>(),
-                ExcludeContexts = Array.Empty<string>(),
             };
 
             var includeContext = Array.Empty<Regex>();
@@ -960,10 +904,6 @@ namespace I18N.DotNet.Tool.Test
             var options = new AnalyzeOptions()
             {
                 InputFile = inputFilePath,
-                CheckDeprecated = false,
-                CheckTranslationForLanguages = Array.Empty<string>(),
-                IncludeContexts = Array.Empty<string>(),
-                ExcludeContexts = Array.Empty<string>(),
             };
 
             var includeContext = Array.Empty<Regex>();
@@ -1026,9 +966,6 @@ namespace I18N.DotNet.Tool.Test
             {
                 InputFile = inputFilePath,
                 CheckDeprecated = true,
-                CheckTranslationForLanguages = Array.Empty<string>(),
-                IncludeContexts = Array.Empty<string>(),
-                ExcludeContexts = Array.Empty<string>(),
             };
 
             var callSequence = new MockSequence();
@@ -1065,9 +1002,6 @@ namespace I18N.DotNet.Tool.Test
             {
                 InputFile = inputFilePath,
                 CheckDeprecated = true,
-                CheckTranslationForLanguages = Array.Empty<string>(),
-                IncludeContexts = Array.Empty<string>(),
-                ExcludeContexts = Array.Empty<string>(),
             };
 
             var callSequence = new MockSequence();
@@ -1081,6 +1015,122 @@ namespace I18N.DotNet.Tool.Test
             // Execute
 
             int ret = Program.Analyze( options, i18nFileMock.Object, textConsoleMock.Object );
+
+            // Verify
+
+            Assert.Equal( 1, ret );
+
+            i18nFileMock.Verify( o => o.LoadFromFile( inputFilePath ), Times.Once );
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "UNEXPECTED ERROR" ) && s.Contains( "foo" ) ) ), Times.Once );
+
+            i18nFileMock.VerifyNoOtherCalls();
+            textConsoleMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public void Deploy_Default()
+        {
+            // Prepare
+
+            string inputFilePath = @"C:\Foo.xml";
+            string outputFilePath = @"C:\Bar.xml";
+
+            var options = new DeployOptions()
+            {
+                InputFile = inputFilePath,
+                OutputFile = outputFilePath,
+            };
+
+            var callSequence = new MockSequence();
+
+            var i18nFileMock = new Mock<II18NFile>();
+            i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( options.InputFile ) );
+            i18nFileMock.InSequence( callSequence ).Setup( f => f.DeleteAllComments() );
+            i18nFileMock.InSequence( callSequence ).Setup( f => f.WriteToFile( options.OutputFile ) );
+
+            var textConsoleMock = new Mock<ITextConsole>();
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>() ) );
+
+            // Execute
+
+            int ret = Program.Deploy( options, i18nFileMock.Object, textConsoleMock.Object );
+
+            // Verify
+
+            Assert.Equal( 0, ret );
+
+            i18nFileMock.Verify( f => f.LoadFromFile( options.InputFile ), Times.Once );
+            i18nFileMock.Verify( f => f.DeleteAllComments(), Times.Once );
+            i18nFileMock.Verify( f => f.WriteToFile( options.OutputFile ), Times.Once );
+
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "success" ) ) ), Times.Once );
+
+            i18nFileMock.VerifyNoOtherCalls();
+            textConsoleMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public void Deploy_ApplicationError()
+        {
+            // Prepare
+
+            string inputFilePath = @"C:\Foo.xml";
+            string outputFilePath = @"C:\Bar.xml";
+
+            var options = new DeployOptions()
+            {
+                InputFile = inputFilePath,
+                OutputFile = outputFilePath,
+            };
+
+            var callSequence = new MockSequence();
+
+            var i18nFileMock = new Mock<II18NFile>();
+            i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( inputFilePath ) ).Throws( new ApplicationException( "foo" ) );
+
+            var textConsoleMock = new Mock<ITextConsole>();
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>() ) );
+
+            // Execute
+
+            int ret = Program.Deploy( options, i18nFileMock.Object, textConsoleMock.Object );
+
+            // Verify
+
+            Assert.Equal( 1, ret );
+
+            i18nFileMock.Verify( o => o.LoadFromFile( inputFilePath ), Times.Once );
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "ERROR" ) && s.Contains( "foo" ) ) ), Times.Once );
+
+            i18nFileMock.VerifyNoOtherCalls();
+            textConsoleMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public void Deploy_UnexpectedError()
+        {
+            // Prepare
+
+            string inputFilePath = @"C:\Foo.xml";
+            string outputFilePath = @"C:\Bar.xml";
+
+            var options = new DeployOptions()
+            {
+                InputFile = inputFilePath,
+                OutputFile = outputFilePath,
+            };
+
+            var callSequence = new MockSequence();
+
+            var i18nFileMock = new Mock<II18NFile>();
+            i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( inputFilePath ) ).Throws( new Exception( "foo" ) );
+
+            var textConsoleMock = new Mock<ITextConsole>();
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>() ) );
+
+            // Execute
+
+            int ret = Program.Deploy( options, i18nFileMock.Object, textConsoleMock.Object );
 
             // Verify
 

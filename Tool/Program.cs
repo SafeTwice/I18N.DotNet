@@ -14,32 +14,34 @@ using System.Text.RegularExpressions;
 
 namespace I18N.DotNet.Tool
 {
-    [Verb( "generate", HelpText = "Generate an I18N file." )]
-    class GenerateOptions
+    [Verb( "parse", HelpText = "Parse source files and generate a I18N development file." )]
+    class ParseSourcesOptions
     {
-        [Option( 'I', Required = true, HelpText = "Input directories paths." )]
-        public IEnumerable<string> InputDirectories { get; set; } = new List<string>();
+        private const string DEFAULT_SOURCE_FILE_PATTERN = "*.cs";
 
-        [Option( 'p', Default = "*.cs", HelpText = "Input files name pattern." )]
-        public string InputFilesPattern { get; set; } = string.Empty;
+        [ Option( 'S', "sources", Required = true, HelpText = "Sources directory paths." )]
+        public IEnumerable<string> SourcesDirectories { get; set; } = new List<string>();
 
-        [Option( 'r', Default = false, HelpText = "Scan in input directories recursively." )]
+        [Option( 'o', "output", Required = true, HelpText = "Output file path." )]
+        public string OutputFile { get; set; } = string.Empty;
+
+        [Option( 'p', "file-pattern", Default = DEFAULT_SOURCE_FILE_PATTERN, HelpText = "Source files name pattern." )]
+        public string SourceFilesPattern { get; set; } = DEFAULT_SOURCE_FILE_PATTERN;
+
+        [Option( 'r', "recursive", Default = false, HelpText = "Scan in source directories recursively." )]
         public bool Recursive { get; set; }
 
-        [Option( 'k', Default = false, HelpText = "Preserve founding comments in output file." )]
+        [Option( 'k', "preserve-foundings", Default = false, HelpText = "Preserve founding comments in output file." )]
         public bool PreserveFoundingComments { get; set; }
 
-        [Option( 'd', Default = false, HelpText = "Mark deprecated entries." )]
+        [Option( 'd', "mark-deprecated", Default = false, HelpText = "Mark deprecated entries." )]
         public bool MarkDeprecated { get; set; }
 
-        [Option( 'l', Default = false, HelpText = "Indicate lines in founding comments." )]
+        [Option( 'l', "with-lines", Default = false, HelpText = "Include line numbers in founding comments." )]
         public bool LineIndicationInFoundingComments { get; set; }
 
-        [Option( 'E', HelpText = "Extra methods to be parsed for strings to be localized." )]
+        [Option( 'E', "extra-methods", HelpText = "Extra methods to be parsed for strings to be localized." )]
         public IEnumerable<string> ExtraLocalizationFunctions { get; set; } = new List<string>();
-
-        [Option( 'o', Required = true, HelpText = "Output file path." )]
-        public string OutputFile { get; set; } = string.Empty;
     }
 
     [Verb( "analyze", HelpText = "Analyze an I18N file." )]
@@ -61,31 +63,42 @@ namespace I18N.DotNet.Tool
         public IEnumerable<string> ExcludeContexts { get; set; } = new List<string>();
     }
 
+    [Verb( "deploy", HelpText = "Generate a I18N deployment file." )]
+    class DeployOptions
+    {
+        [Option( 'i', "input", Required = true, HelpText = "Input file path." )]
+        public string InputFile { get; set; } = string.Empty;
+
+        [Option( 'o', "output", Required = true, HelpText = "Output file path." )]
+        public string OutputFile { get; set; } = string.Empty;
+    }
+
     class Program
     {
         [ExcludeFromCodeCoverage]
         static void Main( string[] args )
         {
-            var parserResult = Parser.Default.ParseArguments<GenerateOptions, AnalyzeOptions>( args );
+            var parserResult = Parser.Default.ParseArguments<ParseSourcesOptions, AnalyzeOptions, DeployOptions>( args );
 
             parserResult.MapResult(
-                ( GenerateOptions opts ) => Generate( opts, new I18NFile(), new SourceFileParser(), new TextConsole() ),
+                ( ParseSourcesOptions opts ) => ParseSources( opts, new I18NFile(), new SourceFileParser(), new TextConsole() ),
                 ( AnalyzeOptions opts ) => Analyze( opts, new I18NFile(), new TextConsole() ),
+                ( DeployOptions opts ) => Deploy( opts, new I18NFile(), new TextConsole() ),
                 errs => 1
                 );
         }
 
-        internal static int Generate( GenerateOptions options, II18NFile outputFile, ISourceFileParser sourceFileParser, ITextConsole textConsole )
+        internal static int ParseSources( ParseSourcesOptions options, II18NFile outputFile, ISourceFileParser sourceFileParser, ITextConsole textConsole )
         {
             try
             {
                 var rootContext = new Context();
 
-                foreach( var directory in options.InputDirectories )
+                foreach( var directory in options.SourcesDirectories )
                 {
                     var dirInfo = new DirectoryInfo( directory );
 
-                    ParseFilesInDirectory( sourceFileParser, dirInfo, options.InputFilesPattern, options.Recursive, options.ExtraLocalizationFunctions, rootContext );
+                    ParseSourcesInDirectory( sourceFileParser, dirInfo, options.SourceFilesPattern, options.Recursive, options.ExtraLocalizationFunctions, rootContext );
                 }
 
                 outputFile.LoadFromFile( options.OutputFile );
@@ -104,7 +117,7 @@ namespace I18N.DotNet.Tool
 
                 outputFile.WriteToFile( options.OutputFile );
 
-                textConsole.WriteLine( $"File generated successfully" );
+                textConsole.WriteLine( $"I18N development file generated successfully" );
 
                 return 0;
             }
@@ -188,7 +201,33 @@ namespace I18N.DotNet.Tool
             return 1;
         }
 
-        private static void ParseFilesInDirectory( ISourceFileParser sourceFileParser, DirectoryInfo dirInfo, string pattern, bool recursive, IEnumerable<string> extraFunctions, Context rootContext )
+        internal static int Deploy( DeployOptions options, II18NFile outputFile, ITextConsole textConsole )
+        {
+            try
+            {
+                outputFile.LoadFromFile( options.InputFile );
+
+                outputFile.DeleteAllComments();
+
+                outputFile.WriteToFile( options.OutputFile );
+
+                textConsole.WriteLine( $"I18N Deployment file generated successfully" );
+
+                return 0;
+            }
+            catch( ApplicationException e )
+            {
+                textConsole.WriteLine( $"ERROR: {e.Message}" );
+            }
+            catch( Exception e )
+            {
+                textConsole.WriteLine( $"UNEXPECTED ERROR: {e}" );
+            }
+
+            return 1;
+        }
+
+        private static void ParseSourcesInDirectory( ISourceFileParser sourceFileParser, DirectoryInfo dirInfo, string pattern, bool recursive, IEnumerable<string> extraFunctions, Context rootContext )
         {
             foreach( var fileInfo in dirInfo.GetFiles( pattern ) )
             {
@@ -199,7 +238,7 @@ namespace I18N.DotNet.Tool
             {
                 foreach( var childDirInfo in dirInfo.GetDirectories() )
                 {
-                    ParseFilesInDirectory( sourceFileParser, childDirInfo, pattern, true, extraFunctions, rootContext );
+                    ParseSourcesInDirectory( sourceFileParser, childDirInfo, pattern, true, extraFunctions, rootContext );
                 }
             }
         }

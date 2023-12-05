@@ -1,8 +1,6 @@
-﻿/**
- * @file
- * @copyright  Copyright (c) 2022 SafeTwice S.L. All rights reserved.
- * @license    MIT (https://opensource.org/licenses/MIT)
- */
+﻿/// @file
+/// @copyright  Copyright (c) 2022 SafeTwice S.L. All rights reserved.
+/// @license    See LICENSE.txt
 
 using System.Collections.Generic;
 using System.Linq;

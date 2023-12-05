@@ -15,6 +15,7 @@ namespace I18N.DotNet.Tool
         // Generation
 
         void DeleteFoundingComments();
+        void DeleteAllComments();
         void CreateEntries( Context rootContext, bool reportLines );
         void CreateDeprecationComments();
         void WriteToFile( string filepath );

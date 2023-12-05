@@ -103,7 +103,7 @@ namespace I18N.DotNet.Tool.Test
             return rootContext;
         }
 
-        private void Check_Generate_NewFile_WithLines()
+        private void Check_Parse_NewFile_WithLines()
         {
             // Prepare
 
@@ -155,9 +155,24 @@ namespace I18N.DotNet.Tool.Test
             Assert.Equal( expectedContents, actualContents );
         }
 
-        private void Check_Generate_NewFile_WithoutLines()
+        [Fact]
+        public void Parse_NewFile_WithLines()
         {
             // Prepare
+
+            File.Delete( m_tempFile );
+
+            // Execute & Verify
+
+            Check_Parse_NewFile_WithLines();
+        }
+
+        [Fact]
+        public void Parse_NewFile_WithoutLines()
+        {
+            // Prepare
+
+            File.Delete( m_tempFile );
 
             var rootContext = CreateRootContext();
 
@@ -206,31 +221,7 @@ namespace I18N.DotNet.Tool.Test
         }
 
         [Fact]
-        public void Generate_NewFile_WithLines()
-        {
-            // Prepare
-
-            File.Delete( m_tempFile );
-
-            // Execute & Verify
-
-            Check_Generate_NewFile_WithLines();
-        }
-
-        [Fact]
-        public void Generate_NewFile_WithoutLines()
-        {
-            // Prepare
-
-            File.Delete( m_tempFile );
-
-            // Execute & Verify
-
-            Check_Generate_NewFile_WithoutLines();
-        }
-
-        [Fact]
-        public void Generate_UpdateFile_PreserveFoundingComments()
+        public void Parse_UpdateFile_PreserveFoundingComments()
         {
             // Prepare
 
@@ -308,7 +299,7 @@ namespace I18N.DotNet.Tool.Test
         }
 
         [Fact]
-        public void Generate_UpdateFile_DeleteFoundingComments()
+        public void Parse_UpdateFile_DeleteFoundingComments()
         {
             // Prepare
 
@@ -384,7 +375,7 @@ namespace I18N.DotNet.Tool.Test
         }
 
         [Fact]
-        public void Generate_UpdateFile_MarkDeprecated()
+        public void Parse_UpdateFile_MarkDeprecated()
         {
             // Prepare
 
@@ -462,7 +453,7 @@ namespace I18N.DotNet.Tool.Test
         }
 
         [Fact]
-        public void Generate_UpdateFile_WrongRoot()
+        public void Parse_UpdateFile_WrongRoot()
         {
             // Prepare
 
@@ -479,7 +470,7 @@ namespace I18N.DotNet.Tool.Test
         }
 
         [Fact]
-        public void Generate_UpdateFile_InvalidXML()
+        public void Parse_UpdateFile_InvalidXML()
         {
             // Prepare
 
@@ -496,7 +487,7 @@ namespace I18N.DotNet.Tool.Test
         }
 
         [Fact]
-        public void Generate_UpdateFile_Blank()
+        public void Parse_UpdateFile_Blank()
         {
             // Prepare
 
@@ -504,11 +495,11 @@ namespace I18N.DotNet.Tool.Test
 
             // Execute & Verify
 
-            Check_Generate_NewFile_WithLines();
+            Check_Parse_NewFile_WithLines();
         }
 
         [Fact]
-        public void Generate_UpdateFile_OnlyWhiteSpace()
+        public void Parse_UpdateFile_OnlyWhiteSpace()
         {
             // Prepare
 
@@ -516,7 +507,7 @@ namespace I18N.DotNet.Tool.Test
 
             // Execute & Verify
 
-            Check_Generate_NewFile_WithLines();
+            Check_Parse_NewFile_WithLines();
         }
 
         private void CreateExistingOutputFileMalformed()
@@ -559,7 +550,7 @@ namespace I18N.DotNet.Tool.Test
         }
 
         [Fact]
-        public void Generate_UpdateFile_Malformed()
+        public void Parse_UpdateFile_Malformed()
         {
             // Prepare
 
@@ -865,7 +856,59 @@ namespace I18N.DotNet.Tool.Test
         }
 
         [Fact]
-        public void Exception_WriteToFile_NotInitialized()
+        public void Deploy()
+        {
+            // Prepare
+
+            CreateExistingOutputFile();
+
+            // Execute
+
+            var i18nFile = new I18NFile();
+            i18nFile.LoadFromFile( m_tempFile );
+            i18nFile.DeleteAllComments();
+            i18nFile.WriteToFile( m_tempFile );
+
+            // Verify
+
+            string expectedContents =
+                "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
+                "<I18N>\n" +
+                "  <Entry>\n" +
+                "    <Key>Key 1</Key>\n" +
+                "    <Value lang=\"de\">Schlüssel 1</Value>\n" +
+                "    <Value lang=\"fr\">Clef 1</Value>\n" +
+                "  </Entry>\n" +
+                "  <Entry>\n" +
+                "    <Key>Key 2</Key>\n" +
+                "    <Value lang=\"es\">Clave 2</Value>\n" +
+                "    <Value lang=\"fr\">Clef 2</Value>\n" +
+                "  </Entry>\n" +
+                "  <Context id=\"Context 1\">\n" +
+                "    <Entry>\n" +
+                "      <Key>Key 3</Key>\n" +
+                "    </Entry>\n" +
+                "    <Entry>\n" +
+                "      <Key>Key 5</Key>\n" +
+                "    </Entry>\n" +
+                "    <Context id=\"Context 11\">\n" +
+                "      <Entry>\n" +
+                "        <Key>Key 9</Key>\n" +
+                "        <Value lang=\"es\">Clave 9</Value>\n" +
+                "      </Entry>\n" +
+                "    </Context>\n" +
+                "  </Context>\n" +
+                "  <Entry>\n" +
+                "    <Key>Key 6</Key>\n" +
+                "  </Entry>\n" +
+                "</I18N>";
+
+            string actualContents = ReadTempFile();
+            Assert.Equal( expectedContents, actualContents );
+        }
+
+        [Fact]
+        public void Exception_NotInitialized()
         {
             // Prepare
 
@@ -874,18 +917,6 @@ namespace I18N.DotNet.Tool.Test
             // Execute & Verify
 
             Assert.Throws<InvalidOperationException>( () => i18nFile.WriteToFile( m_tempFile ) );
-        }
-
-        [Fact]
-        public void Exception_DeleteFoundingComments_NotInitialized2()
-        {
-            // Prepare
-
-            var i18nFile = new I18NFile();
-
-            // Execute & Verify
-
-            Assert.Throws<InvalidOperationException>( () => i18nFile.DeleteFoundingComments() );
         }
     }
 }

@@ -56,6 +56,11 @@ namespace I18N.DotNet.Tool
             DeleteFoundingComments( Root );
         }
 
+        public void DeleteAllComments()
+        {
+            DeleteAllComments( Doc );
+        }
+
         public void CreateEntries( Context rootContext, bool reportLines )
         {
             CreateEntries( Root, rootContext, reportLines );
@@ -68,16 +73,11 @@ namespace I18N.DotNet.Tool
 
         public void WriteToFile( string filepath )
         {
-            if( m_doc == null )
-            {
-                throw new InvalidOperationException( "Not initialized" );
-            }
-
             var xws = new XmlWriterSettings() { Indent = true };
 
             using XmlWriter xw = XmlWriter.Create( filepath, xws );
 
-            m_doc.WriteTo( xw );
+            Doc.WriteTo( xw );
         }
 
         public IEnumerable<(int line, string context, string? key)> GetDeprecatedEntries( Regex[] includeContexts, Regex[] excludeContexts )
@@ -120,7 +120,9 @@ namespace I18N.DotNet.Tool
         //                           PRIVATE PROPERTIES
         //===========================================================================
 
-        private XElement Root => m_doc?.Root ?? throw new InvalidOperationException( "Not initialized" );
+        private XDocument Doc => m_doc ?? throw new InvalidOperationException( "Not initialized" );
+
+        private XElement Root => Doc.Root!;
 
         //===========================================================================
         //                            PRIVATE METHODS
@@ -188,10 +190,9 @@ namespace I18N.DotNet.Tool
             {
                 foreach( var node in entryElement.Nodes() )
                 {
-                    var commentNode = node as XComment;
-                    if( commentNode?.Value.StartsWith( FOUNDING_HEADING ) ?? false )
+                    if( ( node is XComment comment ) && ( comment.Value.StartsWith( FOUNDING_HEADING ) ) )
                     {
-                        commentsToRemove.Add( commentNode );
+                        commentsToRemove.Add( comment );
                     }
                 }
             }
@@ -201,6 +202,29 @@ namespace I18N.DotNet.Tool
             foreach( var contextElement in element.Elements( CONTEXT_TAG ) )
             {
                 DeleteFoundingComments( contextElement );
+            }
+        }
+
+        private static void DeleteAllComments( XContainer container )
+        {
+            var commentsToRemove = new List<XComment>();
+
+            foreach( var childNode in container.Nodes() )
+            {
+                if( childNode is XComment comment )
+                {
+                    commentsToRemove.Add( comment );
+                }
+            }
+
+            commentsToRemove.ForEach( xc => xc.Remove() );
+
+            foreach( var childNode in container.Nodes() )
+            {
+                if( childNode is XContainer childContainer )
+                {
+                    DeleteAllComments( childContainer );
+                }
             }
         }
 

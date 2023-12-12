@@ -309,6 +309,46 @@ namespace I18N.DotNet.Test
             Assert.Equal( value, localizer.Context( "Level1" ).Localize( key ) );
         }
 
+        [Theory]
+        [InlineData( "Non-existant Key", "Non-existant Key" )]
+        [InlineData( "Simple Key 1", "Clef simple 1" )]
+        [InlineData( "Simple Key 2", "Clef simple 2 en contexte L1" )]
+        [InlineData( "Simple Key 3", "Clef simple 3" )]
+        [InlineData( "Simple Key 4", "Clef simple 4" )]
+        public void ILocalizer_Context_Single( string key, string value )
+        {
+            // Prepare
+
+            var localizer = new Localizer( "fr-fr" );
+            localizer.LoadXML( GetConfigA() );
+
+            ILocalizer ilocalizer = localizer;
+
+            // Execute & Verify
+
+            Assert.Equal( value, ilocalizer.Context( "Level1" ).Localize( key ) );
+        }
+
+        [Theory]
+        [InlineData( "Non-existant Key", "Non-existant Key" )]
+        [InlineData( "Simple Key 1", "Clave simple 1 en contexto L2" )]
+        [InlineData( "Simple Key 2", "Clave simple 2 en contexto L1" )]
+        [InlineData( "Simple Key 3", "Clave simple 3" )]
+        [InlineData( "Simple Key 4", "Clave simple 4" )]
+        public void ILocalizer_Context_Split( string key, string value )
+        {
+            // Prepare
+
+            var localizer = new Localizer( "es-es" );
+            localizer.LoadXML( GetConfigA() );
+
+            ILocalizer ilocalizer = localizer;
+
+            // Execute & Verify
+
+            Assert.Equal( value, ilocalizer.Context( new string[] { "Level1", "Level2" } ).Localize( key ) );
+        }
+
         [Fact]
         public void LoadXML_InvalidFormat()
         {

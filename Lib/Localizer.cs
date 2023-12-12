@@ -126,13 +126,25 @@ namespace I18N.DotNet
         }
 
         /// <inheritdoc/>
-        public ILocalizer Context( string contextId )
+        ILocalizer ILocalizer.Context( string contextId )
         {
             return GetContext( contextId );
         }
 
         /// <inheritdoc/>
-        public ILocalizer Context( IEnumerable<string> splitContextIds )
+        ILocalizer ILocalizer.Context( IEnumerable<string> splitContextIds )
+        {
+            return GetContext( splitContextIds );
+        }
+
+        /// <inheritdoc cref="ILocalizer.Context(string)"/>
+        public Localizer Context( string contextId )
+        {
+            return GetContext( contextId );
+        }
+
+        /// <inheritdoc cref="ILocalizer.Context(IEnumerable{string})"/>
+        public Localizer Context( IEnumerable<string> splitContextIds )
         {
             return GetContext( splitContextIds );
         }

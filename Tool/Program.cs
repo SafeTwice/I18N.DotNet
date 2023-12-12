@@ -92,6 +92,8 @@ namespace I18N.DotNet.Tool
         {
             try
             {
+                CheckFileDirectoryExists( options.OutputFile );
+
                 var rootContext = new Context();
 
                 foreach( var directory in options.SourcesDirectories )
@@ -205,6 +207,8 @@ namespace I18N.DotNet.Tool
         {
             try
             {
+                CheckFileDirectoryExists( options.OutputFile );
+
                 outputFile.LoadFromFile( options.InputFile );
 
                 outputFile.DeleteAllComments();
@@ -254,6 +258,21 @@ namespace I18N.DotNet.Tool
                 var escapedSpec = Regex.Escape( contextSpec );
                 var transformedSpec = WILDCARD_REGEX.Replace( escapedSpec, ".*" );
                 return new Regex( $"^/?{transformedSpec}/?$" );
+            }
+        }
+
+        private static void CheckFileDirectoryExists( string filepath )
+        {
+            var directory = Path.GetDirectoryName( filepath ) ?? string.Empty;
+
+            if( directory.Length == 0 )
+            {
+                directory = ".";
+            }
+
+            if( !Directory.Exists( directory ) )
+            {
+                throw new ApplicationException( $"Output directory '{directory}' does not exist" );
             }
         }
 

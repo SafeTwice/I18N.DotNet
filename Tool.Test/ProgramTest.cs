@@ -670,6 +670,8 @@ namespace I18N.DotNet.Tool.Test
             var includeContext = Array.Empty<Regex>();
             var excludeContext = Array.Empty<Regex>();
 
+            var expectedIssues = Array.Empty<(int line, string message, bool isError)>();
+
             var expectedResults = new (int line, string context, string? key)[]
             {
                 ( 99, "Context1", "Key1" ),
@@ -680,12 +682,11 @@ namespace I18N.DotNet.Tool.Test
 
             var i18nFileMock = new Mock<II18NFile>();
             i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( inputFilePath ) );
+            i18nFileMock.InSequence( callSequence ).Setup( f => f.GetFileIssues() ).Returns( expectedIssues );
             i18nFileMock.InSequence( callSequence ).Setup( f => f.GetDeprecatedEntries( includeContext, excludeContext ) ).Returns( expectedResults );
 
             var textConsoleMock = new Mock<ITextConsole>();
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), true ) );
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), false ) );
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), false ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), It.IsAny<bool>() ) );
 
             // Execute
 
@@ -696,12 +697,13 @@ namespace I18N.DotNet.Tool.Test
             Assert.Equal( 2, ret );
 
             i18nFileMock.Verify( o => o.LoadFromFile( inputFilePath ), Times.Once );
+            i18nFileMock.Verify( f => f.GetFileIssues(), Times.Once );
             i18nFileMock.Verify( f => f.GetDeprecatedEntries( includeContext, excludeContext ), Times.Once );
 
             foreach( var result in expectedResults )
             {
                 textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) && s.Contains( result.context ) &&
-                                        s.Contains( result.key! ) ), true ), Times.Once );
+                                        s.Contains( result.key! ) && s.Contains( "WARNING" ) ), true ), Times.Once );
             }
             textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Equals( string.Empty ) ), false ), Times.Once );
             textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "finished" ) ), false ), Times.Once );
@@ -726,6 +728,8 @@ namespace I18N.DotNet.Tool.Test
             var includeContext = Array.Empty<Regex>();
             var excludeContext = Array.Empty<Regex>();
 
+            var expectedIssues = Array.Empty<(int line, string message, bool isError)>();
+
             var expectedResults = new (int line, string context, string? key)[]
             {
                 ( 99, "Context1", "Key1" ),
@@ -737,12 +741,11 @@ namespace I18N.DotNet.Tool.Test
 
             var i18nFileMock = new Mock<II18NFile>();
             i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( inputFilePath ) );
+            i18nFileMock.InSequence( callSequence ).Setup( f => f.GetFileIssues() ).Returns( expectedIssues );
             i18nFileMock.InSequence( callSequence ).Setup( f => f.GetNoTranslationEntries( expectedLanguages, includeContext, excludeContext ) ).Returns( expectedResults );
 
             var textConsoleMock = new Mock<ITextConsole>();
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), true ) );
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), false ) );
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), false ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), It.IsAny<bool>() ) );
 
             // Execute
 
@@ -753,12 +756,13 @@ namespace I18N.DotNet.Tool.Test
             Assert.Equal( 2, ret );
 
             i18nFileMock.Verify( o => o.LoadFromFile( inputFilePath ), Times.Once );
+            i18nFileMock.Verify( f => f.GetFileIssues(), Times.Once );
             i18nFileMock.Verify( f => f.GetNoTranslationEntries( expectedLanguages, includeContext, excludeContext ), Times.Once );
 
             foreach( var result in expectedResults )
             {
                 textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) && s.Contains( result.context ) &&
-                                        s.Contains( result.key! ) ), true ), Times.Once );
+                                        s.Contains( result.key! ) && s.Contains( "WARNING" ) ), true ), Times.Once );
             }
             textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Equals( string.Empty ) ), false ), Times.Once );
             textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "finished" ) ), false ), Times.Once );
@@ -783,6 +787,7 @@ namespace I18N.DotNet.Tool.Test
             var includeContext = Array.Empty<Regex>();
             var excludeContext = Array.Empty<Regex>();
 
+            var expectedIssues = Array.Empty<(int line, string message, bool isError)>();
             var expectedResults = Array.Empty<(int line, string context, string? key)>();
             var expectedLanguages = Array.Empty<string>();
 
@@ -790,10 +795,11 @@ namespace I18N.DotNet.Tool.Test
 
             var i18nFileMock = new Mock<II18NFile>();
             i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( inputFilePath ) );
+            i18nFileMock.InSequence( callSequence ).Setup( f => f.GetFileIssues() ).Returns( expectedIssues );
             i18nFileMock.InSequence( callSequence ).Setup( f => f.GetNoTranslationEntries( expectedLanguages, includeContext, excludeContext ) ).Returns( expectedResults );
 
             var textConsoleMock = new Mock<ITextConsole>();
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), false ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), It.IsAny<bool>() ) );
 
             // Execute
 
@@ -804,6 +810,7 @@ namespace I18N.DotNet.Tool.Test
             Assert.Equal( 0, ret );
 
             i18nFileMock.Verify( o => o.LoadFromFile( inputFilePath ), Times.Once );
+            i18nFileMock.Verify( f => f.GetFileIssues(), Times.Once );
             i18nFileMock.Verify( f => f.GetNoTranslationEntries( expectedLanguages, includeContext, excludeContext ), Times.Once );
 
             textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "finished" ) ), false ), Times.Once );
@@ -827,6 +834,12 @@ namespace I18N.DotNet.Tool.Test
             var includeContext = Array.Empty<Regex>();
             var excludeContext = Array.Empty<Regex>();
 
+            var expectedIssues = new (int line, string message, bool isError)[]
+            {
+                ( 234, "Warning1", false ),
+                ( 7545, "Warning2", false ),
+            };
+
             var expectedDeprecatedResults = new (int line, string context, string? key)[]
             {
                 ( 99, "Context1", "Key1" ),
@@ -843,13 +856,12 @@ namespace I18N.DotNet.Tool.Test
 
             var i18nFileMock = new Mock<II18NFile>();
             i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( inputFilePath ) );
+            i18nFileMock.InSequence( callSequence ).Setup( f => f.GetFileIssues() ).Returns( expectedIssues );
             i18nFileMock.InSequence( callSequence ).Setup( f => f.GetDeprecatedEntries( includeContext, excludeContext ) ).Returns( expectedDeprecatedResults );
             i18nFileMock.InSequence( callSequence ).Setup( f => f.GetNoTranslationEntries( expectedLanguages, includeContext, excludeContext ) ).Returns( expectedNoTranslationResults );
 
             var textConsoleMock = new Mock<ITextConsole>();
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), true ) );
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), false ) );
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), false ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), It.IsAny<bool>() ) );
 
             // Execute
 
@@ -860,18 +872,85 @@ namespace I18N.DotNet.Tool.Test
             Assert.Equal( 2, ret );
 
             i18nFileMock.Verify( o => o.LoadFromFile( inputFilePath ), Times.Once );
+            i18nFileMock.Verify( f => f.GetFileIssues(), Times.Once );
             i18nFileMock.Verify( f => f.GetDeprecatedEntries( includeContext, excludeContext ), Times.Once );
             i18nFileMock.Verify( f => f.GetNoTranslationEntries( expectedLanguages, includeContext, excludeContext ), Times.Once );
 
+            foreach( var issue in expectedIssues )
+            {
+                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( issue.line.ToString() ) && s.Contains( issue.message ) &&
+                                        s.Contains( "WARNING" ) ), true ), Times.Once );
+            }
             foreach( var result in expectedDeprecatedResults )
             {
                 textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) && s.Contains( result.context ) &&
-                                        s.Contains( result.key! ) ), true ), Times.Once );
+                                        s.Contains( result.key! ) && s.Contains( "WARNING" ) ), true ), Times.Once );
             }
             foreach( var result in expectedNoTranslationResults )
             {
                 textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) && s.Contains( result.context ) &&
-                                        s.Contains( result.key! ) ), true ), Times.Once );
+                                        s.Contains( result.key! ) && s.Contains( "WARNING" ) ), true ), Times.Once );
+            }
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Equals( string.Empty ) ), false ), Times.Once );
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "finished" ) ), false ), Times.Once );
+
+            i18nFileMock.VerifyNoOtherCalls();
+            textConsoleMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public void Analize_Default_IssueErrors()
+        {
+            // Prepare
+
+            string inputFilePath = @"C:\Foo.xml";
+
+            var options = new AnalyzeOptions()
+            {
+                InputFile = inputFilePath,
+            };
+
+            var includeContext = Array.Empty<Regex>();
+            var excludeContext = Array.Empty<Regex>();
+
+            var expectedIssues = new (int line, string message, bool isError)[]
+            {
+                ( 234, "Error1", true ),
+                ( 7545, "Error2", true ),
+            };
+
+            var expectedDeprecatedResults = Array.Empty<(int line, string context, string? key)>();
+            var expectedNoTranslationResults = Array.Empty<(int line, string context, string? key)>();
+            var expectedLanguages = Array.Empty<string>();
+
+            var callSequence = new MockSequence();
+
+            var i18nFileMock = new Mock<II18NFile>();
+            i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( inputFilePath ) );
+            i18nFileMock.InSequence( callSequence ).Setup( f => f.GetFileIssues() ).Returns( expectedIssues );
+            i18nFileMock.InSequence( callSequence ).Setup( f => f.GetDeprecatedEntries( includeContext, excludeContext ) ).Returns( expectedDeprecatedResults );
+            i18nFileMock.InSequence( callSequence ).Setup( f => f.GetNoTranslationEntries( expectedLanguages, includeContext, excludeContext ) ).Returns( expectedNoTranslationResults );
+
+            var textConsoleMock = new Mock<ITextConsole>();
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), It.IsAny<bool>() ) );
+
+            // Execute
+
+            int ret = Program.Analyze( options, i18nFileMock.Object, textConsoleMock.Object );
+
+            // Verify
+
+            Assert.Equal( 1, ret );
+
+            i18nFileMock.Verify( o => o.LoadFromFile( inputFilePath ), Times.Once );
+            i18nFileMock.Verify( f => f.GetFileIssues(), Times.Once );
+            i18nFileMock.Verify( f => f.GetDeprecatedEntries( includeContext, excludeContext ), Times.Once );
+            i18nFileMock.Verify( f => f.GetNoTranslationEntries( expectedLanguages, includeContext, excludeContext ), Times.Once );
+
+            foreach( var issue in expectedIssues )
+            {
+                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( issue.line.ToString() ) && s.Contains( issue.message ) &&
+                                        s.Contains( "ERROR" ) ), true ), Times.Once );
             }
             textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Equals( string.Empty ) ), false ), Times.Once );
             textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "finished" ) ), false ), Times.Once );
@@ -899,6 +978,8 @@ namespace I18N.DotNet.Tool.Test
             var includeContext = new Regex[] { new( @"^/?Context 1/?$" ), new( @"^/?/Context 2//?$" ), new( @"FooRegex" ) };
             var excludeContext = new Regex[] { new( @"^/?Context 4/.*/?$" ) };
 
+            var expectedIssues = Array.Empty<(int line, string message, bool isError)>();
+
             var expectedDeprecatedResults = new (int line, string context, string? key)[]
             {
                 ( 99, "Context1", "Key1" ),
@@ -915,13 +996,12 @@ namespace I18N.DotNet.Tool.Test
 
             var i18nFileMock = new Mock<II18NFile>();
             i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( inputFilePath ) );
+            i18nFileMock.InSequence( callSequence ).Setup( f => f.GetFileIssues() ).Returns( expectedIssues );
             i18nFileMock.InSequence( callSequence ).Setup( f => f.GetDeprecatedEntries( It.IsAny<Regex[]>(), It.IsAny<Regex[]>() ) ).Returns( expectedDeprecatedResults );
             i18nFileMock.InSequence( callSequence ).Setup( f => f.GetNoTranslationEntries( expectedLanguages, It.IsAny<Regex[]>(), It.IsAny<Regex[]>() ) ).Returns( expectedNoTranslationResults );
 
             var textConsoleMock = new Mock<ITextConsole>();
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), true ) );
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), false ) );
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), false ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), It.IsAny<bool>() ) );
 
             // Execute
 
@@ -932,6 +1012,7 @@ namespace I18N.DotNet.Tool.Test
             Assert.Equal( 2, ret );
 
             i18nFileMock.Verify( o => o.LoadFromFile( inputFilePath ), Times.Once );
+            i18nFileMock.Verify( f => f.GetFileIssues(), Times.Once );
             i18nFileMock.Verify( f => f.GetDeprecatedEntries( It.Is<Regex[]>( a => a.ToString() == includeContext.ToString() ),
                                                               It.Is<Regex[]>( a => a.ToString() == excludeContext.ToString() ) ),
                                  Times.Once );
@@ -943,12 +1024,12 @@ namespace I18N.DotNet.Tool.Test
             foreach( var result in expectedDeprecatedResults )
             {
                 textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) && s.Contains( result.context ) &&
-                                        s.Contains( result.key! ) ), true ), Times.Once );
+                                        s.Contains( result.key! ) && s.Contains( "WARNING" ) ), true ), Times.Once );
             }
             foreach( var result in expectedNoTranslationResults )
             {
                 textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) && s.Contains( result.context ) &&
-                                        s.Contains( result.key! ) ), true ), Times.Once );
+                                        s.Contains( result.key! ) && s.Contains( "WARNING" ) ), true ), Times.Once );
             }
             textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Equals( string.Empty ) ), false ), Times.Once );
             textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "finished" ) ), false ), Times.Once );
@@ -972,6 +1053,8 @@ namespace I18N.DotNet.Tool.Test
             var includeContext = Array.Empty<Regex>();
             var excludeContext = Array.Empty<Regex>();
 
+            var expectedIssues = Array.Empty<(int line, string message, bool isError)>();
+
             var expectedDeprecatedResults = new (int line, string context, string? key)[]
             {
                 ( 99, "Context1", null),
@@ -988,13 +1071,12 @@ namespace I18N.DotNet.Tool.Test
 
             var i18nFileMock = new Mock<II18NFile>();
             i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( inputFilePath ) );
+            i18nFileMock.InSequence( callSequence ).Setup( f => f.GetFileIssues() ).Returns( expectedIssues );
             i18nFileMock.InSequence( callSequence ).Setup( f => f.GetDeprecatedEntries( includeContext, excludeContext ) ).Returns( expectedDeprecatedResults );
             i18nFileMock.InSequence( callSequence ).Setup( f => f.GetNoTranslationEntries( expectedLanguages, includeContext, excludeContext ) ).Returns( expectedNoTranslationResults );
 
             var textConsoleMock = new Mock<ITextConsole>();
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), true ) );
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), false ) );
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), false ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), It.IsAny<bool>() ) );
 
             // Execute
 
@@ -1005,18 +1087,19 @@ namespace I18N.DotNet.Tool.Test
             Assert.Equal( 2, ret );
 
             i18nFileMock.Verify( o => o.LoadFromFile( inputFilePath ), Times.Once );
+            i18nFileMock.Verify( f => f.GetFileIssues(), Times.Once );
             i18nFileMock.Verify( f => f.GetDeprecatedEntries( includeContext, excludeContext ), Times.Once );
             i18nFileMock.Verify( f => f.GetNoTranslationEntries( expectedLanguages, includeContext, excludeContext ), Times.Once );
 
             foreach( var result in expectedDeprecatedResults )
             {
                 textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) &&
-                                        s.Contains( result.context ) ), true ), Times.Once );
+                                        s.Contains( result.context ) && s.Contains( "WARNING" ) ), true ), Times.Once );
             }
             foreach( var result in expectedNoTranslationResults )
             {
                 textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) &&
-                                        s.Contains( result.context ) ), true ), Times.Once );
+                                        s.Contains( result.context ) && s.Contains( "WARNING" ) ), true ), Times.Once );
             }
             textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Equals( string.Empty ) ), false ), Times.Once );
             textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "finished" ) ), false ), Times.Once );
@@ -1044,7 +1127,7 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( inputFilePath ) ).Throws( new ApplicationException( "foo" ) );
 
             var textConsoleMock = new Mock<ITextConsole>();
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), true ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), It.IsAny<bool>() ) );
 
             // Execute
 
@@ -1080,7 +1163,7 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( inputFilePath ) ).Throws( new Exception( "foo" ) );
 
             var textConsoleMock = new Mock<ITextConsole>();
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), true ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), It.IsAny<bool>() ) );
 
             // Execute
 

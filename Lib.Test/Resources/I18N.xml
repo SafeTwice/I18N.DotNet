@@ -2,7 +2,31 @@
 <I18N>
     <Entry>
         <Key>Simple Key 1</Key>
-        <Value lang='es-es'>Clave simple 1</Value>
-        <Value lang='fr-fr'>Clef simple 1</Value>
+        <Value lang='es'>Clave simple 1</Value>
+        <Value lang='fr'>Clef simple 1</Value>
     </Entry>
+    <Entry>
+        <Key>Simple Key 2</Key>
+        <Value lang='es'>Clave simple 2</Value>
+        <Value lang='fr'>Clef simple 2</Value>
+    </Entry>
+    <Entry>
+        <Key>Format Key: {0:X4}</Key>
+        <Value lang='es'>Clave de formato: {0:X4}</Value>
+        <Value lang='fr'>Clef de format: {0:X4}</Value>
+    </Entry>
+    <Context id='Level1'>
+        <Entry>
+            <Key>Simple Key 2</Key>
+            <Value lang='es'>Clave simple 2 en contexto L1</Value>
+            <Value lang='fr'>Clef simple 2 en contexte L1</Value>
+        </Entry>
+        <Context id='Level2'>
+            <Entry>
+                <Key>Simple Key 3</Key>
+                <Value lang='es'>Clave simple 3 en contexto L2</Value>
+                <Value lang='fr'>Clef simple 3 en contexte L2</Value>
+            </Entry>
+        </Context>
+    </Context>
 </I18N>

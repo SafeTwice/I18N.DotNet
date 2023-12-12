@@ -99,7 +99,7 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.InSequence( callSequence ).Setup( f => f.WriteToFile( options.OutputFile ) );
 
             var textConsoleMock = new Mock<ITextConsole>();
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>() ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), false ) );
 
             // Execute
 
@@ -123,7 +123,7 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.Verify( f => f.CreateDeprecationComments(), Times.Never );
             i18nFileMock.Verify( f => f.WriteToFile( options.OutputFile ), Times.Once );
 
-            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "success" ) ) ), Times.Once );
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "success" ) ), false ), Times.Once );
 
             sourceFileParserMock.VerifyNoOtherCalls();
             i18nFileMock.VerifyNoOtherCalls();
@@ -167,7 +167,7 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.InSequence( callSequence ).Setup( f => f.WriteToFile( options.OutputFile ) );
 
             var textConsoleMock = new Mock<ITextConsole>();
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>() ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), false ) );
 
             // Execute
 
@@ -191,7 +191,7 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.Verify( f => f.CreateDeprecationComments(), Times.Never );
             i18nFileMock.Verify( f => f.WriteToFile( options.OutputFile ), Times.Once );
 
-            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "success" ) ) ), Times.Once );
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "success" ) ), false ), Times.Once );
 
             sourceFileParserMock.VerifyNoOtherCalls();
             i18nFileMock.VerifyNoOtherCalls();
@@ -233,7 +233,7 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.InSequence( callSequence ).Setup( f => f.WriteToFile( options.OutputFile ) );
 
             var textConsoleMock = new Mock<ITextConsole>();
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>() ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), false ) );
 
             // Execute
 
@@ -257,7 +257,7 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.Verify( f => f.CreateDeprecationComments(), Times.Never );
             i18nFileMock.Verify( f => f.WriteToFile( options.OutputFile ), Times.Once );
 
-            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "success" ) ) ), Times.Once );
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "success" ) ), false ), Times.Once );
 
             sourceFileParserMock.VerifyNoOtherCalls();
             i18nFileMock.VerifyNoOtherCalls();
@@ -301,7 +301,7 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.InSequence( callSequence ).Setup( f => f.WriteToFile( options.OutputFile ) );
 
             var textConsoleMock = new Mock<ITextConsole>();
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>() ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), false ) );
 
             // Execute
 
@@ -325,7 +325,7 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.Verify( f => f.CreateDeprecationComments(), Times.Once );
             i18nFileMock.Verify( f => f.WriteToFile( options.OutputFile ), Times.Once );
 
-            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "success" ) ) ), Times.Once );
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "success" ) ), false ), Times.Once );
 
             sourceFileParserMock.VerifyNoOtherCalls();
             i18nFileMock.VerifyNoOtherCalls();
@@ -367,7 +367,7 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.InSequence( callSequence ).Setup( f => f.WriteToFile( options.OutputFile ) );
 
             var textConsoleMock = new Mock<ITextConsole>();
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>() ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), false ) );
 
             // Execute
 
@@ -391,7 +391,7 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.Verify( f => f.CreateDeprecationComments(), Times.Never );
             i18nFileMock.Verify( f => f.WriteToFile( options.OutputFile ), Times.Once );
 
-            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "success" ) ) ), Times.Once );
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "success" ) ), false ), Times.Once );
 
             sourceFileParserMock.VerifyNoOtherCalls();
             i18nFileMock.VerifyNoOtherCalls();
@@ -440,7 +440,7 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.InSequence( callSequence ).Setup( f => f.WriteToFile( options.OutputFile ) );
 
             var textConsoleMock = new Mock<ITextConsole>();
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>() ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), false ) );
 
             // Execute
 
@@ -464,7 +464,7 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.Verify( f => f.CreateDeprecationComments(), Times.Never );
             i18nFileMock.Verify( f => f.WriteToFile( options.OutputFile ), Times.Once );
 
-            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "success" ) ) ), Times.Once );
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "success" ) ), false ), Times.Once );
 
             sourceFileParserMock.VerifyNoOtherCalls();
             i18nFileMock.VerifyNoOtherCalls();
@@ -507,7 +507,7 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.InSequence( callSequence ).Setup( f => f.WriteToFile( options.OutputFile ) );
 
             var textConsoleMock = new Mock<ITextConsole>();
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>() ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), false ) );
 
             // Execute
 
@@ -531,7 +531,7 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.Verify( f => f.CreateDeprecationComments(), Times.Never );
             i18nFileMock.Verify( f => f.WriteToFile( options.OutputFile ), Times.Once );
 
-            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "success" ) ) ), Times.Once );
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "success" ) ), false ), Times.Once );
 
             sourceFileParserMock.VerifyNoOtherCalls();
             i18nFileMock.VerifyNoOtherCalls();
@@ -559,7 +559,7 @@ namespace I18N.DotNet.Tool.Test
             var i18nFileMock = new Mock<II18NFile>();
 
             var textConsoleMock = new Mock<ITextConsole>();
-            textConsoleMock.Setup( c => c.WriteLine( It.IsAny<string>() ) );
+            textConsoleMock.Setup( c => c.WriteLine( It.IsAny<string>(), true ) );
 
             // Execute
 
@@ -571,7 +571,7 @@ namespace I18N.DotNet.Tool.Test
 
             sourceFileParserMock.Verify( sfp => sfp.ParseFile( It.IsAny<string>(), options.ExtraLocalizationFunctions, It.IsAny<Context>() ), Times.Once );
 
-            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "ERROR" ) && s.Contains( "foo" ) ) ), Times.Once );
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "ERROR" ) && s.Contains( "foo" ) ), true ), Times.Once );
 
             sourceFileParserMock.VerifyNoOtherCalls();
             i18nFileMock.VerifyNoOtherCalls();
@@ -600,7 +600,7 @@ namespace I18N.DotNet.Tool.Test
             var i18nFileMock = new Mock<II18NFile>();
 
             var textConsoleMock = new Mock<ITextConsole>();
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>() ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), true ) );
 
             // Execute
 
@@ -612,7 +612,7 @@ namespace I18N.DotNet.Tool.Test
 
             sourceFileParserMock.Verify( sfp => sfp.ParseFile( It.IsAny<string>(), options.ExtraLocalizationFunctions, It.IsAny<Context>() ), Times.Once );
 
-            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "UNEXPECTED ERROR" ) && s.Contains( "foo" ) ) ), Times.Once );
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "UNEXPECTED ERROR" ) && s.Contains( "foo" ) ), true ), Times.Once );
 
             sourceFileParserMock.VerifyNoOtherCalls();
             i18nFileMock.VerifyNoOtherCalls();
@@ -636,7 +636,7 @@ namespace I18N.DotNet.Tool.Test
             var i18nFileMock = new Mock<II18NFile>();
 
             var textConsoleMock = new Mock<ITextConsole>();
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>() ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), true ) );
 
             // Execute
 
@@ -647,7 +647,7 @@ namespace I18N.DotNet.Tool.Test
             Assert.Equal( 1, ret );
 
             textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "ERROR: Output directory" ) && s.Contains( "does not exist" ) && 
-                                    s.Contains( "ETYYLEW87832y74nh23hWHSJD" ) ) ), Times.Once );
+                                    s.Contains( "ETYYLEW87832y74nh23hWHSJD" ) ), true ), Times.Once );
 
             sourceFileParserMock.VerifyNoOtherCalls();
             i18nFileMock.VerifyNoOtherCalls();
@@ -683,7 +683,9 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.InSequence( callSequence ).Setup( f => f.GetDeprecatedEntries( includeContext, excludeContext ) ).Returns( expectedResults );
 
             var textConsoleMock = new Mock<ITextConsole>();
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>() ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), true ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), false ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), false ) );
 
             // Execute
 
@@ -695,10 +697,14 @@ namespace I18N.DotNet.Tool.Test
 
             i18nFileMock.Verify( o => o.LoadFromFile( inputFilePath ), Times.Once );
             i18nFileMock.Verify( f => f.GetDeprecatedEntries( includeContext, excludeContext ), Times.Once );
+
             foreach( var result in expectedResults )
             {
-                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) && s.Contains( result.context ) && s.Contains( result.key! ) ) ), Times.Once );
+                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) && s.Contains( result.context ) &&
+                                        s.Contains( result.key! ) ), true ), Times.Once );
             }
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Equals( string.Empty ) ), false ), Times.Once );
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "finished" ) ), false ), Times.Once );
 
             i18nFileMock.VerifyNoOtherCalls();
             textConsoleMock.VerifyNoOtherCalls();
@@ -734,7 +740,9 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.InSequence( callSequence ).Setup( f => f.GetNoTranslationEntries( expectedLanguages, includeContext, excludeContext ) ).Returns( expectedResults );
 
             var textConsoleMock = new Mock<ITextConsole>();
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>() ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), true ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), false ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), false ) );
 
             // Execute
 
@@ -746,10 +754,14 @@ namespace I18N.DotNet.Tool.Test
 
             i18nFileMock.Verify( o => o.LoadFromFile( inputFilePath ), Times.Once );
             i18nFileMock.Verify( f => f.GetNoTranslationEntries( expectedLanguages, includeContext, excludeContext ), Times.Once );
+
             foreach( var result in expectedResults )
             {
-                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) && s.Contains( result.context ) && s.Contains( result.key! ) ) ), Times.Once );
+                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) && s.Contains( result.context ) &&
+                                        s.Contains( result.key! ) ), true ), Times.Once );
             }
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Equals( string.Empty ) ), false ), Times.Once );
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "finished" ) ), false ), Times.Once );
 
             i18nFileMock.VerifyNoOtherCalls();
             textConsoleMock.VerifyNoOtherCalls();
@@ -781,6 +793,7 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.InSequence( callSequence ).Setup( f => f.GetNoTranslationEntries( expectedLanguages, includeContext, excludeContext ) ).Returns( expectedResults );
 
             var textConsoleMock = new Mock<ITextConsole>();
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), false ) );
 
             // Execute
 
@@ -792,7 +805,8 @@ namespace I18N.DotNet.Tool.Test
 
             i18nFileMock.Verify( o => o.LoadFromFile( inputFilePath ), Times.Once );
             i18nFileMock.Verify( f => f.GetNoTranslationEntries( expectedLanguages, includeContext, excludeContext ), Times.Once );
-            textConsoleMock.Verify( c => c.WriteLine( It.IsAny<string>() ), Times.Never );
+
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "finished" ) ), false ), Times.Once );
 
             i18nFileMock.VerifyNoOtherCalls();
             textConsoleMock.VerifyNoOtherCalls();
@@ -833,7 +847,9 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.InSequence( callSequence ).Setup( f => f.GetNoTranslationEntries( expectedLanguages, includeContext, excludeContext ) ).Returns( expectedNoTranslationResults );
 
             var textConsoleMock = new Mock<ITextConsole>();
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>() ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), true ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), false ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), false ) );
 
             // Execute
 
@@ -846,14 +862,19 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.Verify( o => o.LoadFromFile( inputFilePath ), Times.Once );
             i18nFileMock.Verify( f => f.GetDeprecatedEntries( includeContext, excludeContext ), Times.Once );
             i18nFileMock.Verify( f => f.GetNoTranslationEntries( expectedLanguages, includeContext, excludeContext ), Times.Once );
+
             foreach( var result in expectedDeprecatedResults )
             {
-                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) && s.Contains( result.context ) && s.Contains( result.key! ) ) ), Times.Once );
+                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) && s.Contains( result.context ) &&
+                                        s.Contains( result.key! ) ), true ), Times.Once );
             }
             foreach( var result in expectedNoTranslationResults )
             {
-                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) && s.Contains( result.context ) && s.Contains( result.key! ) ) ), Times.Once );
+                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) && s.Contains( result.context ) &&
+                                        s.Contains( result.key! ) ), true ), Times.Once );
             }
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Equals( string.Empty ) ), false ), Times.Once );
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "finished" ) ), false ), Times.Once );
 
             i18nFileMock.VerifyNoOtherCalls();
             textConsoleMock.VerifyNoOtherCalls();
@@ -898,7 +919,9 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.InSequence( callSequence ).Setup( f => f.GetNoTranslationEntries( expectedLanguages, It.IsAny<Regex[]>(), It.IsAny<Regex[]>() ) ).Returns( expectedNoTranslationResults );
 
             var textConsoleMock = new Mock<ITextConsole>();
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>() ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), true ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), false ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), false ) );
 
             // Execute
 
@@ -916,14 +939,19 @@ namespace I18N.DotNet.Tool.Test
                                                                  It.Is<Regex[]>( a => a.ToString() == includeContext.ToString() ),
                                                                  It.Is<Regex[]>( a => a.ToString() == excludeContext.ToString() ) ),
                                  Times.Once );
+
             foreach( var result in expectedDeprecatedResults )
             {
-                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) && s.Contains( result.context ) && s.Contains( result.key! ) ) ), Times.Once );
+                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) && s.Contains( result.context ) &&
+                                        s.Contains( result.key! ) ), true ), Times.Once );
             }
             foreach( var result in expectedNoTranslationResults )
             {
-                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) && s.Contains( result.context ) && s.Contains( result.key! ) ) ), Times.Once );
+                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) && s.Contains( result.context ) &&
+                                        s.Contains( result.key! ) ), true ), Times.Once );
             }
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Equals( string.Empty ) ), false ), Times.Once );
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "finished" ) ), false ), Times.Once );
 
             i18nFileMock.VerifyNoOtherCalls();
             textConsoleMock.VerifyNoOtherCalls();
@@ -964,7 +992,9 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.InSequence( callSequence ).Setup( f => f.GetNoTranslationEntries( expectedLanguages, includeContext, excludeContext ) ).Returns( expectedNoTranslationResults );
 
             var textConsoleMock = new Mock<ITextConsole>();
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>() ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), true ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), false ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), false ) );
 
             // Execute
 
@@ -977,14 +1007,19 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.Verify( o => o.LoadFromFile( inputFilePath ), Times.Once );
             i18nFileMock.Verify( f => f.GetDeprecatedEntries( includeContext, excludeContext ), Times.Once );
             i18nFileMock.Verify( f => f.GetNoTranslationEntries( expectedLanguages, includeContext, excludeContext ), Times.Once );
+
             foreach( var result in expectedDeprecatedResults )
             {
-                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) && s.Contains( result.context ) ) ), Times.Once );
+                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) &&
+                                        s.Contains( result.context ) ), true ), Times.Once );
             }
             foreach( var result in expectedNoTranslationResults )
             {
-                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) && s.Contains( result.context ) ) ), Times.Once );
+                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) &&
+                                        s.Contains( result.context ) ), true ), Times.Once );
             }
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Equals( string.Empty ) ), false ), Times.Once );
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "finished" ) ), false ), Times.Once );
 
             i18nFileMock.VerifyNoOtherCalls();
             textConsoleMock.VerifyNoOtherCalls();
@@ -1009,7 +1044,7 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( inputFilePath ) ).Throws( new ApplicationException( "foo" ) );
 
             var textConsoleMock = new Mock<ITextConsole>();
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>() ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), true ) );
 
             // Execute
 
@@ -1020,7 +1055,7 @@ namespace I18N.DotNet.Tool.Test
             Assert.Equal( 1, ret );
 
             i18nFileMock.Verify( o => o.LoadFromFile( inputFilePath ), Times.Once );
-            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "ERROR" ) && s.Contains( "foo" ) ) ), Times.Once );
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "ERROR" ) && s.Contains( "foo" ) ), true ), Times.Once );
 
             i18nFileMock.VerifyNoOtherCalls();
             textConsoleMock.VerifyNoOtherCalls();
@@ -1045,7 +1080,7 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( inputFilePath ) ).Throws( new Exception( "foo" ) );
 
             var textConsoleMock = new Mock<ITextConsole>();
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>() ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), true ) );
 
             // Execute
 
@@ -1056,7 +1091,7 @@ namespace I18N.DotNet.Tool.Test
             Assert.Equal( 1, ret );
 
             i18nFileMock.Verify( o => o.LoadFromFile( inputFilePath ), Times.Once );
-            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "UNEXPECTED ERROR" ) && s.Contains( "foo" ) ) ), Times.Once );
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "UNEXPECTED ERROR" ) && s.Contains( "foo" ) ), true ), Times.Once );
 
             i18nFileMock.VerifyNoOtherCalls();
             textConsoleMock.VerifyNoOtherCalls();
@@ -1084,7 +1119,7 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.InSequence( callSequence ).Setup( f => f.WriteToFile( options.OutputFile ) );
 
             var textConsoleMock = new Mock<ITextConsole>();
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>() ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), false ) );
 
             // Execute
 
@@ -1098,7 +1133,7 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.Verify( f => f.DeleteAllComments(), Times.Once );
             i18nFileMock.Verify( f => f.WriteToFile( options.OutputFile ), Times.Once );
 
-            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "success" ) ) ), Times.Once );
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "success" ) ), false ), Times.Once );
 
             i18nFileMock.VerifyNoOtherCalls();
             textConsoleMock.VerifyNoOtherCalls();
@@ -1124,7 +1159,7 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( inputFilePath ) ).Throws( new ApplicationException( "foo" ) );
 
             var textConsoleMock = new Mock<ITextConsole>();
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>() ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), true ) );
 
             // Execute
 
@@ -1135,7 +1170,7 @@ namespace I18N.DotNet.Tool.Test
             Assert.Equal( 1, ret );
 
             i18nFileMock.Verify( o => o.LoadFromFile( inputFilePath ), Times.Once );
-            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "ERROR" ) && s.Contains( "foo" ) ) ), Times.Once );
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "ERROR" ) && s.Contains( "foo" ) ), true ), Times.Once );
 
             i18nFileMock.VerifyNoOtherCalls();
             textConsoleMock.VerifyNoOtherCalls();
@@ -1161,7 +1196,7 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( inputFilePath ) ).Throws( new Exception( "foo" ) );
 
             var textConsoleMock = new Mock<ITextConsole>();
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>() ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), true ) );
 
             // Execute
 
@@ -1172,7 +1207,7 @@ namespace I18N.DotNet.Tool.Test
             Assert.Equal( 1, ret );
 
             i18nFileMock.Verify( o => o.LoadFromFile( inputFilePath ), Times.Once );
-            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "UNEXPECTED ERROR" ) && s.Contains( "foo" ) ) ), Times.Once );
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "UNEXPECTED ERROR" ) && s.Contains( "foo" ) ), true ), Times.Once );
 
             i18nFileMock.VerifyNoOtherCalls();
             textConsoleMock.VerifyNoOtherCalls();
@@ -1197,7 +1232,7 @@ namespace I18N.DotNet.Tool.Test
             var i18nFileMock = new Mock<II18NFile>();
 
             var textConsoleMock = new Mock<ITextConsole>();
-            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>() ) );
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), true ) );
 
             // Execute
 
@@ -1208,7 +1243,7 @@ namespace I18N.DotNet.Tool.Test
             Assert.Equal( 1, ret );
 
             textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "ERROR: Output directory" ) && s.Contains( "does not exist" ) &&
-                                    s.Contains( "ETYYLEW87832y74nh23hWHSJD" ) ) ), Times.Once );
+                                    s.Contains( "ETYYLEW87832y74nh23hWHSJD" ) ), true ), Times.Once );
 
             i18nFileMock.VerifyNoOtherCalls();
             textConsoleMock.VerifyNoOtherCalls();

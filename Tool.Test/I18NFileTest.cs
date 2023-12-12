@@ -540,10 +540,18 @@ namespace I18N.DotNet.Tool.Test
                 "  </Context>\n" +
                 "  <Entry>\n" +
                 "  </Entry>\n" +
+                "  <Entry>\n" +
+                "    <Key/>\n" +
+                "    <Value lang='zh'></Value>\n" +
+                "  </Entry>\n" +
                 "  <Context>\n" +
                 "    <Entry>\n" +
                 "      <Key>Key 77</Key>\n" +
+                "      <Key>Key 78</Key>\n" +
+                "      <Value lang=''>Value with empty language</Value>\n" +
                 "    </Entry>\n" +
+                "    <Context id=''>\n" +
+                "    </Context>\n" +
                 "  </Context>\n" +
                 "</I18N>";
             WriteTempFile( contents );
@@ -598,6 +606,10 @@ namespace I18N.DotNet.Tool.Test
                 "  </Context>\n" +
                 "  <Entry></Entry>\n" +
                 "  <Entry>\n" +
+                "    <Key />\n" +
+                "    <Value lang=\"zh\"></Value>\n" +
+                "  </Entry>\n" +
+                "  <Entry>\n" +
                 "    <!-- Found in: Match 6 @ 0 -->\n" +
                 "    <Key>Key 6</Key>\n" +
                 "  </Entry>\n" +
@@ -608,7 +620,10 @@ namespace I18N.DotNet.Tool.Test
                 "  <Context>\n" +
                 "    <Entry>\n" +
                 "      <Key>Key 77</Key>\n" +
+                "      <Key>Key 78</Key>\n" +
+                "      <Value lang=\"\">Value with empty language</Value>\n" +
                 "    </Entry>\n" +
+                "    <Context id=\"\"></Context>\n" +
                 "  </Context>\n" +
                 "  <Context id=\"Context 2\">\n" +
                 "    <Context id=\"Context 22\">\n" +
@@ -622,6 +637,56 @@ namespace I18N.DotNet.Tool.Test
 
             string actualContents = ReadTempFile();
             Assert.Equal( expectedContents, actualContents );
+        }
+
+        [Fact]
+        public void Analyze_FileIssues()
+        {
+            // Prepare
+
+            CreateExistingOutputFile();
+
+            // Execute
+
+            var i18nFile = new I18NFile();
+            i18nFile.LoadFromFile( m_tempFile );
+            var actualResults = i18nFile.GetFileIssues().ToArray();
+
+            // Verify
+
+            var expectedResults = Array.Empty<(int line, string message, bool isError)>();
+
+            Assert.Equal( expectedResults, actualResults );
+        }
+
+        [Fact]
+        public void Analyze_FileIssues_Malformed()
+        {
+            // Prepare
+
+            CreateExistingOutputFileMalformed();
+
+            // Execute
+
+            var i18nFile = new I18NFile();
+            i18nFile.LoadFromFile( m_tempFile );
+            var actualResults = i18nFile.GetFileIssues().ToArray();
+
+            // Verify
+
+            var expectedResults = new (int line, string message, bool isError)[]
+            {
+                ( 26, "'Entry' element does not have a 'Key' element", true ),
+                ( 29, "'Key' element is empty", true ),
+                ( 30, "'Value' element is empty", false ),
+                ( 17, "'Value' element attribute 'lang' is missing", true ),
+                ( 32, "'Context' element attribute 'id' is missing", true ),
+                ( 33, "'Entry' element has more than one 'Key' element", true ),
+                ( 36, "'Value' element attribute 'lang' is empty", true ),
+                ( 38, "'Context' element attribute 'id' is empty", true ),
+            };
+
+            Assert.Equal( expectedResults, actualResults );
         }
 
         [Fact]
@@ -715,7 +780,8 @@ namespace I18N.DotNet.Tool.Test
             {
                 ( 7, "/", "Key 2" ),
                 ( 26, "/", null ),
-                ( 29, "//", "Key 77" ),
+                ( 28, "/", "" ),
+                ( 33, "//", "Key 77" ),
             };
 
             Assert.Equal( expectedResults, actualResults );
@@ -821,7 +887,7 @@ namespace I18N.DotNet.Tool.Test
                 ( 26, "/", null ),
                 ( 13, "/Context 1/", "Key 3" ),
                 ( 20, "/Context 1/Context 11/", "Key 9" ),
-                ( 29, "//", "Key 77" ),
+                ( 33, "//", "Key 77" ),
             };
 
             Assert.Equal( expectedResults, actualResults );
@@ -847,9 +913,10 @@ namespace I18N.DotNet.Tool.Test
                 ( 2, "/", "Key 1" ),
                 ( 7, "/", "Key 2" ),
                 ( 26, "/", null ),
+                ( 28, "/", "" ),
                 ( 13, "/Context 1/", "Key 3" ),
                 ( 20, "/Context 1/Context 11/", "Key 9" ),
-                ( 29, "//", "Key 77" ),
+                ( 33, "//", "Key 77" ),
             };
 
             Assert.Equal( expectedResults, actualResults );

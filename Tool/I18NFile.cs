@@ -108,6 +108,15 @@ namespace I18N.DotNet.Tool
             }
         }
 
+        public IEnumerable<(int line, string message, bool isError)> GetFileIssues()
+        {
+            foreach( var issueInfo in GetFileIssues( Root ) )
+            {
+                var line = ( (IXmlLineInfo) issueInfo.element ).LineNumber;
+                yield return (line, issueInfo.message, issueInfo.isError);
+            }
+        }
+
         //===========================================================================
         //                          PRIVATE NESTED TYPES
         //===========================================================================
@@ -377,9 +386,9 @@ namespace I18N.DotNet.Tool
 
             foreach( var contextElement in element.Elements( CONTEXT_TAG ) )
             {
-                foreach( var entryElement in GetDeprecatedEntries( contextElement ) )
+                foreach( var childEntry in GetDeprecatedEntries( contextElement ) )
                 {
-                    yield return entryElement;
+                    yield return childEntry;
                 }
             }
         }
@@ -390,7 +399,7 @@ namespace I18N.DotNet.Tool
             {
                 if( languages.Length == 0 )
                 {
-                    if( !entryElement.Elements( VALUE_TAG ).Any( value => value.Attribute( LANG_ATTR )?.Value != null ) )
+                    if( !entryElement.Elements( VALUE_TAG ).Any( value => ( value.Attribute( LANG_ATTR )?.Value?.Length ?? 0 ) > 0 ) )
                     {
                         yield return entryElement;
                     }
@@ -424,10 +433,78 @@ namespace I18N.DotNet.Tool
 
             foreach( var contextElement in element.Elements( CONTEXT_TAG ) )
             {
-                var childContext = contextElement.Attribute( CONTEXT_ID_ATTR )?.Value;
-                foreach( var entryElement in GetNoTranslationEntries( contextElement, languages ) )
+                foreach( var childEntry in GetNoTranslationEntries( contextElement, languages ) )
                 {
-                    yield return entryElement;
+                    yield return childEntry;
+                }
+            }
+        }
+
+        private static IEnumerable<(XElement element, string message, bool isError)> GetFileIssues( XElement element )
+        {
+            foreach( var entryElement in element.Elements( ENTRY_TAG ) )
+            {
+                var keyElements = entryElement.Elements( KEY_TAG );
+
+                if( keyElements.Count() == 0 )
+                {
+                    yield return (entryElement, $"'{ENTRY_TAG}' element does not have a '{KEY_TAG}' element", true);
+                }
+                else if( keyElements.Count() > 1 )
+                {
+                    yield return (entryElement, $"'{ENTRY_TAG}' element has more than one '{KEY_TAG}' element", true);
+                }
+
+                foreach( var keyElement in keyElements )
+                {
+                    var key = keyElement.Value;
+
+                    if( key.Length == 0 )
+                    {
+                        yield return (keyElement, $"'{KEY_TAG}' element is empty", true);
+                    }
+                }
+
+                var valueElements = entryElement.Elements( VALUE_TAG );
+
+                foreach( var valueElement in valueElements )
+                {
+                    var language = valueElement.Attribute( LANG_ATTR )?.Value;
+
+                    if( language == null )
+                    {
+                        yield return (valueElement, $"'{VALUE_TAG}' element attribute '{LANG_ATTR}' is missing", true);
+                    }
+                    else if( language.Length == 0 )
+                    {
+                        yield return (valueElement, $"'{VALUE_TAG}' element attribute '{LANG_ATTR}' is empty", true);
+                    }
+
+                    var value = valueElement.Value;
+
+                    if( value.Length == 0 )
+                    {
+                        yield return (valueElement, $"'{VALUE_TAG}' element is empty", false);
+                    }
+                }
+            }
+
+            foreach( var contextElement in element.Elements( CONTEXT_TAG ) )
+            {
+                var id = contextElement.Attribute( CONTEXT_ID_ATTR )?.Value;
+
+                if( id == null )
+                {
+                    yield return (contextElement, $"'{CONTEXT_TAG}' element attribute '{CONTEXT_ID_ATTR}' is missing", true);
+                }
+                else if( id.Length == 0 )
+                {
+                    yield return (contextElement, $"'{CONTEXT_TAG}' element attribute '{CONTEXT_ID_ATTR}' is empty", true);
+                }
+
+                foreach( var contextIssue in GetFileIssues( contextElement ) )
+                {
+                    yield return contextIssue;
                 }
             }
         }

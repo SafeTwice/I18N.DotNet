@@ -154,7 +154,24 @@ namespace I18N.DotNet.Tool
                     checkLanguages = true;
                 }
 
-                bool noWarnings = true;
+                bool hasWarnings = false;
+                bool hasErrors = false;
+
+                var issues = inputFile.GetFileIssues();
+
+                foreach( var issue in issues )
+                {
+                    if( issue.isError )
+                    {
+                        hasErrors = true;
+                        textConsole.WriteLine( $"ERROR: {issue.message} at line {issue.line}", true );
+                    }
+                    else
+                    {
+                        hasWarnings = true;
+                        textConsole.WriteLine( $"WARNING: {issue.message} at line {issue.line}", true );
+                    }
+                }
 
                 if( options.CheckDeprecated )
                 {
@@ -162,7 +179,7 @@ namespace I18N.DotNet.Tool
 
                     if( results.Count() > 0 )
                     {
-                        noWarnings = false;
+                        hasWarnings = true;
                     }
 
                     foreach( var result in results )
@@ -189,7 +206,7 @@ namespace I18N.DotNet.Tool
 
                     if( results.Count() > 0 )
                     {
-                        noWarnings = false;
+                        hasWarnings = true;
                     }
 
                     foreach( var result in results )
@@ -205,14 +222,14 @@ namespace I18N.DotNet.Tool
                     }
                 }
 
-                if( !noWarnings )
+                if( hasWarnings || hasErrors )
                 {
                     textConsole.WriteLine( string.Empty );
                 }
 
                 textConsole.WriteLine( $"I18N file analysis finished" );
 
-                return noWarnings ? 0 : 2;
+                return hasErrors ? 1 : ( hasWarnings ? 2 : 0 );
             }
             catch( ApplicationException e )
             {

@@ -125,11 +125,11 @@ namespace I18N.DotNet.Tool
             }
             catch( ApplicationException e )
             {
-                textConsole.WriteLine( $"ERROR: {e.Message}" );
+                textConsole.WriteLine( $"ERROR: {e.Message}", true );
             }
             catch( Exception e )
             {
-                textConsole.WriteLine( $"UNEXPECTED ERROR: {e}" );
+                textConsole.WriteLine( $"UNEXPECTED ERROR: {e}", true );
             }
 
             return 1;
@@ -169,11 +169,11 @@ namespace I18N.DotNet.Tool
                     {
                         if( result.key != null )
                         {
-                            textConsole.WriteLine( $"WARNING: Deprecated entry at line {result.line} (Context = {result.context}, Key = '{result.key}')" );
+                            textConsole.WriteLine( $"WARNING: Deprecated entry at line {result.line} (Context = {result.context}, Key = '{result.key}')", true );
                         }
                         else
                         {
-                            textConsole.WriteLine( $"WARNING: Deprecated entry at line {result.line} (Context = {result.context}, No key)" );
+                            textConsole.WriteLine( $"WARNING: Deprecated entry at line {result.line} (Context = {result.context}, No key)", true );
                         }
                     }
                 }
@@ -196,24 +196,31 @@ namespace I18N.DotNet.Tool
                     {
                         if( result.key != null )
                         {
-                            textConsole.WriteLine( $"WARNING: Entry without translation at line {result.line} (Context = {result.context}, Key = '{result.key}')" );
+                            textConsole.WriteLine( $"WARNING: Entry without translation at line {result.line} (Context = {result.context}, Key = '{result.key}')", true );
                         }
                         else
                         {
-                            textConsole.WriteLine( $"WARNING: Entry without translation at line {result.line} (Context = {result.context}, No key)" );
+                            textConsole.WriteLine( $"WARNING: Entry without translation at line {result.line} (Context = {result.context}, No key)", true );
                         }
                     }
                 }
+
+                if( !noWarnings )
+                {
+                    textConsole.WriteLine( string.Empty );
+                }
+
+                textConsole.WriteLine( $"I18N file analysis finished" );
 
                 return noWarnings ? 0 : 2;
             }
             catch( ApplicationException e )
             {
-                textConsole.WriteLine( $"ERROR: {e.Message}" );
+                textConsole.WriteLine( $"ERROR: {e.Message}", true );
             }
             catch( Exception e )
             {
-                textConsole.WriteLine( $"UNEXPECTED ERROR: {e}" );
+                textConsole.WriteLine( $"UNEXPECTED ERROR: {e}", true );
             }
 
             return 1;
@@ -237,11 +244,11 @@ namespace I18N.DotNet.Tool
             }
             catch( ApplicationException e )
             {
-                textConsole.WriteLine( $"ERROR: {e.Message}" );
+                textConsole.WriteLine( $"ERROR: {e.Message}", true );
             }
             catch( Exception e )
             {
-                textConsole.WriteLine( $"UNEXPECTED ERROR: {e}" );
+                textConsole.WriteLine( $"UNEXPECTED ERROR: {e}", true );
             }
 
             return 1;

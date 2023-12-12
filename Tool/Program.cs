@@ -154,9 +154,18 @@ namespace I18N.DotNet.Tool
                     checkLanguages = true;
                 }
 
+                bool noWarnings = true;
+
                 if( options.CheckDeprecated )
                 {
-                    foreach( var result in inputFile.GetDeprecatedEntries( includeContexts, excludeContexts ) )
+                    var results = inputFile.GetDeprecatedEntries( includeContexts, excludeContexts );
+
+                    if( results.Count() > 0 )
+                    {
+                        noWarnings = false;
+                    }
+
+                    foreach( var result in results )
                     {
                         if( result.key != null )
                         {
@@ -176,7 +185,14 @@ namespace I18N.DotNet.Tool
                         languagesToCheck = Array.Empty<string>();
                     }
 
-                    foreach( var result in inputFile.GetNoTranslationEntries( languagesToCheck, includeContexts, excludeContexts ) )
+                    var results = inputFile.GetNoTranslationEntries( languagesToCheck, includeContexts, excludeContexts );
+
+                    if( results.Count() > 0 )
+                    {
+                        noWarnings = false;
+                    }
+
+                    foreach( var result in results )
                     {
                         if( result.key != null )
                         {
@@ -189,7 +205,7 @@ namespace I18N.DotNet.Tool
                     }
                 }
 
-                return 0;
+                return noWarnings ? 0 : 2;
             }
             catch( ApplicationException e )
             {
@@ -215,7 +231,7 @@ namespace I18N.DotNet.Tool
 
                 outputFile.WriteToFile( options.OutputFile );
 
-                textConsole.WriteLine( $"I18N Deployment file generated successfully" );
+                textConsole.WriteLine( $"I18N deployment file generated successfully" );
 
                 return 0;
             }

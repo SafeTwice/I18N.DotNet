@@ -691,7 +691,7 @@ namespace I18N.DotNet.Tool.Test
 
             // Verify
 
-            Assert.Equal( 0, ret );
+            Assert.Equal( 2, ret );
 
             i18nFileMock.Verify( o => o.LoadFromFile( inputFilePath ), Times.Once );
             i18nFileMock.Verify( f => f.GetDeprecatedEntries( includeContext, excludeContext ), Times.Once );
@@ -742,7 +742,7 @@ namespace I18N.DotNet.Tool.Test
 
             // Verify
 
-            Assert.Equal( 0, ret );
+            Assert.Equal( 2, ret );
 
             i18nFileMock.Verify( o => o.LoadFromFile( inputFilePath ), Times.Once );
             i18nFileMock.Verify( f => f.GetNoTranslationEntries( expectedLanguages, includeContext, excludeContext ), Times.Once );
@@ -841,7 +841,7 @@ namespace I18N.DotNet.Tool.Test
 
             // Verify
 
-            Assert.Equal( 0, ret );
+            Assert.Equal( 2, ret );
 
             i18nFileMock.Verify( o => o.LoadFromFile( inputFilePath ), Times.Once );
             i18nFileMock.Verify( f => f.GetDeprecatedEntries( includeContext, excludeContext ), Times.Once );
@@ -906,7 +906,7 @@ namespace I18N.DotNet.Tool.Test
 
             // Verify
 
-            Assert.Equal( 0, ret );
+            Assert.Equal( 2, ret );
 
             i18nFileMock.Verify( o => o.LoadFromFile( inputFilePath ), Times.Once );
             i18nFileMock.Verify( f => f.GetDeprecatedEntries( It.Is<Regex[]>( a => a.ToString() == includeContext.ToString() ),
@@ -972,7 +972,7 @@ namespace I18N.DotNet.Tool.Test
 
             // Verify
 
-            Assert.Equal( 0, ret );
+            Assert.Equal( 2, ret );
 
             i18nFileMock.Verify( o => o.LoadFromFile( inputFilePath ), Times.Once );
             i18nFileMock.Verify( f => f.GetDeprecatedEntries( includeContext, excludeContext ), Times.Once );

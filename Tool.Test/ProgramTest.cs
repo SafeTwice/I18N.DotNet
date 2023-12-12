@@ -620,6 +620,41 @@ namespace I18N.DotNet.Tool.Test
         }
 
         [Fact]
+        public void Generate_OutputDirectoryNotExisting()
+        {
+            // Prepare
+
+            var options = new ParseSourcesOptions()
+            {
+                SourcesDirectories = new string[] { Path.GetTempPath() + @"\TempDir1", Path.GetTempPath() + @"\TempDir2" },
+                OutputFile = Path.GetTempPath() + @"ETYYLEW87832y74nh23hWHSJD\bar.xml",
+            };
+
+            var callSequence = new MockSequence();
+
+            var sourceFileParserMock = new Mock<ISourceFileParser>();
+            var i18nFileMock = new Mock<II18NFile>();
+
+            var textConsoleMock = new Mock<ITextConsole>();
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>() ) );
+
+            // Execute
+
+            int ret = Program.ParseSources( options, i18nFileMock.Object, sourceFileParserMock.Object, textConsoleMock.Object );
+
+            // Verify
+
+            Assert.Equal( 1, ret );
+
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "ERROR: Output directory" ) && s.Contains( "does not exist" ) && 
+                                    s.Contains( "ETYYLEW87832y74nh23hWHSJD" ) ) ), Times.Once );
+
+            sourceFileParserMock.VerifyNoOtherCalls();
+            i18nFileMock.VerifyNoOtherCalls();
+            textConsoleMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
         public void Analize_Deprecated()
         {
             // Prepare
@@ -1142,5 +1177,42 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.VerifyNoOtherCalls();
             textConsoleMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public void Deploy_OutputDirectoryNotExisting()
+        {
+            // Prepare
+
+            string inputFilePath = @"C:\Foo.xml";
+            string outputFilePath = Path.GetTempPath() + @"ETYYLEW87832y74nh23hWHSJD\bar.xml";
+
+            var options = new DeployOptions()
+            {
+                InputFile = inputFilePath,
+                OutputFile = outputFilePath,
+            };
+
+            var callSequence = new MockSequence();
+
+            var i18nFileMock = new Mock<II18NFile>();
+
+            var textConsoleMock = new Mock<ITextConsole>();
+            textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>() ) );
+
+            // Execute
+
+            int ret = Program.Deploy( options, i18nFileMock.Object, textConsoleMock.Object );
+
+            // Verify
+
+            Assert.Equal( 1, ret );
+
+            textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "ERROR: Output directory" ) && s.Contains( "does not exist" ) &&
+                                    s.Contains( "ETYYLEW87832y74nh23hWHSJD" ) ) ), Times.Once );
+
+            i18nFileMock.VerifyNoOtherCalls();
+            textConsoleMock.VerifyNoOtherCalls();
+        }
+
     }
 }

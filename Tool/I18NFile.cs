@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -465,6 +466,8 @@ namespace I18N.DotNet.Tool
                     }
                 }
 
+                var languages = new Dictionary<string, int>();
+
                 var valueElements = entryElement.Elements( VALUE_TAG );
 
                 foreach( var valueElement in valueElements )
@@ -478,6 +481,14 @@ namespace I18N.DotNet.Tool
                     else if( language.Length == 0 )
                     {
                         yield return (valueElement, $"'{VALUE_TAG}' element attribute '{LANG_ATTR}' is empty", true);
+                    }
+                    else if( languages.ContainsKey( language ) )
+                    {
+                        yield return (valueElement, $"Translation for language '{language}' has already been defined at line {languages[ language ]}", false);
+                    }
+                    else
+                    {
+                        languages.Add( language, ( (IXmlLineInfo) valueElement ).LineNumber );
                     }
 
                     var value = valueElement.Value;

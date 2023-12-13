@@ -164,12 +164,12 @@ namespace I18N.DotNet.Tool
                     if( issue.isError )
                     {
                         hasErrors = true;
-                        textConsole.WriteLine( $"ERROR: {issue.message} at line {issue.line}", true );
+                        textConsole.WriteLine( $"ERROR: [Line {issue.line}] {issue.message}", true );
                     }
                     else
                     {
                         hasWarnings = true;
-                        textConsole.WriteLine( $"WARNING: {issue.message} at line {issue.line}", true );
+                        textConsole.WriteLine( $"WARNING: [Line {issue.line}] {issue.message}", true );
                     }
                 }
 
@@ -186,11 +186,11 @@ namespace I18N.DotNet.Tool
                     {
                         if( result.key != null )
                         {
-                            textConsole.WriteLine( $"WARNING: Deprecated entry at line {result.line} (Context = {result.context}, Key = '{result.key}')", true );
+                            textConsole.WriteLine( $"WARNING: [Line {result.line}] Deprecated entry (Context = {result.context}, Key = '{result.key}')", true );
                         }
                         else
                         {
-                            textConsole.WriteLine( $"WARNING: Deprecated entry at line {result.line} (Context = {result.context}, No key)", true );
+                            textConsole.WriteLine( $"WARNING: [Line {result.line}] Deprecated entry (Context = {result.context}, No key)", true );
                         }
                     }
                 }
@@ -213,11 +213,11 @@ namespace I18N.DotNet.Tool
                     {
                         if( result.key != null )
                         {
-                            textConsole.WriteLine( $"WARNING: Entry without translation at line {result.line} (Context = {result.context}, Key = '{result.key}')", true );
+                            textConsole.WriteLine( $"WARNING: [Line {result.line}] Entry without translation (Context = {result.context}, Key = '{result.key}')", true );
                         }
                         else
                         {
-                            textConsole.WriteLine( $"WARNING: Entry without translation at line {result.line} (Context = {result.context}, No key)", true );
+                            textConsole.WriteLine( $"WARNING: [Line {result.line}] Entry without translation (Context = {result.context}, No key)", true );
                         }
                     }
                 }

@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace I18N.DotNet
 {
@@ -23,7 +24,17 @@ namespace I18N.DotNet
         {
             get
             {
-                g_localizer ??= new Localizer();
+                if( g_localizer == null )
+                {
+                    g_localizer = new Localizer();
+
+                    var entryAssembly = Assembly.GetEntryAssembly();
+
+                    if( entryAssembly != null )
+                    {
+                        g_localizer.LoadXML( entryAssembly, "Resources.I18N.xml", true, true );
+                    }
+                }
                 return g_localizer;
             }
 

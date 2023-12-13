@@ -702,7 +702,7 @@ namespace I18N.DotNet.Tool.Test
 
             foreach( var result in expectedResults )
             {
-                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) && s.Contains( result.context ) &&
+                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( $"[Line {result.line}]" ) && s.Contains( result.context ) &&
                                         s.Contains( result.key! ) && s.Contains( "WARNING" ) ), true ), Times.Once );
             }
             textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Equals( string.Empty ) ), false ), Times.Once );
@@ -761,7 +761,7 @@ namespace I18N.DotNet.Tool.Test
 
             foreach( var result in expectedResults )
             {
-                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) && s.Contains( result.context ) &&
+                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( $"[Line {result.line}]" ) && s.Contains( result.context ) &&
                                         s.Contains( result.key! ) && s.Contains( "WARNING" ) ), true ), Times.Once );
             }
             textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Equals( string.Empty ) ), false ), Times.Once );
@@ -878,17 +878,17 @@ namespace I18N.DotNet.Tool.Test
 
             foreach( var issue in expectedIssues )
             {
-                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( issue.line.ToString() ) && s.Contains( issue.message ) &&
+                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( $"[Line {issue.line}]" ) && s.Contains( issue.message ) &&
                                         s.Contains( "WARNING" ) ), true ), Times.Once );
             }
             foreach( var result in expectedDeprecatedResults )
             {
-                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) && s.Contains( result.context ) &&
+                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( $"[Line {result.line}]" ) && s.Contains( result.context ) &&
                                         s.Contains( result.key! ) && s.Contains( "WARNING" ) ), true ), Times.Once );
             }
             foreach( var result in expectedNoTranslationResults )
             {
-                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) && s.Contains( result.context ) &&
+                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( $"[Line {result.line}]" ) && s.Contains( result.context ) &&
                                         s.Contains( result.key! ) && s.Contains( "WARNING" ) ), true ), Times.Once );
             }
             textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Equals( string.Empty ) ), false ), Times.Once );
@@ -949,7 +949,7 @@ namespace I18N.DotNet.Tool.Test
 
             foreach( var issue in expectedIssues )
             {
-                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( issue.line.ToString() ) && s.Contains( issue.message ) &&
+                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( $"[Line {issue.line}]" ) && s.Contains( issue.message ) &&
                                         s.Contains( "ERROR" ) ), true ), Times.Once );
             }
             textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Equals( string.Empty ) ), false ), Times.Once );
@@ -1023,12 +1023,12 @@ namespace I18N.DotNet.Tool.Test
 
             foreach( var result in expectedDeprecatedResults )
             {
-                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) && s.Contains( result.context ) &&
+                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( $"[Line {result.line}]" ) && s.Contains( result.context ) &&
                                         s.Contains( result.key! ) && s.Contains( "WARNING" ) ), true ), Times.Once );
             }
             foreach( var result in expectedNoTranslationResults )
             {
-                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) && s.Contains( result.context ) &&
+                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( $"[Line {result.line}]" ) && s.Contains( result.context ) &&
                                         s.Contains( result.key! ) && s.Contains( "WARNING" ) ), true ), Times.Once );
             }
             textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Equals( string.Empty ) ), false ), Times.Once );
@@ -1093,12 +1093,12 @@ namespace I18N.DotNet.Tool.Test
 
             foreach( var result in expectedDeprecatedResults )
             {
-                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) &&
+                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( $"[Line {result.line}]" ) &&
                                         s.Contains( result.context ) && s.Contains( "WARNING" ) ), true ), Times.Once );
             }
             foreach( var result in expectedNoTranslationResults )
             {
-                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( result.line.ToString() ) &&
+                textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( $"[Line {result.line}]" ) &&
                                         s.Contains( result.context ) && s.Contains( "WARNING" ) ), true ), Times.Once );
             }
             textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Equals( string.Empty ) ), false ), Times.Once );

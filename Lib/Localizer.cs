@@ -218,6 +218,15 @@ namespace I18N.DotNet
         /// <exception cref="InvalidOperationException">Thrown when the embedded resource could not be found in the given assembly</exception>
         public void LoadXML( Assembly assembly, string resourceName, bool merge = true )
         {
+            LoadXML( assembly, resourceName, merge, false );
+        }
+
+        //===========================================================================
+        //                            INTERNAL METHODS
+        //===========================================================================
+
+        internal void LoadXML( Assembly assembly, string resourceName, bool merge, bool ignoreIfNotExists )
+        {
             var assemblyName = assembly.GetName().Name;
             string usedResourceName;
 
@@ -234,7 +243,12 @@ namespace I18N.DotNet
 
             if( stream == null )
             {
-                throw new InvalidOperationException( $"Cannot find resource '{usedResourceName}'");
+                if( ignoreIfNotExists )
+                {
+                    return;
+                }
+
+                throw new InvalidOperationException( $"Cannot find resource '{usedResourceName}'" );
             }
 
             LoadXML( stream, merge );

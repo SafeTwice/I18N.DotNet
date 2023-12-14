@@ -467,8 +467,11 @@ namespace I18N.DotNet.Test
             // Prepare
 
             var localizer = new Localizer();
-            var configB = CreateStream( "<I18N><Entry><Key>Simple Key 1</Key><Value lang='es'>XYZ</Value></Entry></I18N>" );
+            var configB = CreateStream( "<I18N><Entry><Key>Simple Key 1</Key><Value lang='es'>XYZ</Value></Entry>" +
+                                        "<Context id='Level1'><Entry><Key>Simple Key 2</Key><Value lang='es'>ABC</Value></Entry></Context></I18N>" );
             localizer.LoadXML( GetI18NConfig(), "es-es" );
+
+            var contextL1 = localizer.Context( "Level1" );
 
             // Execute
 
@@ -478,6 +481,7 @@ namespace I18N.DotNet.Test
 
             Assert.Equal( "XYZ", localizer.Localize( "Simple Key 1" ) );
             Assert.Equal( "Simple Key 2", localizer.Localize( "Simple Key 2" ) );
+            Assert.Equal( "ABC", contextL1.Localize( "Simple Key 2" ) );
         }
 
         [Fact]

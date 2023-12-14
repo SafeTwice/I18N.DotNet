@@ -16,24 +16,8 @@ namespace I18N.DotNet
     /// <summary>
     /// Converter of strings from a language-neutral value to its corresponding language-specific localization.
     /// </summary>
-    public class Localizer : ILocalizer
+    public class Localizer : ILoadableLocalizer
     {
-        //===========================================================================
-        //                          PUBLIC NESTED TYPES
-        //===========================================================================
-
-        /// <summary>
-        /// Exception thrown when a localization file cannot be parsed properly. 
-        /// </summary>
-        public class ParseException : Exception
-        {
-            /// <summary>
-            /// Constructor.
-            /// </summary>
-            /// <param name="message">A message that describes the error.</param>
-            public ParseException( string message ) : base( message ) { }
-        }
-
         //===========================================================================
         //                          PUBLIC CONSTRUCTORS
         //===========================================================================
@@ -129,43 +113,19 @@ namespace I18N.DotNet
             return GetContext( splitContextIds );
         }
 
-        /// <summary>
-        /// Loads a localization configuration from a file in XML format.
-        /// </summary>
-        /// <param name="filepath" > Path to the localization configuration file in XML format</param>
-        /// <param name="language">Name, code or identifier for the target language of translations,
-        ///                        or <c>null</c> to use the current UI language (obtained from <see cref="CultureInfo.CurrentUICulture"/>)</param>
-        /// <param name="merge"> Replaces the current translations with the loaded ones when<c>false</c>,
-        ///                      otherwise merges both (existing translations are overridden with loaded ones).</param>
-        /// <exception cref="ParseException">Thrown when the input file cannot be parsed properly.</exception>
+        /// <inheritdoc/>
         public void LoadXML( string filepath, string? language = null, bool merge = true )
         {
             LoadXML( XDocument.Load( filepath, LoadOptions.SetLineInfo ), language, merge );
         }
 
-        /// <summary>
-        /// Loads a localization configuration from a stream in XML format.
-        /// </summary>
-        /// <param name="stream">Stream with the localization configuration in XML format</param>
-        /// <param name="language">Name, code or identifier for the target language of translations,
-        ///                        or <c>null</c> to use the current UI language (obtained from <see cref="CultureInfo.CurrentUICulture"/>)</param>
-        /// <param name="merge"> Replaces the current translations with the loaded ones when<c>false</c>,
-        ///                      otherwise merges both (existing translations are overridden with loaded ones).</param>
-        /// <exception cref="ParseException">Thrown when the input file cannot be parsed properly.</exception>
+        /// <inheritdoc/>
         public void LoadXML( Stream stream, string? language = null, bool merge = true )
         {
             LoadXML( XDocument.Load( stream, LoadOptions.SetLineInfo ), language, merge );
         }
 
-        /// <summary>
-        /// Loads a localization configuration from a XML document.
-        /// </summary>
-        /// <param name="doc">XML document with the localization configuration</param>
-        /// <param name="language">Name, code or identifier for the target language of translations,
-        ///                        or <c>null</c> to use the current UI language (obtained from <see cref="CultureInfo.CurrentUICulture"/>)</param>
-        /// <param name="merge"> Replaces the current translations with the loaded ones when<c>false</c>,
-        ///                      otherwise merges both (existing translations are overridden with loaded ones).</param>
-        /// <exception cref="ParseException">Thrown when the input file cannot be parsed properly.</exception>
+        /// <inheritdoc/>
         public void LoadXML( XDocument doc, string? language = null, bool merge = true )
         {
             if( !merge )
@@ -174,27 +134,17 @@ namespace I18N.DotNet
                 m_nestedContexts.Clear();
             }
 
-            var rootElement = doc.Root ?? throw new ParseException( $"XML has no root element" );
+            var rootElement = doc.Root ?? throw new ILoadableLocalizer.ParseException( $"XML has no root element" );
 
             if( rootElement.Name != "I18N" )
             {
-                throw new ParseException( $"Line {( (IXmlLineInfo) rootElement ).LineNumber}: Invalid XML root element" );
+                throw new ILoadableLocalizer.ParseException( $"Line {( (IXmlLineInfo) rootElement ).LineNumber}: Invalid XML root element" );
             }
 
             Load( rootElement, new Language( language ?? CultureInfo.CurrentUICulture.Name ) );
         }
 
-        /// <summary>
-        /// Loads a localization configuration from an XML text embedded as a resource in the given assembly.
-        /// </summary>
-        /// <param name="assembly">Assembly that contains the embedded XML text</param>
-        /// <param name="resourceName">Name of the embedded resource for the XML text</param>
-        /// <param name="language">Name, code or identifier for the target language of translations,
-        ///                        or <c>null</c> to use the current UI language (obtained from <see cref="CultureInfo.CurrentUICulture"/>)</param>
-        /// <param name="merge"> Replaces the current translations with the loaded ones when<c>false</c>,
-        ///                      otherwise merges both (existing translations are overridden with loaded ones).</param>
-        /// <exception cref="ParseException">Thrown when the input file cannot be parsed properly.</exception>
-        /// <exception cref="InvalidOperationException">Thrown when the embedded resource could not be found in the given assembly</exception>
+        /// <inheritdoc/>
         public void LoadXML( Assembly assembly, string resourceName, string? language = null, bool merge = true )
         {
             LoadXML( assembly, resourceName, language, merge, false );
@@ -289,7 +239,7 @@ namespace I18N.DotNet
                         break;
 
                     default:
-                        throw new ParseException( $"Line {( (IXmlLineInfo) childElement ).LineNumber}: Invalid XML element" );
+                        throw new ILoadableLocalizer.ParseException( $"Line {( (IXmlLineInfo) childElement ).LineNumber}: Invalid XML element" );
                 }
             }
         }
@@ -307,7 +257,7 @@ namespace I18N.DotNet
                     case "Key":
                         if( key != null )
                         {
-                            throw new ParseException( $"Line {( (IXmlLineInfo) childElement ).LineNumber}: Too many child '{childElement.Name}' XML elements" );
+                            throw new ILoadableLocalizer.ParseException( $"Line {( (IXmlLineInfo) childElement ).LineNumber}: Too many child '{childElement.Name}' XML elements" );
                         }
                         key = UnescapeEscapeCodes( childElement.Value );
                         break;
@@ -319,7 +269,7 @@ namespace I18N.DotNet
                         {
                             if( valueFull != null )
                             {
-                                throw new ParseException( $"Line {( (IXmlLineInfo) childElement ).LineNumber}: Too many child '{childElement.Name}' XML elements with the same 'lang' attribute" );
+                                throw new ILoadableLocalizer.ParseException( $"Line {( (IXmlLineInfo) childElement ).LineNumber}: Too many child '{childElement.Name}' XML elements with the same 'lang' attribute" );
                             }
                             valueFull = loadedValue;
                         }
@@ -327,20 +277,20 @@ namespace I18N.DotNet
                         {
                             if( valuePrimary != null )
                             {
-                                throw new ParseException( $"Line {( (IXmlLineInfo) childElement ).LineNumber}: Too many child '{childElement.Name}' XML elements with the same 'lang' attribute" );
+                                throw new ILoadableLocalizer.ParseException( $"Line {( (IXmlLineInfo) childElement ).LineNumber}: Too many child '{childElement.Name}' XML elements with the same 'lang' attribute" );
                             }
                             valuePrimary = loadedValue;
                         }
                         break;
 
                     default:
-                        throw new ParseException( $"Line {( (IXmlLineInfo) childElement ).LineNumber}: Invalid XML element" );
+                        throw new ILoadableLocalizer.ParseException( $"Line {( (IXmlLineInfo) childElement ).LineNumber}: Invalid XML element" );
                 }
             }
 
             if( key == null )
             {
-                throw new ParseException( $"Line {( (IXmlLineInfo) element ).LineNumber}: Missing child 'Key' XML element" );
+                throw new ILoadableLocalizer.ParseException( $"Line {( (IXmlLineInfo) element ).LineNumber}: Missing child 'Key' XML element" );
             }
 
             var value = ( valueFull ?? valuePrimary );
@@ -351,12 +301,12 @@ namespace I18N.DotNet
             }
         }
 
-        private EValueType LoadValue( XElement element, Language language, out string? value )
+        private static EValueType LoadValue( XElement element, Language language, out string? value )
         {
             string? lang = element.Attribute( "lang" )?.Value.ToLower();
             if( lang == null )
             {
-                throw new ParseException( $"Line {( (IXmlLineInfo) element ).LineNumber}: Missing attribute 'lang' in '{element.Name}' XML element" );
+                throw new ILoadableLocalizer.ParseException( $"Line {( (IXmlLineInfo) element ).LineNumber}: Missing attribute 'lang' in '{element.Name}' XML element" );
             }
 
             if( lang == language.Full )
@@ -409,7 +359,7 @@ namespace I18N.DotNet
             string? contextId = element.Attribute( "id" )?.Value;
             if( contextId == null )
             {
-                throw new ParseException( $"Line {( (IXmlLineInfo) element ).LineNumber}: Missing attribute 'id' in '{element.Name}' XML element" );
+                throw new ILoadableLocalizer.ParseException( $"Line {( (IXmlLineInfo) element ).LineNumber}: Missing attribute 'id' in '{element.Name}' XML element" );
             }
 
             GetContext( contextId ).Load( element, language );
@@ -431,8 +381,7 @@ namespace I18N.DotNet
             {
                 string leftContextId = splitContextIds.Current.Trim();
 
-                Localizer? localizer;
-                if( !m_nestedContexts.TryGetValue( leftContextId, out localizer ) )
+                if( !m_nestedContexts.TryGetValue( leftContextId, out var localizer ) )
                 {
                     localizer = new Localizer( this );
                     m_nestedContexts.Add( leftContextId, localizer );

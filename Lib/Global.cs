@@ -32,15 +32,10 @@ namespace I18N.DotNet
 
                     if( entryAssembly != null )
                     {
-                        g_localizer.LoadXML( entryAssembly, "Resources.I18N.xml", true, true );
+                        g_localizer.LoadXML( entryAssembly, "Resources.I18N.xml", null, true, true );
                     }
                 }
                 return g_localizer;
-            }
-
-            set
-            {
-                g_localizer = value;
             }
         }
 

@@ -6,20 +6,20 @@ using Xunit;
 
 namespace I18N.DotNet.Test
 {
-    public class GlobalTest
+    public class GlobalLocalizerTest
     {
         [Fact]
         public void Localizer()
         {
             // Verify
 
-            Assert.NotNull( Global.Localizer );
+            Assert.NotNull( GlobalLocalizer.Localizer );
         }
 
         [Fact]
         public void Localize_String()
         {
-            Assert.Equal( "Test", Global.Localize( "Test" ) );
+            Assert.Equal( "Test", GlobalLocalizer.Localize( "Test" ) );
         }
 
         [Fact]
@@ -27,7 +27,7 @@ namespace I18N.DotNet.Test
         {
             int i = 1234;
 
-            Assert.Equal( "Test 1234", Global.Localize( $"Test {i}" ) );
+            Assert.Equal( "Test 1234", GlobalLocalizer.Localize( $"Test {i}" ) );
         }
 
         [Fact]
@@ -35,19 +35,19 @@ namespace I18N.DotNet.Test
         {
             int i = 1234;
 
-            Assert.Equal( "Test 1234", Global.LocalizeFormat( "Test {0}", i ) );
+            Assert.Equal( "Test 1234", GlobalLocalizer.LocalizeFormat( "Test {0}", i ) );
         }
 
         [Fact]
         public void Localize_Multiple()
         {
-            Assert.Equal( new string[] { "ABC", "123" }, Global.Localize( new string[] { "ABC", "123" } ) );
+            Assert.Equal( new string[] { "ABC", "123" }, GlobalLocalizer.Localize( new string[] { "ABC", "123" } ) );
         }
 
         [Fact]
         public void Context()
         {
-            Assert.NotNull( Global.Context( "Context 1" ) );
+            Assert.NotNull( GlobalLocalizer.Context( "Context 1" ) );
         }
     }
 }

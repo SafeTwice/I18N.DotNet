@@ -4,14 +4,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 
 namespace I18N.DotNet
 {
     /// <summary>
     /// Utility class for convenient access to localization functions.
     /// </summary>
-    public static class Global
+    public static class GlobalLocalizer
     {
         //===========================================================================
         //                           PUBLIC PROPERTIES
@@ -20,24 +19,7 @@ namespace I18N.DotNet
         /// <value>
         /// Global localizer.
         /// </value>
-        public static Localizer Localizer
-        {
-            get
-            {
-                if( g_localizer == null )
-                {
-                    g_localizer = new Localizer();
-
-                    var entryAssembly = Assembly.GetEntryAssembly();
-
-                    if( entryAssembly != null )
-                    {
-                        g_localizer.LoadXML( entryAssembly, "Resources.I18N.xml", null, true, true );
-                    }
-                }
-                return g_localizer;
-            }
-        }
+        public static ILoadableLocalizer Localizer { get; } = new AutoLoadLocalizer();
 
         //===========================================================================
         //                            PUBLIC METHODS
@@ -100,11 +82,5 @@ namespace I18N.DotNet
         {
             return Localizer.Context( contextId );
         }
-
-        //===========================================================================
-        //                           PRIVATE ATTRIBUTES
-        //===========================================================================
-
-        private static Localizer? g_localizer;
     }
 }

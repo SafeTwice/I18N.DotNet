@@ -130,8 +130,7 @@ namespace I18N.DotNet
         {
             if( !merge )
             {
-                m_localizations.Clear();
-                m_nestedContexts.Clear();
+                Clear();
             }
 
             var rootElement = doc.Root ?? throw new ILoadableLocalizer.ParseException( $"XML has no root element" );
@@ -392,6 +391,16 @@ namespace I18N.DotNet
             else
             {
                 return this;
+            }
+        }
+
+        private void Clear()
+        {
+            m_localizations.Clear();
+
+            foreach( var context in m_nestedContexts.Values )
+            {
+                context.Clear();
             }
         }
 

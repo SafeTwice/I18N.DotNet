@@ -975,8 +975,8 @@ namespace I18N.DotNet.Tool.Test
                 ExcludeContexts = new string[] { "Context 4/*" },
             };
 
-            var includeContext = new Regex[] { new( @"^/?Context 1/?$" ), new( @"^/?/Context 2//?$" ), new( @"FooRegex" ) };
-            var excludeContext = new Regex[] { new( @"^/?Context 4/.*/?$" ) };
+            var includeContext = new Regex[] { new( @"^/?Context\ 1/?$" ), new( @"^/?/Context\ 2//?$" ), new( @"FooRegex" ) };
+            var excludeContext = new Regex[] { new( @"^/?Context\ 4/.*/?$" ) };
 
             var expectedIssues = Array.Empty<(int line, string message, bool isError)>();
 
@@ -997,8 +997,8 @@ namespace I18N.DotNet.Tool.Test
             var i18nFileMock = new Mock<II18NFile>();
             i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( inputFilePath ) );
             i18nFileMock.InSequence( callSequence ).Setup( f => f.GetFileIssues() ).Returns( expectedIssues );
-            i18nFileMock.InSequence( callSequence ).Setup( f => f.GetDeprecatedEntries( It.IsAny<Regex[]>(), It.IsAny<Regex[]>() ) ).Returns( expectedDeprecatedResults );
-            i18nFileMock.InSequence( callSequence ).Setup( f => f.GetNoTranslationEntries( expectedLanguages, It.IsAny<Regex[]>(), It.IsAny<Regex[]>() ) ).Returns( expectedNoTranslationResults );
+            i18nFileMock.InSequence( callSequence ).Setup( f => f.GetDeprecatedEntries( It.IsAny<IEnumerable<Regex>>(), It.IsAny<IEnumerable<Regex>>() ) ).Returns( expectedDeprecatedResults );
+            i18nFileMock.InSequence( callSequence ).Setup( f => f.GetNoTranslationEntries( expectedLanguages, It.IsAny<IEnumerable<Regex>>(), It.IsAny<IEnumerable<Regex>>() ) ).Returns( expectedNoTranslationResults );
 
             var textConsoleMock = new Mock<ITextConsole>();
             textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), It.IsAny<bool>() ) );
@@ -1013,12 +1013,12 @@ namespace I18N.DotNet.Tool.Test
 
             i18nFileMock.Verify( o => o.LoadFromFile( inputFilePath ), Times.Once );
             i18nFileMock.Verify( f => f.GetFileIssues(), Times.Once );
-            i18nFileMock.Verify( f => f.GetDeprecatedEntries( It.Is<Regex[]>( a => a.ToString() == includeContext.ToString() ),
-                                                              It.Is<Regex[]>( a => a.ToString() == excludeContext.ToString() ) ),
+            i18nFileMock.Verify( f => f.GetDeprecatedEntries( It.Is<IEnumerable<Regex>>( a => Compare( a, includeContext ) ),
+                                                              It.Is<IEnumerable<Regex>>( a => Compare( a, excludeContext ) ) ),
                                  Times.Once );
             i18nFileMock.Verify( f => f.GetNoTranslationEntries( expectedLanguages, 
-                                                                 It.Is<Regex[]>( a => a.ToString() == includeContext.ToString() ),
-                                                                 It.Is<Regex[]>( a => a.ToString() == excludeContext.ToString() ) ),
+                                                                 It.Is<IEnumerable<Regex>>( a => Compare( a, includeContext ) ),
+                                                                 It.Is<IEnumerable<Regex>>( a => Compare( a, excludeContext ) ) ),
                                  Times.Once );
 
             foreach( var result in expectedDeprecatedResults )
@@ -1036,6 +1036,14 @@ namespace I18N.DotNet.Tool.Test
 
             i18nFileMock.VerifyNoOtherCalls();
             textConsoleMock.VerifyNoOtherCalls();
+        }
+
+        private static bool Compare( IEnumerable<Regex> a, IEnumerable<Regex> b )
+        {
+            var aStr = a.Select( x => x.ToString() );
+            var bStr = b.Select( x => x.ToString() );
+
+            return aStr.SequenceEqual( bStr );
         }
 
         [Fact]

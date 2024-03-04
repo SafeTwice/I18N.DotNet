@@ -75,8 +75,12 @@ namespace I18N.DotNet.Tool
 
     class Program
     {
+        //===========================================================================
+        //                            PUBLIC METHODS
+        //===========================================================================
+
         [ExcludeFromCodeCoverage]
-        static void Main( string[] args )
+        public static void Main( string[] args )
         {
             var parserResult = Parser.Default.ParseArguments<ParseSourcesOptions, AnalyzeOptions, DeployOptions>( args );
 
@@ -84,9 +88,13 @@ namespace I18N.DotNet.Tool
                 ( ParseSourcesOptions opts ) => ParseSources( opts, new I18NFile(), new SourceFileParser(), new TextConsole() ),
                 ( AnalyzeOptions opts ) => Analyze( opts, new I18NFile(), new TextConsole() ),
                 ( DeployOptions opts ) => Deploy( opts, new I18NFile(), new TextConsole() ),
-                errs => 1
+                errs => EXIT_CODE_ERROR
                 );
         }
+
+        //===========================================================================
+        //                            INTERNAL METHODS
+        //===========================================================================
 
         internal static int ParseSources( ParseSourcesOptions options, II18NFile outputFile, ISourceFileParser sourceFileParser, ITextConsole textConsole )
         {
@@ -121,7 +129,7 @@ namespace I18N.DotNet.Tool
 
                 textConsole.WriteLine( $"I18N development file generated successfully" );
 
-                return 0;
+                return EXIT_CODE_SUCCESS;
             }
             catch( ApplicationException e )
             {
@@ -132,7 +140,7 @@ namespace I18N.DotNet.Tool
                 textConsole.WriteLine( $"UNEXPECTED ERROR: {e}", true );
             }
 
-            return 1;
+            return EXIT_CODE_ERROR;
         }
 
         internal static int Analyze( AnalyzeOptions options, II18NFile inputFile, ITextConsole textConsole )
@@ -141,8 +149,8 @@ namespace I18N.DotNet.Tool
             {
                 inputFile.LoadFromFile( options.InputFile );
 
-                var includeContexts = options.IncludeContexts.Select( s => ContextSpecToRegex( s ) ).ToArray();
-                var excludeContexts = options.ExcludeContexts.Select( s => ContextSpecToRegex( s ) ).ToArray();
+                var includeContexts = options.IncludeContexts.Select( s => ContextSpecToRegex( s ) );
+                var excludeContexts = options.ExcludeContexts.Select( s => ContextSpecToRegex( s ) );
 
                 var languagesToCheck = options.CheckTranslationForLanguages.ToArray();
                 bool checkLanguages = ( languagesToCheck.Length > 0 );
@@ -177,7 +185,7 @@ namespace I18N.DotNet.Tool
                 {
                     var results = inputFile.GetDeprecatedEntries( includeContexts, excludeContexts );
 
-                    if( results.Count() > 0 )
+                    if( results.Any() )
                     {
                         hasWarnings = true;
                     }
@@ -204,7 +212,7 @@ namespace I18N.DotNet.Tool
 
                     var results = inputFile.GetNoTranslationEntries( languagesToCheck, includeContexts, excludeContexts );
 
-                    if( results.Count() > 0 )
+                    if( results.Any() )
                     {
                         hasWarnings = true;
                     }
@@ -229,7 +237,7 @@ namespace I18N.DotNet.Tool
 
                 textConsole.WriteLine( $"I18N file analysis finished" );
 
-                return hasErrors ? 1 : ( hasWarnings ? 2 : 0 );
+                return hasErrors ? EXIT_CODE_ERROR : ( hasWarnings ? EXIT_CODE_WARNING : EXIT_CODE_SUCCESS );
             }
             catch( ApplicationException e )
             {
@@ -240,7 +248,7 @@ namespace I18N.DotNet.Tool
                 textConsole.WriteLine( $"UNEXPECTED ERROR: {e}", true );
             }
 
-            return 1;
+            return EXIT_CODE_ERROR;
         }
 
         internal static int Deploy( DeployOptions options, II18NFile outputFile, ITextConsole textConsole )
@@ -257,7 +265,7 @@ namespace I18N.DotNet.Tool
 
                 textConsole.WriteLine( $"I18N deployment file generated successfully" );
 
-                return 0;
+                return EXIT_CODE_SUCCESS;
             }
             catch( ApplicationException e )
             {
@@ -268,8 +276,12 @@ namespace I18N.DotNet.Tool
                 textConsole.WriteLine( $"UNEXPECTED ERROR: {e}", true );
             }
 
-            return 1;
+            return EXIT_CODE_ERROR;
         }
+
+        //===========================================================================
+        //                            PRIVATE METHODS
+        //===========================================================================
 
         private static void ParseSourcesInDirectory( ISourceFileParser sourceFileParser, DirectoryInfo dirInfo, string pattern, bool recursive, IEnumerable<string> extraFunctions, Context rootContext )
         {
@@ -316,6 +328,15 @@ namespace I18N.DotNet.Tool
             }
         }
 
+        //===========================================================================
+        //                           PRIVATE CONSTANTS
+        //===========================================================================
+
         private static readonly Regex WILDCARD_REGEX = new( @"(?<!\\)\\\*" );
+
+        private const int EXIT_CODE_SUCCESS = 0;
+        private const int EXIT_CODE_ERROR = 1;
+        private const int EXIT_CODE_WARNING = 2;
+
     }
 }

@@ -81,7 +81,7 @@ namespace I18N.DotNet.Tool
             Doc.WriteTo( xw );
         }
 
-        public IEnumerable<(int line, string context, string? key)> GetDeprecatedEntries( Regex[] includeContexts, Regex[] excludeContexts )
+        public IEnumerable<(int line, string context, string? key)> GetDeprecatedEntries( IEnumerable<Regex> includeContexts, IEnumerable<Regex> excludeContexts )
         {
             foreach( var element in GetDeprecatedEntries( Root ) )
             {
@@ -95,7 +95,7 @@ namespace I18N.DotNet.Tool
             }
         }
 
-        public IEnumerable<(int line, string context, string? key)> GetNoTranslationEntries( string[] languages, Regex[] includeContexts, Regex[] excludeContexts )
+        public IEnumerable<(int line, string context, string? key)> GetNoTranslationEntries( string[] languages, IEnumerable<Regex> includeContexts, IEnumerable<Regex> excludeContexts )
         {
             foreach( var element in GetNoTranslationEntries( Root, languages ) )
             {
@@ -138,9 +138,9 @@ namespace I18N.DotNet.Tool
         //                            PRIVATE METHODS
         //===========================================================================
 
-        private static bool MatchesContexts( string context, Regex[] includeContexts, Regex[] excludeContexts )
+        private static bool MatchesContexts( string context, IEnumerable<Regex> includeContexts, IEnumerable<Regex> excludeContexts )
         {
-            bool includeMatch = ( includeContexts.Length == 0 );
+            bool includeMatch = !includeContexts.Any();
 
             foreach( var includeContext in includeContexts )
             {
@@ -447,11 +447,13 @@ namespace I18N.DotNet.Tool
             {
                 var keyElements = entryElement.Elements( KEY_TAG );
 
-                if( keyElements.Count() == 0 )
+                var keyElementsCount = keyElements.Count();
+
+                if( keyElementsCount == 0 )
                 {
                     yield return (entryElement, $"'{ENTRY_TAG}' element does not have a '{KEY_TAG}' element", true);
                 }
-                else if( keyElements.Count() > 1 )
+                else if( keyElementsCount > 1 )
                 {
                     yield return (entryElement, $"'{ENTRY_TAG}' element has more than one '{KEY_TAG}' element", true);
                 }

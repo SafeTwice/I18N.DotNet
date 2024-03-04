@@ -9,7 +9,6 @@ The I18N.DotNet Tool utility can be used to generate, update, analyze and deploy
 
 The easiest way to install I18N.DotNet Tool is using the NuGet package: https://www.nuget.org/packages/I18N.DotNet.Tool/
 
-
 ## Usage
 
 When installed from the [NuGet package](https://www.nuget.org/packages/I18N.DotNet.Tool/):
@@ -22,13 +21,24 @@ When executed from the tool compiled using Visual Studio:
 I18N.DotNet.Tool.exe <command> [COMMAND-OPTIONS...]
 ```
 
-This tool accepts two different commands:
+This tool accepts three different commands:
 
 | Command                       | Description                                                      |
 | -                             | -                                                                |
 | [parse](#parse-command)       | Parses source files and generates or updates a translations file |
 | [analyze](#analyze-command)   | Analyzes a translations file                                     |
 | [deploy](#deploy-command)     | Generates a translations file suitable for deployment            |
+
+### Workflow
+
+The typical workflow to manage translation files after source code updates (i.e., when new internationalized strings are added to source code) follows these steps:
+
+1. Use the [parse](#parse-command) command to analyze source files and create/update an intermediate translations file used for working on translations (the "development" I18N file).
+2. Use the [analyze](#analyze-command) command to analyze the "development" I18N file to search for issues, deprecated entries and missing translations.
+3. If needed, update the "development" I18N file solving issues, removing or updating deprecated entries, and adding translations for new entries; then return to step 2 to check for non-resolved issues.
+4. Use the [deploy](#deploy-command) commmmand to generate the "deployment" I18N file that will be embedded or distributed with the application or library.
+
+## Commands
 
 ### Parse Command
 

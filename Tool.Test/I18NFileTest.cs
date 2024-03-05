@@ -54,7 +54,7 @@ namespace I18N.DotNet.Tool.Test
                 "  </Entry>\n" +
                 "  <Context id=\"Context 1\">\n" +
                 "    <!-- Non-Erasable Comment -->\n" +
-                "    <Entry>\n" +
+                "    <Entry omit=\"es,it\">\n" +
                 "      <!-- Found in: Match 3 @ 33 -->\n" +
                 "      <!-- Found in: Match 3 @ 1 -->\n" +
                 "      <Key>Key 3</Key>\n" +
@@ -257,7 +257,7 @@ namespace I18N.DotNet.Tool.Test
                 "  </Entry>\n" +
                 "  <Context id=\"Context 1\">\n" +
                 "    <!-- Non-Erasable Comment -->\n" +
-                "    <Entry>\n" +
+                "    <Entry omit=\"es,it\">\n" +
                 "      <!-- Found in: Match 3 @ 33 -->\n" +
                 "      <!-- Found in: Match 3 @ 1 -->\n" +
                 "      <!-- Found in: Match 3 @ 2 -->\n" +
@@ -335,7 +335,7 @@ namespace I18N.DotNet.Tool.Test
                 "  </Entry>\n" +
                 "  <Context id=\"Context 1\">\n" +
                 "    <!-- Non-Erasable Comment -->\n" +
-                "    <Entry>\n" +
+                "    <Entry omit=\"es,it\">\n" +
                 "      <!-- Found in: Match 3 @ 1 -->\n" +
                 "      <!-- Found in: Match 3 @ 2 -->\n" +
                 "      <Key>Key 3</Key>\n" +
@@ -413,7 +413,7 @@ namespace I18N.DotNet.Tool.Test
                 "  </Entry>\n" +
                 "  <Context id=\"Context 1\">\n" +
                 "    <!-- Non-Erasable Comment -->\n" +
-                "    <Entry>\n" +
+                "    <Entry omit=\"es,it\">\n" +
                 "      <!-- Found in: Match 3 @ 1 -->\n" +
                 "      <!-- Found in: Match 3 @ 2 -->\n" +
                 "      <Key>Key 3</Key>\n" +
@@ -519,7 +519,7 @@ namespace I18N.DotNet.Tool.Test
                 "    <!-- Found in: Match 1 @ 11 -->\n" +
                 "    <Key>Key 1</Key>\n" +
                 "  </Entry>\n" +
-                "  <Entry>\n" +
+                "  <Entry omit=\"*\">\n" +
                 "    <Key>Key 2</Key>\n" +
                 "    <!-- Non-Erasable Comment -->\n" +
                 "  </Entry>\n" +
@@ -585,7 +585,7 @@ namespace I18N.DotNet.Tool.Test
                 "    <!-- Found in: Match 1 @ 2 -->\n" +
                 "    <Key>Key 1</Key>\n" +
                 "  </Entry>\n" +
-                "  <Entry>\n" +
+                "  <Entry omit=\"*\">\n" +
                 "    <Key>Key 2</Key>\n" +
                 "    <!-- Non-Erasable Comment -->\n" +
                 "  </Entry>\n" +
@@ -808,7 +808,6 @@ namespace I18N.DotNet.Tool.Test
             var expectedResults = new (int line, string context, string? key)[]
             {
                 ( 34, "/", "Key 6" ),
-                ( 17, "/Context 1/", "Key 3" ),
                 ( 22, "/Context 1/", "Key 5" ),
             };
 
@@ -886,7 +885,6 @@ namespace I18N.DotNet.Tool.Test
             var expectedResults = new (int line, string context, string? key)[]
             {
                 ( 2, "/", "Key 1" ),
-                ( 7, "/", "Key 2" ),
                 ( 26, "/", null ),
                 ( 13, "/Context 1/", "Key 3" ),
                 ( 20, "/Context 1/Context 11/", "Key 9" ),
@@ -914,7 +912,6 @@ namespace I18N.DotNet.Tool.Test
             var expectedResults = new (int line, string context, string? key)[]
             {
                 ( 2, "/", "Key 1" ),
-                ( 7, "/", "Key 2" ),
                 ( 26, "/", null ),
                 ( 28, "/", "" ),
                 ( 13, "/Context 1/", "Key 3" ),
@@ -955,7 +952,7 @@ namespace I18N.DotNet.Tool.Test
                 "    <Value lang=\"fr\">Clef 2</Value>\n" +
                 "  </Entry>\n" +
                 "  <Context id=\"Context 1\">\n" +
-                "    <Entry>\n" +
+                "    <Entry omit=\"es,it\">\n" +
                 "      <Key>Key 3</Key>\n" +
                 "    </Entry>\n" +
                 "    <Entry>\n" +

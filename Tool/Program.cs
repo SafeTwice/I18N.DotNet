@@ -152,8 +152,8 @@ namespace I18N.DotNet.Tool
                 var includeContexts = options.IncludeContexts.Select( s => ContextSpecToRegex( s ) );
                 var excludeContexts = options.ExcludeContexts.Select( s => ContextSpecToRegex( s ) );
 
-                var languagesToCheck = options.CheckTranslationForLanguages.ToArray();
-                bool checkLanguages = ( languagesToCheck.Length > 0 );
+                var languagesToCheck = options.CheckTranslationForLanguages;
+                bool checkLanguages = languagesToCheck.Any();
 
                 if( !options.CheckDeprecated && !checkLanguages )
                 {

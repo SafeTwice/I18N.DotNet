@@ -259,7 +259,7 @@ namespace I18N.DotNet.Tool
 
                 outputFile.LoadFromFile( options.InputFile );
 
-                outputFile.DeleteAllComments();
+                outputFile.PrepareForDeployment();
 
                 outputFile.WriteToFile( options.OutputFile );
 

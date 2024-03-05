@@ -59,12 +59,14 @@ namespace I18N.DotNet.Tool.Test
                 "      <!-- Found in: Match 3 @ 1 -->\n" +
                 "      <Key>Key 3</Key>\n" +
                 "    </Entry>\n" +
-                "    <Entry>\n" +
-                "      <!-- DEPRECATED -->\n" +
-                "      <Key>Key 5</Key>\n" +
-                "    </Entry>\n" +
-                "    <Context id=\"Context 11\">\n" +
+                "    <Context id=\"Context 10\">\n" +
                 "      <Entry>\n" +
+                "        <!-- DEPRECATED -->\n" +
+                "        <Key>Key 5</Key>\n" +
+                "      </Entry>\n" +
+                "    </Context>\n" +
+                "    <Context id=\"Context 11\">\n" +
+                "      <Entry omit=\"ca\">\n" +
                 "        <!-- Found in: Match 9 @ 99 -->\n" +
                 "        <Key>Key 9</Key>\n" +
                 "        <Value lang='es'>Clave 9</Value>\n" +
@@ -263,12 +265,14 @@ namespace I18N.DotNet.Tool.Test
                 "      <!-- Found in: Match 3 @ 2 -->\n" +
                 "      <Key>Key 3</Key>\n" +
                 "    </Entry>\n" +
-                "    <Entry>\n" +
-                "      <!-- DEPRECATED -->\n" +
-                "      <Key>Key 5</Key>\n" +
-                "    </Entry>\n" +
-                "    <Context id=\"Context 11\">\n" +
+                "    <Context id=\"Context 10\">\n" +
                 "      <Entry>\n" +
+                "        <!-- DEPRECATED -->\n" +
+                "        <Key>Key 5</Key>\n" +
+                "      </Entry>\n" +
+                "    </Context>\n" +
+                "    <Context id=\"Context 11\">\n" +
+                "      <Entry omit=\"ca\">\n" +
                 "        <!-- Found in: Match 9 @ 99 -->\n" +
                 "        <Key>Key 9</Key>\n" +
                 "        <Value lang=\"es\">Clave 9</Value>\n" +
@@ -340,12 +344,14 @@ namespace I18N.DotNet.Tool.Test
                 "      <!-- Found in: Match 3 @ 2 -->\n" +
                 "      <Key>Key 3</Key>\n" +
                 "    </Entry>\n" +
-                "    <Entry>\n" +
-                "      <!-- DEPRECATED -->\n" +
-                "      <Key>Key 5</Key>\n" +
-                "    </Entry>\n" +
-                "    <Context id=\"Context 11\">\n" +
+                "    <Context id=\"Context 10\">\n" +
                 "      <Entry>\n" +
+                "        <!-- DEPRECATED -->\n" +
+                "        <Key>Key 5</Key>\n" +
+                "      </Entry>\n" +
+                "    </Context>\n" +
+                "    <Context id=\"Context 11\">\n" +
+                "      <Entry omit=\"ca\">\n" +
                 "        <Key>Key 9</Key>\n" +
                 "        <Value lang=\"es\">Clave 9</Value>\n" +
                 "      </Entry>\n" +
@@ -418,12 +424,14 @@ namespace I18N.DotNet.Tool.Test
                 "      <!-- Found in: Match 3 @ 2 -->\n" +
                 "      <Key>Key 3</Key>\n" +
                 "    </Entry>\n" +
-                "    <Entry>\n" +
-                "      <!-- DEPRECATED -->\n" +
-                "      <Key>Key 5</Key>\n" +
-                "    </Entry>\n" +
-                "    <Context id=\"Context 11\">\n" +
+                "    <Context id=\"Context 10\">\n" +
                 "      <Entry>\n" +
+                "        <!-- DEPRECATED -->\n" +
+                "        <Key>Key 5</Key>\n" +
+                "      </Entry>\n" +
+                "    </Context>\n" +
+                "    <Context id=\"Context 11\">\n" +
+                "      <Entry omit=\"ca\">\n" +
                 "        <!-- DEPRECATED -->\n" +
                 "        <Key>Key 9</Key>\n" +
                 "        <Value lang=\"es\">Clave 9</Value>\n" +
@@ -710,8 +718,8 @@ namespace I18N.DotNet.Tool.Test
             var expectedResults = new (int line, string context, string? key)[]
             {
                 ( 9, "/", "Key 2" ),
-                ( 34, "/", "Key 6" ),
-                ( 22, "/Context 1/", "Key 5" ),
+                ( 36, "/", "Key 6" ),
+                ( 23, "/Context 1/Context 10/", "Key 5" ),
             };
 
             Assert.Equal( expectedResults, actualResults );
@@ -734,7 +742,7 @@ namespace I18N.DotNet.Tool.Test
 
             var expectedResults = new (int line, string context, string? key)[]
             {
-                ( 22, "/Context 1/", "Key 5" ),
+                ( 23, "/Context 1/Context 10/", "Key 5" ),
             };
 
             Assert.Equal( expectedResults, actualResults );
@@ -758,7 +766,7 @@ namespace I18N.DotNet.Tool.Test
             var expectedResults = new (int line, string context, string? key)[]
             {
                 ( 9, "/", "Key 2" ),
-                ( 34, "/", "Key 6" ),
+                ( 36, "/", "Key 6" ),
             };
 
             Assert.Equal( expectedResults, actualResults );
@@ -807,8 +815,8 @@ namespace I18N.DotNet.Tool.Test
 
             var expectedResults = new (int line, string context, string? key)[]
             {
-                ( 34, "/", "Key 6" ),
-                ( 22, "/Context 1/", "Key 5" ),
+                ( 36, "/", "Key 6" ),
+                ( 23, "/Context 1/Context 10/", "Key 5" ),
             };
 
             Assert.Equal( expectedResults, actualResults );
@@ -831,10 +839,10 @@ namespace I18N.DotNet.Tool.Test
 
             var expectedResults = new (int line, string context, string? key)[]
             {
-                ( 34, "/", "Key 6" ),
+                ( 36, "/", "Key 6" ),
                 ( 17, "/Context 1/", "Key 3" ),
-                ( 22, "/Context 1/", "Key 5" ),
-                ( 27, "/Context 1/Context 11/", "Key 9" ),
+                ( 23, "/Context 1/Context 10/", "Key 5" ),
+                ( 29, "/Context 1/Context 11/", "Key 9" ),
             };
 
             Assert.Equal( expectedResults, actualResults );
@@ -858,10 +866,10 @@ namespace I18N.DotNet.Tool.Test
             var expectedResults = new (int line, string context, string? key)[]
             {
                 ( 2, "/", "Key 1" ),
-                ( 34, "/", "Key 6" ),
+                ( 36, "/", "Key 6" ),
                 ( 17, "/Context 1/", "Key 3" ),
-                ( 22, "/Context 1/", "Key 5" ),
-                ( 27, "/Context 1/Context 11/", "Key 9" ),
+                ( 23, "/Context 1/Context 10/", "Key 5" ),
+                ( 29, "/Context 1/Context 11/", "Key 9" ),
             };
 
             Assert.Equal( expectedResults, actualResults );
@@ -933,7 +941,7 @@ namespace I18N.DotNet.Tool.Test
 
             var i18nFile = new I18NFile();
             i18nFile.LoadFromFile( m_tempFile );
-            i18nFile.DeleteAllComments();
+            i18nFile.PrepareForDeployment();
             i18nFile.WriteToFile( m_tempFile );
 
             // Verify
@@ -952,12 +960,6 @@ namespace I18N.DotNet.Tool.Test
                 "    <Value lang=\"fr\">Clef 2</Value>\n" +
                 "  </Entry>\n" +
                 "  <Context id=\"Context 1\">\n" +
-                "    <Entry omit=\"es,it\">\n" +
-                "      <Key>Key 3</Key>\n" +
-                "    </Entry>\n" +
-                "    <Entry>\n" +
-                "      <Key>Key 5</Key>\n" +
-                "    </Entry>\n" +
                 "    <Context id=\"Context 11\">\n" +
                 "      <Entry>\n" +
                 "        <Key>Key 9</Key>\n" +
@@ -965,9 +967,6 @@ namespace I18N.DotNet.Tool.Test
                 "      </Entry>\n" +
                 "    </Context>\n" +
                 "  </Context>\n" +
-                "  <Entry>\n" +
-                "    <Key>Key 6</Key>\n" +
-                "  </Entry>\n" +
                 "</I18N>";
 
             string actualContents = ReadTempFile();

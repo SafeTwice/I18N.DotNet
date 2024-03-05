@@ -57,9 +57,9 @@ namespace I18N.DotNet.Tool
             DeleteFoundingComments( Root );
         }
 
-        public void DeleteAllComments()
+        public void PrepareForDeployment()
         {
-            DeleteAllComments( Doc );
+            PrepareForDeployment( Doc );
         }
 
         public void CreateEntries( Context rootContext, bool reportLines )
@@ -215,6 +215,22 @@ namespace I18N.DotNet.Tool
             }
         }
 
+        private static void PrepareForDeployment( XContainer container )
+        {
+            DeleteAllComments( container );
+            DeleteEmptyEntries( container );
+
+            foreach( var childNode in container.Nodes() )
+            {
+                if( childNode is XContainer childContainer )
+                {
+                    PrepareForDeployment( childContainer );
+                }
+            }
+
+            DeleteEmptyContexts( container );
+        }
+
         private static void DeleteAllComments( XContainer container )
         {
             var commentsToRemove = new List<XComment>();
@@ -228,14 +244,52 @@ namespace I18N.DotNet.Tool
             }
 
             commentsToRemove.ForEach( xc => xc.Remove() );
+        }
+
+        private static void DeleteEmptyEntries( XContainer container )
+        {
+            var elementsToRemove = new List<XElement>();
 
             foreach( var childNode in container.Nodes() )
             {
-                if( childNode is XContainer childContainer )
+                if( childNode is XElement element )
                 {
-                    DeleteAllComments( childContainer );
+                    if( element.Name == ENTRY_TAG )
+                    {
+                        if( !element.Elements( VALUE_TAG ).Any() )
+                        {
+                            elementsToRemove.Add( element );
+                        }
+                        else
+                        {
+                            element.Attribute( OMIT_ATTR )?.Remove();
+                        }
+                    }
                 }
             }
+
+            elementsToRemove.ForEach( xc => xc.Remove() );
+        }
+
+        private static void DeleteEmptyContexts( XContainer container )
+        {
+            var elementsToRemove = new List<XElement>();
+
+            foreach( var childNode in container.Nodes() )
+            {
+                if( childNode is XElement element )
+                {
+                    if( element.Name == CONTEXT_TAG )
+                    {
+                        if( !element.Elements().Any() )
+                        {
+                            elementsToRemove.Add( element );
+                        }
+                    }
+                }
+            }
+
+            elementsToRemove.ForEach( xc => xc.Remove() );
         }
 
         private static void DeleteDeprecatedComments( XElement element )

@@ -1206,7 +1206,7 @@ namespace I18N.DotNet.Tool.Test
 
             var i18nFileMock = new Mock<II18NFile>();
             i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( options.InputFile ) );
-            i18nFileMock.InSequence( callSequence ).Setup( f => f.DeleteAllComments() );
+            i18nFileMock.InSequence( callSequence ).Setup( f => f.PrepareForDeployment() );
             i18nFileMock.InSequence( callSequence ).Setup( f => f.WriteToFile( options.OutputFile ) );
 
             var textConsoleMock = new Mock<ITextConsole>();
@@ -1221,7 +1221,7 @@ namespace I18N.DotNet.Tool.Test
             Assert.Equal( 0, ret );
 
             i18nFileMock.Verify( f => f.LoadFromFile( options.InputFile ), Times.Once );
-            i18nFileMock.Verify( f => f.DeleteAllComments(), Times.Once );
+            i18nFileMock.Verify( f => f.PrepareForDeployment(), Times.Once );
             i18nFileMock.Verify( f => f.WriteToFile( options.OutputFile ), Times.Once );
 
             textConsoleMock.Verify( c => c.WriteLine( It.Is<string>( s => s.Contains( "success" ) ), false ), Times.Once );

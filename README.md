@@ -18,7 +18,7 @@ The easiest way to install I18N.DotNet is using the NuGet package: https://www.n
 To use the I18N.DotNet library, three steps must be followed:
 
 1. Modify the source code to internationalize strings that must be translated (see [Adapting Source Code (I18N)](#adapting-source-code-%28i18n%29)).
-2. Write translations for internationalized strings (see [Writing Translations (L10N)](#writing-translations-%28l10n%29))).
+2. Write translations for internationalized strings (see [Writing Translations (L10N)](#writing-translations-%28l10n%29)).
 3. Embed the translations file in the executable (see [Embedding the Translations File](#embedding-the-translations-file)).
 
 ### Adapting Source Code (I18N)

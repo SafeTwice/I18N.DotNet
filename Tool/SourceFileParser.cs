@@ -165,39 +165,27 @@ namespace I18N.DotNet.Tool
             return Regex.Replace( text, @"([\n\r\f\t\v\b\\])", m =>
             {
                 var payload = m.Groups[ 1 ].Value;
-                string result = payload;
-                switch( payload )
+                if( ESCAPE_CODES.TryGetValue( payload, out var result ) )
                 {
-                    case "\n":
-                        result = "\\n";
-                        break;
-
-                    case "\r":
-                        result = "\\r";
-                        break;
-
-                    case "\f":
-                        result = "\\f";
-                        break;
-
-                    case "\t":
-                        result = "\\t";
-                        break;
-
-                    case "\v":
-                        result = "\\v";
-                        break;
-
-                    case "\b":
-                        result = "\\b";
-                        break;
-
-                    case "\\":
-                        result = "\\\\";
-                        break;
+                    return result;
                 }
-                return result;
+                return payload;
             } );
         }
+
+        //===========================================================================
+        //                           PRIVATE CONSTANTS
+        //===========================================================================
+
+        private static readonly Dictionary<string, string> ESCAPE_CODES = new Dictionary<string, string>
+        {
+            { "\n", "\\n" },
+            { "\r", "\\r" },
+            { "\f", "\\f" },
+            { "\t", "\\t" },
+            { "\v", "\\v" },
+            { "\b", "\\b" },
+            { "\\", "\\\\" }
+        };
     }
 }

@@ -330,25 +330,14 @@ namespace I18N.DotNet
             return Regex.Replace( text, @"\\([nrftvb\\]|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})", m =>
             {
                 var payload = m.Groups[ 1 ].Value;
-                switch( payload )
+                if( ESCAPE_CODES.TryGetValue( payload, out var escapeCode ) )
                 {
-                    case "n":
-                        return "\n";
-                    case "r":
-                        return "\r";
-                    case "f":
-                        return "\f";
-                    case "t":
-                        return "\t";
-                    case "v":
-                        return "\v";
-                    case "b":
-                        return "\b";
-                    case "\\":
-                        return "\\";
-                    default:
-                        int charNum = Convert.ToInt32( payload.Substring( 1 ), 16 );
-                        return Convert.ToChar( charNum ).ToString();
+                    return escapeCode;
+                }
+                else
+                {
+                    int charNum = Convert.ToInt32( payload.Substring( 1 ), 16 );
+                    return Convert.ToChar( charNum ).ToString();
                 }
             } );
         }
@@ -403,6 +392,21 @@ namespace I18N.DotNet
                 context.Clear();
             }
         }
+
+        //===========================================================================
+        //                           PRIVATE CONSTANTS
+        //===========================================================================
+
+        private static readonly Dictionary<string, string> ESCAPE_CODES = new Dictionary<string, string>
+        {
+            { "n", "\n" },
+            { "r", "\r" },
+            { "f", "\f" },
+            { "t", "\t" },
+            { "v", "\v" },
+            { "b", "\b" },
+            { "\\", "\\" }
+        };
 
         //===========================================================================
         //                           PRIVATE ATTRIBUTES

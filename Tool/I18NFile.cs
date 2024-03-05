@@ -461,8 +461,12 @@ namespace I18N.DotNet.Tool
 
                 if( !requiredLanguages.Any() )
                 {
-                    if( ( omittedLanguagesValue.Length == 0 ) &&
-                        !entryElement.Elements( VALUE_TAG ).Any( value => ( value.Attribute( LANG_ATTR )?.Value?.Length ?? 0 ) > 0 ) )
+                    if( omittedLanguagesValue.Length > 0 )
+                    {
+                        continue;
+                    }
+
+                    if( !entryElement.Elements( VALUE_TAG ).Any( value => ( value.Attribute( LANG_ATTR )?.Value?.Length ?? 0 ) > 0 ) )
                     {
                         yield return entryElement;
                     }

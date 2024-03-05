@@ -54,10 +54,10 @@ namespace I18N.DotNet.Tool.Test
                 "  </Entry>\n" +
                 "  <Context id=\"Context 1\">\n" +
                 "    <!-- Non-Erasable Comment -->\n" +
-                "    <Entry omit=\"es,it\">\n" +
+                "    <Entry>\n" +
                 "      <!-- Found in: Match 3 @ 33 -->\n" +
                 "      <!-- Found in: Match 3 @ 1 -->\n" +
-                "      <Key>Key 3</Key>\n" +
+                "      <Key lang=\"es,it\">Key 3</Key>\n" +
                 "    </Entry>\n" +
                 "    <Context id=\"Context 10\">\n" +
                 "      <Entry>\n" +
@@ -66,9 +66,9 @@ namespace I18N.DotNet.Tool.Test
                 "      </Entry>\n" +
                 "    </Context>\n" +
                 "    <Context id=\"Context 11\">\n" +
-                "      <Entry omit=\"ca\">\n" +
+                "      <Entry>\n" +
                 "        <!-- Found in: Match 9 @ 99 -->\n" +
-                "        <Key>Key 9</Key>\n" +
+                "        <Key lang=\"ca\">Key 9</Key>\n" +
                 "        <Value lang='es'>Clave 9</Value>\n" +
                 "      </Entry>\n" +
                 "    </Context>\n" +
@@ -259,11 +259,11 @@ namespace I18N.DotNet.Tool.Test
                 "  </Entry>\n" +
                 "  <Context id=\"Context 1\">\n" +
                 "    <!-- Non-Erasable Comment -->\n" +
-                "    <Entry omit=\"es,it\">\n" +
+                "    <Entry>\n" +
                 "      <!-- Found in: Match 3 @ 33 -->\n" +
                 "      <!-- Found in: Match 3 @ 1 -->\n" +
                 "      <!-- Found in: Match 3 @ 2 -->\n" +
-                "      <Key>Key 3</Key>\n" +
+                "      <Key lang=\"es,it\">Key 3</Key>\n" +
                 "    </Entry>\n" +
                 "    <Context id=\"Context 10\">\n" +
                 "      <Entry>\n" +
@@ -272,9 +272,9 @@ namespace I18N.DotNet.Tool.Test
                 "      </Entry>\n" +
                 "    </Context>\n" +
                 "    <Context id=\"Context 11\">\n" +
-                "      <Entry omit=\"ca\">\n" +
+                "      <Entry>\n" +
                 "        <!-- Found in: Match 9 @ 99 -->\n" +
-                "        <Key>Key 9</Key>\n" +
+                "        <Key lang=\"ca\">Key 9</Key>\n" +
                 "        <Value lang=\"es\">Clave 9</Value>\n" +
                 "      </Entry>\n" +
                 "    </Context>\n" +
@@ -339,10 +339,10 @@ namespace I18N.DotNet.Tool.Test
                 "  </Entry>\n" +
                 "  <Context id=\"Context 1\">\n" +
                 "    <!-- Non-Erasable Comment -->\n" +
-                "    <Entry omit=\"es,it\">\n" +
+                "    <Entry>\n" +
                 "      <!-- Found in: Match 3 @ 1 -->\n" +
                 "      <!-- Found in: Match 3 @ 2 -->\n" +
-                "      <Key>Key 3</Key>\n" +
+                "      <Key lang=\"es,it\">Key 3</Key>\n" +
                 "    </Entry>\n" +
                 "    <Context id=\"Context 10\">\n" +
                 "      <Entry>\n" +
@@ -351,8 +351,8 @@ namespace I18N.DotNet.Tool.Test
                 "      </Entry>\n" +
                 "    </Context>\n" +
                 "    <Context id=\"Context 11\">\n" +
-                "      <Entry omit=\"ca\">\n" +
-                "        <Key>Key 9</Key>\n" +
+                "      <Entry>\n" +
+                "        <Key lang=\"ca\">Key 9</Key>\n" +
                 "        <Value lang=\"es\">Clave 9</Value>\n" +
                 "      </Entry>\n" +
                 "    </Context>\n" +
@@ -419,10 +419,10 @@ namespace I18N.DotNet.Tool.Test
                 "  </Entry>\n" +
                 "  <Context id=\"Context 1\">\n" +
                 "    <!-- Non-Erasable Comment -->\n" +
-                "    <Entry omit=\"es,it\">\n" +
+                "    <Entry>\n" +
                 "      <!-- Found in: Match 3 @ 1 -->\n" +
                 "      <!-- Found in: Match 3 @ 2 -->\n" +
-                "      <Key>Key 3</Key>\n" +
+                "      <Key lang=\"es,it\">Key 3</Key>\n" +
                 "    </Entry>\n" +
                 "    <Context id=\"Context 10\">\n" +
                 "      <Entry>\n" +
@@ -431,9 +431,9 @@ namespace I18N.DotNet.Tool.Test
                 "      </Entry>\n" +
                 "    </Context>\n" +
                 "    <Context id=\"Context 11\">\n" +
-                "      <Entry omit=\"ca\">\n" +
+                "      <Entry>\n" +
                 "        <!-- DEPRECATED -->\n" +
-                "        <Key>Key 9</Key>\n" +
+                "        <Key lang=\"ca\">Key 9</Key>\n" +
                 "        <Value lang=\"es\">Clave 9</Value>\n" +
                 "      </Entry>\n" +
                 "    </Context>\n" +
@@ -527,8 +527,8 @@ namespace I18N.DotNet.Tool.Test
                 "    <!-- Found in: Match 1 @ 11 -->\n" +
                 "    <Key>Key 1</Key>\n" +
                 "  </Entry>\n" +
-                "  <Entry omit=\"*\">\n" +
-                "    <Key>Key 2</Key>\n" +
+                "  <Entry>\n" +
+                "    <Key lang=\"*\">Key 2</Key>\n" +
                 "    <!-- Non-Erasable Comment -->\n" +
                 "  </Entry>\n" +
                 "  <Context id=\"Context 1\">\n" +
@@ -593,8 +593,8 @@ namespace I18N.DotNet.Tool.Test
                 "    <!-- Found in: Match 1 @ 2 -->\n" +
                 "    <Key>Key 1</Key>\n" +
                 "  </Entry>\n" +
-                "  <Entry omit=\"*\">\n" +
-                "    <Key>Key 2</Key>\n" +
+                "  <Entry>\n" +
+                "    <Key lang=\"*\">Key 2</Key>\n" +
                 "    <!-- Non-Erasable Comment -->\n" +
                 "  </Entry>\n" +
                 "  <Context id=\"Context 1\">\n" +

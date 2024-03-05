@@ -262,7 +262,7 @@ namespace I18N.DotNet.Tool
                         }
                         else
                         {
-                            element.Attribute( OMIT_ATTR )?.Remove();
+                            element.Element( KEY_TAG )?.Attribute( LANG_ATTR )?.Remove();
                         }
                     }
                 }
@@ -452,7 +452,9 @@ namespace I18N.DotNet.Tool
         {
             foreach( var entryElement in element.Elements( ENTRY_TAG ) )
             {
-                var omittedLanguagesValue = entryElement.Attribute( OMIT_ATTR )?.Value.Trim() ?? string.Empty;
+                var keyElement = entryElement.Element( KEY_TAG );
+
+                var omittedLanguagesValue = keyElement?.Attribute( LANG_ATTR )?.Value.Trim() ?? string.Empty;
 
                 if( omittedLanguagesValue == "*" )
                 {
@@ -625,7 +627,6 @@ namespace I18N.DotNet.Tool
         private const string CONTEXT_TAG = "Context";
         private const string CONTEXT_ID_ATTR = "id";
         private const string LANG_ATTR = "lang";
-        private const string OMIT_ATTR = "omit";
 
         private const string DEPRECATED_COMMENT = " DEPRECATED ";
 

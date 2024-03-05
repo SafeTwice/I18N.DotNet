@@ -17,13 +17,17 @@ The easiest way to install I18N.DotNet is using the NuGet package: https://www.n
 
 To use the I18N.DotNet library, three steps must be followed:
 
-1. Modify the source code to internationalize strings that must be translated (see [Adapting Source Code (I18N)](#adapting-source-code-%28i18n%29)).
+1. Write/modify the source code to internationalize strings that must be translated (see [Writing/Adapting Source Code (I18N)](#writing/adapting-source-code-%28i18n%29)).
 2. Write translations for internationalized strings (see [Writing Translations (L10N)](#writing-translations-%28l10n%29)).
 3. Embed the translations file in the executable (see [Embedding the Translations File](#embedding-the-translations-file)).
 
-### Adapting Source Code (I18N)
+### Writing/Adapting Source Code (I18N)
 
-Source code must be adapted wrapping the strings to be translated with a call to `I18N.DotNet.Global.Localize()`.
+When writing internationalized source code, the strings to be translated must be wrapped with a call to `I18N.DotNet.Global.Localize()`.
+
+The easier and most convenient approach for writing internationalized software is to choose a language that will be used as the base language throughout the software development (e.g., English), and then write the software just as any non-internationalized source code, except that strings to be translated must be wrapped with calls to `Localize()`. This way the base language will act as the default language when translations are not available for the current target language.
+
+Adapting exising non-internationalized source code is as easy as wrapping the existing strings to be translated with calls to `Localize()`.
 
 ###### Example (C#)
 ``` CS

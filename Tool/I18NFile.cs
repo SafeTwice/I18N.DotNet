@@ -95,9 +95,9 @@ namespace I18N.DotNet.Tool
             }
         }
 
-        public IEnumerable<(int line, string context, string? key)> GetNoTranslationEntries( string[] languages, IEnumerable<Regex> includeContexts, IEnumerable<Regex> excludeContexts )
+        public IEnumerable<(int line, string context, string? key)> GetNoTranslationEntries( IEnumerable<string> requiredLanguages, IEnumerable<Regex> includeContexts, IEnumerable<Regex> excludeContexts )
         {
-            foreach( var element in GetNoTranslationEntries( Root, languages ) )
+            foreach( var element in GetNoTranslationEntries( Root, requiredLanguages ) )
             {
                 var line = ( (IXmlLineInfo) element ).LineNumber;
                 var key = element.Element( KEY_TAG )?.Value;
@@ -394,30 +394,44 @@ namespace I18N.DotNet.Tool
             }
         }
 
-        private static IEnumerable<XElement> GetNoTranslationEntries( XElement element, string[] languages )
+        private static IEnumerable<XElement> GetNoTranslationEntries( XElement element, IEnumerable<string> requiredLanguages )
         {
             foreach( var entryElement in element.Elements( ENTRY_TAG ) )
             {
-                if( languages.Length == 0 )
+                var omittedLanguagesValue = entryElement.Attribute( OMIT_ATTR )?.Value.Trim() ?? string.Empty;
+
+                if( omittedLanguagesValue == "*" )
                 {
-                    if( !entryElement.Elements( VALUE_TAG ).Any( value => ( value.Attribute( LANG_ATTR )?.Value?.Length ?? 0 ) > 0 ) )
+                    continue;
+                }
+
+                if( !requiredLanguages.Any() )
+                {
+                    if( ( omittedLanguagesValue.Length == 0 ) &&
+                        !entryElement.Elements( VALUE_TAG ).Any( value => ( value.Attribute( LANG_ATTR )?.Value?.Length ?? 0 ) > 0 ) )
                     {
                         yield return entryElement;
                     }
                 }
                 else
                 {
-                    int found = 0;
+                    var omittedLanguages = omittedLanguagesValue.Split( ',' ).Select( v => v.Trim() );
 
-                    foreach( var valueElement in entryElement.Elements( VALUE_TAG ) )
+                    var expectedLanguages = requiredLanguages.Except( omittedLanguages ).ToList();
+
+                    if( expectedLanguages.Any() )
                     {
-                        var valueLanguage = valueElement.Attribute( LANG_ATTR )?.Value;
-                        if( valueLanguage != null )
+                        foreach( var valueElement in entryElement.Elements( VALUE_TAG ) )
                         {
-                            if( languages.Any( l => ( l == valueLanguage ) ) )
+                            var valueLanguage = valueElement.Attribute( LANG_ATTR )?.Value;
+                            if( valueLanguage != null )
                             {
-                                found++;
-                                if( found >= languages.Length )
+                                if( expectedLanguages.Contains( valueLanguage ) )
+                                {
+                                    expectedLanguages.Remove( valueLanguage );
+                                }
+
+                                if( !expectedLanguages.Any() )
                                 {
                                     break;
                                 }
@@ -425,7 +439,7 @@ namespace I18N.DotNet.Tool
                         }
                     }
 
-                    if( found < languages.Length )
+                    if( expectedLanguages.Any() )
                     {
                         yield return entryElement;
                     }
@@ -434,7 +448,7 @@ namespace I18N.DotNet.Tool
 
             foreach( var contextElement in element.Elements( CONTEXT_TAG ) )
             {
-                foreach( var childEntry in GetNoTranslationEntries( contextElement, languages ) )
+                foreach( var childEntry in GetNoTranslationEntries( contextElement, requiredLanguages ) )
                 {
                     yield return childEntry;
                 }
@@ -553,6 +567,7 @@ namespace I18N.DotNet.Tool
         private const string CONTEXT_TAG = "Context";
         private const string CONTEXT_ID_ATTR = "id";
         private const string LANG_ATTR = "lang";
+        private const string OMIT_ATTR = "omit";
 
         private const string DEPRECATED_COMMENT = " DEPRECATED ";
 

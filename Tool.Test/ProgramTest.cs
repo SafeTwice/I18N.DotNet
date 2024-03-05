@@ -735,14 +735,14 @@ namespace I18N.DotNet.Tool.Test
                 ( 99, "Context1", "Key1" ),
                 ( 888, "Context2", "Key2" ),
             };
-            var expectedLanguages = options.CheckTranslationForLanguages.ToArray();
+            var requiredLanguages = options.CheckTranslationForLanguages;
 
             var callSequence = new MockSequence();
 
             var i18nFileMock = new Mock<II18NFile>();
             i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( inputFilePath ) );
             i18nFileMock.InSequence( callSequence ).Setup( f => f.GetFileIssues() ).Returns( expectedIssues );
-            i18nFileMock.InSequence( callSequence ).Setup( f => f.GetNoTranslationEntries( expectedLanguages, includeContext, excludeContext ) ).Returns( expectedResults );
+            i18nFileMock.InSequence( callSequence ).Setup( f => f.GetNoTranslationEntries( requiredLanguages, includeContext, excludeContext ) ).Returns( expectedResults );
 
             var textConsoleMock = new Mock<ITextConsole>();
             textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), It.IsAny<bool>() ) );
@@ -757,7 +757,7 @@ namespace I18N.DotNet.Tool.Test
 
             i18nFileMock.Verify( o => o.LoadFromFile( inputFilePath ), Times.Once );
             i18nFileMock.Verify( f => f.GetFileIssues(), Times.Once );
-            i18nFileMock.Verify( f => f.GetNoTranslationEntries( expectedLanguages, includeContext, excludeContext ), Times.Once );
+            i18nFileMock.Verify( f => f.GetNoTranslationEntries( requiredLanguages, includeContext, excludeContext ), Times.Once );
 
             foreach( var result in expectedResults )
             {
@@ -990,7 +990,7 @@ namespace I18N.DotNet.Tool.Test
                 ( 9999, "Context 22", "Key 345" ),
                 ( 123445, "Fooo Bar", "Key 3456" ),
             };
-            var expectedLanguages = options.CheckTranslationForLanguages.ToArray();
+            var requiredLanguages = options.CheckTranslationForLanguages;
 
             var callSequence = new MockSequence();
 
@@ -998,7 +998,7 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.InSequence( callSequence ).Setup( f => f.LoadFromFile( inputFilePath ) );
             i18nFileMock.InSequence( callSequence ).Setup( f => f.GetFileIssues() ).Returns( expectedIssues );
             i18nFileMock.InSequence( callSequence ).Setup( f => f.GetDeprecatedEntries( It.IsAny<IEnumerable<Regex>>(), It.IsAny<IEnumerable<Regex>>() ) ).Returns( expectedDeprecatedResults );
-            i18nFileMock.InSequence( callSequence ).Setup( f => f.GetNoTranslationEntries( expectedLanguages, It.IsAny<IEnumerable<Regex>>(), It.IsAny<IEnumerable<Regex>>() ) ).Returns( expectedNoTranslationResults );
+            i18nFileMock.InSequence( callSequence ).Setup( f => f.GetNoTranslationEntries( requiredLanguages, It.IsAny<IEnumerable<Regex>>(), It.IsAny<IEnumerable<Regex>>() ) ).Returns( expectedNoTranslationResults );
 
             var textConsoleMock = new Mock<ITextConsole>();
             textConsoleMock.InSequence( callSequence ).Setup( c => c.WriteLine( It.IsAny<string>(), It.IsAny<bool>() ) );
@@ -1016,7 +1016,7 @@ namespace I18N.DotNet.Tool.Test
             i18nFileMock.Verify( f => f.GetDeprecatedEntries( It.Is<IEnumerable<Regex>>( a => Compare( a, includeContext ) ),
                                                               It.Is<IEnumerable<Regex>>( a => Compare( a, excludeContext ) ) ),
                                  Times.Once );
-            i18nFileMock.Verify( f => f.GetNoTranslationEntries( expectedLanguages, 
+            i18nFileMock.Verify( f => f.GetNoTranslationEntries( requiredLanguages, 
                                                                  It.Is<IEnumerable<Regex>>( a => Compare( a, includeContext ) ),
                                                                  It.Is<IEnumerable<Regex>>( a => Compare( a, excludeContext ) ) ),
                                  Times.Once );

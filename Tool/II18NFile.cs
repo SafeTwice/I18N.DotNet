@@ -23,7 +23,7 @@ namespace I18N.DotNet.Tool
         // Analysis
 
         IEnumerable<(int line, string context, string? key)> GetDeprecatedEntries( IEnumerable<Regex> includeContexts, IEnumerable<Regex> excludeContexts );
-        IEnumerable<(int line, string context, string? key)> GetNoTranslationEntries( string[] languages, IEnumerable<Regex> includeContexts, IEnumerable<Regex> excludeContexts );
+        IEnumerable<(int line, string context, string? key)> GetNoTranslationEntries( IEnumerable<string> requiredLanguages, IEnumerable<Regex> includeContexts, IEnumerable<Regex> excludeContexts );
         IEnumerable<(int line, string message, bool isError)> GetFileIssues();
     }
 }

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['global_0',['Global',['../classI18N_1_1DotNet_1_1Global.html',1,'I18N::DotNet']]]
+  ['context_0',['Context',['../classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#ae49c2e04c4044ffb978c74f29acec614',1,'I18N.DotNet.AutoLoadLocalizer.Context(string contextId)'],['../classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a5fca3a722db044bd6c40299650ba3c8b',1,'I18N.DotNet.AutoLoadLocalizer.Context(IEnumerable&lt; string &gt; splitContextIds)'],['../classI18N_1_1DotNet_1_1GlobalLocalizer.html#a602d429b7fc2ab63881ba828316b5b4c',1,'I18N.DotNet.GlobalLocalizer.Context()'],['../interfaceI18N_1_1DotNet_1_1ILocalizer.html#ae49c2e04c4044ffb978c74f29acec614',1,'I18N.DotNet.ILocalizer.Context(string contextId)'],['../interfaceI18N_1_1DotNet_1_1ILocalizer.html#a5fca3a722db044bd6c40299650ba3c8b',1,'I18N.DotNet.ILocalizer.Context(IEnumerable&lt; string &gt; splitContextIds)'],['../classI18N_1_1DotNet_1_1Localizer.html#ace0bd7bf8f21ba58e498f7a7c00993ba',1,'I18N.DotNet.Localizer.Context(string contextId)'],['../classI18N_1_1DotNet_1_1Localizer.html#a4ad4e6b48e9382ce97336e77ed3e72a0',1,'I18N.DotNet.Localizer.Context(IEnumerable&lt; string &gt; splitContextIds)']]]
 ];

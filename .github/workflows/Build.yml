@@ -36,9 +36,9 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
       - name: Restore dependencies
         run: dotnet restore
       - name: Patch source documentation
@@ -54,7 +54,7 @@ jobs:
       - name: Pack
         run: dotnet pack --no-build --verbosity normal -c Release -o ${{ env.NUGET_DIR }}
       - name: Upload NuGets
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: nuget
           if-no-files-found: error
@@ -72,11 +72,11 @@ jobs:
     needs: [ build ]
     steps:
       - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
       - name: Install Meziantou NuGet validator
         run: dotnet tool update Meziantou.Framework.NuGetPackageValidation.Tool --global
       - name: Download NuGets
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: nuget
           path: ${{ env.NUGET_DIR }}
@@ -88,19 +88,19 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
       - name: Restore dependencies
         run: dotnet restore
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
+        uses: github/codeql-action/init@v3
         with:
           languages: csharp
       - name: Build
         run: dotnet build --no-restore -c Release
       - name: CodeQL analysis
-        uses: github/codeql-action/analyze@v2
+        uses: github/codeql-action/analyze@v3
         with:
           category: "/language:csharp"
 
@@ -110,9 +110,9 @@ jobs:
     needs: [ validate-nuget, analyze ]
     steps:
       - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
       - name: Download NuGets
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: nuget
           path: ${{ env.NUGET_DIR }}
@@ -127,7 +127,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Chekout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Patch source documentation
         run: |
           awk -i inplace 'BEGIN {p=0}; NR<3 {print}; /^## About/ {p=1}; /^## Full API Documentation/ {p=0}; p==1 {print}' README.md
@@ -154,7 +154,7 @@ jobs:
       - name: Copy PDF documentation
         run: sudo cp Lib/latex/refman.pdf Lib/html/${{ env.PROJECT_NAME }}.pdf
       - name: Upload documentation
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: docs
           if-no-files-found: error
@@ -167,7 +167,7 @@ jobs:
     needs: [ generate-docs ]
     steps:
       - name: Download documentation
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: docs
           path: ${{ env.DOCS_DIR }}
@@ -184,7 +184,7 @@ jobs:
     needs: [ publish-docs ]
     steps:
       - name: Chekout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: gh-pages
       - name: Redirect stable to new release

@@ -5,7 +5,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>dotnet-i18n-tool</ToolCommandName>
-    <Version>1.1.1</Version>
+    <Version>1.2</Version>
     <DebugType>embedded</DebugType>
     <NoWarn>CS1587</NoWarn>
     <EnablePackageValidation>true</EnablePackageValidation>

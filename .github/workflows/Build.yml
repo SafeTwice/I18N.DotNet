@@ -65,7 +65,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           format: lcov
-          files: Lib.Test/Coverage/coverage.net8.0.info Tool.Test/Coverage/coverage.info
+          files: Lib.Test/Coverage/coverage.net8.0.info
 
   validate-nuget:
     runs-on: windows-latest

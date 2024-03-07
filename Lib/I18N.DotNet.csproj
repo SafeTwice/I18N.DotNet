@@ -1,45 +1,49 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>net472;net48;net6.0;net7.0;net8.0</TargetFrameworks>
-    <Version>1.2</Version>
-    <DebugType>embedded</DebugType>
-    <NoWarn>NETSDK1138;CS1587</NoWarn>
-    <EnablePackageValidation>true</EnablePackageValidation>
-    <Title>$(AssemblyName)</Title>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Authors>SafeTwice S.L.</Authors>
-    <PackageProjectUrl>https://github.com/SafeTwice/I18N.DotNet</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/SafeTwice/I18N.DotNet.git</RepositoryUrl>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl> 
-    <PackageTags>i18n;translation;internationalization;localization;l10n</PackageTags>
-    <Company>www.safetwice.com</Company>
-    <Description>Internationalization library for .NET</Description>
-    <Copyright>Copyright © 2022-2023 SafeTwice S.L.</Copyright>
-    <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <LangVersion>10</LangVersion>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFrameworks>net472;net48;net6.0;net7.0;net8.0</TargetFrameworks>
+        <Version>1.2</Version>
+        <DebugType>embedded</DebugType>
+        <NoWarn>NETSDK1138;CS1587</NoWarn>
+        <EnablePackageValidation>true</EnablePackageValidation>
+        <Title>$(AssemblyName)</Title>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <Authors>SafeTwice S.L.</Authors>
+        <PackageProjectUrl>https://github.com/SafeTwice/I18N.DotNet</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/SafeTwice/I18N.DotNet.git</RepositoryUrl>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <PackageTags>i18n;translation;internationalization;localization;l10n</PackageTags>
+        <Company>www.safetwice.com</Company>
+        <Description>Internationalization library for .NET</Description>
+        <Copyright>Copyright © 2022-2024 SafeTwice S.L.</Copyright>
+        <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <LangVersion>10</LangVersion>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <None Include="..\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
+    <PropertyGroup Condition="'$(GITHUB_EVENT_NAME)'=='release'">
+        <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.1.1">
-      <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-      </PackageReference>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
+    <ItemGroup>
+        <None Include="..\README.md">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.1.1">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
 
     <ItemGroup>
         <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">

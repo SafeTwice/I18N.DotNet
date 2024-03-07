@@ -7,7 +7,7 @@
 
 I18N.DotNet is a .NET library written in C# to enable simple internationalization (I18N) / localization (L10N) (i.e. translation to different languages) of .NET applications and libraries.
 
-The companion utility [I18N.DotNet Tool](https://github.com/SafeTwice/I18N.DotNet/tree/main/Tool) is provided to ease management of translation files.
+The companion utility [I18N.DotNet Tool](https://github.com/SafeTwice/I18N.DotNet-Tool) is provided to ease management of translation files.
 
 ## Installation
 
@@ -56,8 +56,6 @@ For each string than has been internationalized an `Entry` element under the roo
 - A single `Key` child element which value is the internationalized string defined in the code (replacing for interpolated strings the interpolated expressions with their positional index).
 - `Value`child elements with their attribute `lang` set to the target language of the translation and which value is the translated string.
 
-The companion utility [I18N.DotNet Tool](Tool/) can be used to ease the creation of the translations file by scanning source files and automatically generating entries for discovered internationalized strings.
-
 ###### Example
 ``` XML
 <?xml version="1.0" encoding="utf-8"?>
@@ -75,11 +73,13 @@ The companion utility [I18N.DotNet Tool](Tool/) can be used to ease the creation
 </I18N>
 ```
 
+> **NOTE**: The companion utility [I18N.DotNet Tool](https://github.com/SafeTwice/I18N.DotNet-Tool) can be used to ease the creation of the translations file by scanning source files and automatically generating entries for discovered internationalized strings.
+
 ### Embedding the Translations File
 
 A very convenient way of distributing the translations for an application is to embedded the translations file in the executable assembly as an embedded resource identified by _Resources.I18N.xml_.
 
-Using Visual Studio, the easiest way to achieve this is to name the translations file _"I18N.xml"_ and store it in a directory named  _"Resources"_ inside the VS project directory, and then configure the file in the VS project as an embedded resource (i.e., set its Build Action to "Embedded resource" in the IDE, or add `<EmbeddedResource Include="Resources\I18N.xml" />` to an `ItemGroup` in the project file).
+Using Visual Studio, the easiest way to achieve this is to name the translations file _"I18N.xml"_ and deploy it in a directory named  _"Resources"_ inside the VS project directory, and then configure the file in the VS project as an embedded resource (i.e., set its Build Action to "Embedded resource" in the IDE, or add `<EmbeddedResource Include="Resources\I18N.xml" />` to an `ItemGroup` in the project file).
 
 ###### Example (.csproj)
 ``` XML
@@ -90,6 +90,8 @@ Using Visual Studio, the easiest way to achieve this is to name the translations
   </ItemGroup>
 </Project>
 ```
+
+> **NOTE**: The companion utility [I18N.DotNet Tool](https://github.com/SafeTwice/I18N.DotNet-Tool) can be used to generate translations files optimized for deployment from the separate translations files used during development and during the translation process.
 
 
 ## Advanced Usage

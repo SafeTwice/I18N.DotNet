@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@473626</span>
+   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@f9af90</span>
    </div>
   </td>
  </tr>
@@ -76,7 +76,7 @@ $(function() {
 <h1><a class="anchor" id="autotoc_md1"></a>
 About</h1>
 <p ><a class="el" href="namespaceI18N_1_1DotNet.html">I18N.DotNet</a> is a .NET library written in C# to enable simple internationalization (<a class="el" href="namespaceI18N.html">I18N</a>) / localization (L10N) (i.e. translation to different languages) of .NET applications and libraries.</p>
-<p >The companion utility <a href="https://github.com/SafeTwice/I18N.DotNet/tree/main/Tool">I18N.DotNet Tool</a> is provided to ease management of translation files.</p>
+<p >The companion utility <a href="https://github.com/SafeTwice/I18N.DotNet-Tool">I18N.DotNet Tool</a> is provided to ease management of translation files.</p>
 <h1><a class="anchor" id="autotoc_md2"></a>
 Installation</h1>
 <p >The easiest way to install <a class="el" href="namespaceI18N_1_1DotNet.html">I18N.DotNet</a> is using the NuGet package: <a href="https://www.nuget.org/packages/I18N.DotNet/">https://www.nuget.org/packages/I18N.DotNet/</a></p>
@@ -116,7 +116,6 @@ Writing Translations (L10N)</h2>
 <li>A single <code>Key</code> child element which value is the internationalized string defined in the code (replacing for interpolated strings the interpolated expressions with their positional index).</li>
 <li><code>Value</code>child elements with their attribute <code>lang</code> set to the target language of the translation and which value is the translated string.</li>
 </ul>
-<p >The companion utility <a href="Tool/">I18N.DotNet Tool</a> can be used to ease the creation of the translations file by scanning source files and automatically generating entries for discovered internationalized strings.</p>
 <h5>Example</h5>
 <div class="fragment"><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div>
 <div class="line">&lt;I18N&gt;</div>
@@ -131,10 +130,13 @@ Writing Translations (L10N)</h2>
 <div class="line">    &lt;Value lang=&quot;fr&quot;&gt;String interpolé à traduire avec valeur {0:X4}&lt;/Value&gt;</div>
 <div class="line">  &lt;/Entry&gt;</div>
 <div class="line">&lt;/I18N&gt;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md6"></a>
+</div><!-- fragment --><blockquote class="doxtable">
+<p >&zwj;<b>NOTE</b>: The companion utility <a href="https://github.com/SafeTwice/I18N.DotNet-Tool">I18N.DotNet Tool</a> can be used to ease the creation of the translations file by scanning source files and automatically generating entries for discovered internationalized strings. </p>
+</blockquote>
+<h2><a class="anchor" id="autotoc_md6"></a>
 Embedding the Translations File</h2>
 <p >A very convenient way of distributing the translations for an application is to embedded the translations file in the executable assembly as an embedded resource identified by <em>Resources.I18N.xml</em>.</p>
-<p >Using Visual Studio, the easiest way to achieve this is to name the translations file _"I18N.xml"_ and store it in a directory named _"Resources"_ inside the VS project directory, and then configure the file in the VS project as an embedded resource (i.e., set its Build Action to "Embedded resource" in the IDE, or add <code>&lt;EmbeddedResource Include="Resources\I18N.xml" /&gt;</code> to an <code>ItemGroup</code> in the project file).</p>
+<p >Using Visual Studio, the easiest way to achieve this is to name the translations file _"I18N.xml"_ and deploy it in a directory named _"Resources"_ inside the VS project directory, and then configure the file in the VS project as an embedded resource (i.e., set its Build Action to "Embedded resource" in the IDE, or add <code>&lt;EmbeddedResource Include="Resources\I18N.xml" /&gt;</code> to an <code>ItemGroup</code> in the project file).</p>
 <h5>Example (.csproj)</h5>
 <div class="fragment"><div class="line">&lt;Project Sdk=&quot;Microsoft.NET.Sdk&quot;&gt;</div>
 <div class="line">  ...</div>
@@ -142,7 +144,10 @@ Embedding the Translations File</h2>
 <div class="line">    &lt;EmbeddedResource Include=&quot;Resources\I18N.xml&quot; /&gt;</div>
 <div class="line">  &lt;/ItemGroup&gt;</div>
 <div class="line">&lt;/Project&gt;</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md7"></a>
+</div><!-- fragment --><blockquote class="doxtable">
+<p >&zwj;<b>NOTE</b>: The companion utility <a href="https://github.com/SafeTwice/I18N.DotNet-Tool">I18N.DotNet Tool</a> can be used to generate translations files optimized for deployment from the separate translations files used during development and during the translation process. </p>
+</blockquote>
+<h1><a class="anchor" id="autotoc_md7"></a>
 Advanced Usage</h1>
 <h2><a class="anchor" id="autotoc_md8"></a>
 Global Localizer</h2>

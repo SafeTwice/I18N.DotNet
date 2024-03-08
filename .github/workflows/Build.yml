@@ -45,7 +45,7 @@ jobs:
         run: |
           $LineBeforeAbout = ( Get-Content README.md | Select-String -Pattern "^## About" | Select-Object -First 1 ).LineNumber - 1
           ( Get-Content README.md | Select-Object -Skip $LineBeforeAbout ) | Set-Content README.md
-          $LineBeforeFullApiDocs = ( Get-Content README.md | Select-String -Pattern "^## Full API Documentation" | Select-Object -First 1 ).LineNumber - 1
+          $LineBeforeFullApiDocs = ( Get-Content README.md | Select-String -Pattern "^### Full API Documentation" | Select-Object -First 1 ).LineNumber - 1
           ( Get-Content README.md | Select-Object -First $LineBeforeFullApiDocs ) | Set-Content README.md
       - name: Build
         run: dotnet build --no-restore -c Release

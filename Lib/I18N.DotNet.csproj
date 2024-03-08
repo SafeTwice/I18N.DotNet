@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFrameworks>net472;net48;net6.0;net7.0;net8.0</TargetFrameworks>
-        <Version>1.2</Version>
+        <Version>1.2.1</Version>
         <DebugType>embedded</DebugType>
         <NoWarn>NETSDK1138;CS1587</NoWarn>
         <EnablePackageValidation>true</EnablePackageValidation>

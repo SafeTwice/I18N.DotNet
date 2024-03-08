@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@f12acb</span>
+   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@178ebc</span>
    </div>
   </td>
  </tr>
@@ -153,7 +153,7 @@ Advanced Usage (Internationalizing Applications)</h1>
 <h2><a class="anchor" id="autotoc_md8"></a>
 Global Localizer</h2>
 <p >The static class <code>GlobalLocalizer</code> has the property <code>Localizer</code> which contains the global localizer. This instance is shared and can be conveniently used by all software components. In fact all the methods exposed by the <code>GlobalLocalizer</code> class are just convenience wrappers that call the global localizer.</p>
-<p >The instance of <code>GlobalLocalizer.Localizer</code> is an instance of the <code>AutoLoadLocalizer</code> class that on first usage (if translations have not been previously loaded) tries to load the translations from an embedded resource identified by <em>Resources.I18N.xml</em> inside the entry (application) assembly using the current UI language as the target language.</p>
+<p >The property <code>GlobalLocalizer.Localizer</code> is an instance of `AutoLoadLocalizer` that on first usage (if translations have not been previously loaded) tries to load the translations from an embedded resource identified by <em>Resources.I18N.xml</em> inside the entry (application) assembly using the current UI language as the target language.</p>
 <p >The default behavior is just right for most use cases, but if the translations file is stored in an embedded resource with a different identifier, or in a separate file (e.g., installed alongside the application executable), one of the <code>LoadXML</code> methods can be invoked on the global localizer to load it.</p>
 <h5>Non-Default usage Example (C#)</h5>
 <div class="fragment"><div class="line">void SetupI18N( string language, string directoryPath )</div>

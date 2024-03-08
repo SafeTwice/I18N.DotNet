@@ -453,7 +453,7 @@ namespace I18N.DotNet.Test
 
             // Execute
 
-            localizer.LoadXML( configB, "es-es" );
+            localizer.LoadXML( configB, "es-es", true );
 
             // Verify
 

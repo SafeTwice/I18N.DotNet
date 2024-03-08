@@ -43,7 +43,7 @@ namespace I18N.DotNet
         /// <param name="merge"> Replaces the current translations with the loaded ones when<c>false</c>,
         ///                      otherwise merges both (existing translations are overridden with loaded ones).</param>
         /// <exception cref="ParseException">Thrown when the input file cannot be parsed properly.</exception>
-        void LoadXML( string filepath, string? language = null, bool merge = true );
+        void LoadXML( string filepath, string? language = null, bool merge = false );
 
         /// <summary>
         /// Loads a localization configuration from a stream in XML format.
@@ -54,7 +54,7 @@ namespace I18N.DotNet
         /// <param name="merge"> Replaces the current translations with the loaded ones when<c>false</c>,
         ///                      otherwise merges both (existing translations are overridden with loaded ones).</param>
         /// <exception cref="ParseException">Thrown when the stream contents cannot be parsed properly.</exception>
-        public void LoadXML( Stream stream, string? language = null, bool merge = true );
+        public void LoadXML( Stream stream, string? language = null, bool merge = false );
 
         /// <summary>
         /// Loads a localization configuration from a XML document.
@@ -65,7 +65,7 @@ namespace I18N.DotNet
         /// <param name="merge"> Replaces the current translations with the loaded ones when<c>false</c>,
         ///                      otherwise merges both (existing translations are overridden with loaded ones).</param>
         /// <exception cref="ParseException">Thrown when the input document cannot be parsed properly.</exception>
-        public void LoadXML( XDocument doc, string? language = null, bool merge = true );
+        public void LoadXML( XDocument doc, string? language = null, bool merge = false );
 
         /// <summary>
         /// Loads a localization configuration from an XML text embedded as a resource in the given assembly.
@@ -78,6 +78,6 @@ namespace I18N.DotNet
         ///                      otherwise merges both (existing translations are overridden with loaded ones).</param>
         /// <exception cref="ParseException">Thrown when the embedded resource contents cannot be parsed properly.</exception>
         /// <exception cref="InvalidOperationException">Thrown when the embedded resource could not be found in the given assembly</exception>
-        public void LoadXML( Assembly assembly, string resourceName, string? language = null, bool merge = true );
+        public void LoadXML( Assembly assembly, string resourceName, string? language = null, bool merge = false );
     }
 }

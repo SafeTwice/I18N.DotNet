@@ -64,28 +64,28 @@ namespace I18N.DotNet
         public ILocalizer Context( IEnumerable<string> splitContextIds ) => InternalLocalizer.Context( splitContextIds );
 
         /// <inheritdoc/>
-        public void LoadXML( string filepath, string? language = null, bool merge = true )
+        public void LoadXML( string filepath, string? language = null, bool merge = false )
         {
             m_internalLocalizer ??= new Localizer();
             m_internalLocalizer.LoadXML( filepath, language, merge );
         }
 
         /// <inheritdoc/>
-        public void LoadXML( Stream stream, string? language = null, bool merge = true )
+        public void LoadXML( Stream stream, string? language = null, bool merge = false )
         {
             m_internalLocalizer ??= new Localizer();
             m_internalLocalizer.LoadXML( stream, language, merge );
         }
 
         /// <inheritdoc/>
-        public void LoadXML( XDocument doc, string? language = null, bool merge = true )
+        public void LoadXML( XDocument doc, string? language = null, bool merge = false )
         {
             m_internalLocalizer ??= new Localizer();
             m_internalLocalizer.LoadXML( doc, language, merge );
         }
 
         /// <inheritdoc/>
-        public void LoadXML( Assembly assembly, string resourceName, string? language = null, bool merge = true )
+        public void LoadXML( Assembly assembly, string resourceName, string? language = null, bool merge = false )
         {
             m_internalLocalizer ??= new Localizer();
             m_internalLocalizer.LoadXML( assembly, resourceName, language, merge );
@@ -104,7 +104,7 @@ namespace I18N.DotNet
         ///                      otherwise merges both (existing translations are overridden with loaded ones).</param>
         /// <exception cref="ILoadableLocalizer.ParseException">Thrown when the embedded resource contents cannot be parsed properly.</exception>
         /// <exception cref="InvalidOperationException">Thrown when the embedded resource could not be found</exception>
-        public void Load( string? language, bool merge = true )
+        public void Load( string? language, bool merge = false )
         {
             var assembly = CheckAssembly();
 

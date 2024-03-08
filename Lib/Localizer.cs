@@ -114,19 +114,19 @@ namespace I18N.DotNet
         }
 
         /// <inheritdoc/>
-        public void LoadXML( string filepath, string? language = null, bool merge = true )
+        public void LoadXML( string filepath, string? language = null, bool merge = false )
         {
             LoadXML( XDocument.Load( filepath, LoadOptions.SetLineInfo ), language, merge );
         }
 
         /// <inheritdoc/>
-        public void LoadXML( Stream stream, string? language = null, bool merge = true )
+        public void LoadXML( Stream stream, string? language = null, bool merge = false )
         {
             LoadXML( XDocument.Load( stream, LoadOptions.SetLineInfo ), language, merge );
         }
 
         /// <inheritdoc/>
-        public void LoadXML( XDocument doc, string? language = null, bool merge = true )
+        public void LoadXML( XDocument doc, string? language = null, bool merge = false )
         {
             if( !merge )
             {
@@ -144,7 +144,7 @@ namespace I18N.DotNet
         }
 
         /// <inheritdoc/>
-        public void LoadXML( Assembly assembly, string resourceName, string? language = null, bool merge = true )
+        public void LoadXML( Assembly assembly, string resourceName, string? language = null, bool merge = false )
         {
             LoadXML( assembly, resourceName, language, merge, false );
         }

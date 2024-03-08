@@ -19,7 +19,7 @@ namespace I18N.DotNet
         /// <value>
         /// Global localizer.
         /// </value>
-        public static ILoadableLocalizer Localizer { get; } = new AutoLoadLocalizer();
+        public static AutoLoadLocalizer Localizer { get; } = new AutoLoadLocalizer();
 
         //===========================================================================
         //                            PUBLIC METHODS

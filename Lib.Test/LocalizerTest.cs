@@ -1,5 +1,5 @@
 /// @file
-/// @copyright  Copyright (c) 2020-2023 SafeTwice S.L. All rights reserved.
+/// @copyright  Copyright (c) 2020-2024 SafeTwice S.L. All rights reserved.
 /// @license    See LICENSE.txt
 
 using System;
@@ -18,11 +18,6 @@ namespace I18N.DotNet.Test
         [Fact]
         public void DefaultConstructor()
         {
-            // Prepare
-
-            var oldUICulture = CultureInfo.CurrentUICulture;
-            CultureInfo.CurrentUICulture = CultureInfo.CreateSpecificCulture( "es-ES" );
-
             // Execute
 
             var localizer = new Localizer();
@@ -30,16 +25,10 @@ namespace I18N.DotNet.Test
             // Verify
 
             Assert.Equal( "Simple Key 1", localizer.Localize( "Simple Key 1" ) );
-
-            // Cleanup
-
-            CultureInfo.CurrentUICulture = oldUICulture;
         }
 
-        [Theory]
-        [InlineData( "Non-existant Key" )]
-        [InlineData( "Simple Key 1" )]
-        public void Localize_NeutralLanguage_Simple( string key )
+        [Fact]
+        public void Localize_BaseLanguage_PlainString()
         {
             // Prepare
 
@@ -48,13 +37,20 @@ namespace I18N.DotNet.Test
 
             // Execute & Verify
 
-            Assert.Equal( key, localizer.Localize( key ) );
+            string[] testData =
+            {
+                "Non-existant Key",
+                "Simple Key 1"
+            };
+
+            foreach( var key in testData )
+            {
+                Assert.Equal( key, localizer.Localize( key ) );
+            }
         }
 
-        [Theory]
-        [InlineData( "Non-existant Key", "Non-existant Key" )]
-        [InlineData( "Simple Key 1", "Clef simple 1" )]
-        public void Localize_SpecificLanguage_Simple( string key, string value )
+        [Fact]
+        public void Localize_SpecificLanguage_PlainString()
         {
             // Prepare
 
@@ -63,14 +59,20 @@ namespace I18N.DotNet.Test
 
             // Execute & Verify
 
-            Assert.Equal( value, localizer.Localize( key ) );
+            (string key, string value)[] testData =
+{
+                ( "Non-existant Key", "Non-existant Key" ),
+                ( "Simple Key 1", "Clef simple 1" )
+            };
+
+            foreach( var (key, value) in testData )
+            {
+                Assert.Equal( value, localizer.Localize( key ) );
+            }
         }
 
-        [Theory]
-        [InlineData( "Non-existant Key", "Non-existant Key" )]
-        [InlineData( "Simple Key 1", "Che, viste, clave resimple 1. Obvio" )]
-        [InlineData( "Simple Key 2", "Clave simple 2" )]
-        public void Localize_PrimaryOrVariantLanguageMatch( string key, string value )
+        [Fact]
+        public void Localize_PrimaryOrVariantLanguageMatch()
         {
             // Prepare
 
@@ -79,19 +81,21 @@ namespace I18N.DotNet.Test
 
             // Execute & Verify
 
-            Assert.Equal( value, localizer.Localize( key ) );
+            (string key, string value)[] testData =
+{
+                ( "Non-existant Key", "Non-existant Key" ),
+                ( "Simple Key 1", "Che, viste, clave resimple 1. Obvio" ),
+                ( "Simple Key 2", "Clave simple 2" )
+            };
+
+            foreach( var (key, value) in testData )
+            {
+                Assert.Equal( value, localizer.Localize( key ) );
+            }
         }
 
-        public static IEnumerable<object[]> GetNeutralLanguageInterpolatedData()
-        {
-            int i = 1234;
-            yield return new object[] { (FormattableString) $"Format Key: {i:X4}", $"Format Key: {i:X4}" };
-            yield return new object[] { (FormattableString) $"Non-existent Format: {i}", $"Non-existent Format: {i}" };
-        }
-
-        [Theory]
-        [MemberData( nameof( GetNeutralLanguageInterpolatedData ) )]
-        public void Localize_NeutralLanguage_Interpolated( FormattableString format, string value )
+        [Fact]
+        public void Localize_BaseLanguage_Interpolated()
         {
             // Prepare
 
@@ -100,19 +104,22 @@ namespace I18N.DotNet.Test
 
             // Execute & Verify
 
-            Assert.Equal( value, localizer.Localize( format ) );
+            var i = 12.34;
+
+            (FormattableString key, string value)[] testData =
+{
+                ( $"Format Key: {i:F3}", "Format Key: 12.340" ),
+                ( $"Non-existent Format: {i}", "Non-existent Format: 12.34" ),
+            };
+
+            foreach( var (key, value) in testData )
+            {
+                Assert.Equal( value, localizer.Localize( key ) );
+            }
         }
 
-        public static IEnumerable<object[]> GetSpecificLanguageInterpolatedData()
-        {
-            int i = 1234;
-            yield return new object[] { (FormattableString) $"Format Key: {i:X4}", $"Clave de formato: {i}" };
-            yield return new object[] { (FormattableString) $"Non-existent Format: {i}", $"Non-existent Format: {i}" };
-        }
-
-        [Theory]
-        [MemberData( nameof( GetSpecificLanguageInterpolatedData ) )]
-        public void Localize_SpecificLanguage_Interpolated( FormattableString format, string value )
+        [Fact]
+        public void Localize_SpecificLanguage_Interpolated()
         {
             // Prepare
 
@@ -121,7 +128,18 @@ namespace I18N.DotNet.Test
 
             // Execute & Verify
 
-            Assert.Equal( value, localizer.Localize( format ) );
+            var i = 884.2398878;
+
+            (FormattableString key, string value)[] testData =
+{
+                ( $"Format Key: {i:F3}", "Clave de formato: 884,2399" ),
+                ( $"Non-existent Format: {i}", "Non-existent Format: 884,2398878" ),
+            };
+
+            foreach( var (key, value) in testData )
+            {
+                Assert.Equal( value, localizer.Localize( key ) );
+            }
         }
 
         [Fact]
@@ -150,13 +168,8 @@ namespace I18N.DotNet.Test
             Assert.Equal( new string[] { "Non-existant Key", "Clef simple 1" }, localizer.Localize( new string[] { "Non-existant Key", "Simple Key 1" } ) );
         }
 
-        [Theory]
-        [InlineData( "Non-existant Key", "Non-existant Key" )]
-        [InlineData( "Simple Key 1", "Clef simple 1" )]
-        [InlineData( "Simple Key 2", "Clef simple 2 en contexte L1" )]
-        [InlineData( "Simple Key 3", "Clef simple 3" )]
-        [InlineData( "Simple Key 4", "Clef simple 4" )]
-        public void Context_ExistingContextL1( string key, string value )
+        [Fact]
+        public void Context_ExistingContextL1()
         {
             // Prepare
 
@@ -165,16 +178,23 @@ namespace I18N.DotNet.Test
 
             // Execute & Verify
 
-            Assert.Equal( value, localizer.Context( "Level1" ).Localize( key ) );
+            (string key, string value)[] testData =
+            {
+                ( "Non-existant Key", "Non-existant Key" ),
+                ( "Simple Key 1", "Clef simple 1" ),
+                ( "Simple Key 2", "Clef simple 2 en contexte L1" ),
+                ( "Simple Key 3", "Clef simple 3" ),
+                ( "Simple Key 4", "Clef simple 4" )
+            };
+
+            foreach( var (key, value) in testData )
+            {
+                Assert.Equal( value, localizer.Context( "Level1" ).Localize( key ) );
+            }
         }
 
-        [Theory]
-        [InlineData( "Non-existant Key", "Non-existant Key" )]
-        [InlineData( "Simple Key 1", "Clef simple 1 en contexte L2" )]
-        [InlineData( "Simple Key 2", "Clef simple 2 en contexte L1" )]
-        [InlineData( "Simple Key 3", "Clef simple 3 en contexte L2" )]
-        [InlineData( "Simple Key 4", "Clef simple 4" )]
-        public void Context_ExistingContextL2A( string key, string value )
+        [Fact]
+        public void Context_ExistingContextL2A()
         {
             // Prepare
 
@@ -183,16 +203,23 @@ namespace I18N.DotNet.Test
 
             // Execute & Verify
 
-            Assert.Equal( value, localizer.Context( "Level1.Level2" ).Localize( key ) );
+            (string key, string value)[] testData =
+            {
+                ( "Non-existant Key", "Non-existant Key" ),
+                ( "Simple Key 1", "Clef simple 1 en contexte L2" ),
+                ( "Simple Key 2", "Clef simple 2 en contexte L1" ),
+                ( "Simple Key 3", "Clef simple 3 en contexte L2" ),
+                ( "Simple Key 4", "Clef simple 4" )
+            };
+
+            foreach( var (key, value) in testData )
+            {
+                Assert.Equal( value, localizer.Context( "Level1.Level2" ).Localize( key ) );
+            }
         }
 
-        [Theory]
-        [InlineData( "Non-existant Key", "Non-existant Key" )]
-        [InlineData( "Simple Key 1", "Clave simple 1 en contexto L2" )]
-        [InlineData( "Simple Key 2", "Clave simple 2 en contexto L1" )]
-        [InlineData( "Simple Key 3", "Clave simple 3" )]
-        [InlineData( "Simple Key 4", "Clave simple 4" )]
-        public void Context_ExistingContextL2B( string key, string value )
+        [Fact]
+        public void Context_ExistingContextL2B()
         {
             // Prepare
 
@@ -201,16 +228,23 @@ namespace I18N.DotNet.Test
 
             // Execute & Verify
 
-            Assert.Equal( value, localizer.Context( "Level1.Level2" ).Localize( key ) );
+            (string key, string value)[] testData =
+            {
+                ( "Non-existant Key", "Non-existant Key" ),
+                ( "Simple Key 1", "Clave simple 1 en contexto L2" ),
+                ( "Simple Key 2", "Clave simple 2 en contexto L1" ),
+                ( "Simple Key 3", "Clave simple 3" ),
+                ( "Simple Key 4", "Clave simple 4" )
+            };
+
+            foreach( var (key, value) in testData )
+            {
+                Assert.Equal( value, localizer.Context( "Level1.Level2" ).Localize( key ) );
+            }
         }
 
-        [Theory]
-        [InlineData( "Non-existant Key", "Non-existant Key" )]
-        [InlineData( "Simple Key 1", "Clave simple 1 en contexto L2" )]
-        [InlineData( "Simple Key 2", "Clave simple 2 en contexto L1" )]
-        [InlineData( "Simple Key 3", "Clave simple 3" )]
-        [InlineData( "Simple Key 4", "Clave simple 4" )]
-        public void Context_ExistingContextL2B_Split( string key, string value )
+        [Fact]
+        public void Context_ExistingContextL2B_Split()
         {
             // Prepare
 
@@ -219,16 +253,25 @@ namespace I18N.DotNet.Test
 
             // Execute & Verify
 
-            Assert.Equal( value, localizer.Context( new string[] { "Level1", "Level2" } ).Localize( key ) );
+            (string key, string value)[] testData =
+            {
+                ( "Non-existant Key", "Non-existant Key" ),
+                ( "Simple Key 1", "Clave simple 1 en contexto L2" ),
+                ( "Simple Key 2", "Clave simple 2 en contexto L1" ),
+                ( "Simple Key 3", "Clave simple 3" ),
+                ( "Simple Key 4", "Clave simple 4" )
+            };
+
+            var context = new string[] { "Level1", "Level2" };
+
+            foreach( var (key, value) in testData )
+            {
+                Assert.Equal( value, localizer.Context( context ).Localize( key ) );
+            }
         }
 
-        [Theory]
-        [InlineData( "Non-existant Key", "Non-existant Key" )]
-        [InlineData( "Simple Key 1", "Clef simple 1" )]
-        [InlineData( "Simple Key 2", "Clef simple 2" )]
-        [InlineData( "Simple Key 3", "Clef simple 3" )]
-        [InlineData( "Simple Key 4", "Clef simple 4" )]
-        public void Context_NonExistingContext( string key, string value )
+        [Fact]
+        public void Context_NonExistingContext()
         {
             // Prepare
 
@@ -237,12 +280,23 @@ namespace I18N.DotNet.Test
 
             // Execute & Verify
 
-            Assert.Equal( value, localizer.Context( "LevelX" ).Localize( key ) );
+            (string key, string value)[] testData =
+            {
+                ( "Non-existant Key", "Non-existant Key" ),
+                ( "Simple Key 1", "Clef simple 1" ),
+                ( "Simple Key 2", "Clef simple 2" ),
+                ( "Simple Key 3", "Clef simple 3" ),
+                ( "Simple Key 4", "Clef simple 4" )
+            };
+
+            foreach( var (key, value) in testData )
+            {
+                Assert.Equal( value, localizer.Context( "LevelX" ).Localize( key ) );
+            }
         }
 
-        [Theory]
-        [MemberData( nameof( GetSpecificLanguageInterpolatedData ) )]
-        public void Context_Interpolated( FormattableString key, string value )
+        [Fact]
+        public void Context_Interpolated()
         {
             // Prepare
 
@@ -251,16 +305,21 @@ namespace I18N.DotNet.Test
 
             // Execute & Verify
 
-            Assert.Equal( value, localizer.Context( "Level1" ).Localize( key ) );
+            int i = 1234;
+            (FormattableString key, string value)[] testData =
+{
+                ( $"Format Key: {i:F3}", "Clave de formato: 1234,0000" ),
+                ( $"Non-existent Format: {i}", "Non-existent Format: 1234" ),
+            };
+
+            foreach( var (key, value) in testData )
+            {
+                Assert.Equal( value, localizer.Context( "Level1" ).Localize( key ) );
+            }
         }
 
-        [Theory]
-        [InlineData( "Non-existant Key", "Non-existant Key" )]
-        [InlineData( "Simple Key 1", "Clef simple 1" )]
-        [InlineData( "Simple Key 2", "Clef simple 2 en contexte L1" )]
-        [InlineData( "Simple Key 3", "Clef simple 3" )]
-        [InlineData( "Simple Key 4", "Clef simple 4" )]
-        public void ILocalizer_Context_Single( string key, string value )
+        [Fact]
+        public void ILocalizer_Context_Single()
         {
             // Prepare
 
@@ -271,16 +330,23 @@ namespace I18N.DotNet.Test
 
             // Execute & Verify
 
-            Assert.Equal( value, ilocalizer.Context( "Level1" ).Localize( key ) );
+            (string key, string value)[] testData =
+            {
+                ( "Non-existant Key", "Non-existant Key" ),
+                ( "Simple Key 1", "Clef simple 1" ),
+                ( "Simple Key 2", "Clef simple 2 en contexte L1" ),
+                ( "Simple Key 3", "Clef simple 3" ),
+                ( "Simple Key 4", "Clef simple 4" )
+            };
+
+            foreach( var (key, value) in testData )
+            {
+                Assert.Equal( value, ilocalizer.Context( "Level1" ).Localize( key ) );
+            }
         }
 
-        [Theory]
-        [InlineData( "Non-existant Key", "Non-existant Key" )]
-        [InlineData( "Simple Key 1", "Clave simple 1 en contexto L2" )]
-        [InlineData( "Simple Key 2", "Clave simple 2 en contexto L1" )]
-        [InlineData( "Simple Key 3", "Clave simple 3" )]
-        [InlineData( "Simple Key 4", "Clave simple 4" )]
-        public void ILocalizer_Context_Split( string key, string value )
+        [Fact]
+        public void ILocalizer_Context_Split()
         {
             // Prepare
 
@@ -291,7 +357,21 @@ namespace I18N.DotNet.Test
 
             // Execute & Verify
 
-            Assert.Equal( value, ilocalizer.Context( new string[] { "Level1", "Level2" } ).Localize( key ) );
+            (string key, string value)[] testData =
+            {
+                ( "Non-existant Key", "Non-existant Key" ),
+                ( "Simple Key 1", "Clave simple 1 en contexto L2" ),
+                ( "Simple Key 2", "Clave simple 2 en contexto L1" ),
+                ( "Simple Key 3", "Clave simple 3" ),
+                ( "Simple Key 4", "Clave simple 4" )
+            };
+
+            var context = new string[] { "Level1", "Level2" };
+
+            foreach( var (key, value) in testData )
+            {
+                Assert.Equal( value, ilocalizer.Context( context ).Localize( key ) );
+            }
         }
 
         [Fact]
@@ -347,7 +427,7 @@ namespace I18N.DotNet.Test
 
             // Execute & Verify
 
-            var exception = Assert.Throws<ILoadableLocalizer.ParseException>( () => localizer.LoadXML( data,  "x"  ) );
+            var exception = Assert.Throws<ILoadableLocalizer.ParseException>( () => localizer.LoadXML( data, "x" ) );
 
             Assert.Contains( "Missing child 'Key' XML element", exception.Message );
         }
@@ -443,7 +523,79 @@ namespace I18N.DotNet.Test
         }
 
         [Fact]
-        public void LoadXML_Merge()
+        public void LoadXML_Stream_Language()
+        {
+            // Prepare
+
+            var localizer = new Localizer();
+
+            // Execute
+
+            localizer.LoadXML( GetI18NConfig(), "es-es" );
+
+            // Verify
+
+            var formatArg = 12.5;
+
+            Assert.Equal( "Clave simple 1", localizer.Localize( "Simple Key 1" ) );
+            Assert.Equal( "Clave simple 2", localizer.Localize( "Simple Key 2" ) );
+            Assert.Equal( "Clave de formato: 12,5000", localizer.Localize( $"Format Key: {formatArg:F3}" ) );
+        }
+
+        [Fact]
+        public void LoadXML_Stream_Culture()
+        {
+            // Prepare
+
+            var localizer = new Localizer();
+
+            // Execute
+
+            localizer.LoadXML( GetI18NConfig(), CultureInfo.GetCultureInfo( "es" ) );
+
+            // Verify
+
+            var formatArg = 12.5;
+
+            Assert.Equal( "Clave simple 1", localizer.Localize( "Simple Key 1" ) );
+            Assert.Equal( "Clave simple 2", localizer.Localize( "Simple Key 2" ) );
+            Assert.Equal( "Clave de formato: 12,5000", localizer.Localize( $"Format Key: {formatArg:F3}" ) );
+        }
+
+        [Fact]
+        public void LoadXML_Stream_DefaultCulture()
+        {
+            // Prepare
+
+            var oldUICulture = CultureInfo.CurrentUICulture;
+            CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo( "fr-FR" );
+
+            try
+            {
+                var localizer = new Localizer();
+
+                // Execute
+
+                localizer.LoadXML( GetI18NConfig() );
+
+                // Verify
+
+                var formatArg = 789.566;
+
+                Assert.Equal( "Clef simple 1", localizer.Localize( "Simple Key 1" ) );
+                Assert.Equal( "Clef simple 2", localizer.Localize( "Simple Key 2" ) );
+                Assert.Equal( "Clef de format: 789,6", localizer.Localize( $"Format Key: {formatArg:F3}" ) );
+            }
+            finally
+            {
+                // Cleanup
+
+                CultureInfo.CurrentUICulture = oldUICulture;
+            }
+        }
+
+        [Fact]
+        public void LoadXML_Stream_Merge()
         {
             // Prepare
 
@@ -453,7 +605,7 @@ namespace I18N.DotNet.Test
 
             // Execute
 
-            localizer.LoadXML( configB, "es-es", true );
+            localizer.LoadXML( configB, true );
 
             // Verify
 
@@ -462,7 +614,7 @@ namespace I18N.DotNet.Test
         }
 
         [Fact]
-        public void LoadXML_NoMerge()
+        public void LoadXML_Stream_NoMerge()
         {
             // Prepare
 
@@ -475,7 +627,7 @@ namespace I18N.DotNet.Test
 
             // Execute
 
-            localizer.LoadXML( configB, "es-es", false );
+            localizer.LoadXML( configB, false );
 
             // Verify
 
@@ -485,7 +637,7 @@ namespace I18N.DotNet.Test
         }
 
         [Fact]
-        public void LoadXML_File()
+        public void LoadXML_File_Language()
         {
             // Prepare
 
@@ -507,6 +659,73 @@ namespace I18N.DotNet.Test
                 // Verify
 
                 Assert.Equal( "Clave simple 1", localizer.Localize( "Simple Key 1" ) );
+            }
+            finally
+            {
+                // Cleanup
+
+                File.Delete( tempFileName );
+            }
+        }
+
+        [Fact]
+        public void LoadXML_File_Culture()
+        {
+            // Prepare
+
+            var tempFileName = Path.GetTempFileName();
+
+            try
+            {
+                using( var tempFile = File.Create( tempFileName ) )
+                {
+                    GetI18NConfig().CopyTo( tempFile );
+                }
+
+                var localizer = new Localizer();
+
+                // Execute
+
+                localizer.LoadXML( tempFileName, CultureInfo.GetCultureInfo( "es-es" ) );
+
+                // Verify
+
+                Assert.Equal( "Clave simple 1", localizer.Localize( "Simple Key 1" ) );
+            }
+            finally
+            {
+                // Cleanup
+
+                File.Delete( tempFileName );
+            }
+        }
+
+        [Fact]
+        public void LoadXML_File_Merge()
+        {
+            // Prepare
+
+            var tempFileName = Path.GetTempFileName();
+
+            try
+            {
+                using( var tempFile = File.Create( tempFileName ) )
+                using( var writer = new StreamWriter( tempFile ) )
+                {
+                    writer.Write( "<I18N><Entry><Key>Simple Key 1</Key><Value lang='es'>XYZ</Value></Entry></I18N>" );
+                }
+
+                var localizer = new Localizer();
+                localizer.LoadXML( GetI18NConfig(), "es-es" );
+
+                // Execute
+
+                localizer.LoadXML( tempFileName, true );
+
+                // Verify
+
+                Assert.Equal( "XYZ", localizer.Localize( "Simple Key 1" ) );
+                Assert.Equal( "Clave simple 2", localizer.Localize( "Simple Key 2" ) );
             }
             finally
             {
@@ -542,6 +761,22 @@ namespace I18N.DotNet.Test
             // Execute
 
             localizer.LoadXML( typeof( LocalizerTest ).Assembly, "I18N.DotNet.Test.Resources.I18N.xml", "es-es" );
+
+            // Verify
+
+            Assert.Equal( "Clave simple 1", localizer.Localize( "Simple Key 1" ) );
+        }
+
+        [Fact]
+        public void LoadXML_EmbeddedResource_Culture()
+        {
+            // Prepare
+
+            var localizer = new Localizer();
+
+            // Execute
+
+            localizer.LoadXML( typeof( LocalizerTest ).Assembly, "Resources.I18N.xml", CultureInfo.GetCultureInfo( "es-es" ) );
 
             // Verify
 

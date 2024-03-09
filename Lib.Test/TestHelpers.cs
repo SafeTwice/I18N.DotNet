@@ -50,9 +50,9 @@ namespace I18N.DotNet.Test
                 "    <Value lang='fr'>Clef simple 4</Value>\n" +
                 "  </Entry>\n" +
                 "  <Entry>\n" +
-                "    <Key>Format Key: {0:X4}</Key>\n" +
-                "    <Value lang='es'>Clave de formato: {0}</Value>\n" +
-                "    <Value lang='fr'>Clef de format: {0}</Value>\n" +
+                "    <Key>Format Key: {0:F3}</Key>\n" +
+                "    <Value lang='es'>Clave de formato: {0:F4}</Value>\n" +
+                "    <Value lang='fr'>Clef de format: {0:F1}</Value>\n" +
                 "  </Entry>\n" +
                 "  <Context id='Level1.Level2'>\n" +
                 "    <Entry>\n" +

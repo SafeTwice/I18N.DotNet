@@ -1,10 +1,11 @@
 ﻿/// @file
-/// @copyright  Copyright (c) 2023 SafeTwice S.L. All rights reserved.
+/// @copyright  Copyright (c) 2023-2024 SafeTwice S.L. All rights reserved.
 /// @license    See LICENSE.txt
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Xml.Linq;
@@ -20,9 +21,9 @@ namespace I18N.DotNet
         //                           PUBLIC CONSTANTS
         //===========================================================================
 
-        /// <value>
+        /// <summary>
         /// Default identifier for the embedded resource containing the translations.
-        /// </value>
+        /// </summary>
         public const string DEFAULT_RESOURCE_NAME = "Resources.I18N.xml";
 
         //===========================================================================
@@ -32,8 +33,13 @@ namespace I18N.DotNet
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="resourceName">Name of the embedded resource for the XML text</param>
-        /// <param name="assembly">Assembly that contains the embedded XML text (the calling assembly will be used if <c>null</c>)</param>
+        /// <remarks>
+        /// When the localization methods are called for the first time, the translations are automatically loaded from
+        /// the embedded resource identified by <paramref name="resourceName"/> inside the given <paramref name="assembly"/>
+        /// (if translations have not been previously loaded explicitly).
+        /// </remarks>
+        /// <param name="resourceName">Name of the embedded resource for the XML file</param>
+        /// <param name="assembly">Assembly that contains the embedded XML file (the calling assembly will be used if <c>null</c>)</param>
         public AutoLoadLocalizer( string resourceName = DEFAULT_RESOURCE_NAME, Assembly? assembly = null )
         {
             m_assembly = assembly ?? Assembly.GetCallingAssembly();
@@ -64,52 +70,116 @@ namespace I18N.DotNet
         public ILocalizer Context( IEnumerable<string> splitContextIds ) => InternalLocalizer.Context( splitContextIds );
 
         /// <inheritdoc/>
-        public void LoadXML( string filepath, string? language = null, bool merge = false )
+        public void LoadXML( string filepath, CultureInfo? culture = null )
         {
             m_internalLocalizer ??= new Localizer();
-            m_internalLocalizer.LoadXML( filepath, language, merge );
+            m_internalLocalizer.LoadXML( filepath, culture );
         }
 
         /// <inheritdoc/>
-        public void LoadXML( Stream stream, string? language = null, bool merge = false )
+        public void LoadXML( string filepath, string language )
         {
             m_internalLocalizer ??= new Localizer();
-            m_internalLocalizer.LoadXML( stream, language, merge );
+            m_internalLocalizer.LoadXML( filepath, language );
         }
 
         /// <inheritdoc/>
-        public void LoadXML( XDocument doc, string? language = null, bool merge = false )
+        public void LoadXML( string filepath, bool merge )
         {
             m_internalLocalizer ??= new Localizer();
-            m_internalLocalizer.LoadXML( doc, language, merge );
+            m_internalLocalizer.LoadXML( filepath, merge );
         }
 
         /// <inheritdoc/>
-        public void LoadXML( Assembly assembly, string resourceName, string? language = null, bool merge = false )
+        public void LoadXML( Stream stream, CultureInfo? culture = null )
         {
             m_internalLocalizer ??= new Localizer();
-            m_internalLocalizer.LoadXML( assembly, resourceName, language, merge );
+            m_internalLocalizer.LoadXML( stream, culture );
+        }
+
+        /// <inheritdoc/>
+        public void LoadXML( Stream stream, string language )
+        {
+            m_internalLocalizer ??= new Localizer();
+            m_internalLocalizer.LoadXML( stream, language );
+        }
+
+        /// <inheritdoc/>
+        public void LoadXML( Stream stream, bool merge )
+        {
+            m_internalLocalizer ??= new Localizer();
+            m_internalLocalizer.LoadXML( stream, merge );
+        }
+
+        /// <inheritdoc/>
+        public void LoadXML( XDocument doc, CultureInfo? culture = null )
+        {
+            m_internalLocalizer ??= new Localizer();
+            m_internalLocalizer.LoadXML( doc, culture );
+        }
+
+        /// <inheritdoc/>
+        public void LoadXML( XDocument doc, string language )
+        {
+            m_internalLocalizer ??= new Localizer();
+            m_internalLocalizer.LoadXML( doc, language );
+        }
+
+        /// <inheritdoc/>
+        public void LoadXML( XDocument doc, bool merge )
+        {
+            m_internalLocalizer ??= new Localizer();
+            m_internalLocalizer.LoadXML( doc, merge );
+        }
+
+        /// <inheritdoc/>
+        public void LoadXML( Assembly assembly, string resourceName, CultureInfo? culture = null )
+        {
+            m_internalLocalizer ??= new Localizer();
+            m_internalLocalizer.LoadXML( assembly, resourceName, culture );
+        }
+
+        /// <inheritdoc/>
+        public void LoadXML( Assembly assembly, string resourceName, string language )
+        {
+            m_internalLocalizer ??= new Localizer();
+            m_internalLocalizer.LoadXML( assembly, resourceName, language );
+        }
+
+        /// <inheritdoc/>
+        public void LoadXML( Assembly assembly, string resourceName, bool merge )
+        {
+            m_internalLocalizer ??= new Localizer();
+            m_internalLocalizer.LoadXML( assembly, resourceName, merge );
         }
 
         /// <summary>
-        /// Loads the localization configuration from the embedded resource using the given language.
+        /// Loads translations for the given <paramref name="culture"/> from the embedded resource specified when creating the instance.
         /// </summary>
-        /// <remarks>
-        /// If this method is not called explicitly, the translations are automatically loaded from the embedded resource using the
-        /// current UI language when a localization method is called for the first time.
-        /// </remarks>
-        /// <param name="language">Name, code or identifier for the target language of translations,
-        ///                        or <c>null</c> to use the current UI language (obtained from <see cref="System.Globalization.CultureInfo.CurrentUICulture"/>)</param>
-        /// <param name="merge"> Replaces the current translations with the loaded ones when<c>false</c>,
-        ///                      otherwise merges both (existing translations are overridden with loaded ones).</param>
+        /// <param name="culture">Culture for the target language of translations,
+        ///                       or <c>null</c> to use the current UI culture (obtained from <see cref="System.Globalization.CultureInfo.CurrentUICulture"/>)</param>
         /// <exception cref="ILoadableLocalizer.ParseException">Thrown when the embedded resource contents cannot be parsed properly.</exception>
-        /// <exception cref="InvalidOperationException">Thrown when the embedded resource could not be found</exception>
-        public void Load( string? language, bool merge = false )
+        /// <exception cref="InvalidOperationException">Thrown when the embedded resource could not be found.</exception>
+        public void Load( CultureInfo? culture )
         {
             var assembly = CheckAssembly();
 
             m_internalLocalizer ??= new Localizer();
-            m_internalLocalizer.LoadXML( assembly, m_resourceName, language, merge );
+            m_internalLocalizer.LoadXML( assembly, m_resourceName, culture );
+        }
+
+        /// <summary>
+        /// Loads translations for the given <paramref name="language"/> from the embedded resource specified when creating the instance.
+        /// </summary>
+        /// <param name="language">Name, code or identifier for the target language of translations</param>
+        /// <exception cref="ILoadableLocalizer.ParseException">Thrown when the embedded resource contents cannot be parsed properly.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when the embedded resource could not be found.</exception>
+        public void Load( string language )
+        {
+            var assembly = CheckAssembly();
+
+            m_internalLocalizer ??= new Localizer();
+            m_internalLocalizer.LoadXML( assembly, m_resourceName, language );
         }
 
         //===========================================================================
@@ -136,7 +206,7 @@ namespace I18N.DotNet
                     m_internalLocalizer = new Localizer();
                     if( m_assembly != null )
                     {
-                        m_internalLocalizer.LoadXML( m_assembly, m_resourceName, null, true, m_ignoreIfNotExists );
+                        m_internalLocalizer.LoadXML( m_assembly, m_resourceName, false, m_ignoreIfNotExists );
                     }
                 }
                 return m_internalLocalizer;

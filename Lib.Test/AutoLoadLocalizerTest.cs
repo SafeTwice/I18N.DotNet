@@ -18,25 +18,30 @@ namespace I18N.DotNet.Test
             // Prepare
 
             var oldUICulture = CultureInfo.CurrentUICulture;
-            CultureInfo.CurrentUICulture = CultureInfo.CreateSpecificCulture( "es-ES" );
+            CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo( "es-ES" );
 
-            // Execute
+            try
+            {
+                // Execute
 
-            var localizer = new AutoLoadLocalizer( assembly: null );
+                var localizer = new AutoLoadLocalizer( assembly: null );
 
-            // Verify
+                // Verify
 
-            Assert.Equal( "Clave simple 1", localizer.Localize( "Simple Key 1" ) );
-            Assert.Equal( "Clave de formato: 0159", localizer.Localize( $"Format Key: {345:X4}" ) );
-            Assert.Equal( new string[] { "Clave simple 1", "Clave simple 2" }, localizer.Localize( new string[] { "Simple Key 1", "Simple Key 2" } ) );
-            Assert.Equal( "Clave de formato: 002F", localizer.LocalizeFormat( "Format Key: {0:X4}", 47 ) );
+                Assert.Equal( "Clave simple 1", localizer.Localize( "Simple Key 1" ) );
+                Assert.Equal( "Clave de formato: 0159", localizer.Localize( $"Format Key: {345:X4}" ) );
+                Assert.Equal( new string[] { "Clave simple 1", "Clave simple 2" }, localizer.Localize( new string[] { "Simple Key 1", "Simple Key 2" } ) );
+                Assert.Equal( "Clave de formato: 002F", localizer.LocalizeFormat( "Format Key: {0:X4}", 47 ) );
 
-            Assert.Equal( "Clave simple 3 en contexto L2", localizer.Context( "Level1.Level2" ).Localize( "Simple Key 3" ) );
-            Assert.Equal( "Clave simple 3 en contexto L2", localizer.Context( new string[] { "Level1", "Level2" } ).Localize( "Simple Key 3" ) );
+                Assert.Equal( "Clave simple 3 en contexto L2", localizer.Context( "Level1.Level2" ).Localize( "Simple Key 3" ) );
+                Assert.Equal( "Clave simple 3 en contexto L2", localizer.Context( new string[] { "Level1", "Level2" } ).Localize( "Simple Key 3" ) );
+            }
+            finally
+            {
+                // Cleanup
 
-            // Cleanup
-
-            CultureInfo.CurrentUICulture = oldUICulture;
+                CultureInfo.CurrentUICulture = oldUICulture;
+            }
         }
 
         [Fact]
@@ -45,25 +50,30 @@ namespace I18N.DotNet.Test
             // Prepare
 
             var oldUICulture = CultureInfo.CurrentUICulture;
-            CultureInfo.CurrentUICulture = CultureInfo.CreateSpecificCulture( "fr-FR" );
+            CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo( "fr-FR" );
 
-            // Execute
+            try
+            {
+                // Execute
 
-            var localizer = new AutoLoadLocalizer( "I18N.DotNet.Test.Resources.I18N.xml", typeof( AutoLoadLocalizerTest ).Assembly );
+                var localizer = new AutoLoadLocalizer( "I18N.DotNet.Test.Resources.I18N.xml", typeof( AutoLoadLocalizerTest ).Assembly );
 
-            // Verify
+                // Verify
 
-            Assert.Equal( "Clef simple 1", localizer.Localize( "Simple Key 1" ) );
-            Assert.Equal( "Clef de format: 0159", localizer.Localize( $"Format Key: {345:X4}" ) );
-            Assert.Equal( new string[] { "Clef simple 1", "Clef simple 2" }, localizer.Localize( new string[] { "Simple Key 1", "Simple Key 2" } ) );
-            Assert.Equal( "Clef de format: 002F", localizer.LocalizeFormat( "Format Key: {0:X4}", 47 ) );
+                Assert.Equal( "Clef simple 1", localizer.Localize( "Simple Key 1" ) );
+                Assert.Equal( "Clef de format: 0159", localizer.Localize( $"Format Key: {345:X4}" ) );
+                Assert.Equal( new string[] { "Clef simple 1", "Clef simple 2" }, localizer.Localize( new string[] { "Simple Key 1", "Simple Key 2" } ) );
+                Assert.Equal( "Clef de format: 002F", localizer.LocalizeFormat( "Format Key: {0:X4}", 47 ) );
 
-            Assert.Equal( "Clef simple 3 en contexte L2", localizer.Context( "Level1.Level2" ).Localize( "Simple Key 3" ) );
-            Assert.Equal( "Clef simple 3 en contexte L2", localizer.Context( new string[] { "Level1", "Level2" } ).Localize( "Simple Key 3" ) );
+                Assert.Equal( "Clef simple 3 en contexte L2", localizer.Context( "Level1.Level2" ).Localize( "Simple Key 3" ) );
+                Assert.Equal( "Clef simple 3 en contexte L2", localizer.Context( new string[] { "Level1", "Level2" } ).Localize( "Simple Key 3" ) );
+            }
+            finally
+            {
+                // Cleanup
 
-            // Cleanup
-
-            CultureInfo.CurrentUICulture = oldUICulture;
+                CultureInfo.CurrentUICulture = oldUICulture;
+            }
         }
 
         [Fact]
@@ -72,29 +82,34 @@ namespace I18N.DotNet.Test
             // Prepare
 
             var oldUICulture = CultureInfo.CurrentUICulture;
-            CultureInfo.CurrentUICulture = CultureInfo.CreateSpecificCulture( "es-ES" );
+            CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo( "es-ES" );
 
-            // Execute
+            try
+            {
+                // Execute
 
-            var localizer = new AutoLoadLocalizer();
+                var localizer = new AutoLoadLocalizer();
 
-            // Verify
+                // Verify
 
-            Assert.Equal( "Simple Key 1", localizer.Localize( "Simple Key 1" ) );
-            Assert.Equal( "Format Key: 0159", localizer.Localize( $"Format Key: {345:X4}" ) );
-            Assert.Equal( new string[] { "Simple Key 1", "Simple Key 2" }, localizer.Localize( new string[] { "Simple Key 1", "Simple Key 2" } ) );
-            Assert.Equal( "Format Key: 002F", localizer.LocalizeFormat( "Format Key: {0:X4}", 47 ) );
+                Assert.Equal( "Simple Key 1", localizer.Localize( "Simple Key 1" ) );
+                Assert.Equal( "Format Key: 0159", localizer.Localize( $"Format Key: {345:X4}" ) );
+                Assert.Equal( new string[] { "Simple Key 1", "Simple Key 2" }, localizer.Localize( new string[] { "Simple Key 1", "Simple Key 2" } ) );
+                Assert.Equal( "Format Key: 002F", localizer.LocalizeFormat( "Format Key: {0:X4}", 47 ) );
 
-            Assert.Equal( "Simple Key 3", localizer.Context( "Level1.Level2" ).Localize( "Simple Key 3" ) );
-            Assert.Equal( "Simple Key 3", localizer.Context( new string[] { "Level1", "Level2" } ).Localize( "Simple Key 3" ) );
+                Assert.Equal( "Simple Key 3", localizer.Context( "Level1.Level2" ).Localize( "Simple Key 3" ) );
+                Assert.Equal( "Simple Key 3", localizer.Context( new string[] { "Level1", "Level2" } ).Localize( "Simple Key 3" ) );
+            }
+            finally
+            {
+                // Cleanup
 
-            // Cleanup
-
-            CultureInfo.CurrentUICulture = oldUICulture;
+                CultureInfo.CurrentUICulture = oldUICulture;
+            }
         }
 
         [Fact]
-        public void Load()
+        public void Load_Language()
         {
             // Prepare
 
@@ -116,12 +131,31 @@ namespace I18N.DotNet.Test
         }
 
         [Fact]
-        public void LoadXML_FromStream()
+        public void Load_Culture()
         {
             // Prepare
 
-            var oldUICulture = CultureInfo.CurrentUICulture;
-            CultureInfo.CurrentUICulture = CultureInfo.CreateSpecificCulture( "es-ES" );
+            var localizer = new AutoLoadLocalizer( assembly: null );
+
+            // Execute
+
+            localizer.Load( CultureInfo.GetCultureInfo( "fr-FR" ) );
+
+            // Verify
+
+            Assert.Equal( "Clef simple 1", localizer.Localize( "Simple Key 1" ) );
+            Assert.Equal( "Clef de format: 0159", localizer.Localize( $"Format Key: {345:X4}" ) );
+            Assert.Equal( new string[] { "Clef simple 1", "Clef simple 2" }, localizer.Localize( new string[] { "Simple Key 1", "Simple Key 2" } ) );
+            Assert.Equal( "Clef de format: 002F", localizer.LocalizeFormat( "Format Key: {0:X4}", 47 ) );
+
+            Assert.Equal( "Clef simple 3 en contexte L2", localizer.Context( "Level1.Level2" ).Localize( "Simple Key 3" ) );
+            Assert.Equal( "Clef simple 3 en contexte L2", localizer.Context( new string[] { "Level1", "Level2" } ).Localize( "Simple Key 3" ) );
+        }
+
+        [Fact]
+        public void LoadXML_FromStream_Language()
+        {
+            // Prepare
 
             var localizer = new AutoLoadLocalizer();
 
@@ -132,14 +166,54 @@ namespace I18N.DotNet.Test
             // Verify
 
             Assert.Equal( "Clave simple 1", localizer.Localize( "Simple Key 1" ) );
-
-            // Cleanup
-
-            CultureInfo.CurrentUICulture = oldUICulture;
         }
 
         [Fact]
-        public void LoadXML_FromFile()
+        public void LoadXML_FromStream_Culture()
+        {
+            // Prepare
+
+            var localizer = new AutoLoadLocalizer();
+
+            // Execute
+
+            localizer.LoadXML( GetI18NConfig(), CultureInfo.GetCultureInfo( "es-AR" ) );
+
+            // Verify
+
+            Assert.Equal( "Che, viste, clave resimple 1. Obvio", localizer.Localize( "Simple Key 1" ) );
+        }
+
+        [Fact]
+        public void LoadXML_FromStream_Merge()
+        {
+            // Prepare
+
+            var oldUICulture = CultureInfo.CurrentUICulture;
+            CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo( "fr" );
+
+            try
+            {
+                var localizer = new AutoLoadLocalizer();
+
+                // Execute
+
+                localizer.LoadXML( GetI18NConfig(), true );
+
+                // Verify
+
+                Assert.Equal( "Clef simple 1", localizer.Localize( "Simple Key 1" ) );
+            }
+            finally
+            {
+                // Cleanup
+
+                CultureInfo.CurrentUICulture = oldUICulture;
+            }
+        }
+
+        [Fact]
+        public void LoadXML_FromFile_Language()
         {
             // Prepare
 
@@ -171,12 +245,78 @@ namespace I18N.DotNet.Test
         }
 
         [Fact]
-        public void LoadXML_FromXDocument()
+        public void LoadXML_FromFile_Culture()
         {
             // Prepare
 
+            var tempFileName = Path.GetTempFileName();
+
+            try
+            {
+                using( var tempFile = File.Create( tempFileName ) )
+                {
+                    GetI18NConfig().CopyTo( tempFile );
+                }
+
+                var localizer = new AutoLoadLocalizer();
+
+                // Execute
+
+                localizer.LoadXML( tempFileName, CultureInfo.GetCultureInfo( "es" ) );
+
+                // Verify
+
+                Assert.Equal( "Clave simple 1", localizer.Localize( "Simple Key 1" ) );
+            }
+            finally
+            {
+                // Cleanup
+
+                File.Delete( tempFileName );
+            }
+        }
+
+        [Fact]
+        public void LoadXML_FromFile_Merge()
+        {
+            // Prepare
+
+            var tempFileName = Path.GetTempFileName();
+
             var oldUICulture = CultureInfo.CurrentUICulture;
-            CultureInfo.CurrentUICulture = CultureInfo.CreateSpecificCulture( "es-ES" );
+            CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo( "es-ES" );
+
+            try
+            {
+                using( var tempFile = File.Create( tempFileName ) )
+                {
+                    GetI18NConfig().CopyTo( tempFile );
+                }
+
+                var localizer = new AutoLoadLocalizer();
+
+                // Execute
+
+                localizer.LoadXML( tempFileName, true );
+
+                // Verify
+
+                Assert.Equal( "Clave simple 1", localizer.Localize( "Simple Key 1" ) );
+            }
+            finally
+            {
+                // Cleanup
+
+                File.Delete( tempFileName );
+
+                CultureInfo.CurrentUICulture = oldUICulture;
+            }
+        }
+
+        [Fact]
+        public void LoadXML_FromXDocument_Language()
+        {
+            // Prepare
 
             var localizer = new AutoLoadLocalizer();
 
@@ -189,19 +329,60 @@ namespace I18N.DotNet.Test
             // Verify
 
             Assert.Equal( "Clave simple 1", localizer.Localize( "Simple Key 1" ) );
-
-            // Cleanup
-
-            CultureInfo.CurrentUICulture = oldUICulture;
         }
 
         [Fact]
-        public void LoadXML_FromEmbeddedResource()
+        public void LoadXML_FromXDocument_Culture()
+        {
+            // Prepare
+
+            var localizer = new AutoLoadLocalizer();
+
+            var doc = XDocument.Load( GetI18NConfig() );
+
+            // Execute
+
+            localizer.LoadXML( doc, CultureInfo.GetCultureInfo( "es" ) );
+
+            // Verify
+
+            Assert.Equal( "Clave simple 1", localizer.Localize( "Simple Key 1" ) );
+        }
+
+        [Fact]
+        public void LoadXML_FromXDocument_Merge()
         {
             // Prepare
 
             var oldUICulture = CultureInfo.CurrentUICulture;
-            CultureInfo.CurrentUICulture = CultureInfo.CreateSpecificCulture( "es-ES" );
+            CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo( "es-ES" );
+
+            try
+            {
+                var localizer = new AutoLoadLocalizer();
+
+                var doc = XDocument.Load( GetI18NConfig() );
+
+                // Execute
+
+                localizer.LoadXML( doc, false );
+
+                // Verify
+
+                Assert.Equal( "Clave simple 1", localizer.Localize( "Simple Key 1" ) );
+            }
+            finally
+            {
+                // Cleanup
+
+                CultureInfo.CurrentUICulture = oldUICulture;
+            }
+        }
+
+        [Fact]
+        public void LoadXML_FromEmbeddedResource_Language()
+        {
+            // Prepare
 
             var localizer = new AutoLoadLocalizer();
 
@@ -212,10 +393,50 @@ namespace I18N.DotNet.Test
             // Verify
 
             Assert.Equal( "Clave simple 1", localizer.Localize( "Simple Key 1" ) );
+        }
 
-            // Cleanup
+        [Fact]
+        public void LoadXML_FromEmbeddedResource_Culture()
+        {
+            // Prepare
 
-            CultureInfo.CurrentUICulture = oldUICulture;
+            var localizer = new AutoLoadLocalizer();
+
+            // Execute
+
+            localizer.LoadXML( typeof( AutoLoadLocalizerTest ).Assembly, "Resources.I18N.xml", CultureInfo.GetCultureInfo( "es" ) );
+
+            // Verify
+
+            Assert.Equal( "Clave simple 1", localizer.Localize( "Simple Key 1" ) );
+        }
+
+        [Fact]
+        public void LoadXML_FromEmbeddedResource_Merge()
+        {
+            // Prepare
+
+            var oldUICulture = CultureInfo.CurrentUICulture;
+            CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo( "es-ES" );
+
+            try
+            {
+                var localizer = new AutoLoadLocalizer();
+
+                // Execute
+
+                localizer.LoadXML( typeof( AutoLoadLocalizerTest ).Assembly, "Resources.I18N.xml", true );
+
+                // Verify
+
+                Assert.Equal( "Clave simple 1", localizer.Localize( "Simple Key 1" ) );
+            }
+            finally
+            {
+                // Cleanup
+
+                CultureInfo.CurrentUICulture = oldUICulture;
+            }
         }
     }
 }

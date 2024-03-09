@@ -22,10 +22,10 @@ namespace I18N.DotNet
         //===========================================================================
 
         /// <inheritdoc/>
-        public string TargetLanguage => InternalLocalizer.TargetLanguage;
+        public string TargetLanguage => m_internalLocalizer?.TargetLanguage ?? CultureInfo.CurrentUICulture.Name;
 
         /// <inheritdoc/>
-        public CultureInfo TargetCulture => InternalLocalizer.TargetCulture;
+        public CultureInfo TargetCulture => m_internalLocalizer?.TargetCulture ?? CultureInfo.CurrentUICulture;
 
         //===========================================================================
         //                           PUBLIC CONSTANTS

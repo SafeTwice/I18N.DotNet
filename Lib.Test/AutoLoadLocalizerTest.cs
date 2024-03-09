@@ -63,9 +63,6 @@ namespace I18N.DotNet.Test
 
                 // Verify
 
-                Assert.Equal( CultureInfo.CurrentUICulture.Name, localizer.TargetLanguage, true );
-                Assert.Equal( CultureInfo.CurrentUICulture, localizer.TargetCulture );
-
                 Assert.Equal( "Clef simple 1", localizer.Localize( "Simple Key 1" ) );
                 Assert.Equal( "Clef de format: 0159", localizer.Localize( $"Format Key: {345:X4}" ) );
                 Assert.Equal( new string[] { "Clef simple 1", "Clef simple 2" }, localizer.Localize( new string[] { "Simple Key 1", "Simple Key 2" } ) );
@@ -73,6 +70,9 @@ namespace I18N.DotNet.Test
 
                 Assert.Equal( "Clef simple 3 en contexte L2", localizer.Context( "Level1.Level2" ).Localize( "Simple Key 3" ) );
                 Assert.Equal( "Clef simple 3 en contexte L2", localizer.Context( new string[] { "Level1", "Level2" } ).Localize( "Simple Key 3" ) );
+
+                Assert.Equal( CultureInfo.CurrentUICulture.Name, localizer.TargetLanguage, true );
+                Assert.Equal( CultureInfo.CurrentUICulture, localizer.TargetCulture );
             }
             finally
             {
@@ -159,6 +159,9 @@ namespace I18N.DotNet.Test
 
             // Verify
 
+            Assert.Equal( targetCulture.Name, localizer.TargetLanguage, true );
+            Assert.Equal( targetCulture, localizer.TargetCulture );
+
             Assert.Equal( "Clef simple 1", localizer.Localize( "Simple Key 1" ) );
             Assert.Equal( "Clef de format: 0159", localizer.Localize( $"Format Key: {345:X4}" ) );
             Assert.Equal( new string[] { "Clef simple 1", "Clef simple 2" }, localizer.Localize( new string[] { "Simple Key 1", "Simple Key 2" } ) );
@@ -166,9 +169,6 @@ namespace I18N.DotNet.Test
 
             Assert.Equal( "Clef simple 3 en contexte L2", localizer.Context( "Level1.Level2" ).Localize( "Simple Key 3" ) );
             Assert.Equal( "Clef simple 3 en contexte L2", localizer.Context( new string[] { "Level1", "Level2" } ).Localize( "Simple Key 3" ) );
-
-            Assert.Equal( targetCulture.Name, localizer.TargetLanguage, true );
-            Assert.Equal( targetCulture, localizer.TargetCulture );
         }
 
         [Fact]

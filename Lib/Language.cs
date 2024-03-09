@@ -29,7 +29,7 @@ namespace I18N.DotNet
         /// <summary>
         /// Format provider for the language.
         /// </summary>
-        public IFormatProvider FormatProvider { get; }
+        public CultureInfo Culture { get; }
 
         //===========================================================================
         //                          PUBLIC CONSTRUCTORS
@@ -45,11 +45,11 @@ namespace I18N.DotNet
 
             try
             {
-                FormatProvider = CultureInfo.GetCultureInfo( language );
+                Culture = CultureInfo.GetCultureInfo( language );
             }
             catch( CultureNotFoundException )
             {
-                FormatProvider = CultureInfo.InvariantCulture;
+                Culture = CultureInfo.InvariantCulture;
             }
         }
 
@@ -60,7 +60,7 @@ namespace I18N.DotNet
         public Language( CultureInfo culture )
         {
             (Full, Primary) = SplitLanguage( culture.Name );
-            FormatProvider = culture;
+            Culture = culture;
         }
 
         //===========================================================================

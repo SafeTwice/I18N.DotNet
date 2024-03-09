@@ -38,6 +38,9 @@ namespace I18N.DotNet
         /// <summary>
         /// Loads translations for the given <paramref name="culture"/> from a localization configuration file in XML format.
         /// </summary>
+        /// <remarks>
+        /// All the translations loaded previously in the localizer are discarded and replaced with the new ones.
+        /// </remarks>
         /// <param name="filepath">Path to the localization configuration file</param>
         /// <param name="culture">Culture for the target language of translations,
         ///                       or <c>null</c> to use the current UI culture (obtained from <see cref="System.Globalization.CultureInfo.CurrentUICulture"/>)</param>
@@ -47,6 +50,9 @@ namespace I18N.DotNet
         /// <summary>
         /// Loads translations for the given <paramref name="language"/> from a localization configuration file in XML format.
         /// </summary>
+        /// <remarks>
+        /// All the translations loaded previously in the localizer are discarded and replaced with the new ones.
+        /// </remarks>
         /// <param name="filepath">Path to the localization configuration file</param>
         /// <param name="language">Name, code or identifier for the target language of translations</param>
         /// <exception cref="ParseException">Thrown when the input file cannot be parsed properly.</exception>
@@ -64,6 +70,9 @@ namespace I18N.DotNet
         /// <summary>
         /// Loads translations for the given <paramref name="culture"/> from a localization configuration file in XML format obtained from a stream.
         /// </summary>
+        /// <remarks>
+        /// All the translations loaded previously in the localizer are discarded and replaced with the new ones.
+        /// </remarks>
         /// <param name="stream">Stream with the localization configuration</param>
         /// <param name="culture">Culture for the target language of translations,
         ///                       or <c>null</c> to use the current UI culture (obtained from <see cref="System.Globalization.CultureInfo.CurrentUICulture"/>)</param>
@@ -73,6 +82,9 @@ namespace I18N.DotNet
         /// <summary>
         /// Loads translations for the given <paramref name="language"/> from a localization configuration file obtained in XML format from a stream.
         /// </summary>
+        /// <remarks>
+        /// All the translations loaded previously in the localizer are discarded and replaced with the new ones.
+        /// </remarks>
         /// <param name="stream">Stream with the localization configuration</param>
         /// <param name="language">Name, code or identifier for the target language of translations</param>
         /// <exception cref="ParseException">Thrown when the stream contents cannot be parsed properly.</exception>
@@ -90,6 +102,9 @@ namespace I18N.DotNet
         /// <summary>
         /// Loads translations for the given <paramref name="culture"/> from a localization configuration in an XML document.
         /// </summary>
+        /// <remarks>
+        /// All the translations loaded previously in the localizer are discarded and replaced with the new ones.
+        /// </remarks>
         /// <param name="doc">XML document with the localization configuration</param>
         /// <param name="culture">Culture for the target language of translations,
         ///                       or <c>null</c> to use the current UI culture (obtained from <see cref="System.Globalization.CultureInfo.CurrentUICulture"/>)</param>
@@ -99,6 +114,9 @@ namespace I18N.DotNet
         /// <summary>
         /// Loads translations for the given <paramref name="language"/> from a localization configuration in an XML document.
         /// </summary>
+        /// <remarks>
+        /// All the translations loaded previously in the localizer are discarded and replaced with the new ones.
+        /// </remarks>
         /// <param name="doc">XML document with the localization configuration</param>
         /// <param name="language">Name, code or identifier for the target language of translations</param>
         /// <exception cref="ParseException">Thrown when the input document cannot be parsed properly.</exception>
@@ -116,6 +134,9 @@ namespace I18N.DotNet
         /// <summary>
         /// Loads translations for the given <paramref name="culture"/> from a localization configuration file in XML format obtained from an embedded resource in the given assembly.
         /// </summary>
+        /// <remarks>
+        /// All the translations loaded previously in the localizer are discarded and replaced with the new ones.
+        /// </remarks>
         /// <param name="assembly">Assembly that contains the embedded XML file</param>
         /// <param name="resourceName">Name of the embedded resource for the XML file</param>
         /// <param name="culture">Culture for the target language of translations,
@@ -127,6 +148,9 @@ namespace I18N.DotNet
         /// <summary>
         /// Loads translations for the given <paramref name="language"/> from a localization configuration file in XML format obtained from an embedded resource in the given assembly.
         /// </summary>
+        /// <remarks>
+        /// All the translations loaded previously in the localizer are discarded and replaced with the new ones.
+        /// </remarks>
         /// <param name="assembly">Assembly that contains the embedded XML file</param>
         /// <param name="resourceName">Name of the embedded resource for the XML file</param>
         /// <param name="language">Name, code or identifier for the target language of translations</param>

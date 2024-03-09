@@ -24,6 +24,9 @@ namespace I18N.DotNet.Test
 
             // Verify
 
+            Assert.Equal( CultureInfo.CurrentUICulture.Name, localizer.TargetLanguage, true );
+            Assert.Equal( CultureInfo.CurrentUICulture, localizer.TargetCulture );
+
             Assert.Equal( "Simple Key 1", localizer.Localize( "Simple Key 1" ) );
         }
 
@@ -32,10 +35,15 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
+            const string targetLanguage = "en-us";
+
             var localizer = new Localizer();
-            localizer.LoadXML( GetI18NConfig(), "en-us" );
+            localizer.LoadXML( GetI18NConfig(), targetLanguage );
 
             // Execute & Verify
+
+            Assert.Equal( targetLanguage, localizer.TargetLanguage, true );
+            Assert.Equal( targetLanguage, localizer.TargetCulture.Name, true );
 
             string[] testData =
             {
@@ -54,10 +62,15 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
+            const string targetLanguage = "fr";
+
             var localizer = new Localizer();
-            localizer.LoadXML( GetI18NConfig(), "fr" );
+            localizer.LoadXML( GetI18NConfig(), targetLanguage );
 
             // Execute & Verify
+
+            Assert.Equal( targetLanguage, localizer.TargetLanguage, true );
+            Assert.Equal( targetLanguage, localizer.TargetCulture.Name, true );
 
             (string key, string value)[] testData =
 {
@@ -76,10 +89,15 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
+            const string targetLanguage = "es-AR";
+
             var localizer = new Localizer();
-            localizer.LoadXML( GetI18NConfig(), "es-AR" );
+            localizer.LoadXML( GetI18NConfig(), targetLanguage );
 
             // Execute & Verify
+
+            Assert.Equal( targetLanguage, localizer.TargetLanguage, true );
+            Assert.Equal( targetLanguage, localizer.TargetCulture.Name, true );
 
             (string key, string value)[] testData =
 {
@@ -99,10 +117,15 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
+            const string targetLanguage = "en-us";
+
             var localizer = new Localizer();
-            localizer.LoadXML( GetI18NConfig(), "en-us" );
+            localizer.LoadXML( GetI18NConfig(), targetLanguage );
 
             // Execute & Verify
+
+            Assert.Equal( targetLanguage, localizer.TargetLanguage, true );
+            Assert.Equal( targetLanguage, localizer.TargetCulture.Name, true );
 
             var i = 12.34;
 
@@ -123,10 +146,15 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
+            const string targetLanguage = "es-es";
+
             var localizer = new Localizer();
-            localizer.LoadXML( GetI18NConfig(), "es-es" );
+            localizer.LoadXML( GetI18NConfig(), targetLanguage );
 
             // Execute & Verify
+
+            Assert.Equal( targetLanguage, localizer.TargetLanguage, true );
+            Assert.Equal( targetLanguage, localizer.TargetCulture.Name, true );
 
             var i = 884.2398878;
 
@@ -173,10 +201,15 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
+            const string targetLanguage = "fr-fr";
+
             var localizer = new Localizer();
-            localizer.LoadXML( GetI18NConfig(), "fr-fr" );
+            localizer.LoadXML( GetI18NConfig(), targetLanguage );
 
             // Execute & Verify
+
+            Assert.Equal( targetLanguage, localizer.Context( "Level1" ).TargetLanguage, true );
+            Assert.Equal( targetLanguage, localizer.Context( "Level1" ).TargetCulture.Name, true );
 
             (string key, string value)[] testData =
             {
@@ -198,10 +231,15 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
+            const string targetLanguage = "fr-fr";
+
             var localizer = new Localizer();
-            localizer.LoadXML( GetI18NConfig(), "fr-fr" );
+            localizer.LoadXML( GetI18NConfig(), targetLanguage );
 
             // Execute & Verify
+
+            Assert.Equal( targetLanguage, localizer.Context( "Level1.Level2" ).TargetLanguage, true );
+            Assert.Equal( targetLanguage, localizer.Context( "Level1.Level2" ).TargetCulture.Name, true );
 
             (string key, string value)[] testData =
             {
@@ -223,10 +261,15 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
+            const string targetLanguage = "es-es";
+
             var localizer = new Localizer();
-            localizer.LoadXML( GetI18NConfig(), "es-es" );
+            localizer.LoadXML( GetI18NConfig(), targetLanguage );
 
             // Execute & Verify
+
+            Assert.Equal( targetLanguage, localizer.Context( "Level1.Level2" ).TargetLanguage, true );
+            Assert.Equal( targetLanguage, localizer.Context( "Level1.Level2" ).TargetCulture.Name, true );
 
             (string key, string value)[] testData =
             {
@@ -248,10 +291,17 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
+            const string targetLanguage = "es-es";
+
             var localizer = new Localizer();
-            localizer.LoadXML( GetI18NConfig(), "es-es" );
+            localizer.LoadXML( GetI18NConfig(), targetLanguage );
 
             // Execute & Verify
+
+            var contextId = new string[] { "Level1", "Level2" };
+
+            Assert.Equal( targetLanguage, localizer.Context( contextId ).TargetLanguage, true );
+            Assert.Equal( targetLanguage, localizer.Context( contextId ).TargetCulture.Name, true );
 
             (string key, string value)[] testData =
             {
@@ -262,11 +312,9 @@ namespace I18N.DotNet.Test
                 ( "Simple Key 4", "Clave simple 4" )
             };
 
-            var context = new string[] { "Level1", "Level2" };
-
             foreach( var (key, value) in testData )
             {
-                Assert.Equal( value, localizer.Context( context ).Localize( key ) );
+                Assert.Equal( value, localizer.Context( contextId ).Localize( key ) );
             }
         }
 
@@ -275,10 +323,15 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
+            const string targetLanguage = "fr-fr";
+
             var localizer = new Localizer();
-            localizer.LoadXML( GetI18NConfig(), "fr-fr" );
+            localizer.LoadXML( GetI18NConfig(), targetLanguage );
 
             // Execute & Verify
+
+            Assert.Equal( targetLanguage, localizer.Context( "LevelX" ).TargetLanguage, true );
+            Assert.Equal( targetLanguage, localizer.Context( "LevelX" ).TargetCulture.Name, true );
 
             (string key, string value)[] testData =
             {
@@ -527,13 +580,18 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
+            const string targetLanguage = "es-es";
+
             var localizer = new Localizer();
 
             // Execute
 
-            localizer.LoadXML( GetI18NConfig(), "es-es" );
+            localizer.LoadXML( GetI18NConfig(), targetLanguage );
 
             // Verify
+
+            Assert.Equal( targetLanguage, localizer.TargetLanguage, true );
+            Assert.Equal( targetLanguage, localizer.TargetCulture.Name, true );
 
             var formatArg = 12.5;
 
@@ -547,13 +605,18 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
+            var targetCulture = CultureInfo.GetCultureInfo( "es" );
+
             var localizer = new Localizer();
 
             // Execute
 
-            localizer.LoadXML( GetI18NConfig(), CultureInfo.GetCultureInfo( "es" ) );
+            localizer.LoadXML( GetI18NConfig(), targetCulture );
 
             // Verify
+
+            Assert.Equal( targetCulture.Name, localizer.TargetLanguage, true );
+            Assert.Equal( targetCulture, localizer.TargetCulture );
 
             var formatArg = 12.5;
 
@@ -580,6 +643,9 @@ namespace I18N.DotNet.Test
 
                 // Verify
 
+                Assert.Equal( CultureInfo.CurrentUICulture.Name, localizer.TargetLanguage, true );
+                Assert.Equal( CultureInfo.CurrentUICulture, localizer.TargetCulture );
+
                 var formatArg = 789.566;
 
                 Assert.Equal( "Clef simple 1", localizer.Localize( "Simple Key 1" ) );
@@ -599,15 +665,20 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
+            const string targetLanguage = "es-es";
+
             var localizer = new Localizer();
             var configB = CreateStream( "<I18N><Entry><Key>Simple Key 1</Key><Value lang='es'>XYZ</Value></Entry></I18N>" );
-            localizer.LoadXML( GetI18NConfig(), "es-es" );
+            localizer.LoadXML( GetI18NConfig(), targetLanguage );
 
             // Execute
 
             localizer.LoadXML( configB, true );
 
             // Verify
+
+            Assert.Equal( targetLanguage, localizer.TargetLanguage, true );
+            Assert.Equal( targetLanguage, localizer.TargetCulture.Name, true );
 
             Assert.Equal( "XYZ", localizer.Localize( "Simple Key 1" ) );
             Assert.Equal( "Clave simple 2", localizer.Localize( "Simple Key 2" ) );
@@ -618,10 +689,12 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
+            const string targetLanguage = "es-es";
+
             var localizer = new Localizer();
             var configB = CreateStream( "<I18N><Entry><Key>Simple Key 1</Key><Value lang='es'>XYZ</Value></Entry>" +
                                         "<Context id='Level1'><Entry><Key>Simple Key 2</Key><Value lang='es'>ABC</Value></Entry></Context></I18N>" );
-            localizer.LoadXML( GetI18NConfig(), "es-es" );
+            localizer.LoadXML( GetI18NConfig(), targetLanguage );
 
             var contextL1 = localizer.Context( "Level1" );
 
@@ -630,6 +703,9 @@ namespace I18N.DotNet.Test
             localizer.LoadXML( configB, false );
 
             // Verify
+
+            Assert.Equal( targetLanguage, localizer.TargetLanguage, true );
+            Assert.Equal( targetLanguage, localizer.TargetCulture.Name, true );
 
             Assert.Equal( "XYZ", localizer.Localize( "Simple Key 1" ) );
             Assert.Equal( "Simple Key 2", localizer.Localize( "Simple Key 2" ) );
@@ -640,6 +716,8 @@ namespace I18N.DotNet.Test
         public void LoadXML_File_Language()
         {
             // Prepare
+
+            const string targetLanguage = "es-es";
 
             var tempFileName = Path.GetTempFileName();
 
@@ -654,9 +732,12 @@ namespace I18N.DotNet.Test
 
                 // Execute
 
-                localizer.LoadXML( tempFileName, "es-es" );
+                localizer.LoadXML( tempFileName, targetLanguage );
 
                 // Verify
+
+                Assert.Equal( targetLanguage, localizer.TargetLanguage, true );
+                Assert.Equal( targetLanguage, localizer.TargetCulture.Name, true );
 
                 Assert.Equal( "Clave simple 1", localizer.Localize( "Simple Key 1" ) );
             }
@@ -677,6 +758,8 @@ namespace I18N.DotNet.Test
 
             try
             {
+                var targetCulture = CultureInfo.GetCultureInfo( "es-es" );
+
                 using( var tempFile = File.Create( tempFileName ) )
                 {
                     GetI18NConfig().CopyTo( tempFile );
@@ -686,9 +769,12 @@ namespace I18N.DotNet.Test
 
                 // Execute
 
-                localizer.LoadXML( tempFileName, CultureInfo.GetCultureInfo( "es-es" ) );
+                localizer.LoadXML( tempFileName, targetCulture );
 
                 // Verify
+
+                Assert.Equal( targetCulture.Name, localizer.TargetLanguage, true );
+                Assert.Equal( targetCulture, localizer.TargetCulture );
 
                 Assert.Equal( "Clave simple 1", localizer.Localize( "Simple Key 1" ) );
             }
@@ -705,6 +791,8 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
+            const string targetLanguage = "es-es";
+
             var tempFileName = Path.GetTempFileName();
 
             try
@@ -716,13 +804,16 @@ namespace I18N.DotNet.Test
                 }
 
                 var localizer = new Localizer();
-                localizer.LoadXML( GetI18NConfig(), "es-es" );
+                localizer.LoadXML( GetI18NConfig(), targetLanguage );
 
                 // Execute
 
                 localizer.LoadXML( tempFileName, true );
 
                 // Verify
+
+                Assert.Equal( targetLanguage, localizer.TargetLanguage, true );
+                Assert.Equal( targetLanguage, localizer.TargetCulture.Name, true );
 
                 Assert.Equal( "XYZ", localizer.Localize( "Simple Key 1" ) );
                 Assert.Equal( "Clave simple 2", localizer.Localize( "Simple Key 2" ) );
@@ -740,13 +831,18 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
+            const string targetLanguage = "es-es";
+
             var localizer = new Localizer();
 
             // Execute
 
-            localizer.LoadXML( typeof( LocalizerTest ).Assembly, "Resources.I18N.xml", "es-es" );
+            localizer.LoadXML( typeof( LocalizerTest ).Assembly, "Resources.I18N.xml", targetLanguage );
 
             // Verify
+
+            Assert.Equal( targetLanguage, localizer.TargetLanguage, true );
+            Assert.Equal( targetLanguage, localizer.TargetCulture.Name, true );
 
             Assert.Equal( "Clave simple 1", localizer.Localize( "Simple Key 1" ) );
         }
@@ -756,13 +852,18 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
+            const string targetLanguage = "es-es";
+
             var localizer = new Localizer();
 
             // Execute
 
-            localizer.LoadXML( typeof( LocalizerTest ).Assembly, "I18N.DotNet.Test.Resources.I18N.xml", "es-es" );
+            localizer.LoadXML( typeof( LocalizerTest ).Assembly, "I18N.DotNet.Test.Resources.I18N.xml", targetLanguage );
 
             // Verify
+
+            Assert.Equal( targetLanguage, localizer.TargetLanguage, true );
+            Assert.Equal( targetLanguage, localizer.TargetCulture.Name, true );
 
             Assert.Equal( "Clave simple 1", localizer.Localize( "Simple Key 1" ) );
         }
@@ -772,15 +873,20 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
+            var targetCulture = CultureInfo.GetCultureInfo( "fr-CA" );
+
             var localizer = new Localizer();
 
             // Execute
 
-            localizer.LoadXML( typeof( LocalizerTest ).Assembly, "Resources.I18N.xml", CultureInfo.GetCultureInfo( "es-es" ) );
+            localizer.LoadXML( typeof( LocalizerTest ).Assembly, "Resources.I18N.xml", targetCulture );
 
             // Verify
 
-            Assert.Equal( "Clave simple 1", localizer.Localize( "Simple Key 1" ) );
+            Assert.Equal( targetCulture.Name, localizer.TargetLanguage, true );
+            Assert.Equal( targetCulture, localizer.TargetCulture );
+
+            Assert.Equal( "Clef simple 1", localizer.Localize( "Simple Key 1" ) );
         }
 
         [Fact]

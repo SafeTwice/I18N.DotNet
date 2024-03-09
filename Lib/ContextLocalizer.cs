@@ -17,6 +17,16 @@ namespace I18N.DotNet
     public class ContextLocalizer : ILocalizer
     {
         //===========================================================================
+        //                           PUBLIC PROPERTIES
+        //===========================================================================
+
+        /// <inheritdoc/>
+        public string TargetLanguage => Language.Full;
+
+        /// <inheritdoc/>
+        public CultureInfo TargetCulture => Language.Culture;
+
+        //===========================================================================
         //                            PUBLIC METHODS
         //===========================================================================
 
@@ -48,7 +58,7 @@ namespace I18N.DotNet
         {
             if( m_localizations.TryGetValue( format, out var localizedFormat ) )
             {
-                return String.Format( Language.FormatProvider, localizedFormat, args );
+                return String.Format( Language.Culture, localizedFormat, args );
             }
             else if( m_parentContext != null )
             {
@@ -56,7 +66,7 @@ namespace I18N.DotNet
             }
             else
             {
-                return String.Format( Language.FormatProvider, format, args );
+                return String.Format( Language.Culture, format, args );
             }
         }
 

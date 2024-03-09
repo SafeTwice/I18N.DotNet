@@ -18,6 +18,16 @@ namespace I18N.DotNet
     public class AutoLoadLocalizer : ILoadableLocalizer
     {
         //===========================================================================
+        //                           PUBLIC PROPERTIES
+        //===========================================================================
+
+        /// <inheritdoc/>
+        public string TargetLanguage => InternalLocalizer.TargetLanguage;
+
+        /// <inheritdoc/>
+        public CultureInfo TargetCulture => InternalLocalizer.TargetCulture;
+
+        //===========================================================================
         //                           PUBLIC CONSTANTS
         //===========================================================================
 

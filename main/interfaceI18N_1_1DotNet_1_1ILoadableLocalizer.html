@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@5345c4</span>
+   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@3d843d</span>
    </div>
   </td>
  </tr>
@@ -81,7 +81,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p><a class="el" href="classI18N_1_1DotNet_1_1Localizer.html" title="Converter of strings from a language-neutral value to its corresponding language-specific localizatio...">Localizer</a> which translations can be loaded from different sources.   
+<p><a class="el" href="classI18N_1_1DotNet_1_1Localizer.html" title="Simple loadable localizer.">Localizer</a> which translations can be loaded from different sources.   
  <a href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for ILoadableLocalizer:</div>
@@ -91,7 +91,7 @@ Inheritance diagram for ILoadableLocalizer:</div>
   <map id="ILoadableLocalizer_map" name="ILoadableLocalizer_map">
 <area href="interfaceI18N_1_1DotNet_1_1ILocalizer.html" title="Converter of strings from a language-neutral value to its corresponding language-specific localizatio..." alt="ILocalizer" shape="rect" coords="64,0,183,24"/>
 <area href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html" title="Implementation of a localizer which configuration is automatically loaded from an embedded resource." alt="AutoLoadLocalizer" shape="rect" coords="0,112,119,136"/>
-<area href="classI18N_1_1DotNet_1_1Localizer.html" title="Converter of strings from a language-neutral value to its corresponding language-specific localizatio..." alt="Localizer" shape="rect" coords="129,112,248,136"/>
+<area href="classI18N_1_1DotNet_1_1Localizer.html" title="Simple loadable localizer." alt="Localizer" shape="rect" coords="129,112,248,136"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -103,18 +103,42 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aab40cff67e68d7d1c3655f01cd1d4540"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#aab40cff67e68d7d1c3655f01cd1d4540">LoadXML</a> (string filepath, string? language=null, bool merge=false)</td></tr>
-<tr class="memdesc:aab40cff67e68d7d1c3655f01cd1d4540"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a localization configuration from a file in XML format.   <a href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#aab40cff67e68d7d1c3655f01cd1d4540">More...</a><br /></td></tr>
-<tr class="separator:aab40cff67e68d7d1c3655f01cd1d4540"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace2d2f1edfc46f3e557f33999c6aa499"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#ace2d2f1edfc46f3e557f33999c6aa499">LoadXML</a> (Stream stream, string? language=null, bool merge=false)</td></tr>
-<tr class="memdesc:ace2d2f1edfc46f3e557f33999c6aa499"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a localization configuration from a stream in XML format.   <a href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#ace2d2f1edfc46f3e557f33999c6aa499">More...</a><br /></td></tr>
-<tr class="separator:ace2d2f1edfc46f3e557f33999c6aa499"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ebf8218d984abe6b8ad3d3906a103f9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#a5ebf8218d984abe6b8ad3d3906a103f9">LoadXML</a> (XDocument doc, string? language=null, bool merge=false)</td></tr>
-<tr class="memdesc:a5ebf8218d984abe6b8ad3d3906a103f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a localization configuration from a XML document.   <a href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#a5ebf8218d984abe6b8ad3d3906a103f9">More...</a><br /></td></tr>
-<tr class="separator:a5ebf8218d984abe6b8ad3d3906a103f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a225ebaed18536132691cad23ab460a0e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#a225ebaed18536132691cad23ab460a0e">LoadXML</a> (Assembly assembly, string resourceName, string? language=null, bool merge=false)</td></tr>
-<tr class="memdesc:a225ebaed18536132691cad23ab460a0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a localization configuration from an XML text embedded as a resource in the given assembly.   <a href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#a225ebaed18536132691cad23ab460a0e">More...</a><br /></td></tr>
-<tr class="separator:a225ebaed18536132691cad23ab460a0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b87da9455d6fda3b154b696085f54bb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#a1b87da9455d6fda3b154b696085f54bb">LoadXML</a> (string filepath, CultureInfo? culture=null)</td></tr>
+<tr class="memdesc:a1b87da9455d6fda3b154b696085f54bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the given <em>culture</em>  from a localization configuration file in XML format.   <a href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#a1b87da9455d6fda3b154b696085f54bb">More...</a><br /></td></tr>
+<tr class="separator:a1b87da9455d6fda3b154b696085f54bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c5b084841aedca01579ca5448ee6045"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#a6c5b084841aedca01579ca5448ee6045">LoadXML</a> (string filepath, string language)</td></tr>
+<tr class="memdesc:a6c5b084841aedca01579ca5448ee6045"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the given <em>language</em>  from a localization configuration file in XML format.   <a href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#a6c5b084841aedca01579ca5448ee6045">More...</a><br /></td></tr>
+<tr class="separator:a6c5b084841aedca01579ca5448ee6045"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21a0a557c377bb6a3799bf90a9e42a09"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#a21a0a557c377bb6a3799bf90a9e42a09">LoadXML</a> (string filepath, bool merge)</td></tr>
+<tr class="memdesc:a21a0a557c377bb6a3799bf90a9e42a09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the current localizer language from a localization configuration file in XML format.   <a href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#a21a0a557c377bb6a3799bf90a9e42a09">More...</a><br /></td></tr>
+<tr class="separator:a21a0a557c377bb6a3799bf90a9e42a09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefaf9612d22c7f62f81a9e978dacc076"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#aefaf9612d22c7f62f81a9e978dacc076">LoadXML</a> (Stream stream, CultureInfo? culture=null)</td></tr>
+<tr class="memdesc:aefaf9612d22c7f62f81a9e978dacc076"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the given <em>culture</em>  from a localization configuration file in XML format obtained from a stream.   <a href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#aefaf9612d22c7f62f81a9e978dacc076">More...</a><br /></td></tr>
+<tr class="separator:aefaf9612d22c7f62f81a9e978dacc076"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a079226db0161c717ca541f37cc3c578f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#a079226db0161c717ca541f37cc3c578f">LoadXML</a> (Stream stream, string language)</td></tr>
+<tr class="memdesc:a079226db0161c717ca541f37cc3c578f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the given <em>language</em>  from a localization configuration file obtained in XML format from a stream.   <a href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#a079226db0161c717ca541f37cc3c578f">More...</a><br /></td></tr>
+<tr class="separator:a079226db0161c717ca541f37cc3c578f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b4eb0dc0896724048ea0565274ee3bf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#a8b4eb0dc0896724048ea0565274ee3bf">LoadXML</a> (Stream stream, bool merge)</td></tr>
+<tr class="memdesc:a8b4eb0dc0896724048ea0565274ee3bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the current localizer language from a localization configuration file in XML format obtained from a stream.   <a href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#a8b4eb0dc0896724048ea0565274ee3bf">More...</a><br /></td></tr>
+<tr class="separator:a8b4eb0dc0896724048ea0565274ee3bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a919a2c010a147fe3629cd540c3d98750"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#a919a2c010a147fe3629cd540c3d98750">LoadXML</a> (XDocument doc, CultureInfo? culture=null)</td></tr>
+<tr class="memdesc:a919a2c010a147fe3629cd540c3d98750"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the given <em>culture</em>  from a localization configuration in an XML document.   <a href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#a919a2c010a147fe3629cd540c3d98750">More...</a><br /></td></tr>
+<tr class="separator:a919a2c010a147fe3629cd540c3d98750"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0edaf6f20f7f6ef2c6848fa99f760a6e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#a0edaf6f20f7f6ef2c6848fa99f760a6e">LoadXML</a> (XDocument doc, string language)</td></tr>
+<tr class="memdesc:a0edaf6f20f7f6ef2c6848fa99f760a6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the given <em>language</em>  from a localization configuration in an XML document.   <a href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#a0edaf6f20f7f6ef2c6848fa99f760a6e">More...</a><br /></td></tr>
+<tr class="separator:a0edaf6f20f7f6ef2c6848fa99f760a6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8106f75668262cd54774be6a6125add2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#a8106f75668262cd54774be6a6125add2">LoadXML</a> (XDocument doc, bool merge)</td></tr>
+<tr class="memdesc:a8106f75668262cd54774be6a6125add2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the current localizer language from a localization configuration in an XML document.   <a href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#a8106f75668262cd54774be6a6125add2">More...</a><br /></td></tr>
+<tr class="separator:a8106f75668262cd54774be6a6125add2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7fb30eb59dc566a4fe997cc3acf884a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#af7fb30eb59dc566a4fe997cc3acf884a">LoadXML</a> (Assembly assembly, string resourceName, CultureInfo? culture=null)</td></tr>
+<tr class="memdesc:af7fb30eb59dc566a4fe997cc3acf884a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the given <em>culture</em>  from a localization configuration file in XML format obtained from an embedded resource in the given assembly.   <a href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#af7fb30eb59dc566a4fe997cc3acf884a">More...</a><br /></td></tr>
+<tr class="separator:af7fb30eb59dc566a4fe997cc3acf884a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbd615f0dde8b673e359e821c19ff8a7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#adbd615f0dde8b673e359e821c19ff8a7">LoadXML</a> (Assembly assembly, string resourceName, string language)</td></tr>
+<tr class="memdesc:adbd615f0dde8b673e359e821c19ff8a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the given <em>language</em>  from a localization configuration file in XML format obtained from an embedded resource in the given assembly.   <a href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#adbd615f0dde8b673e359e821c19ff8a7">More...</a><br /></td></tr>
+<tr class="separator:adbd615f0dde8b673e359e821c19ff8a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d25052f5c2effada93b2bf2aba410ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#a9d25052f5c2effada93b2bf2aba410ff">LoadXML</a> (Assembly assembly, string resourceName, bool merge)</td></tr>
+<tr class="memdesc:a9d25052f5c2effada93b2bf2aba410ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the current localizer language from a localization configuration file in XML format obtained from an embedded resource in the given assembly.   <a href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#a9d25052f5c2effada93b2bf2aba410ff">More...</a><br /></td></tr>
+<tr class="separator:a9d25052f5c2effada93b2bf2aba410ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada22a224e5a85fd1589101df66e1d0f2"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceI18N_1_1DotNet_1_1ILocalizer.html#ada22a224e5a85fd1589101df66e1d0f2">Localize</a> (<a class="el" href="classI18N_1_1DotNet_1_1PlainString.html">PlainString</a> text)</td></tr>
 <tr class="memdesc:ada22a224e5a85fd1589101df66e1d0f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localizes a string.   <a href="interfaceI18N_1_1DotNet_1_1ILocalizer.html#ada22a224e5a85fd1589101df66e1d0f2">More...</a><br /></td></tr>
 <tr class="separator:ada22a224e5a85fd1589101df66e1d0f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -135,7 +159,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a5fca3a722db044bd6c40299650ba3c8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p ><a class="el" href="classI18N_1_1DotNet_1_1Localizer.html" title="Converter of strings from a language-neutral value to its corresponding language-specific localizatio...">Localizer</a> which translations can be loaded from different sources.  </p>
+<div class="textblock"><p ><a class="el" href="classI18N_1_1DotNet_1_1Localizer.html" title="Simple loadable localizer.">Localizer</a> which translations can be loaded from different sources.  </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a5fca3a722db044bd6c40299650ba3c8b" name="a5fca3a722db044bd6c40299650ba3c8b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5fca3a722db044bd6c40299650ba3c8b">&#9670;&#160;</a></span>Context() <span class="overload">[1/2]</span></h2>
@@ -169,9 +193,9 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classI18N_1_1DotNet_1_1Localizer.html" title="Converter of strings from a language-neutral value to its corresponding language-specific localizatio...">Localizer</a> for the given context</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classI18N_1_1DotNet_1_1Localizer.html" title="Simple loadable localizer.">Localizer</a> for the given context</dd></dl>
 
-<p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a5fca3a722db044bd6c40299650ba3c8b">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1Localizer.html#a4ad4e6b48e9382ce97336e77ed3e72a0">Localizer</a>.</p>
+<p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a5fca3a722db044bd6c40299650ba3c8b">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1ContextLocalizer.html#a3c1dfe25147bc0569792b0857e07428d">ContextLocalizer</a>.</p>
 
 </div>
 </div>
@@ -208,14 +232,14 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classI18N_1_1DotNet_1_1Localizer.html" title="Converter of strings from a language-neutral value to its corresponding language-specific localizatio...">Localizer</a> for the given context</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classI18N_1_1DotNet_1_1Localizer.html" title="Simple loadable localizer.">Localizer</a> for the given context</dd></dl>
 
-<p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#ae49c2e04c4044ffb978c74f29acec614">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1Localizer.html#ace0bd7bf8f21ba58e498f7a7c00993ba">Localizer</a>.</p>
+<p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#ae49c2e04c4044ffb978c74f29acec614">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1ContextLocalizer.html#aa9c24c939c61e04036c77c878d12a923">ContextLocalizer</a>.</p>
 
 </div>
 </div>
-<a id="a225ebaed18536132691cad23ab460a0e" name="a225ebaed18536132691cad23ab460a0e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a225ebaed18536132691cad23ab460a0e">&#9670;&#160;</a></span>LoadXML() <span class="overload">[1/4]</span></h2>
+<a id="a9d25052f5c2effada93b2bf2aba410ff" name="a9d25052f5c2effada93b2bf2aba410ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d25052f5c2effada93b2bf2aba410ff">&#9670;&#160;</a></span>LoadXML() <span class="overload">[1/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -235,14 +259,8 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">string?&#160;</td>
-          <td class="paramname"><em>language</em> = <code>null</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>merge</em> = <code>false</code>&#160;</td>
+          <td class="paramname"><em>merge</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -252,30 +270,135 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Loads a localization configuration from an XML text embedded as a resource in the given assembly.  </p>
+<p>Loads translations for the current localizer language from a localization configuration file in XML format obtained from an embedded resource in the given assembly.  </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">assembly</td><td>Assembly that contains the embedded XML text</td></tr>
-    <tr><td class="paramname">resourceName</td><td>Name of the embedded resource for the XML text</td></tr>
-    <tr><td class="paramname">language</td><td>Name, code or identifier for the target language of translations, or <code>null</code> to use the current UI language (obtained from System.Globalization.CultureInfo.CurrentUICulture)</td></tr>
+    <tr><td class="paramname">assembly</td><td>Assembly that contains the embedded XML file</td></tr>
+    <tr><td class="paramname">resourceName</td><td>Name of the embedded resource for the XML file</td></tr>
     <tr><td class="paramname">merge</td><td>Replaces the current translations with the loaded ones when&lt;c&gt;false, otherwise merges both (existing translations are overridden with loaded ones).</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classI18N_1_1DotNet_1_1ILoadableLocalizer_1_1ParseException.html" title="Exception thrown when a localization file cannot be parsed properly.">ParseException</a></td><td>Thrown when the embedded resource contents cannot be parsed properly.</td></tr>
-    <tr><td class="paramname">InvalidOperationException</td><td>Thrown when the embedded resource could not be found in the given assembly</td></tr>
+    <tr><td class="paramname"><a class="el" href="classI18N_1_1DotNet_1_1ILoadableLocalizer_1_1ParseException.html" title="Exception thrown when a localization file cannot be parsed properly.">ParseException</a></td><td>Thrown when the stream contents cannot be parsed properly.</td></tr>
+    <tr><td class="paramname">InvalidOperationException</td><td>Thrown when the embedded resource could not be found in the given assembly.</td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a225ebaed18536132691cad23ab460a0e">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1Localizer.html#a225ebaed18536132691cad23ab460a0e">Localizer</a>.</p>
+<p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a9d25052f5c2effada93b2bf2aba410ff">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1Localizer.html#a9d25052f5c2effada93b2bf2aba410ff">Localizer</a>.</p>
 
 </div>
 </div>
-<a id="ace2d2f1edfc46f3e557f33999c6aa499" name="ace2d2f1edfc46f3e557f33999c6aa499"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ace2d2f1edfc46f3e557f33999c6aa499">&#9670;&#160;</a></span>LoadXML() <span class="overload">[2/4]</span></h2>
+<a id="af7fb30eb59dc566a4fe997cc3acf884a" name="af7fb30eb59dc566a4fe997cc3acf884a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af7fb30eb59dc566a4fe997cc3acf884a">&#9670;&#160;</a></span>LoadXML() <span class="overload">[2/12]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LoadXML </td>
+          <td>(</td>
+          <td class="paramtype">Assembly&#160;</td>
+          <td class="paramname"><em>assembly</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>resourceName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">CultureInfo?&#160;</td>
+          <td class="paramname"><em>culture</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Loads translations for the given <em>culture</em>  from a localization configuration file in XML format obtained from an embedded resource in the given assembly.  </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">assembly</td><td>Assembly that contains the embedded XML file</td></tr>
+    <tr><td class="paramname">resourceName</td><td>Name of the embedded resource for the XML file</td></tr>
+    <tr><td class="paramname">culture</td><td>Culture for the target language of translations, or <code>null</code> to use the current UI culture (obtained from System.Globalization.CultureInfo.CurrentUICulture)</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classI18N_1_1DotNet_1_1ILoadableLocalizer_1_1ParseException.html" title="Exception thrown when a localization file cannot be parsed properly.">ParseException</a></td><td>Thrown when the embedded resource contents cannot be parsed properly.</td></tr>
+    <tr><td class="paramname">InvalidOperationException</td><td>Thrown when the embedded resource could not be found in the given assembly.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#af7fb30eb59dc566a4fe997cc3acf884a">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1Localizer.html#af7fb30eb59dc566a4fe997cc3acf884a">Localizer</a>.</p>
+
+</div>
+</div>
+<a id="adbd615f0dde8b673e359e821c19ff8a7" name="adbd615f0dde8b673e359e821c19ff8a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adbd615f0dde8b673e359e821c19ff8a7">&#9670;&#160;</a></span>LoadXML() <span class="overload">[3/12]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LoadXML </td>
+          <td>(</td>
+          <td class="paramtype">Assembly&#160;</td>
+          <td class="paramname"><em>assembly</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>resourceName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>language</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Loads translations for the given <em>language</em>  from a localization configuration file in XML format obtained from an embedded resource in the given assembly.  </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">assembly</td><td>Assembly that contains the embedded XML file</td></tr>
+    <tr><td class="paramname">resourceName</td><td>Name of the embedded resource for the XML file</td></tr>
+    <tr><td class="paramname">language</td><td>Name, code or identifier for the target language of translations</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classI18N_1_1DotNet_1_1ILoadableLocalizer_1_1ParseException.html" title="Exception thrown when a localization file cannot be parsed properly.">ParseException</a></td><td>Thrown when the embedded resource contents cannot be parsed properly.</td></tr>
+    <tr><td class="paramname">InvalidOperationException</td><td>Thrown when the embedded resource could not be found in the given assembly.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#adbd615f0dde8b673e359e821c19ff8a7">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1Localizer.html#adbd615f0dde8b673e359e821c19ff8a7">Localizer</a>.</p>
+
+</div>
+</div>
+<a id="a8b4eb0dc0896724048ea0565274ee3bf" name="a8b4eb0dc0896724048ea0565274ee3bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b4eb0dc0896724048ea0565274ee3bf">&#9670;&#160;</a></span>LoadXML() <span class="overload">[4/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -289,14 +412,8 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">string?&#160;</td>
-          <td class="paramname"><em>language</em> = <code>null</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>merge</em> = <code>false</code>&#160;</td>
+          <td class="paramname"><em>merge</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -306,11 +423,10 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Loads a localization configuration from a stream in XML format.  </p>
+<p>Loads translations for the current localizer language from a localization configuration file in XML format obtained from a stream.  </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">stream</td><td>Stream with the localization configuration in XML format</td></tr>
-    <tr><td class="paramname">language</td><td>Name, code or identifier for the target language of translations, or <code>null</code> to use the current UI language (obtained from System.Globalization.CultureInfo.CurrentUICulture)</td></tr>
+    <tr><td class="paramname">stream</td><td>Stream with the localization configuration</td></tr>
     <tr><td class="paramname">merge</td><td>Replaces the current translations with the loaded ones when&lt;c&gt;false, otherwise merges both (existing translations are overridden with loaded ones).</td></tr>
   </table>
   </dd>
@@ -322,12 +438,102 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#ace2d2f1edfc46f3e557f33999c6aa499">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1Localizer.html#ace2d2f1edfc46f3e557f33999c6aa499">Localizer</a>.</p>
+<p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a8b4eb0dc0896724048ea0565274ee3bf">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1Localizer.html#a8b4eb0dc0896724048ea0565274ee3bf">Localizer</a>.</p>
 
 </div>
 </div>
-<a id="aab40cff67e68d7d1c3655f01cd1d4540" name="aab40cff67e68d7d1c3655f01cd1d4540"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aab40cff67e68d7d1c3655f01cd1d4540">&#9670;&#160;</a></span>LoadXML() <span class="overload">[3/4]</span></h2>
+<a id="aefaf9612d22c7f62f81a9e978dacc076" name="aefaf9612d22c7f62f81a9e978dacc076"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefaf9612d22c7f62f81a9e978dacc076">&#9670;&#160;</a></span>LoadXML() <span class="overload">[5/12]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LoadXML </td>
+          <td>(</td>
+          <td class="paramtype">Stream&#160;</td>
+          <td class="paramname"><em>stream</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">CultureInfo?&#160;</td>
+          <td class="paramname"><em>culture</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Loads translations for the given <em>culture</em>  from a localization configuration file in XML format obtained from a stream.  </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">stream</td><td>Stream with the localization configuration</td></tr>
+    <tr><td class="paramname">culture</td><td>Culture for the target language of translations, or <code>null</code> to use the current UI culture (obtained from System.Globalization.CultureInfo.CurrentUICulture)</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classI18N_1_1DotNet_1_1ILoadableLocalizer_1_1ParseException.html" title="Exception thrown when a localization file cannot be parsed properly.">ParseException</a></td><td>Thrown when the stream contents cannot be parsed properly.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#aefaf9612d22c7f62f81a9e978dacc076">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1Localizer.html#aefaf9612d22c7f62f81a9e978dacc076">Localizer</a>.</p>
+
+</div>
+</div>
+<a id="a079226db0161c717ca541f37cc3c578f" name="a079226db0161c717ca541f37cc3c578f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a079226db0161c717ca541f37cc3c578f">&#9670;&#160;</a></span>LoadXML() <span class="overload">[6/12]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LoadXML </td>
+          <td>(</td>
+          <td class="paramtype">Stream&#160;</td>
+          <td class="paramname"><em>stream</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>language</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Loads translations for the given <em>language</em>  from a localization configuration file obtained in XML format from a stream.  </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">stream</td><td>Stream with the localization configuration</td></tr>
+    <tr><td class="paramname">language</td><td>Name, code or identifier for the target language of translations</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classI18N_1_1DotNet_1_1ILoadableLocalizer_1_1ParseException.html" title="Exception thrown when a localization file cannot be parsed properly.">ParseException</a></td><td>Thrown when the stream contents cannot be parsed properly.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a079226db0161c717ca541f37cc3c578f">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1Localizer.html#a079226db0161c717ca541f37cc3c578f">Localizer</a>.</p>
+
+</div>
+</div>
+<a id="a21a0a557c377bb6a3799bf90a9e42a09" name="a21a0a557c377bb6a3799bf90a9e42a09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21a0a557c377bb6a3799bf90a9e42a09">&#9670;&#160;</a></span>LoadXML() <span class="overload">[7/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -341,14 +547,8 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">string?&#160;</td>
-          <td class="paramname"><em>language</em> = <code>null</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>merge</em> = <code>false</code>&#160;</td>
+          <td class="paramname"><em>merge</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -358,11 +558,10 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Loads a localization configuration from a file in XML format.  </p>
+<p>Loads translations for the current localizer language from a localization configuration file in XML format.  </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">filepath</td><td>Path to the localization configuration file in XML format</td></tr>
-    <tr><td class="paramname">language</td><td>Name, code or identifier for the target language of translations, or <code>null</code> to use the current UI language (obtained from System.Globalization.CultureInfo.CurrentUICulture)</td></tr>
+    <tr><td class="paramname">filepath</td><td>Path to the localization configuration file</td></tr>
     <tr><td class="paramname">merge</td><td>Replaces the current translations with the loaded ones when&lt;c&gt;false, otherwise merges both (existing translations are overridden with loaded ones).</td></tr>
   </table>
   </dd>
@@ -374,12 +573,102 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#aab40cff67e68d7d1c3655f01cd1d4540">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1Localizer.html#aab40cff67e68d7d1c3655f01cd1d4540">Localizer</a>.</p>
+<p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a21a0a557c377bb6a3799bf90a9e42a09">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1Localizer.html#a21a0a557c377bb6a3799bf90a9e42a09">Localizer</a>.</p>
 
 </div>
 </div>
-<a id="a5ebf8218d984abe6b8ad3d3906a103f9" name="a5ebf8218d984abe6b8ad3d3906a103f9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ebf8218d984abe6b8ad3d3906a103f9">&#9670;&#160;</a></span>LoadXML() <span class="overload">[4/4]</span></h2>
+<a id="a1b87da9455d6fda3b154b696085f54bb" name="a1b87da9455d6fda3b154b696085f54bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b87da9455d6fda3b154b696085f54bb">&#9670;&#160;</a></span>LoadXML() <span class="overload">[8/12]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LoadXML </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>filepath</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">CultureInfo?&#160;</td>
+          <td class="paramname"><em>culture</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Loads translations for the given <em>culture</em>  from a localization configuration file in XML format.  </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filepath</td><td>Path to the localization configuration file</td></tr>
+    <tr><td class="paramname">culture</td><td>Culture for the target language of translations, or <code>null</code> to use the current UI culture (obtained from System.Globalization.CultureInfo.CurrentUICulture)</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classI18N_1_1DotNet_1_1ILoadableLocalizer_1_1ParseException.html" title="Exception thrown when a localization file cannot be parsed properly.">ParseException</a></td><td>Thrown when the input file cannot be parsed properly.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a1b87da9455d6fda3b154b696085f54bb">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1Localizer.html#a1b87da9455d6fda3b154b696085f54bb">Localizer</a>.</p>
+
+</div>
+</div>
+<a id="a6c5b084841aedca01579ca5448ee6045" name="a6c5b084841aedca01579ca5448ee6045"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c5b084841aedca01579ca5448ee6045">&#9670;&#160;</a></span>LoadXML() <span class="overload">[9/12]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LoadXML </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>filepath</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>language</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Loads translations for the given <em>language</em>  from a localization configuration file in XML format.  </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filepath</td><td>Path to the localization configuration file</td></tr>
+    <tr><td class="paramname">language</td><td>Name, code or identifier for the target language of translations</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classI18N_1_1DotNet_1_1ILoadableLocalizer_1_1ParseException.html" title="Exception thrown when a localization file cannot be parsed properly.">ParseException</a></td><td>Thrown when the input file cannot be parsed properly.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a6c5b084841aedca01579ca5448ee6045">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1Localizer.html#a6c5b084841aedca01579ca5448ee6045">Localizer</a>.</p>
+
+</div>
+</div>
+<a id="a8106f75668262cd54774be6a6125add2" name="a8106f75668262cd54774be6a6125add2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8106f75668262cd54774be6a6125add2">&#9670;&#160;</a></span>LoadXML() <span class="overload">[10/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -393,14 +682,8 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">string?&#160;</td>
-          <td class="paramname"><em>language</em> = <code>null</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>merge</em> = <code>false</code>&#160;</td>
+          <td class="paramname"><em>merge</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -410,12 +693,56 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Loads a localization configuration from a XML document.  </p>
+<p>Loads translations for the current localizer language from a localization configuration in an XML document.  </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">doc</td><td>XML document with the localization configuration</td></tr>
-    <tr><td class="paramname">language</td><td>Name, code or identifier for the target language of translations, or <code>null</code> to use the current UI language (obtained from System.Globalization.CultureInfo.CurrentUICulture)</td></tr>
     <tr><td class="paramname">merge</td><td>Replaces the current translations with the loaded ones when&lt;c&gt;false, otherwise merges both (existing translations are overridden with loaded ones).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classI18N_1_1DotNet_1_1ILoadableLocalizer_1_1ParseException.html" title="Exception thrown when a localization file cannot be parsed properly.">ParseException</a></td><td>Thrown when the stream contents cannot be parsed properly.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a8106f75668262cd54774be6a6125add2">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1Localizer.html#a8106f75668262cd54774be6a6125add2">Localizer</a>.</p>
+
+</div>
+</div>
+<a id="a919a2c010a147fe3629cd540c3d98750" name="a919a2c010a147fe3629cd540c3d98750"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a919a2c010a147fe3629cd540c3d98750">&#9670;&#160;</a></span>LoadXML() <span class="overload">[11/12]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LoadXML </td>
+          <td>(</td>
+          <td class="paramtype">XDocument&#160;</td>
+          <td class="paramname"><em>doc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">CultureInfo?&#160;</td>
+          <td class="paramname"><em>culture</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Loads translations for the given <em>culture</em>  from a localization configuration in an XML document.  </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">doc</td><td>XML document with the localization configuration</td></tr>
+    <tr><td class="paramname">culture</td><td>Culture for the target language of translations, or <code>null</code> to use the current UI culture (obtained from System.Globalization.CultureInfo.CurrentUICulture)</td></tr>
   </table>
   </dd>
 </dl>
@@ -426,7 +753,52 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a5ebf8218d984abe6b8ad3d3906a103f9">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1Localizer.html#a5ebf8218d984abe6b8ad3d3906a103f9">Localizer</a>.</p>
+<p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a919a2c010a147fe3629cd540c3d98750">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1Localizer.html#a919a2c010a147fe3629cd540c3d98750">Localizer</a>.</p>
+
+</div>
+</div>
+<a id="a0edaf6f20f7f6ef2c6848fa99f760a6e" name="a0edaf6f20f7f6ef2c6848fa99f760a6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0edaf6f20f7f6ef2c6848fa99f760a6e">&#9670;&#160;</a></span>LoadXML() <span class="overload">[12/12]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LoadXML </td>
+          <td>(</td>
+          <td class="paramtype">XDocument&#160;</td>
+          <td class="paramname"><em>doc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>language</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Loads translations for the given <em>language</em>  from a localization configuration in an XML document.  </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">doc</td><td>XML document with the localization configuration</td></tr>
+    <tr><td class="paramname">language</td><td>Name, code or identifier for the target language of translations</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classI18N_1_1DotNet_1_1ILoadableLocalizer_1_1ParseException.html" title="Exception thrown when a localization file cannot be parsed properly.">ParseException</a></td><td>Thrown when the input document cannot be parsed properly.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a0edaf6f20f7f6ef2c6848fa99f760a6e">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1Localizer.html#a0edaf6f20f7f6ef2c6848fa99f760a6e">Localizer</a>.</p>
 
 </div>
 </div>
@@ -464,7 +836,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Formatted string generated from the language-specific localized format string if found, or generated from<em>frmtText</em>  otherwise</dd></dl>
 
-<p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a7499982383540c50c9c8af4ca77b148a">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1Localizer.html#a7499982383540c50c9c8af4ca77b148a">Localizer</a>.</p>
+<p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a7499982383540c50c9c8af4ca77b148a">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1ContextLocalizer.html#a7499982383540c50c9c8af4ca77b148a">ContextLocalizer</a>.</p>
 
 </div>
 </div>
@@ -502,7 +874,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
-<p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a3579424af7a27438a10c409e974bcdbf">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1Localizer.html#a3579424af7a27438a10c409e974bcdbf">Localizer</a>.</p>
+<p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a3579424af7a27438a10c409e974bcdbf">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1ContextLocalizer.html#a3579424af7a27438a10c409e974bcdbf">ContextLocalizer</a>.</p>
 
 </div>
 </div>
@@ -540,7 +912,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Language-specific localized string if found, or <em>text</em>  otherwise</dd></dl>
 
-<p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#ada22a224e5a85fd1589101df66e1d0f2">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1Localizer.html#ada22a224e5a85fd1589101df66e1d0f2">Localizer</a>.</p>
+<p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#ada22a224e5a85fd1589101df66e1d0f2">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1ContextLocalizer.html#ada22a224e5a85fd1589101df66e1d0f2">ContextLocalizer</a>.</p>
 
 </div>
 </div>

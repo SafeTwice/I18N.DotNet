@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@3d843d</span>
+   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@54211f</span>
    </div>
   </td>
  </tr>
@@ -76,6 +76,7 @@ $(function() {
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="#properties">Properties</a> &#124;
 <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">AutoLoadLocalizer Class Reference</div></div>
 </div><!--header-->
@@ -90,7 +91,7 @@ Inheritance diagram for AutoLoadLocalizer:</div>
   <img src="classI18N_1_1DotNet_1_1AutoLoadLocalizer.png" usemap="#AutoLoadLocalizer_map" alt=""/>
   <map id="AutoLoadLocalizer_map" name="AutoLoadLocalizer_map">
 <area href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html" title="Localizer which translations can be loaded from different sources." alt="ILoadableLocalizer" shape="rect" coords="0,56,119,80"/>
-<area href="interfaceI18N_1_1DotNet_1_1ILocalizer.html" title="Converter of strings from a language-neutral value to its corresponding language-specific localizatio..." alt="ILocalizer" shape="rect" coords="0,0,119,24"/>
+<area href="interfaceI18N_1_1DotNet_1_1ILocalizer.html" title="Converter of strings from a base-language value to its corresponding language-specific localization." alt="ILocalizer" shape="rect" coords="0,0,119,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -100,54 +101,28 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ae0c4a3234fe720385dcf5031f297c487"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.   <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#ae0c4a3234fe720385dcf5031f297c487">More...</a><br /></td></tr>
 <tr class="separator:ae0c4a3234fe720385dcf5031f297c487"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada22a224e5a85fd1589101df66e1d0f2"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#ada22a224e5a85fd1589101df66e1d0f2">Localize</a> (<a class="el" href="classI18N_1_1DotNet_1_1PlainString.html">PlainString</a> text)</td></tr>
-<tr class="memdesc:ada22a224e5a85fd1589101df66e1d0f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localizes a string. Converts the language-neutral string <em>text</em>  to its corresponding language-specific localized value.   <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#ada22a224e5a85fd1589101df66e1d0f2">More...</a><br /></td></tr>
+<tr class="memdesc:ada22a224e5a85fd1589101df66e1d0f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localizes a string. Converts the base-language string <em>text</em>  to its corresponding language-specific localized value.   <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#ada22a224e5a85fd1589101df66e1d0f2">More...</a><br /></td></tr>
 <tr class="separator:ada22a224e5a85fd1589101df66e1d0f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7499982383540c50c9c8af4ca77b148a"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a7499982383540c50c9c8af4ca77b148a">Localize</a> (FormattableString frmtText)</td></tr>
-<tr class="memdesc:a7499982383540c50c9c8af4ca77b148a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localizes an interpolated string. Converts the composite format string of the language-neutral formattable string <em>frmtText</em>  ( e.g.an interpolated string) to its corresponding language-specific localized composite format value, and then generates the result by formatting the localized composite format value along with the<em>frmtText</em>  arguments by using the formatting conventions of the current culture.   <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a7499982383540c50c9c8af4ca77b148a">More...</a><br /></td></tr>
+<tr class="memdesc:a7499982383540c50c9c8af4ca77b148a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localizes an interpolated string. Converts the composite format string of the base-language formattable string <em>frmtText</em>  (e.g. an interpolated string) to its corresponding language-specific localized composite format value, and then generates the result by formatting the localized composite format value along with the<em>frmtText</em>  arguments by using the formatting conventions of the localizer culture.   <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a7499982383540c50c9c8af4ca77b148a">More...</a><br /></td></tr>
 <tr class="separator:a7499982383540c50c9c8af4ca77b148a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3579424af7a27438a10c409e974bcdbf"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a3579424af7a27438a10c409e974bcdbf">Localize</a> (IEnumerable&lt; string &gt; texts)</td></tr>
-<tr class="memdesc:a3579424af7a27438a10c409e974bcdbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localizes multiple strings. Converts the language-neutral strings in <em>texts</em>  to their corresponding language-specific localized values.   <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a3579424af7a27438a10c409e974bcdbf">More...</a><br /></td></tr>
+<tr class="memdesc:a3579424af7a27438a10c409e974bcdbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localizes multiple strings. Converts the base-language strings in <em>texts</em>  to their corresponding language-specific localized values.   <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a3579424af7a27438a10c409e974bcdbf">More...</a><br /></td></tr>
 <tr class="separator:a3579424af7a27438a10c409e974bcdbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f19386626945b60ec58ca38a91b7d35"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a0f19386626945b60ec58ca38a91b7d35">LocalizeFormat</a> (string format, params object[] args)</td></tr>
-<tr class="memdesc:a0f19386626945b60ec58ca38a91b7d35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localizes and then formats a string. Converts the language-neutral format string <em>format</em>  to its corresponding language-specific localized format value, and then generates the result by formatting the localized format value along with the<em>args</em>  arguments by using the formatting conventions of the current culture.   <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a0f19386626945b60ec58ca38a91b7d35">More...</a><br /></td></tr>
+<tr class="memdesc:a0f19386626945b60ec58ca38a91b7d35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localizes and then formats a string. Converts the base-language format string <em>format</em>  to its corresponding language-specific localized format value, and then generates the result by formatting the localized format value along with the<em>args</em>  arguments by using the formatting conventions of the localizer culture.   <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a0f19386626945b60ec58ca38a91b7d35">More...</a><br /></td></tr>
 <tr class="separator:a0f19386626945b60ec58ca38a91b7d35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae49c2e04c4044ffb978c74f29acec614"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interfaceI18N_1_1DotNet_1_1ILocalizer.html">ILocalizer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#ae49c2e04c4044ffb978c74f29acec614">Context</a> (string contextId)</td></tr>
-<tr class="memdesc:ae49c2e04c4044ffb978c74f29acec614"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the localizer for a context in the current localizer. Contexts are used to disambiguate the conversion of the same language-neutral string to different language-specific strings depending on the context where the conversion is performed.   <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#ae49c2e04c4044ffb978c74f29acec614">More...</a><br /></td></tr>
+<tr class="memdesc:ae49c2e04c4044ffb978c74f29acec614"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the localizer for a context in the current localizer. Contexts are used to disambiguate the conversion of the same base-language string to different language-specific strings depending on the context where the conversion is performed.   <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#ae49c2e04c4044ffb978c74f29acec614">More...</a><br /></td></tr>
 <tr class="separator:ae49c2e04c4044ffb978c74f29acec614"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5fca3a722db044bd6c40299650ba3c8b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interfaceI18N_1_1DotNet_1_1ILocalizer.html">ILocalizer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a5fca3a722db044bd6c40299650ba3c8b">Context</a> (IEnumerable&lt; string &gt; splitContextIds)</td></tr>
-<tr class="memdesc:a5fca3a722db044bd6c40299650ba3c8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the localizer for a context in the current localizer. Contexts are used to disambiguate the conversion of the same language-neutral string to different language-specific strings depending on the context where the conversion is performed.   <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a5fca3a722db044bd6c40299650ba3c8b">More...</a><br /></td></tr>
+<tr class="memdesc:a5fca3a722db044bd6c40299650ba3c8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the localizer for a context in the current localizer. Contexts are used to disambiguate the conversion of the same base-language string to different language-specific strings depending on the context where the conversion is performed.   <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a5fca3a722db044bd6c40299650ba3c8b">More...</a><br /></td></tr>
 <tr class="separator:a5fca3a722db044bd6c40299650ba3c8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b87da9455d6fda3b154b696085f54bb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a1b87da9455d6fda3b154b696085f54bb">LoadXML</a> (string filepath, CultureInfo? culture=null)</td></tr>
-<tr class="memdesc:a1b87da9455d6fda3b154b696085f54bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the given <em>culture</em>  from a localization configuration file in XML format. <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">filepath</td><td>Path to the localization configuration file</td></tr>
-    <tr><td class="paramname">culture</td><td>Culture for the target language of translations, or <code>null</code> to use the current UI culture (obtained from System.Globalization.CultureInfo.CurrentUICulture)</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classI18N_1_1DotNet_1_1ILoadableLocalizer_1_1ParseException.html" title="Exception thrown when a localization file cannot be parsed properly.">ParseException</a></td><td>Thrown when the input file cannot be parsed properly.</td></tr>
-  </table>
-  </dd>
-</dl>
-  <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a1b87da9455d6fda3b154b696085f54bb">More...</a><br /></td></tr>
+<tr class="memdesc:a1b87da9455d6fda3b154b696085f54bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the given <em>culture</em>  from a localization configuration file in XML format. All the translations loaded previously in the localizer are discarded and replaced with the new ones.   <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a1b87da9455d6fda3b154b696085f54bb">More...</a><br /></td></tr>
 <tr class="separator:a1b87da9455d6fda3b154b696085f54bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c5b084841aedca01579ca5448ee6045"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a6c5b084841aedca01579ca5448ee6045">LoadXML</a> (string filepath, string language)</td></tr>
-<tr class="memdesc:a6c5b084841aedca01579ca5448ee6045"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the given <em>language</em>  from a localization configuration file in XML format. <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">filepath</td><td>Path to the localization configuration file</td></tr>
-    <tr><td class="paramname">language</td><td>Name, code or identifier for the target language of translations</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classI18N_1_1DotNet_1_1ILoadableLocalizer_1_1ParseException.html" title="Exception thrown when a localization file cannot be parsed properly.">ParseException</a></td><td>Thrown when the input file cannot be parsed properly.</td></tr>
-  </table>
-  </dd>
-</dl>
-  <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a6c5b084841aedca01579ca5448ee6045">More...</a><br /></td></tr>
+<tr class="memdesc:a6c5b084841aedca01579ca5448ee6045"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the given <em>language</em>  from a localization configuration file in XML format. All the translations loaded previously in the localizer are discarded and replaced with the new ones.   <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a6c5b084841aedca01579ca5448ee6045">More...</a><br /></td></tr>
 <tr class="separator:a6c5b084841aedca01579ca5448ee6045"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a21a0a557c377bb6a3799bf90a9e42a09"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a21a0a557c377bb6a3799bf90a9e42a09">LoadXML</a> (string filepath, bool merge)</td></tr>
 <tr class="memdesc:a21a0a557c377bb6a3799bf90a9e42a09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the current localizer language from a localization configuration file in XML format. <dl class="params"><dt>Parameters</dt><dd>
@@ -166,36 +141,10 @@ Public Member Functions</h2></td></tr>
   <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a21a0a557c377bb6a3799bf90a9e42a09">More...</a><br /></td></tr>
 <tr class="separator:a21a0a557c377bb6a3799bf90a9e42a09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aefaf9612d22c7f62f81a9e978dacc076"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#aefaf9612d22c7f62f81a9e978dacc076">LoadXML</a> (Stream stream, CultureInfo? culture=null)</td></tr>
-<tr class="memdesc:aefaf9612d22c7f62f81a9e978dacc076"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the given <em>culture</em>  from a localization configuration file in XML format obtained from a stream. <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">stream</td><td>Stream with the localization configuration</td></tr>
-    <tr><td class="paramname">culture</td><td>Culture for the target language of translations, or <code>null</code> to use the current UI culture (obtained from System.Globalization.CultureInfo.CurrentUICulture)</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classI18N_1_1DotNet_1_1ILoadableLocalizer_1_1ParseException.html" title="Exception thrown when a localization file cannot be parsed properly.">ParseException</a></td><td>Thrown when the stream contents cannot be parsed properly.</td></tr>
-  </table>
-  </dd>
-</dl>
-  <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#aefaf9612d22c7f62f81a9e978dacc076">More...</a><br /></td></tr>
+<tr class="memdesc:aefaf9612d22c7f62f81a9e978dacc076"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the given <em>culture</em>  from a localization configuration file in XML format obtained from a stream. All the translations loaded previously in the localizer are discarded and replaced with the new ones.   <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#aefaf9612d22c7f62f81a9e978dacc076">More...</a><br /></td></tr>
 <tr class="separator:aefaf9612d22c7f62f81a9e978dacc076"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a079226db0161c717ca541f37cc3c578f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a079226db0161c717ca541f37cc3c578f">LoadXML</a> (Stream stream, string language)</td></tr>
-<tr class="memdesc:a079226db0161c717ca541f37cc3c578f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the given <em>language</em>  from a localization configuration file obtained in XML format from a stream. <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">stream</td><td>Stream with the localization configuration</td></tr>
-    <tr><td class="paramname">language</td><td>Name, code or identifier for the target language of translations</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classI18N_1_1DotNet_1_1ILoadableLocalizer_1_1ParseException.html" title="Exception thrown when a localization file cannot be parsed properly.">ParseException</a></td><td>Thrown when the stream contents cannot be parsed properly.</td></tr>
-  </table>
-  </dd>
-</dl>
-  <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a079226db0161c717ca541f37cc3c578f">More...</a><br /></td></tr>
+<tr class="memdesc:a079226db0161c717ca541f37cc3c578f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the given <em>language</em>  from a localization configuration file obtained in XML format from a stream. All the translations loaded previously in the localizer are discarded and replaced with the new ones.   <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a079226db0161c717ca541f37cc3c578f">More...</a><br /></td></tr>
 <tr class="separator:a079226db0161c717ca541f37cc3c578f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b4eb0dc0896724048ea0565274ee3bf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a8b4eb0dc0896724048ea0565274ee3bf">LoadXML</a> (Stream stream, bool merge)</td></tr>
 <tr class="memdesc:a8b4eb0dc0896724048ea0565274ee3bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the current localizer language from a localization configuration file in XML format obtained from a stream. <dl class="params"><dt>Parameters</dt><dd>
@@ -214,36 +163,10 @@ Public Member Functions</h2></td></tr>
   <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a8b4eb0dc0896724048ea0565274ee3bf">More...</a><br /></td></tr>
 <tr class="separator:a8b4eb0dc0896724048ea0565274ee3bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a919a2c010a147fe3629cd540c3d98750"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a919a2c010a147fe3629cd540c3d98750">LoadXML</a> (XDocument doc, CultureInfo? culture=null)</td></tr>
-<tr class="memdesc:a919a2c010a147fe3629cd540c3d98750"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the given <em>culture</em>  from a localization configuration in an XML document. <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">doc</td><td>XML document with the localization configuration</td></tr>
-    <tr><td class="paramname">culture</td><td>Culture for the target language of translations, or <code>null</code> to use the current UI culture (obtained from System.Globalization.CultureInfo.CurrentUICulture)</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classI18N_1_1DotNet_1_1ILoadableLocalizer_1_1ParseException.html" title="Exception thrown when a localization file cannot be parsed properly.">ParseException</a></td><td>Thrown when the input document cannot be parsed properly.</td></tr>
-  </table>
-  </dd>
-</dl>
-  <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a919a2c010a147fe3629cd540c3d98750">More...</a><br /></td></tr>
+<tr class="memdesc:a919a2c010a147fe3629cd540c3d98750"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the given <em>culture</em>  from a localization configuration in an XML document. All the translations loaded previously in the localizer are discarded and replaced with the new ones.   <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a919a2c010a147fe3629cd540c3d98750">More...</a><br /></td></tr>
 <tr class="separator:a919a2c010a147fe3629cd540c3d98750"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0edaf6f20f7f6ef2c6848fa99f760a6e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a0edaf6f20f7f6ef2c6848fa99f760a6e">LoadXML</a> (XDocument doc, string language)</td></tr>
-<tr class="memdesc:a0edaf6f20f7f6ef2c6848fa99f760a6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the given <em>language</em>  from a localization configuration in an XML document. <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">doc</td><td>XML document with the localization configuration</td></tr>
-    <tr><td class="paramname">language</td><td>Name, code or identifier for the target language of translations</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classI18N_1_1DotNet_1_1ILoadableLocalizer_1_1ParseException.html" title="Exception thrown when a localization file cannot be parsed properly.">ParseException</a></td><td>Thrown when the input document cannot be parsed properly.</td></tr>
-  </table>
-  </dd>
-</dl>
-  <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a0edaf6f20f7f6ef2c6848fa99f760a6e">More...</a><br /></td></tr>
+<tr class="memdesc:a0edaf6f20f7f6ef2c6848fa99f760a6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the given <em>language</em>  from a localization configuration in an XML document. All the translations loaded previously in the localizer are discarded and replaced with the new ones.   <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a0edaf6f20f7f6ef2c6848fa99f760a6e">More...</a><br /></td></tr>
 <tr class="separator:a0edaf6f20f7f6ef2c6848fa99f760a6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8106f75668262cd54774be6a6125add2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a8106f75668262cd54774be6a6125add2">LoadXML</a> (XDocument doc, bool merge)</td></tr>
 <tr class="memdesc:a8106f75668262cd54774be6a6125add2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the current localizer language from a localization configuration in an XML document. <dl class="params"><dt>Parameters</dt><dd>
@@ -262,40 +185,10 @@ Public Member Functions</h2></td></tr>
   <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a8106f75668262cd54774be6a6125add2">More...</a><br /></td></tr>
 <tr class="separator:a8106f75668262cd54774be6a6125add2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af7fb30eb59dc566a4fe997cc3acf884a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#af7fb30eb59dc566a4fe997cc3acf884a">LoadXML</a> (Assembly assembly, string resourceName, CultureInfo? culture=null)</td></tr>
-<tr class="memdesc:af7fb30eb59dc566a4fe997cc3acf884a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the given <em>culture</em>  from a localization configuration file in XML format obtained from an embedded resource in the given assembly. <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">assembly</td><td>Assembly that contains the embedded XML file</td></tr>
-    <tr><td class="paramname">resourceName</td><td>Name of the embedded resource for the XML file</td></tr>
-    <tr><td class="paramname">culture</td><td>Culture for the target language of translations, or <code>null</code> to use the current UI culture (obtained from System.Globalization.CultureInfo.CurrentUICulture)</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classI18N_1_1DotNet_1_1ILoadableLocalizer_1_1ParseException.html" title="Exception thrown when a localization file cannot be parsed properly.">ParseException</a></td><td>Thrown when the embedded resource contents cannot be parsed properly.</td></tr>
-    <tr><td class="paramname">InvalidOperationException</td><td>Thrown when the embedded resource could not be found in the given assembly.</td></tr>
-  </table>
-  </dd>
-</dl>
-  <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#af7fb30eb59dc566a4fe997cc3acf884a">More...</a><br /></td></tr>
+<tr class="memdesc:af7fb30eb59dc566a4fe997cc3acf884a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the given <em>culture</em>  from a localization configuration file in XML format obtained from an embedded resource in the given assembly. All the translations loaded previously in the localizer are discarded and replaced with the new ones.   <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#af7fb30eb59dc566a4fe997cc3acf884a">More...</a><br /></td></tr>
 <tr class="separator:af7fb30eb59dc566a4fe997cc3acf884a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adbd615f0dde8b673e359e821c19ff8a7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#adbd615f0dde8b673e359e821c19ff8a7">LoadXML</a> (Assembly assembly, string resourceName, string language)</td></tr>
-<tr class="memdesc:adbd615f0dde8b673e359e821c19ff8a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the given <em>language</em>  from a localization configuration file in XML format obtained from an embedded resource in the given assembly. <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">assembly</td><td>Assembly that contains the embedded XML file</td></tr>
-    <tr><td class="paramname">resourceName</td><td>Name of the embedded resource for the XML file</td></tr>
-    <tr><td class="paramname">language</td><td>Name, code or identifier for the target language of translations</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classI18N_1_1DotNet_1_1ILoadableLocalizer_1_1ParseException.html" title="Exception thrown when a localization file cannot be parsed properly.">ParseException</a></td><td>Thrown when the embedded resource contents cannot be parsed properly.</td></tr>
-    <tr><td class="paramname">InvalidOperationException</td><td>Thrown when the embedded resource could not be found in the given assembly.</td></tr>
-  </table>
-  </dd>
-</dl>
-  <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#adbd615f0dde8b673e359e821c19ff8a7">More...</a><br /></td></tr>
+<tr class="memdesc:adbd615f0dde8b673e359e821c19ff8a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the given <em>language</em>  from a localization configuration file in XML format obtained from an embedded resource in the given assembly. All the translations loaded previously in the localizer are discarded and replaced with the new ones.   <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#adbd615f0dde8b673e359e821c19ff8a7">More...</a><br /></td></tr>
 <tr class="separator:adbd615f0dde8b673e359e821c19ff8a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d25052f5c2effada93b2bf2aba410ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a9d25052f5c2effada93b2bf2aba410ff">LoadXML</a> (Assembly assembly, string resourceName, bool merge)</td></tr>
 <tr class="memdesc:a9d25052f5c2effada93b2bf2aba410ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads translations for the current localizer language from a localization configuration file in XML format obtained from an embedded resource in the given assembly. <dl class="params"><dt>Parameters</dt><dd>
@@ -327,6 +220,15 @@ Static Public Attributes</h2></td></tr>
 <tr class="memitem:a3ef7185eb11cf86c4c320b5514c13896"><td class="memItemLeft" align="right" valign="top">const string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a3ef7185eb11cf86c4c320b5514c13896">DEFAULT_RESOURCE_NAME</a> = &quot;Resources.I18N.xml&quot;</td></tr>
 <tr class="memdesc:a3ef7185eb11cf86c4c320b5514c13896"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default identifier for the embedded resource containing the translations.   <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a3ef7185eb11cf86c4c320b5514c13896">More...</a><br /></td></tr>
 <tr class="separator:a3ef7185eb11cf86c4c320b5514c13896"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="properties" name="properties"></a>
+Properties</h2></td></tr>
+<tr class="memitem:a6b228f6031b66411cbe6c8ee269d2be8"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a6b228f6031b66411cbe6c8ee269d2be8">TargetLanguage</a><code> [get]</code></td></tr>
+<tr class="memdesc:a6b228f6031b66411cbe6c8ee269d2be8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Target language of the localizer.   <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a6b228f6031b66411cbe6c8ee269d2be8">More...</a><br /></td></tr>
+<tr class="separator:a6b228f6031b66411cbe6c8ee269d2be8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d9a8900dac1446d2d1850ade8e320f5"><td class="memItemLeft" align="right" valign="top">CultureInfo&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a7d9a8900dac1446d2d1850ade8e320f5">TargetCulture</a><code> [get]</code></td></tr>
+<tr class="memdesc:a7d9a8900dac1446d2d1850ade8e320f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Target culture of the localizer.   <a href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a7d9a8900dac1446d2d1850ade8e320f5">More...</a><br /></td></tr>
+<tr class="separator:a7d9a8900dac1446d2d1850ade8e320f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Implementation of a localizer which configuration is automatically loaded from an embedded resource.  </p>
@@ -386,7 +288,7 @@ Static Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the localizer for a context in the current localizer. Contexts are used to disambiguate the conversion of the same language-neutral string to different language-specific strings depending on the context where the conversion is performed.  </p>
+<p>Gets the localizer for a context in the current localizer. Contexts are used to disambiguate the conversion of the same base-language string to different language-specific strings depending on the context where the conversion is performed.  </p>
 
 <p>Implements <a class="el" href="interfaceI18N_1_1DotNet_1_1ILocalizer.html#a5fca3a722db044bd6c40299650ba3c8b">ILocalizer</a>.</p>
 
@@ -408,7 +310,7 @@ Static Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the localizer for a context in the current localizer. Contexts are used to disambiguate the conversion of the same language-neutral string to different language-specific strings depending on the context where the conversion is performed.  </p>
+<p>Gets the localizer for a context in the current localizer. Contexts are used to disambiguate the conversion of the same base-language string to different language-specific strings depending on the context where the conversion is performed.  </p>
 
 <p>Implements <a class="el" href="interfaceI18N_1_1DotNet_1_1ILocalizer.html#ae49c2e04c4044ffb978c74f29acec614">ILocalizer</a>.</p>
 
@@ -565,22 +467,7 @@ Static Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Loads translations for the given <em>culture</em>  from a localization configuration file in XML format obtained from an embedded resource in the given assembly. <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">assembly</td><td>Assembly that contains the embedded XML file</td></tr>
-    <tr><td class="paramname">resourceName</td><td>Name of the embedded resource for the XML file</td></tr>
-    <tr><td class="paramname">culture</td><td>Culture for the target language of translations, or <code>null</code> to use the current UI culture (obtained from System.Globalization.CultureInfo.CurrentUICulture)</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classI18N_1_1DotNet_1_1ILoadableLocalizer_1_1ParseException.html" title="Exception thrown when a localization file cannot be parsed properly.">ParseException</a></td><td>Thrown when the embedded resource contents cannot be parsed properly.</td></tr>
-    <tr><td class="paramname">InvalidOperationException</td><td>Thrown when the embedded resource could not be found in the given assembly.</td></tr>
-  </table>
-  </dd>
-</dl>
- </p>
+<p>Loads translations for the given <em>culture</em>  from a localization configuration file in XML format obtained from an embedded resource in the given assembly. All the translations loaded previously in the localizer are discarded and replaced with the new ones.  </p>
 
 <p>Implements <a class="el" href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#af7fb30eb59dc566a4fe997cc3acf884a">ILoadableLocalizer</a>.</p>
 
@@ -618,22 +505,7 @@ Static Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Loads translations for the given <em>language</em>  from a localization configuration file in XML format obtained from an embedded resource in the given assembly. <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">assembly</td><td>Assembly that contains the embedded XML file</td></tr>
-    <tr><td class="paramname">resourceName</td><td>Name of the embedded resource for the XML file</td></tr>
-    <tr><td class="paramname">language</td><td>Name, code or identifier for the target language of translations</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classI18N_1_1DotNet_1_1ILoadableLocalizer_1_1ParseException.html" title="Exception thrown when a localization file cannot be parsed properly.">ParseException</a></td><td>Thrown when the embedded resource contents cannot be parsed properly.</td></tr>
-    <tr><td class="paramname">InvalidOperationException</td><td>Thrown when the embedded resource could not be found in the given assembly.</td></tr>
-  </table>
-  </dd>
-</dl>
- </p>
+<p>Loads translations for the given <em>language</em>  from a localization configuration file in XML format obtained from an embedded resource in the given assembly. All the translations loaded previously in the localizer are discarded and replaced with the new ones.  </p>
 
 <p>Implements <a class="el" href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#adbd615f0dde8b673e359e821c19ff8a7">ILoadableLocalizer</a>.</p>
 
@@ -710,20 +582,7 @@ Static Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Loads translations for the given <em>culture</em>  from a localization configuration file in XML format obtained from a stream. <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">stream</td><td>Stream with the localization configuration</td></tr>
-    <tr><td class="paramname">culture</td><td>Culture for the target language of translations, or <code>null</code> to use the current UI culture (obtained from System.Globalization.CultureInfo.CurrentUICulture)</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classI18N_1_1DotNet_1_1ILoadableLocalizer_1_1ParseException.html" title="Exception thrown when a localization file cannot be parsed properly.">ParseException</a></td><td>Thrown when the stream contents cannot be parsed properly.</td></tr>
-  </table>
-  </dd>
-</dl>
- </p>
+<p>Loads translations for the given <em>culture</em>  from a localization configuration file in XML format obtained from a stream. All the translations loaded previously in the localizer are discarded and replaced with the new ones.  </p>
 
 <p>Implements <a class="el" href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#aefaf9612d22c7f62f81a9e978dacc076">ILoadableLocalizer</a>.</p>
 
@@ -755,20 +614,7 @@ Static Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Loads translations for the given <em>language</em>  from a localization configuration file obtained in XML format from a stream. <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">stream</td><td>Stream with the localization configuration</td></tr>
-    <tr><td class="paramname">language</td><td>Name, code or identifier for the target language of translations</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classI18N_1_1DotNet_1_1ILoadableLocalizer_1_1ParseException.html" title="Exception thrown when a localization file cannot be parsed properly.">ParseException</a></td><td>Thrown when the stream contents cannot be parsed properly.</td></tr>
-  </table>
-  </dd>
-</dl>
- </p>
+<p>Loads translations for the given <em>language</em>  from a localization configuration file obtained in XML format from a stream. All the translations loaded previously in the localizer are discarded and replaced with the new ones.  </p>
 
 <p>Implements <a class="el" href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#a079226db0161c717ca541f37cc3c578f">ILoadableLocalizer</a>.</p>
 
@@ -845,20 +691,7 @@ Static Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Loads translations for the given <em>culture</em>  from a localization configuration file in XML format. <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">filepath</td><td>Path to the localization configuration file</td></tr>
-    <tr><td class="paramname">culture</td><td>Culture for the target language of translations, or <code>null</code> to use the current UI culture (obtained from System.Globalization.CultureInfo.CurrentUICulture)</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classI18N_1_1DotNet_1_1ILoadableLocalizer_1_1ParseException.html" title="Exception thrown when a localization file cannot be parsed properly.">ParseException</a></td><td>Thrown when the input file cannot be parsed properly.</td></tr>
-  </table>
-  </dd>
-</dl>
- </p>
+<p>Loads translations for the given <em>culture</em>  from a localization configuration file in XML format. All the translations loaded previously in the localizer are discarded and replaced with the new ones.  </p>
 
 <p>Implements <a class="el" href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#a1b87da9455d6fda3b154b696085f54bb">ILoadableLocalizer</a>.</p>
 
@@ -890,20 +723,7 @@ Static Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Loads translations for the given <em>language</em>  from a localization configuration file in XML format. <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">filepath</td><td>Path to the localization configuration file</td></tr>
-    <tr><td class="paramname">language</td><td>Name, code or identifier for the target language of translations</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classI18N_1_1DotNet_1_1ILoadableLocalizer_1_1ParseException.html" title="Exception thrown when a localization file cannot be parsed properly.">ParseException</a></td><td>Thrown when the input file cannot be parsed properly.</td></tr>
-  </table>
-  </dd>
-</dl>
- </p>
+<p>Loads translations for the given <em>language</em>  from a localization configuration file in XML format. All the translations loaded previously in the localizer are discarded and replaced with the new ones.  </p>
 
 <p>Implements <a class="el" href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#a6c5b084841aedca01579ca5448ee6045">ILoadableLocalizer</a>.</p>
 
@@ -980,20 +800,7 @@ Static Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Loads translations for the given <em>culture</em>  from a localization configuration in an XML document. <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">doc</td><td>XML document with the localization configuration</td></tr>
-    <tr><td class="paramname">culture</td><td>Culture for the target language of translations, or <code>null</code> to use the current UI culture (obtained from System.Globalization.CultureInfo.CurrentUICulture)</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classI18N_1_1DotNet_1_1ILoadableLocalizer_1_1ParseException.html" title="Exception thrown when a localization file cannot be parsed properly.">ParseException</a></td><td>Thrown when the input document cannot be parsed properly.</td></tr>
-  </table>
-  </dd>
-</dl>
- </p>
+<p>Loads translations for the given <em>culture</em>  from a localization configuration in an XML document. All the translations loaded previously in the localizer are discarded and replaced with the new ones.  </p>
 
 <p>Implements <a class="el" href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#a919a2c010a147fe3629cd540c3d98750">ILoadableLocalizer</a>.</p>
 
@@ -1025,20 +832,7 @@ Static Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Loads translations for the given <em>language</em>  from a localization configuration in an XML document. <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">doc</td><td>XML document with the localization configuration</td></tr>
-    <tr><td class="paramname">language</td><td>Name, code or identifier for the target language of translations</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classI18N_1_1DotNet_1_1ILoadableLocalizer_1_1ParseException.html" title="Exception thrown when a localization file cannot be parsed properly.">ParseException</a></td><td>Thrown when the input document cannot be parsed properly.</td></tr>
-  </table>
-  </dd>
-</dl>
- </p>
+<p>Loads translations for the given <em>language</em>  from a localization configuration in an XML document. All the translations loaded previously in the localizer are discarded and replaced with the new ones.  </p>
 
 <p>Implements <a class="el" href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.html#a0edaf6f20f7f6ef2c6848fa99f760a6e">ILoadableLocalizer</a>.</p>
 
@@ -1060,7 +854,7 @@ Static Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Localizes an interpolated string. Converts the composite format string of the language-neutral formattable string <em>frmtText</em>  ( e.g.an interpolated string) to its corresponding language-specific localized composite format value, and then generates the result by formatting the localized composite format value along with the<em>frmtText</em>  arguments by using the formatting conventions of the current culture.  </p>
+<p>Localizes an interpolated string. Converts the composite format string of the base-language formattable string <em>frmtText</em>  (e.g. an interpolated string) to its corresponding language-specific localized composite format value, and then generates the result by formatting the localized composite format value along with the<em>frmtText</em>  arguments by using the formatting conventions of the localizer culture.  </p>
 
 <p>Implements <a class="el" href="interfaceI18N_1_1DotNet_1_1ILocalizer.html#a7499982383540c50c9c8af4ca77b148a">ILocalizer</a>.</p>
 
@@ -1082,7 +876,7 @@ Static Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Localizes multiple strings. Converts the language-neutral strings in <em>texts</em>  to their corresponding language-specific localized values.  </p>
+<p>Localizes multiple strings. Converts the base-language strings in <em>texts</em>  to their corresponding language-specific localized values.  </p>
 
 <p>Implements <a class="el" href="interfaceI18N_1_1DotNet_1_1ILocalizer.html#a3579424af7a27438a10c409e974bcdbf">ILocalizer</a>.</p>
 
@@ -1104,7 +898,7 @@ Static Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Localizes a string. Converts the language-neutral string <em>text</em>  to its corresponding language-specific localized value.  </p>
+<p>Localizes a string. Converts the base-language string <em>text</em>  to its corresponding language-specific localized value.  </p>
 
 <p>Implements <a class="el" href="interfaceI18N_1_1DotNet_1_1ILocalizer.html#ada22a224e5a85fd1589101df66e1d0f2">ILocalizer</a>.</p>
 
@@ -1136,7 +930,7 @@ Static Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Localizes and then formats a string. Converts the language-neutral format string <em>format</em>  to its corresponding language-specific localized format value, and then generates the result by formatting the localized format value along with the<em>args</em>  arguments by using the formatting conventions of the current culture.  </p>
+<p>Localizes and then formats a string. Converts the base-language format string <em>format</em>  to its corresponding language-specific localized format value, and then generates the result by formatting the localized format value along with the<em>args</em>  arguments by using the formatting conventions of the localizer culture.  </p>
 
 <p>Implements <a class="el" href="interfaceI18N_1_1DotNet_1_1ILocalizer.html#a0f19386626945b60ec58ca38a91b7d35">ILocalizer</a>.</p>
 
@@ -1164,6 +958,59 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Default identifier for the embedded resource containing the translations.  </p>
+
+</div>
+</div>
+<h2 class="groupheader">Property Documentation</h2>
+<a id="a7d9a8900dac1446d2d1850ade8e320f5" name="a7d9a8900dac1446d2d1850ade8e320f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d9a8900dac1446d2d1850ade8e320f5">&#9670;&#160;</a></span>TargetCulture</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">CultureInfo TargetCulture</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Target culture of the localizer.  </p>
+
+<p>Implements <a class="el" href="interfaceI18N_1_1DotNet_1_1ILocalizer.html#a7d9a8900dac1446d2d1850ade8e320f5">ILocalizer</a>.</p>
+
+</div>
+</div>
+<a id="a6b228f6031b66411cbe6c8ee269d2be8" name="a6b228f6031b66411cbe6c8ee269d2be8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b228f6031b66411cbe6c8ee269d2be8">&#9670;&#160;</a></span>TargetLanguage</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">string TargetLanguage</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Target language of the localizer.  </p>
+
+<p>Implements <a class="el" href="interfaceI18N_1_1DotNet_1_1ILocalizer.html#a6b228f6031b66411cbe6c8ee269d2be8">ILocalizer</a>.</p>
 
 </div>
 </div>

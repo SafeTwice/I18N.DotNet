@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@3d843d</span>
+   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@54211f</span>
    </div>
   </td>
  </tr>
@@ -76,6 +76,7 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#properties">Properties</a> &#124;
 <a href="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">ILoadableLocalizer Interface Reference</div></div>
 </div><!--header-->
@@ -89,7 +90,7 @@ Inheritance diagram for ILoadableLocalizer:</div>
  <div class="center">
   <img src="interfaceI18N_1_1DotNet_1_1ILoadableLocalizer.png" usemap="#ILoadableLocalizer_map" alt=""/>
   <map id="ILoadableLocalizer_map" name="ILoadableLocalizer_map">
-<area href="interfaceI18N_1_1DotNet_1_1ILocalizer.html" title="Converter of strings from a language-neutral value to its corresponding language-specific localizatio..." alt="ILocalizer" shape="rect" coords="64,0,183,24"/>
+<area href="interfaceI18N_1_1DotNet_1_1ILocalizer.html" title="Converter of strings from a base-language value to its corresponding language-specific localization." alt="ILocalizer" shape="rect" coords="64,0,183,24"/>
 <area href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html" title="Implementation of a localizer which configuration is automatically loaded from an embedded resource." alt="AutoLoadLocalizer" shape="rect" coords="0,112,119,136"/>
 <area href="classI18N_1_1DotNet_1_1Localizer.html" title="Simple loadable localizer." alt="Localizer" shape="rect" coords="129,112,248,136"/>
   </map>
@@ -157,6 +158,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5fca3a722db044bd6c40299650ba3c8b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interfaceI18N_1_1DotNet_1_1ILocalizer.html">ILocalizer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceI18N_1_1DotNet_1_1ILocalizer.html#a5fca3a722db044bd6c40299650ba3c8b">Context</a> (IEnumerable&lt; string &gt; splitContextIds)</td></tr>
 <tr class="memdesc:a5fca3a722db044bd6c40299650ba3c8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the localizer for a context in the current localizer.   <a href="interfaceI18N_1_1DotNet_1_1ILocalizer.html#a5fca3a722db044bd6c40299650ba3c8b">More...</a><br /></td></tr>
 <tr class="separator:a5fca3a722db044bd6c40299650ba3c8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="properties" name="properties"></a>
+Properties</h2></td></tr>
+<tr class="memitem:a6b228f6031b66411cbe6c8ee269d2be8"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceI18N_1_1DotNet_1_1ILocalizer.html#a6b228f6031b66411cbe6c8ee269d2be8">TargetLanguage</a><code> [get]</code></td></tr>
+<tr class="memdesc:a6b228f6031b66411cbe6c8ee269d2be8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Target language of the localizer.   <a href="interfaceI18N_1_1DotNet_1_1ILocalizer.html#a6b228f6031b66411cbe6c8ee269d2be8">More...</a><br /></td></tr>
+<tr class="separator:a6b228f6031b66411cbe6c8ee269d2be8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d9a8900dac1446d2d1850ade8e320f5"><td class="memItemLeft" align="right" valign="top">CultureInfo&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceI18N_1_1DotNet_1_1ILocalizer.html#a7d9a8900dac1446d2d1850ade8e320f5">TargetCulture</a><code> [get]</code></td></tr>
+<tr class="memdesc:a7d9a8900dac1446d2d1850ade8e320f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Target culture of the localizer.   <a href="interfaceI18N_1_1DotNet_1_1ILocalizer.html#a7d9a8900dac1446d2d1850ade8e320f5">More...</a><br /></td></tr>
+<tr class="separator:a7d9a8900dac1446d2d1850ade8e320f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p ><a class="el" href="classI18N_1_1DotNet_1_1Localizer.html" title="Simple loadable localizer.">Localizer</a> which translations can be loaded from different sources.  </p>
@@ -186,7 +196,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets the localizer for a context in the current localizer.  </p>
-<p >Contexts are used to disambiguate the conversion of the same language-neutral string to different language-specific strings depending on the context where the conversion is performed. </p>
+<p >Contexts are used to disambiguate the conversion of the same base-language string to different language-specific strings depending on the context where the conversion is performed. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">splitContextIds</td><td>Chain of context identifiers in split form</td></tr>
@@ -224,7 +234,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets the localizer for a context in the current localizer.  </p>
-<p >Contexts are used to disambiguate the conversion of the same language-neutral string to different language-specific strings depending on the context where the conversion is performed. </p>
+<p >Contexts are used to disambiguate the conversion of the same base-language string to different language-specific strings depending on the context where the conversion is performed. </p>
 <p >Contexts can be nested. The context identifier can identify a chain of nested contexts by separating their identifiers with the '.' character (left = outermost / right = innermost). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -324,6 +334,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Loads translations for the given <em>culture</em>  from a localization configuration file in XML format obtained from an embedded resource in the given assembly.  </p>
+<p >All the translations loaded previously in the localizer are discarded and replaced with the new ones. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">assembly</td><td>Assembly that contains the embedded XML file</td></tr>
@@ -377,6 +388,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Loads translations for the given <em>language</em>  from a localization configuration file in XML format obtained from an embedded resource in the given assembly.  </p>
+<p >All the translations loaded previously in the localizer are discarded and replaced with the new ones. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">assembly</td><td>Assembly that contains the embedded XML file</td></tr>
@@ -469,6 +481,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Loads translations for the given <em>culture</em>  from a localization configuration file in XML format obtained from a stream.  </p>
+<p >All the translations loaded previously in the localizer are discarded and replaced with the new ones. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">stream</td><td>Stream with the localization configuration</td></tr>
@@ -514,6 +527,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Loads translations for the given <em>language</em>  from a localization configuration file obtained in XML format from a stream.  </p>
+<p >All the translations loaded previously in the localizer are discarded and replaced with the new ones. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">stream</td><td>Stream with the localization configuration</td></tr>
@@ -604,6 +618,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Loads translations for the given <em>culture</em>  from a localization configuration file in XML format.  </p>
+<p >All the translations loaded previously in the localizer are discarded and replaced with the new ones. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">filepath</td><td>Path to the localization configuration file</td></tr>
@@ -649,6 +664,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Loads translations for the given <em>language</em>  from a localization configuration file in XML format.  </p>
+<p >All the translations loaded previously in the localizer are discarded and replaced with the new ones. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">filepath</td><td>Path to the localization configuration file</td></tr>
@@ -739,6 +755,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Loads translations for the given <em>culture</em>  from a localization configuration in an XML document.  </p>
+<p >All the translations loaded previously in the localizer are discarded and replaced with the new ones. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">doc</td><td>XML document with the localization configuration</td></tr>
@@ -784,6 +801,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Loads translations for the given <em>language</em>  from a localization configuration in an XML document.  </p>
+<p >All the translations loaded previously in the localizer are discarded and replaced with the new ones. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">doc</td><td>XML document with the localization configuration</td></tr>
@@ -827,14 +845,20 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Localizes an interpolated string.  </p>
-<p >Converts the composite format string of the language-neutral formattable string <em>frmtText</em>  ( e.g.an interpolated string) to its corresponding language-specific localized composite format value, and then generates the result by formatting the localized composite format value along with the<em>frmtText</em>  arguments by using the formatting conventions of the current culture. </p>
+<p >Converts the composite format string of the base-language formattable string <em>frmtText</em>  (e.g. an interpolated string) to its corresponding language-specific localized composite format value, and then generates the result by formatting the localized composite format value along with the<em>frmtText</em>  arguments by using the formatting conventions of the localizer culture. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">frmtText</td><td>Language-neutral formattable string</td></tr>
+    <tr><td class="paramname">frmtText</td><td>Base-language formattable string</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Formatted string generated from the language-specific localized format string if found, or generated from<em>frmtText</em>  otherwise</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">FormatException</td><td>Thrown when the localized format value of <em>frmtText</em>  is invalid.</td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a7499982383540c50c9c8af4ca77b148a">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1ContextLocalizer.html#a7499982383540c50c9c8af4ca77b148a">ContextLocalizer</a>.</p>
 
@@ -865,10 +889,10 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Localizes multiple strings.  </p>
-<p >Converts the language-neutral strings in <em>texts</em>  to their corresponding language-specific localized values. </p>
+<p >Converts the base-language strings in <em>texts</em>  to their corresponding language-specific localized values. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">texts</td><td>Language-neutral strings</td></tr>
+    <tr><td class="paramname">texts</td><td>Base-language strings</td></tr>
   </table>
   </dd>
 </dl>
@@ -903,10 +927,10 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Localizes a string.  </p>
-<p >Converts the language-neutral string <em>text</em>  to its corresponding language-specific localized value. </p>
+<p >Converts the base-language string <em>text</em>  to its corresponding language-specific localized value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">text</td><td>Language-neutral string</td></tr>
+    <tr><td class="paramname">text</td><td>Base-language string</td></tr>
   </table>
   </dd>
 </dl>
@@ -951,17 +975,76 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Localizes and then formats a string.  </p>
-<p >Converts the language-neutral format string <em>format</em>  to its corresponding language-specific localized format value, and then generates the result by formatting the localized format value along with the<em>args</em>  arguments by using the formatting conventions of the current culture. </p>
+<p >Converts the base-language format string <em>format</em>  to its corresponding language-specific localized format value, and then generates the result by formatting the localized format value along with the<em>args</em>  arguments by using the formatting conventions of the localizer culture. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">format</td><td>Language-neutral format string</td></tr>
+    <tr><td class="paramname">format</td><td>Base-language format string</td></tr>
     <tr><td class="paramname">args</td><td>Arguments for the format string</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Formatted string generated from the language-specific localized format string if found, or generated from<em>format</em>  otherwise</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">FormatException</td><td>Thrown when <em>format</em>  or its localized format value is invalid.</td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a0f19386626945b60ec58ca38a91b7d35">AutoLoadLocalizer</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Property Documentation</h2>
+<a id="a7d9a8900dac1446d2d1850ade8e320f5" name="a7d9a8900dac1446d2d1850ade8e320f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d9a8900dac1446d2d1850ade8e320f5">&#9670;&#160;</a></span>TargetCulture</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">CultureInfo TargetCulture</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Target culture of the localizer.  </p>
+
+<p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a7d9a8900dac1446d2d1850ade8e320f5">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1ContextLocalizer.html#a7d9a8900dac1446d2d1850ade8e320f5">ContextLocalizer</a>.</p>
+
+</div>
+</div>
+<a id="a6b228f6031b66411cbe6c8ee269d2be8" name="a6b228f6031b66411cbe6c8ee269d2be8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b228f6031b66411cbe6c8ee269d2be8">&#9670;&#160;</a></span>TargetLanguage</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">string TargetLanguage</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Target language of the localizer.  </p>
+
+<p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a6b228f6031b66411cbe6c8ee269d2be8">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1ContextLocalizer.html#a6b228f6031b66411cbe6c8ee269d2be8">ContextLocalizer</a>.</p>
 
 </div>
 </div>

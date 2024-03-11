@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@820a1f</span>
+   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@e7cfe2</span>
    </div>
   </td>
  </tr>
@@ -393,10 +393,10 @@ ILocalizer Interface</h3>
 <h3><a class="anchor" id="autotoc_md31"></a>
 ILoadableLocalizer Interface</h3>
 <p >The <code>ILoadableLocalizer</code> interface is an extension of `ILocalizer` that represents localizer classes which provide functionality to load translations for a single target language from different sources:</p><ul>
-<li><code>LoadXML</code> method to load translations from a file in the filesystem.</li>
-<li><code>LoadXML</code> method to load translations from a <a href="https://learn.microsoft.com/en-us/dotnet/api/system.io.stream">Stream</a>.</li>
-<li><code>LoadXML</code> method to load translations from an XML document (<a href="https://learn.microsoft.com/en-us/dotnet/api/system.xml.linq.xdocument">XDocument</a>).</li>
-<li><code>LoadXML</code> method to load translations from an embedded resource in an assembly.</li>
+<li><code>LoadXML</code> methods to (re)load/merge translations from a file in the filesystem.</li>
+<li><code>LoadXML</code> methods to (re)load/merge translations from a <a href="https://learn.microsoft.com/en-us/dotnet/api/system.io.stream">Stream</a>.</li>
+<li><code>LoadXML</code> methods to (re)load/merge translations from an XML document (<a href="https://learn.microsoft.com/en-us/dotnet/api/system.xml.linq.xdocument">XDocument</a>).</li>
+<li><code>LoadXML</code> methods to (re)load/merge translations from an embedded resource in an assembly.</li>
 </ul>
 <h3><a class="anchor" id="autotoc_md32"></a>
 Localizer Class</h3>
@@ -407,7 +407,7 @@ AutoLoadLocalizer Class</h3>
 <p >The default parameters for the <code>AutoLoadLocalizer</code> constructor make the created instance load the translations file from an embedded resource identified by <em>Resources.I18N.xml</em> in the calling assembly (i.e., in the assembly that creates the instance).</p>
 <p >A different resource identifier or assembly can be passed as parameters to the <code>AutoLoadLocalizer</code> constructor if necessary.</p>
 <p >Additionally, this class provides:</p><ul>
-<li><code>Load</code> method to load/reload translations from the configured embedded resource for a given language.</li>
+<li><code>Load</code> method to (re)load translations from the configured embedded resource for a given language.</li>
 </ul>
 <h3><a class="anchor" id="autotoc_md34"></a>
 GlobalLocalizer Class</h3>

@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@487a43</span>
+   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@b16da2</span>
    </div>
   </td>
  </tr>
@@ -339,7 +339,7 @@ Properties</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">assembly</td><td>Assembly that contains the embedded XML file</td></tr>
     <tr><td class="paramname">resourceName</td><td>Name of the embedded resource for the XML file</td></tr>
-    <tr><td class="paramname">culture</td><td>Culture for the target language of translations, or <code>null</code> to use the current UI culture (obtained from System.Globalization.CultureInfo.CurrentUICulture)</td></tr>
+    <tr><td class="paramname">culture</td><td>Culture for the target language of translations, or <code>null</code> to use the current UI culture (obtained from CultureInfo.CurrentUICulture)</td></tr>
   </table>
   </dd>
 </dl>
@@ -388,7 +388,8 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Loads translations for the given <em>language</em>  from a localization configuration file in XML format obtained from an embedded resource in the given assembly.  </p>
-<p >All the translations loaded previously in the localizer are discarded and replaced with the new ones. </p>
+<p >All the translations loaded previously in the localizer are discarded and replaced with the new ones.</p>
+<p >If the system does not support a culture for <em>language</em> , then CultureInfo.InvariantCulture will be used as the culture for formatting operations.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">assembly</td><td>Assembly that contains the embedded XML file</td></tr>
@@ -485,7 +486,7 @@ Properties</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">stream</td><td>Stream with the localization configuration</td></tr>
-    <tr><td class="paramname">culture</td><td>Culture for the target language of translations, or <code>null</code> to use the current UI culture (obtained from System.Globalization.CultureInfo.CurrentUICulture)</td></tr>
+    <tr><td class="paramname">culture</td><td>Culture for the target language of translations, or <code>null</code> to use the current UI culture (obtained from CultureInfo.CurrentUICulture)</td></tr>
   </table>
   </dd>
 </dl>
@@ -527,7 +528,8 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Loads translations for the given <em>language</em>  from a localization configuration file obtained in XML format from a stream.  </p>
-<p >All the translations loaded previously in the localizer are discarded and replaced with the new ones. </p>
+<p >All the translations loaded previously in the localizer are discarded and replaced with the new ones.</p>
+<p >If the system does not support a culture for <em>language</em> , then CultureInfo.InvariantCulture will be used as the culture for formatting operations.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">stream</td><td>Stream with the localization configuration</td></tr>
@@ -622,7 +624,7 @@ Properties</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">filepath</td><td>Path to the localization configuration file</td></tr>
-    <tr><td class="paramname">culture</td><td>Culture for the target language of translations, or <code>null</code> to use the current UI culture (obtained from System.Globalization.CultureInfo.CurrentUICulture)</td></tr>
+    <tr><td class="paramname">culture</td><td>Culture for the target language of translations, or <code>null</code> to use the current UI culture (obtained from CultureInfo.CurrentUICulture)</td></tr>
   </table>
   </dd>
 </dl>
@@ -664,7 +666,8 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Loads translations for the given <em>language</em>  from a localization configuration file in XML format.  </p>
-<p >All the translations loaded previously in the localizer are discarded and replaced with the new ones. </p>
+<p >All the translations loaded previously in the localizer are discarded and replaced with the new ones.</p>
+<p >If the system does not support a culture for <em>language</em> , then CultureInfo.InvariantCulture will be used as the culture for formatting operations.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">filepath</td><td>Path to the localization configuration file</td></tr>
@@ -759,7 +762,7 @@ Properties</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">doc</td><td>XML document with the localization configuration</td></tr>
-    <tr><td class="paramname">culture</td><td>Culture for the target language of translations, or <code>null</code> to use the current UI culture (obtained from System.Globalization.CultureInfo.CurrentUICulture)</td></tr>
+    <tr><td class="paramname">culture</td><td>Culture for the target language of translations, or <code>null</code> to use the current UI culture (obtained from CultureInfo.CurrentUICulture)</td></tr>
   </table>
   </dd>
 </dl>
@@ -801,7 +804,8 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Loads translations for the given <em>language</em>  from a localization configuration in an XML document.  </p>
-<p >All the translations loaded previously in the localizer are discarded and replaced with the new ones. </p>
+<p >All the translations loaded previously in the localizer are discarded and replaced with the new ones.</p>
+<p >If the system does not support a culture for <em>language</em> , then CultureInfo.InvariantCulture will be used as the culture for formatting operations.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">doc</td><td>XML document with the localization configuration</td></tr>

@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@487a43</span>
+   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@b16da2</span>
    </div>
   </td>
  </tr>
@@ -92,7 +92,7 @@ Getting Started</h1>
 Writing/Adapting Source Code (I18N)</h2>
 <p >When writing internationalized source code, the strings to be translated must be wrapped with a call to <code><a class="el" href="classI18N_1_1DotNet_1_1GlobalLocalizer.html#a75a861e41bbca8dae718bf3e67c7c988" title="Localizes a string using the global localizer.">I18N.DotNet.GlobalLocalizer.Localize()</a></code>.</p>
 <p >The easier and most convenient approach for writing internationalized software is to choose a language that will be used as the base language throughout the software development (e.g., English), and then write the software just as any non-internationalized source code, except that strings to be translated must be wrapped with calls to <code>Localize()</code>. This way the base language will act as the default language when translations are not available for the current target language.</p>
-<p >Adapting exising non-internationalized source code is as easy as wrapping the existing strings to be translated with calls to <code>Localize()</code>.</p>
+<p >Adapting existing non-internationalized source code is as easy as wrapping the existing strings to be translated with calls to <code>Localize()</code>.</p>
 <h5>Example (C#)</h5>
 <div class="fragment"><div class="line">using static I18N.DotNet.GlobalLocalizer;</div>
 <div class="line">using System;</div>
@@ -114,7 +114,7 @@ Writing Translations (L10N)</h2>
 <p >For each string than has been internationalized an <code>Entry</code> element under the root must be defined, with:</p>
 <ul>
 <li>A single <code>Key</code> child element which value is the internationalized string defined in the code (replacing for interpolated strings the interpolated expressions with their positional index).</li>
-<li><code>Value</code>child elements with their attribute <code>lang</code> set to the target language of the translation and which value is the translated string.</li>
+<li>Several <code>Value</code>child elements with their attribute <code>lang</code> set to the target language of the translation and which value is the translated string.</li>
 </ul>
 <h5>Example</h5>
 <div class="fragment"><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div>
@@ -125,9 +125,9 @@ Writing Translations (L10N)</h2>
 <div class="line">    &lt;Value lang=&quot;fr&quot;&gt;String simple à traduire&lt;/Value&gt;</div>
 <div class="line">  &lt;/Entry&gt;</div>
 <div class="line">  &lt;Entry&gt;</div>
-<div class="line">    &lt;Key&gt;Interpolated string to be translated with value {0:X4}&lt;/Key&gt;</div>
-<div class="line">    &lt;Value lang=&quot;es&quot;&gt;String interpolado a traducir con valor {0:X4}&lt;/Value&gt;</div>
-<div class="line">    &lt;Value lang=&quot;fr&quot;&gt;String interpolé à traduire avec valeur {0:X4}&lt;/Value&gt;</div>
+<div class="line">    &lt;Key&gt;Interpolated string to be translated with value {0:d}&lt;/Key&gt;</div>
+<div class="line">    &lt;Value lang=&quot;es&quot;&gt;String interpolado a traducir con valor {0:dd/MM/yy}&lt;/Value&gt;</div>
+<div class="line">    &lt;Value lang=&quot;fr&quot;&gt;String interpolé à traduire avec valeur {0:d}&lt;/Value&gt;</div>
 <div class="line">  &lt;/Entry&gt;</div>
 <div class="line">&lt;/I18N&gt;</div>
 </div><!-- fragment --><blockquote class="doxtable">
@@ -152,8 +152,8 @@ Embedding the Translations File</h2>
 Advanced Usage (Internationalizing Applications)</h1>
 <h2><a class="anchor" id="autotoc_md8"></a>
 Global Localizer</h2>
-<p >The static class <code>GlobalLocalizer</code> has the property <code>Localizer</code> which contains the global localizer. This instance is shared and can be conveniently used by all software components. In fact all the methods exposed by the <code>GlobalLocalizer</code> class are just convenience wrappers that call the global localizer.</p>
-<p >The property <code>GlobalLocalizer.Localizer</code> is an instance of `AutoLoadLocalizer` that on first usage (if translations have not been previously loaded) tries to load the translations from an embedded resource identified by <em>Resources.I18N.xml</em> inside the entry (application) assembly using the current UI language as the target language.</p>
+<p >The static class `GlobalLocalizer` has the property <code>Localizer</code> which contains the global localizer. This instance is shared and can be conveniently used by all software components. In fact all the methods exposed by the <code>GlobalLocalizer</code> class are just convenience wrappers that call the global localizer.</p>
+<p >The property <code>GlobalLocalizer.Localizer</code> is an instance of `AutoLoadLocalizer` that on first usage (if translations have not been previously loaded) tries to load the translations from an embedded resource identified by _"Resources.I18N.xml"_ inside the entry (application) assembly using the current UI language as the target language.</p>
 <p >The default behavior is just right for most use cases, but if the translations file is stored in an embedded resource with a different identifier, or in a separate file (e.g., installed alongside the application executable), one of the <code>LoadXML</code> methods can be invoked on the global localizer to load it (see Loading Translations).</p>
 <h5>Non-Default usage Example (C#)</h5>
 <div class="fragment"><div class="line">void SetupI18N( string language, string directoryPath )</div>
@@ -169,26 +169,39 @@ Local Localizers</h2>
 <div class="line">{</div>
 <div class="line">  var reportLocalizer = new Localizer();</div>
 <div class="line">  reportLocalizer.LoadXML( Assembly.GetExecutingAssembly(), &quot;Reports.I18N.xml&quot;, language )</div>
-<div class="line">  return GenerateReport( reportLocalizer, new CultureInfo( language ) );</div>
+<div class="line">  return GenerateReport( reportLocalizer );</div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line">Report GenerateReport( ILocalizer localizer, CultureInfo culture )</div>
+<div class="line">Report GenerateReport( ILocalizer localizer )</div>
 <div class="line">{</div>
 <div class="line">  var report = new Report();</div>
-<div class="line">  report.AddEntry( localizer.Localize( $&quot;Date: {DateTime.Now.ToString(culture)}&quot; ) );</div>
+<div class="line">  report.AddEntry( localizer.Localize( $&quot;Date: {DateTime.Now:d}&quot; ) );</div>
 <div class="line">  ...</div>
 <div class="line">  return report;</div>
 <div class="line">}</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md10"></a>
+String Format</h2>
+<p >Calls to <a href="https://learn.microsoft.com/en-us/dotnet/api/system.string.format"><code>String.Format()</code></a> where the format string has to be internationalized should be replaced by a call to <code>GlobalLocalizer.LocalizeFormat()</code> / <code>ILocalizer.LocalizeFormat()</code> instead of just internationalizing the format string.</p>
+<p >Strings formatted using <code>LocalizeFormat()</code> and interpolated strings localized using <code>Localize()</code> are conveniently formatted using the formatting conventions of the localizer's target language/culture.</p>
+<blockquote class="doxtable">
+<p >&zwj;Strings formatted using <a href="https://learn.microsoft.com/en-us/dotnet/api/system.string.format"><code>String.Format()</code></a>, when no explicit <a href="https://learn.microsoft.com/en-us/dotnet/api/system.iformatprovider">format provider</a> is used, will use the format conventions of the <a href="https://learn.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo.currentculture">default culture</a>, which may be different from the localizer's target culture, and can therefore produce unexpected localization results. </p>
+</blockquote>
+<h5>Example (C#)</h5>
+<div class="fragment"><div class="line">String.Format( Localize( &quot;Format string to be translated with value {0}&quot; ), myVar );</div>
+<div class="line">// should be replaced by</div>
+<div class="line">LocalizeFormat( &quot;Format string to be translated with value {0}&quot;, myVar );</div>
+<div class="line">// which is equivalent to</div>
+<div class="line">Localize( $&quot;Format string to be translated with value {myVar}&quot; );</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md11"></a>
 Language Identifiers &amp; Variants</h2>
-<p >Any arbitrary string can be used for identifying languages, although it is recommended to use identifiers formed by a ISO 639-1 alpha-2 language name (2-letter language codes, e.g., _"en"_, _"es"_), additionally followed by an hyphen and a ISO 3166-1 alpha-2 country/region name (e.g., _"en-US"_, _"es-ES"_).</p>
+<p >Any arbitrary string can be used for identifying languages, although it is recommended to use identifiers formed by a ISO 639-1 alpha-2 language name (2-letter language codes, e.g., _"en"_, _"es"_), additionally followed by an hyphen and a ISO 3166-1 alpha-2 country/region name (e.g., _"en-US"_, _"es-ES"_). Specifically, it is recommended to use one of the <a href="https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-lcid/a9eac961-e77d-41a6-90a5-ce1a8b0cdb9c">language/region names supported by Windows</a>.</p>
 <p >Language identifiers are processed as case-insensitive (i.e., _"fr-FR"_ is equivalent to _"fr-fr"_).</p>
 <p >When using language identifiers formed by a primary code and a variant code separated by an hyphen (e.g., _"en-us"_, _"es-es"_), if a localized conversion for the language variant is not found then a conversion for the primary (base) language is tried too.</p>
 <p >For example, when loading the translations on a <code>Localizer</code> created for the _"en-gb"_ language, for each string to be translated a translation for the language _"en-gb"_ will be searched first, and if not found then a translation for the language _"en"_ will be searched next.</p>
 <p >It is therefore recommended to:</p>
 <ul>
 <li>In source code:<ul>
-<li>Use primary-variant code (e.g., _"en-us"_, _"es-es"_) as target language identifiers (i.e., as arguments to the <code>LoadXML</code> methods).</li>
+<li>Use primary-variant code (e.g., _"en-us"_, _"es-es"_) as target language identifiers (e.g., as <code>string</code> arguments to the <code>LoadXML</code> methods) or when <a href="https://learn.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo.getcultureinfo">obtaining target cultures</a> (e.g., to use as <a href="https://learn.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo">CultureInfo</a> arguments to the <code>LoadXML</code> methods).</li>
 </ul>
 </li>
 <li>In tranlation files:<ul>
@@ -197,14 +210,7 @@ Language Identifiers &amp; Variants</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md11"></a>
-String Format</h2>
-<p >Calls to <code>String.Format()</code> where the format string has to be internationalized can be replaced by a call to <code>GlobalLocalizer.LocalizeFormat()</code> / <code>ILocalizer.LocalizeFormat()</code>.</p>
-<h5>Example (C#)</h5>
-<div class="fragment"><div class="line">String.Format( Localize( &quot;Format string to be translated with value {0}&quot; ), myVar );</div>
-<div class="line">// is equivalent to</div>
-<div class="line">LocalizeFormat( &quot;Format string to be translated with value {0}&quot;, myVar );</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md12"></a>
+<h2><a class="anchor" id="autotoc_md12"></a>
 Contexts</h2>
 <p >Sometimes the same source language string has different translations in different contexts (e.g., English _"OK"_ should be translated in Spanish to _"Aceptar"_ for a button label but to _"Correcto"_ for a successful outcome indication).</p>
 <p >Since the source language key is the same in both cases, context partitioning must be used, which affects the source code side and the translations file side.</p>
@@ -244,38 +250,45 @@ Context Partitioning in the Translation File (L10N)</h4>
 <div class="line">&lt;/I18N&gt;</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md15"></a>
 Loading Translations</h2>
-<p >The translations can be loaded into a localizer implementing `ILoadableLocalizer` by different ways:</p>
+<p >The translations can be (re)loaded into a localizer implementing `ILoadableLocalizer` by different ways:</p>
 <h4><a class="anchor" id="autotoc_md16"></a>
+Automatically</h4>
+<p >The global localizer and `AutoLoadLocalizer` instances load their translations automatically from an embedded resource when any of their localization methods (those defined in `ILocalizer`) is called (only if translations have not been previously loaded explicitly).</p>
+<h4><a class="anchor" id="autotoc_md17"></a>
 From an Embedded Resource</h4>
-<p >The easiest way of using translation files is to embed them into an executable assembly (application or library), then load them into an `ILoadableLocalizer` instance using the <code>LoadXML</code> method indicating the assembly to load the embedded resource from and its identifier.</p>
-<blockquote class="doxtable">
-<p >&zwj;Note: The global localizer will automatically try to load the translations file from an embedded resource identified by <em>Resources.I18N.xml</em> in the entry assembly. </p>
-</blockquote>
+<p >A very convenient way of using translation files is to embed them into an executable assembly (application or library), then load them into a localizer implementing `ILoadableLocalizer` using a <code>LoadXML</code> method passing as arguments the assembly to load the embedded resource from and its identifier (and optionally the target language for translations).</p>
 <h5>Example (C#)</h5>
 <div class="fragment"><div class="line">void SetupI18N()</div>
 <div class="line">{</div>
 <div class="line">  GlobalLocalizer.Localizer.LoadXML( Assembly.GetExecutingAssembly(), &quot;I18N.Translations.xml&quot; );</div>
 <div class="line">}</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md17"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md18"></a>
 From a Standalone File</h4>
-<p >If the translations file is stored as a separate file (e.g., installed alongside the application executable), the <code>LoadXML</code> method can be invoked on an `ILoadableLocalizer` instance passing the path to the file.</p>
+<p >If the translations file is stored as a separate file (e.g., installed alongside the application executable), a <code>LoadXML</code> method can be invoked on a localizer implementing `ILoadableLocalizer` passing the path to the file as an argument (and passing optionally the target language for translations).</p>
 <h5>Example (C#)</h5>
 <div class="fragment"><div class="line">void SetupI18N()</div>
 <div class="line">{</div>
 <div class="line">  var programPath = Path.GetDirectoryName( Assembly.GetExecutingAssembly().Location );</div>
 <div class="line">  GlobalLocalizer.Localizer.LoadXML( programPath + &quot;/I18N.xml&quot; );</div>
 <div class="line">}</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md18"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md19"></a>
 From a Stream</h4>
-<p >When the translations file are neither stored as a file or embedded resource (e.g., downloading the translations from a remote server to local memory, obtaining the translations from a database), the <code>LoadXML</code> method can be invoked on an `ILoadableLocalizer` instance passing a <a href="https://learn.microsoft.com/es-es/dotnet/api/system.io.stream">System.IO.Stream</a> object that must provide the file contents.</p>
-<h2><a class="anchor" id="autotoc_md19"></a>
-Specifying the Translation Target Language</h2>
-<p >When loading translations automatically or by means of explicit calls to <code>LoadXML</code> methods, the current UI language (obtained from <a href="https://learn.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo.currentuiculture">System.Globalization.CultureInfo.CurrentUICulture</a>) is used by default as the target language.</p>
-<p >The usage of a different target language for the global localizer or a local localizer can be specified by different ways:</p>
+<p >When the translations file are neither stored as a file or embedded resource (e.g., downloading the translations from a remote server to local memory, obtaining the translations from a database), a <code>LoadXML</code> method can be invoked on an `ILoadableLocalizer` instance passing as an argument a <a href="https://learn.microsoft.com/en-us/dotnet/api/system.io.stream"><code>System.IO.Stream</code></a> object that must provide the file contents (and optionally the target language for translations).</p>
 <h4><a class="anchor" id="autotoc_md20"></a>
-Change the UI Language</h4>
-<p >During application startup, before any localization method is called, set <a href="https://learn.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo.currentuiculture">System.Globalization.CultureInfo CurrentUICulture</a> to the desired target language.</p>
-<p >This approach is simple to make the global localizer use a specific language (e.g., use a language configured by the user), and it has the advantage that resources localized by other means may probably also use the same target language.</p>
+From an XML Document</h4>
+<p >Additionally, translations can be loaded from an XML document by invoking a <code>LoadXML</code> method on an `ILoadableLocalizer` instance passing as an argument a <a href="https://learn.microsoft.com/en-us/dotnet/api/system.xml.linq.xdocument"><code>System.Xml.Linq.XDocument</code></a> object loaded with the translations (and optionally the target language for translations).</p>
+<h2><a class="anchor" id="autotoc_md21"></a>
+Specifying the Translation Target Language</h2>
+<p >The target language (and associated culture for formatting operations) for localizers (e.g., the global localizer or for a local localizer) is selected only when translations are loaded on the localizer.</p>
+<p >When translations are loaded (automatically or by means of explicit calls to <code>LoadXML</code> methods), if an explicit target language (or culture) is not indicated, then the current UI language (obtained from <a href="https://learn.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo.currentuiculture">System.Globalization.CultureInfo.CurrentUICulture</a>) is used by default as the target language (and culture).</p>
+<p >Selecting a different language (or culture) than the default can be achieved by different ways:</p>
+<h4><a class="anchor" id="autotoc_md22"></a>
+Changing the UI Culture During Startup</h4>
+<p >An easy way of changing the target language is, during application startup, before any localization method is called, to set <a href="https://learn.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo.currentuiculture">System.Globalization.CultureInfo.CurrentUICulture</a> to the culture corresponding to the desired target language.</p>
+<blockquote class="doxtable">
+<p >&zwj;Automatically-loading localizers do not select their default language when they are created, but they instead delay this selection until they load their translations, which will not happen automatically until a localization method is called. Therefore the default UI culture can be changed after these localizers have been created, and the new culture will still be used properly when localization methods are called for the first time. </p>
+</blockquote>
+<p>This approach to make the global localizer use a specific language (e.g., use a language configured by the user) is very simple, and it has the advantage that resources localized by other means may probably also use the same target language and culture.</p>
 <h5>Example (C#)</h5>
 <div class="fragment"><div class="line">using System.Globalization;</div>
 <div class="line"> </div>
@@ -285,49 +298,56 @@ Change the UI Language</h4>
 <div class="line">  {</div>
 <div class="line">    if( args.Length &gt;= 1 )</div>
 <div class="line">    {</div>
-<div class="line">      CultureInfo CurrentUICulture = new CultureInfo( args[0] );</div>
+<div class="line">      CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo( args[0] );</div>
 <div class="line">    }</div>
 <div class="line">    ...</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-</div><!-- fragment --><p >When the application is already running, changing the UI language will have no immediate effect on the localizers which translations have alredy been loaded.</p>
-<p >To enforce dynamic changes of the UI language to take effect, instances of `AutoLoadLocalizer` (like the global localizer) must be manually forced to reload its translations.</p>
-<h5>Example (C#)</h5>
-<div class="fragment"><div class="line">void SetupI18N( string language )</div>
-<div class="line">{</div>
-<div class="line">  CultureInfo CurrentUICulture = new CultureInfo( language );</div>
-<div class="line">  GlobalLocalizer.Localizer.Load( null );</div>
-<div class="line">}</div>
 </div><!-- fragment --><blockquote class="doxtable">
 <p >&zwj;<b>NOTE</b>: It may also be useful to set <a href="https://learn.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo.currentculture">System.Globalization.CultureInfo CurrentCulture</a>, <a href="https://learn.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo.defaultthreadcurrentuiculture">System.Globalization.CultureInfo DefaultThreadCurrentUICulture</a>, and/or <a href="https://learn.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo.defaultthreadcurrentculture">System.Globalization.CultureInfo DefaultThreadCurrentCulture</a>. </p>
 </blockquote>
-<h4><a class="anchor" id="autotoc_md21"></a>
-AutoLoadLocalizer.Load Method Parameter</h4>
-<p >The `AutoLoadLocalizer` class provides a <code>Load</code> method that accepts the target language as a parameter.</p>
-<p >The <code>AutoLoadLocalizer.Load</code> method can be called during application startup or during runtime to load/reload the translations from the embeded resource for a specific language.</p>
+<h4><a class="anchor" id="autotoc_md23"></a>
+Changing the UI Culture Dynamically</h4>
+<p >When the application is already running, changing the UI culture will have no immediate effect on the localizers which translations have already been loaded.</p>
+<p >Automatically-loading localizers (i.e., instances of `AutoLoadLocalizer`, like the global localizer) can be manually forced to reload its translations to enforce dynamic changes of the UI culture to take effect.</p>
 <h5>Example (C#)</h5>
 <div class="fragment"><div class="line">void SetupI18N( string language )</div>
 <div class="line">{</div>
-<div class="line">  GlobalLocalizer.Localizer.Load( language );</div>
+<div class="line">  CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo( language );</div>
+<div class="line">  GlobalLocalizer.Localizer.Load( null );</div>
 <div class="line">}</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md22"></a>
-ILoadableLocalizer.LoadXML Methods Parameter</h4>
-<p >The <code>LoadXML</code> methods of `ILoadableLocalizer` accept the target language as an optional parameter.</p>
-<p >The <code>ILoadableLocalizer.LoadXML</code> methods can be called during application startup or during runtime to load/reload the translations for a specific language.</p>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md24"></a>
+Automatically-Loading Localizers Translations (Re)Load</h4>
+<p >The `AutoLoadLocalizer` class provides <code>Load</code> methods that accept the target language as a language identifier or culture (see TargetCulture) parameter.</p>
+<p >The <code>AutoLoadLocalizer.Load</code> methods can be called during application startup or during runtime to (re)load the translations from the embedded resource for a specific language.</p>
+<h5>Example (C#)</h5>
+<div class="fragment"><div class="line">void SetupI18N( CultureInfo culture )</div>
+<div class="line">{</div>
+<div class="line">  GlobalLocalizer.Localizer.Load( culture );</div>
+<div class="line">}</div>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md25"></a>
+Loadable Localizers Translations (Re)Load</h4>
+<p >The `ILoadableLocalizer` interface defines <code>LoadXML</code> methods that accept the target language as an optional language identifier or culture (see TargetCulture) parameter.</p>
+<p >The <code>ILoadableLocalizer.LoadXML</code> methods can be called during application startup or during runtime to (re)load the translations for a specific language.</p>
 <h5>Example (C#)</h5>
 <div class="fragment"><div class="line">void SetupI18N( string language )</div>
 <div class="line">{</div>
 <div class="line">  var programPath = Path.GetDirectoryName( Assembly.GetExecutingAssembly().Location );</div>
 <div class="line">  GlobalLocalizer.Localizer.LoadXML( programPath + &quot;/I18N.xml&quot;, language );</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md23"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md26"></a>
+Target Culture</h3>
+<p >When selecting the target language for translations, it can be specified either with a language identifier (using a <a href="https://learn.microsoft.com/en-us/dotnet/api/system.string">string</a>) or with a culture (using a <a href="https://learn.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo">CultureInfo</a>).</p>
+<p >When specifying the target language with a language identifier, the target culture is automatically set to the culture associated in the system with the language identifier (obtained using <a href="https://learn.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo.getcultureinfo">System.Globalization.CultureInfo.GetCultureInfo</a>). If the system does not support a culture for the target language, then the <a href="https://learn.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo.invariantculture">invariant culture</a> will be used.</p>
+<p >The localizer's target culture is used during formatting operations.</p>
+<h1><a class="anchor" id="autotoc_md27"></a>
 Advanced Usage (Internationalizing Libraries)</h1>
-<h2><a class="anchor" id="autotoc_md24"></a>
+<h2><a class="anchor" id="autotoc_md28"></a>
 Library Localizers</h2>
-<p >The global localizer is convenient for usage in applications (i.e., which are implemented in the entry assembly), but libraries should not use the global localizer because they would depend on the application to load the translations for its internationalized strings or risk the application discarding the translations if trying to load them automatically druing library initialization.</p>
+<p >The global localizer is convenient for usage in applications (i.e., which are implemented in the entry assembly), but libraries should not use the global localizer because they would depend on the application to load the translations for its internationalized strings, or risk the application discarding the translations after the library has merged its own translations automatically during library initialization.</p>
 <p >For libraries the easiest solution is to define their own "global" localizer as a static property inside a static class, similar to the <code>GlobalLocalizer</code> class but only intended for the scope of the library.</p>
 <p >This library localizer can be initialized using an instance of `AutoLoadLocalizer`, which is a special localizer that automatically loads the translations file from an embedded resource.</p>
-<p >The static class can be declared with <code>internal</code> scope, or with <code>public</code> scope to allow applications to extend or replace the library localizer (e.g., to add more translations, or to change them).</p>
+<p >The static class can be declared with <code>internal</code> scope, or better with <code>public</code> scope to allow applications to access the library localizer (e.g., to add more translations, change them, reload them, etc.).</p>
 <p >Finally, the translations file for the library must be embedded in the library assembly as an embedded resource identified by <em>Resources.I18N.xml</em> (just like with an application), which the `AutoLoadLocalizer` instance will try to load by default.</p>
 <h5>Library Localizer Implementation Example (C#)</h5>
 <div class="fragment"><div class="line">using I18N.DotNet;</div>
@@ -358,27 +378,27 @@ Library Localizers</h2>
 <div class="line">    }</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md25"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md29"></a>
 API Documentation</h1>
-<h3><a class="anchor" id="autotoc_md26"></a>
+<h3><a class="anchor" id="autotoc_md30"></a>
 ILocalizer Interface</h3>
 <p >The <code>ILocalizer</code> interface represents classes which provide localization functionality to software components (i.e. perform string translations) for a single target language:</p><ul>
 <li><code>Localize</code> methods to translate strings, interpolated strings and collections of strings.</li>
 <li><code>LocalizeFormat</code> method to format and translate strings.</li>
 <li><code>Context</code> methods to access contexts and subcontexts (see Contexts).</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md27"></a>
+<h3><a class="anchor" id="autotoc_md31"></a>
 ILoadableLocalizer Interface</h3>
 <p >The <code>ILoadableLocalizer</code> interface is an extension of `ILocalizer` that represents localizer classes which provide functionality to load translations for a single target language from different sources:</p><ul>
 <li><code>LoadXML</code> method to load translations from a file in the filesystem.</li>
-<li><code>LoadXML</code> method to load translations from a <a href="https://learn.microsoft.com/es-es/dotnet/api/system.io.stream">Stream</a>.</li>
+<li><code>LoadXML</code> method to load translations from a <a href="https://learn.microsoft.com/en-us/dotnet/api/system.io.stream">Stream</a>.</li>
 <li><code>LoadXML</code> method to load translations from an XML document (<a href="https://learn.microsoft.com/en-us/dotnet/api/system.xml.linq.xdocument">XDocument</a>).</li>
 <li><code>LoadXML</code> method to load translations from an embedded resource in an assembly.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md28"></a>
+<h3><a class="anchor" id="autotoc_md32"></a>
 Localizer Class</h3>
 <p >The <code>Localizer</code> class is a simple implementation of `ILoadableLocalizer` which is capable of loading string translations for a single target language and then providing localization functionality.</p>
-<h3><a class="anchor" id="autotoc_md29"></a>
+<h3><a class="anchor" id="autotoc_md33"></a>
 AutoLoadLocalizer Class</h3>
 <p >The <code>AutoLoadLocalizer</code> class is an implementation of `ILoadableLocalizer` that on first call of any of its localization methods (i.e., those specified by `ILocalizer`), loads automatically the translations from an embedded resource in an assembly using the current UI language as the target language (if translations have not been previously loaded).</p>
 <p >The default parameters for the <code>AutoLoadLocalizer</code> constructor make the created instance load the translations file from an embedded resource identified by <em>Resources.I18N.xml</em> in the calling assembly (i.e., in the assembly that creates the instance).</p>
@@ -386,7 +406,15 @@ AutoLoadLocalizer Class</h3>
 <p >Additionally, this class provides:</p><ul>
 <li><code>Load</code> method to load/reload translations from the configured embedded resource for a given language.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md30"></a>
+<h3><a class="anchor" id="autotoc_md34"></a>
+GlobalLocalizer Class</h3>
+<p >The <code>GlobalLocalizer</code> static class provides access to the global localizer:</p><ul>
+<li><code>Localizer</code> static property that provides the global localizer as a localizer instance.</li>
+<li><code>Localize</code> static methods to translate strings, interpolated strings and collections of strings.</li>
+<li><code>LocalizeFormat</code> static method to format and translate strings.</li>
+<li><code>Context</code> static methods to access contexts and subcontexts (see Contexts).</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md35"></a>
 Full API Documentation</h2>
 <p >You can browse the full API documentation for:</p><ul>
 <li><a href="https://safetwice.github.io/I18N.DotNet/stable">The last release (stable)</a></li>

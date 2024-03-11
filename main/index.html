@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@7d8d27</span>
+   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@d574fb</span>
    </div>
   </td>
  </tr>
@@ -282,7 +282,7 @@ From an XML Document</h4>
 <p >Additionally, translations can be loaded from an XML document by invoking a <code>LoadXML</code> method on an `ILoadableLocalizer` instance passing as an argument a <a href="https://learn.microsoft.com/en-us/dotnet/api/system.xml.linq.xdocument"><code>System.Xml.Linq.XDocument</code></a> object loaded with the translations (and passing optionally the target language for translations).</p>
 <h2><a class="anchor" id="autotoc_md21"></a>
 Specifying the Translation Target Language</h2>
-<p >The target language (and associated culture for formatting operations) for localizers (e.g., the global localizer or for a local localizer) is selected only when translations are loaded on the localizer.</p>
+<p >The target language and associated culture for formatting operations used by localizers (e.g., the global localizer or a local localizer) is selected only when translations are loaded on the localizer.</p>
 <p >When translations are loaded (automatically or by means of explicit calls to <code>LoadXML</code> methods), if an explicit target language (or culture) is not indicated, then the current UI language (obtained from <a href="https://learn.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo.currentuiculture">System.Globalization.CultureInfo.CurrentUICulture</a>) is used by default as the target language (and culture).</p>
 <p >Selecting a different language (or culture) than the default can be achieved by different ways:</p>
 <h4><a class="anchor" id="autotoc_md22"></a>

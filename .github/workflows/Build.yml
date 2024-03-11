@@ -188,7 +188,10 @@ jobs:
         with:
           ref: gh-pages
       - name: Redirect stable to new release
-        run: ln -sf $GITHUB_REF_NAME stable
+        run: |
+          echo TAG = $GITHUB_REF_NAME
+          rm -f stable
+          ln -sf $GITHUB_REF_NAME stable
       - name: Commit and push changes
         uses: EndBug/add-and-commit@v9
         with:

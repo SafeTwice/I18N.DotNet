@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@b16da2</span>
+   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@f750ff</span>
    </div>
   </td>
  </tr>
@@ -136,7 +136,7 @@ Writing Translations (L10N)</h2>
 <h2><a class="anchor" id="autotoc_md6"></a>
 Embedding the Translations File</h2>
 <p >A very convenient way of distributing the translations for an application is to embedded the translations file in the executable assembly as an embedded resource identified by <em>Resources.I18N.xml</em>.</p>
-<p >Using Visual Studio, the easiest way to achieve this is to name the translations file _"I18N.xml"_ and deploy it in a directory named _"Resources"_ inside the VS project directory, and then configure the file in the VS project as an embedded resource (i.e., set its Build Action to "Embedded resource" in the IDE, or add <code>&lt;EmbeddedResource Include="Resources\I18N.xml" /&gt;</code> to an <code>ItemGroup</code> in the project file).</p>
+<p >Using Visual Studio, the easiest way to achieve this is to deploy the translations file as a file named _"I18N.xml"_ in a directory named _"Resources"_ inside the VS project directory, and then configure the file in the VS project as an embedded resource (i.e., set its Build Action to "Embedded resource" in the IDE, or add <code>&lt;EmbeddedResource Include="Resources\I18N.xml" /&gt;</code> to an <code>ItemGroup</code> in the project file).</p>
 <h5>Example (.csproj)</h5>
 <div class="fragment"><div class="line">&lt;Project Sdk=&quot;Microsoft.NET.Sdk&quot;&gt;</div>
 <div class="line">  ...</div>
@@ -204,7 +204,7 @@ Language Identifiers &amp; Variants</h2>
 <li>Use primary-variant code (e.g., _"en-us"_, _"es-es"_) as target language identifiers (e.g., as <code>string</code> arguments to the <code>LoadXML</code> methods) or when <a href="https://learn.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo.getcultureinfo">obtaining target cultures</a> (e.g., to use as <a href="https://learn.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo">CultureInfo</a> arguments to the <code>LoadXML</code> methods).</li>
 </ul>
 </li>
-<li>In tranlation files:<ul>
+<li>In translation files:<ul>
 <li>Use primary code (e.g., _"en"_, _"fr"_) as translation language identifiers (i.e, as the <code>lang</code> attribute values of XML <code>I18N.Entry.Value</code> entries) for generic (non variant-specific) translations.</li>
 <li>Use primary code-variant (e.g., _"en-gb"_, _"es-ar"_) as translation language identifiers (i.e, as the <code>lang</code> attribute values of XML <code>I18N.Entry.Value</code> entries) for variant-specific translations.</li>
 </ul>

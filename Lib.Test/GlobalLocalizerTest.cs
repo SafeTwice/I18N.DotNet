@@ -45,9 +45,15 @@ namespace I18N.DotNet.Test
         }
 
         [Fact]
-        public void Context()
+        public void Context_Single()
         {
             Assert.NotNull( GlobalLocalizer.Context( "Context 1" ) );
+        }
+
+        [Fact]
+        public void Context_Split()
+        {
+            Assert.NotNull( GlobalLocalizer.Context( new string[] { "Context 1", "Context2" } ) );
         }
     }
 }

@@ -82,5 +82,16 @@ namespace I18N.DotNet
         {
             return Localizer.Context( contextId );
         }
+
+        /// <summary>
+        /// Gets a context in the global localizer.
+        /// </summary>
+        /// <seealso cref="ILocalizer.Context(IEnumerable{string})"/>
+        /// <param name="splitContextIds">Chain of context identifiers in split form</param>
+        /// <returns>Localizer for the given context</returns>
+        public static ILocalizer Context( IEnumerable<string> splitContextIds )
+        {
+            return Localizer.Context( splitContextIds );
+        }
     }
 }

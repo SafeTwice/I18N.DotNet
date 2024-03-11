@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@841234</span>
+   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@421812</span>
    </div>
   </td>
  </tr>
@@ -116,6 +116,9 @@ Writing Translations (L10N)</h2>
 <li>A single <code>Key</code> child element which value is the internationalized string defined in the code (replacing for interpolated strings the interpolated expressions with their positional index).</li>
 <li>Several <code>Value</code> child elements with their attribute <code>lang</code> set to the target language of the translation and which value is the translated string.</li>
 </ul>
+<blockquote class="doxtable">
+<p >&zwj;It is not necessary to add translations (i.e., <code>Value</code> elements) for the development base language, since the value of the <code>Key</code> element will be used as the default translation when a translation for a specific language is not found. </p>
+</blockquote>
 <h5>Example</h5>
 <div class="fragment"><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div>
 <div class="line">&lt;I18N&gt;</div>
@@ -131,9 +134,6 @@ Writing Translations (L10N)</h2>
 <div class="line">  &lt;/Entry&gt;</div>
 <div class="line">&lt;/I18N&gt;</div>
 </div><!-- fragment --><blockquote class="doxtable">
-<p >&zwj;It is not necessary to add translations (i.e., <code>Value</code> elements) for the development base language, since the value of the <code>Key</code> element will be used as the default translation when a translation for a specific language is not found. </p>
-</blockquote>
-<blockquote class="doxtable">
 <p >&zwj;<b>NOTE</b>: The companion utility <a href="https://github.com/SafeTwice/I18N.DotNet-Tool">I18N.DotNet Tool</a> can be used to ease the creation of the translations file by scanning source files and automatically generating entries for discovered internationalized strings. </p>
 </blockquote>
 <h2><a class="anchor" id="autotoc_md6"></a>

@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@421812</span>
+   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@296c9b</span>
    </div>
   </td>
  </tr>
@@ -217,8 +217,8 @@ Language Identifiers &amp; Variants</h2>
 Contexts</h2>
 <p >Sometimes the same source language string has different translations in different contexts (e.g., English _"OK"_ should be translated in Spanish to _"Aceptar"_ for a button label but to _"Correcto"_ for a successful outcome indication).</p>
 <p >Since the source language key is the same in both cases, context partitioning must be used, which affects the source code side and the translations file side.</p>
-<h4><a class="anchor" id="autotoc_md13"></a>
-Context Partitioning in Source Code (I18N)</h4>
+<h3><a class="anchor" id="autotoc_md13"></a>
+Context Partitioning in Source Code (I18N)</h3>
 <p >In source code, the context of the key can be explicitly indicated when the string is being internationalized by calling <code>GlobalLocalizer.Context()</code> / <code>ILocalizer.Context()</code> and passing it the context identifier, and then calling the localization methods on the returned context (which is an `ILocalizer`).</p>
 <p >Contexts can be nested. A chain of successively nested contexts can be identified by joining their identifiers using the dot character ('.') as a composite context identifier.</p>
 <p >Translations in a context are searched hierarchically: if a translation is not found for the target language in a context (neither for the language variant nor the primary language), then a translation is searched again on its parent context (if it exists). Finally, if no translation is found in the context hierarchy, then the base language translation is used (i.e., the value of the argument passed to the <code>Localize</code> method).</p>
@@ -226,8 +226,8 @@ Context Partitioning in Source Code (I18N)</h4>
 <div class="fragment"><div class="line">Button.Label = Context( &quot;GUI.Button&quot; ).Localize( &quot;OK&quot; );</div>
 <div class="line">// ...</div>
 <div class="line">TextBox.Text = Context( &quot;GUI&quot; ).Context( &quot;Status&quot; ).Localize( &quot;OK&quot; );</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md14"></a>
-Context Partitioning in the Translation File (L10N)</h4>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md14"></a>
+Context Partitioning in the Translation File (L10N)</h3>
 <p >Context partitioning is performed in the translations XML file using <code>Context</code> elements as children of the root element or nested within other <code>Context</code> elements. These elements must have an <code>id</code> attribute to indicate the context identifier (which can be a composite context identifier), and are containers for the <code>Entry</code> elements that define the translations for that context.</p>
 <h5>Example</h5>
 <div class="fragment"><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div>

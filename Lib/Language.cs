@@ -38,7 +38,7 @@ namespace I18N.DotNet
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="language">Name, code or identifier for the language</param>
+        /// <param name="language">Name, code or identifier for the language.</param>
         public Language( string language )
         {
             (Full, Primary) = SplitLanguage( language );
@@ -56,7 +56,7 @@ namespace I18N.DotNet
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="culture">Culture for the language</param>
+        /// <param name="culture">Culture for the language.</param>
         public Language( CultureInfo culture )
         {
             (Full, Primary) = SplitLanguage( culture.Name );

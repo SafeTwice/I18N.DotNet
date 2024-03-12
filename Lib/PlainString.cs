@@ -25,7 +25,7 @@ namespace I18N.DotNet
         /// <summary>
         /// Converts a string value to a PlainString.
         /// </summary>
-        /// <param name="value">Value</param>
+        /// <param name="value">Value.</param>
         public static implicit operator PlainString( string value )
         {
             return new PlainString( value );
@@ -38,10 +38,10 @@ namespace I18N.DotNet
         /// This implicit operator is needed to avoid FormattableString values to be automatically
         /// converted to string and then to PlainString when resolving parameter overloads.
         /// </remarks>
-        /// <param arg="value">Value</param>
-        /// <exception cref="InvalidOperationException">Always thrown</exception>
+        /// <param name="value">Value.</param>
+        /// <exception cref="InvalidOperationException">Always thrown.</exception>
         [ExcludeFromCodeCoverage]
-        public static implicit operator PlainString( FormattableString arg )
+        public static implicit operator PlainString( FormattableString value )
         {
             throw new InvalidOperationException();
         }

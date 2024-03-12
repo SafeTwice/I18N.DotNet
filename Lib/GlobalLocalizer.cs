@@ -16,9 +16,9 @@ namespace I18N.DotNet
         //                           PUBLIC PROPERTIES
         //===========================================================================
 
-        /// <value>
+        /// <summary>
         /// Global localizer.
-        /// </value>
+        /// </summary>
         public static AutoLoadLocalizer Localizer { get; } = new AutoLoadLocalizer();
 
         //===========================================================================
@@ -29,8 +29,8 @@ namespace I18N.DotNet
         /// Localizes a string using the global localizer.
         /// </summary>
         /// <seealso cref="ILocalizer.Localize(PlainString)"/>
-        /// <param name="text">Language-neutral string</param>
-        /// <returns>Language-specific localized string if found, or <paramref name="text"/> otherwise</returns>
+        /// <param name="text">Base-language string.</param>
+        /// <returns>Language-specific localized string if found, or <paramref name="text"/> otherwise.</returns>
         public static string Localize( PlainString text )
         {
             return Localizer.Localize( text );
@@ -40,20 +40,20 @@ namespace I18N.DotNet
         /// Localizes an interpolated string using the global localizer.
         /// </summary>
         /// <seealso cref="ILocalizer.Localize(FormattableString)"/>
-        /// <param name="frmtText">Language-neutral formattable string</param>
+        /// <param name="frmtText">Base-language formattable string.</param>
         /// <returns>Formatted string generated from the language-specific localized format string if found, 
-        ///          or generated from <paramref name="frmtText"/> otherwise</returns>
+        ///          or generated from <paramref name="frmtText"/> otherwise.</returns>
         public static string Localize( FormattableString frmtText )
         {
             return Localizer.Localize( frmtText );
         }
 
         /// <summary>
-        /// Localizes multiple strings.
+        /// Localizes multiple strings using the global localizer.
         /// </summary>
         /// <seealso cref="ILocalizer.Localize(IEnumerable{string})"/>
-        /// <param name="texts">Array of language-neutral strings</param>
-        /// <returns>Array with the language-specific localized strings if found, or the language-neutral string otherwise</returns>
+        /// <param name="texts">Base-language strings.</param>
+        /// <returns>Language-specific localized strings if found, or the base-language string otherwise.</returns>
         public static IEnumerable<string> Localize( IEnumerable<string> texts )
         {
             return Localizer.Localize( texts );
@@ -63,10 +63,10 @@ namespace I18N.DotNet
         /// Localizes and then formats a string using the global localizer.
         /// </summary>
         /// <seealso cref="ILocalizer.LocalizeFormat(string, object[])"/>
-        /// <param name="format">Language-neutral format string</param>
-        /// <param name="args">Arguments for the format string</param>
+        /// <param name="format">Base-language format string.</param>
+        /// <param name="args">Arguments for the format string.</param>
         /// <returns>Formatted string generated from the language-specific localized format string if found,
-        ///          or generated from <paramref name="format"/> otherwise</returns>
+        ///          or generated from <paramref name="format"/> otherwise.</returns>
         public static string LocalizeFormat( string format, params object[] args )
         {
             return Localizer.LocalizeFormat( format, args );
@@ -76,8 +76,8 @@ namespace I18N.DotNet
         /// Gets a context in the global localizer.
         /// </summary>
         /// <seealso cref="ILocalizer.Context(string)"/>
-        /// <param name="contextId">Identifier of the context</param>
-        /// <returns>Localizer for the given context</returns>
+        /// <param name="contextId">Identifier of the context.</param>
+        /// <returns>Localizer for the given context.</returns>
         public static ILocalizer Context( string contextId )
         {
             return Localizer.Context( contextId );
@@ -87,8 +87,8 @@ namespace I18N.DotNet
         /// Gets a context in the global localizer.
         /// </summary>
         /// <seealso cref="ILocalizer.Context(IEnumerable{string})"/>
-        /// <param name="splitContextIds">Chain of context identifiers in split form</param>
-        /// <returns>Localizer for the given context</returns>
+        /// <param name="splitContextIds">Chain of context identifiers in split form.</param>
+        /// <returns>Localizer for the given context.</returns>
         public static ILocalizer Context( IEnumerable<string> splitContextIds )
         {
             return Localizer.Context( splitContextIds );

@@ -48,8 +48,8 @@ namespace I18N.DotNet
         /// the embedded resource identified by <paramref name="resourceName"/> inside the given <paramref name="assembly"/>
         /// (if translations have not been previously loaded explicitly).
         /// </remarks>
-        /// <param name="resourceName">Name of the embedded resource for the XML file</param>
-        /// <param name="assembly">Assembly that contains the embedded XML file (the calling assembly will be used if <c>null</c>)</param>
+        /// <param name="resourceName">Name of the embedded resource for the XML file.</param>
+        /// <param name="assembly">Assembly that contains the embedded XML file (the calling assembly will be used if <c>null</c>).</param>
         public AutoLoadLocalizer( string resourceName = DEFAULT_RESOURCE_NAME, Assembly? assembly = null )
         {
             m_assembly = assembly ?? Assembly.GetCallingAssembly();
@@ -167,7 +167,7 @@ namespace I18N.DotNet
         /// Loads translations for the given <paramref name="culture"/> from the embedded resource specified when creating the instance.
         /// </summary>
         /// <param name="culture">Culture for the target language of translations,
-        ///                       or <c>null</c> to use the current UI culture (obtained from <see cref="System.Globalization.CultureInfo.CurrentUICulture"/>)</param>
+        ///                       or <c>null</c> to use the current UI culture (obtained from <see cref="System.Globalization.CultureInfo.CurrentUICulture"/>).</param>
         /// <exception cref="ILoadableLocalizer.ParseException">Thrown when the embedded resource contents cannot be parsed properly.</exception>
         /// <exception cref="InvalidOperationException">Thrown when the embedded resource could not be found.</exception>
         public void Load( CultureInfo? culture )
@@ -181,7 +181,7 @@ namespace I18N.DotNet
         /// <summary>
         /// Loads translations for the given <paramref name="language"/> from the embedded resource specified when creating the instance.
         /// </summary>
-        /// <param name="language">Name, code or identifier for the target language of translations</param>
+        /// <param name="language">Name, code or identifier for the target language of translations.</param>
         /// <exception cref="ILoadableLocalizer.ParseException">Thrown when the embedded resource contents cannot be parsed properly.</exception>
         /// <exception cref="InvalidOperationException">Thrown when the embedded resource could not be found.</exception>
         public void Load( string language )

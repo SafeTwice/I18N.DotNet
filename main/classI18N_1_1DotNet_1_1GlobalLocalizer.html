@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@b32fa3</span>
+   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@6544ac</span>
    </div>
   </td>
  </tr>
@@ -93,7 +93,7 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memdesc:aa4bd95d65d171147063a07aa21d00f90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localizes an interpolated string using the global localizer.   <a href="classI18N_1_1DotNet_1_1GlobalLocalizer.html#aa4bd95d65d171147063a07aa21d00f90">More...</a><br /></td></tr>
 <tr class="separator:aa4bd95d65d171147063a07aa21d00f90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4756fe426e5e78544e1cd10851ff88d7"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI18N_1_1DotNet_1_1GlobalLocalizer.html#a4756fe426e5e78544e1cd10851ff88d7">Localize</a> (IEnumerable&lt; string &gt; texts)</td></tr>
-<tr class="memdesc:a4756fe426e5e78544e1cd10851ff88d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localizes multiple strings.   <a href="classI18N_1_1DotNet_1_1GlobalLocalizer.html#a4756fe426e5e78544e1cd10851ff88d7">More...</a><br /></td></tr>
+<tr class="memdesc:a4756fe426e5e78544e1cd10851ff88d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localizes multiple strings using the global localizer.   <a href="classI18N_1_1DotNet_1_1GlobalLocalizer.html#a4756fe426e5e78544e1cd10851ff88d7">More...</a><br /></td></tr>
 <tr class="separator:a4756fe426e5e78544e1cd10851ff88d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adcf99559166519298dc697938fe7988d"><td class="memItemLeft" align="right" valign="top">static string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI18N_1_1DotNet_1_1GlobalLocalizer.html#adcf99559166519298dc697938fe7988d">LocalizeFormat</a> (string format, params object[] args)</td></tr>
 <tr class="memdesc:adcf99559166519298dc697938fe7988d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localizes and then formats a string using the global localizer.   <a href="classI18N_1_1DotNet_1_1GlobalLocalizer.html#adcf99559166519298dc697938fe7988d">More...</a><br /></td></tr>
@@ -108,6 +108,7 @@ Static Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="properties" name="properties"></a>
 Properties</h2></td></tr>
 <tr class="memitem:a934513e706fa695136a1146ca188478a"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html">AutoLoadLocalizer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI18N_1_1DotNet_1_1GlobalLocalizer.html#a934513e706fa695136a1146ca188478a">Localizer</a> = new <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html">AutoLoadLocalizer</a>()<code> [get]</code></td></tr>
+<tr class="memdesc:a934513e706fa695136a1146ca188478a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global localizer.   <a href="classI18N_1_1DotNet_1_1GlobalLocalizer.html#a934513e706fa695136a1146ca188478a">More...</a><br /></td></tr>
 <tr class="separator:a934513e706fa695136a1146ca188478a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -141,11 +142,11 @@ Properties</h2></td></tr>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="interfaceI18N_1_1DotNet_1_1ILocalizer.html#a5fca3a722db044bd6c40299650ba3c8b" title="Gets the localizer for a context in the current localizer.">ILocalizer.Context(IEnumerable&lt;string&gt;)</a></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">splitContextIds</td><td>Chain of context identifiers in split form</td></tr>
+    <tr><td class="paramname">splitContextIds</td><td>Chain of context identifiers in split form.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classI18N_1_1DotNet_1_1Localizer.html" title="Simple loadable localizer.">Localizer</a> for the given context</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classI18N_1_1DotNet_1_1Localizer.html" title="Simple loadable localizer.">Localizer</a> for the given context.</dd></dl>
 
 </div>
 </div>
@@ -177,11 +178,11 @@ Properties</h2></td></tr>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="interfaceI18N_1_1DotNet_1_1ILocalizer.html#ae49c2e04c4044ffb978c74f29acec614" title="Gets the localizer for a context in the current localizer.">ILocalizer.Context(string)</a></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">contextId</td><td>Identifier of the context</td></tr>
+    <tr><td class="paramname">contextId</td><td>Identifier of the context.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classI18N_1_1DotNet_1_1Localizer.html" title="Simple loadable localizer.">Localizer</a> for the given context</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classI18N_1_1DotNet_1_1Localizer.html" title="Simple loadable localizer.">Localizer</a> for the given context.</dd></dl>
 
 </div>
 </div>
@@ -213,11 +214,11 @@ Properties</h2></td></tr>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="interfaceI18N_1_1DotNet_1_1ILocalizer.html#a7499982383540c50c9c8af4ca77b148a" title="Localizes an interpolated string.">ILocalizer.Localize(FormattableString)</a></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">frmtText</td><td>Language-neutral formattable string</td></tr>
+    <tr><td class="paramname">frmtText</td><td>Base-language formattable string.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Formatted string generated from the language-specific localized format string if found, or generated from <em>frmtText</em>  otherwise</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Formatted string generated from the language-specific localized format string if found, or generated from <em>frmtText</em>  otherwise.</dd></dl>
 
 </div>
 </div>
@@ -245,15 +246,15 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Localizes multiple strings.  </p>
+<p>Localizes multiple strings using the global localizer.  </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="interfaceI18N_1_1DotNet_1_1ILocalizer.html#a3579424af7a27438a10c409e974bcdbf" title="Localizes multiple strings.">ILocalizer.Localize(IEnumerable&lt;string&gt;)</a></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">texts</td><td>Array of language-neutral strings</td></tr>
+    <tr><td class="paramname">texts</td><td>Base-language strings.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Array with the language-specific localized strings if found, or the language-neutral string otherwise</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Language-specific localized strings if found, or the base-language string otherwise.</dd></dl>
 
 </div>
 </div>
@@ -285,11 +286,11 @@ Properties</h2></td></tr>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="interfaceI18N_1_1DotNet_1_1ILocalizer.html#ada22a224e5a85fd1589101df66e1d0f2" title="Localizes a string.">ILocalizer.Localize(PlainString)</a></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">text</td><td>Language-neutral string</td></tr>
+    <tr><td class="paramname">text</td><td>Base-language string.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Language-specific localized string if found, or <em>text</em>  otherwise</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Language-specific localized string if found, or <em>text</em>  otherwise.</dd></dl>
 
 </div>
 </div>
@@ -331,12 +332,12 @@ Properties</h2></td></tr>
 <dl class="section see"><dt>See also</dt><dd>ILocalizer.LocalizeFormat(string, object[])</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">format</td><td>Language-neutral format string</td></tr>
-    <tr><td class="paramname">args</td><td>Arguments for the format string</td></tr>
+    <tr><td class="paramname">format</td><td>Base-language format string.</td></tr>
+    <tr><td class="paramname">args</td><td>Arguments for the format string.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Formatted string generated from the language-specific localized format string if found, or generated from <em>format</em>  otherwise</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Formatted string generated from the language-specific localized format string if found, or generated from <em>format</em>  otherwise.</dd></dl>
 
 </div>
 </div>
@@ -360,7 +361,8 @@ Properties</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >Global localizer. </p>
+
+<p>Global localizer.  </p>
 
 </div>
 </div>

@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@b32fa3</span>
+   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@6544ac</span>
    </div>
   </td>
  </tr>
@@ -96,9 +96,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a7c21ed8b878fb477f0941eab8ace79e4"><td class="memItemLeft" align="right" valign="top">static implicit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI18N_1_1DotNet_1_1PlainString.html#a7c21ed8b878fb477f0941eab8ace79e4">operator PlainString</a> (string value)</td></tr>
 <tr class="memdesc:a7c21ed8b878fb477f0941eab8ace79e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a string value to a <a class="el" href="classI18N_1_1DotNet_1_1PlainString.html" title="Represents just a string. This class is used to allow interpolated strings to preferably be passed as...">PlainString</a>.   <a href="classI18N_1_1DotNet_1_1PlainString.html#a7c21ed8b878fb477f0941eab8ace79e4">More...</a><br /></td></tr>
 <tr class="separator:a7c21ed8b878fb477f0941eab8ace79e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3845103eed73a7c8b15960e699fffb6"><td class="memItemLeft" align="right" valign="top">static implicit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI18N_1_1DotNet_1_1PlainString.html#aa3845103eed73a7c8b15960e699fffb6">operator PlainString</a> (FormattableString arg)</td></tr>
-<tr class="memdesc:aa3845103eed73a7c8b15960e699fffb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a FormattableString value to a <a class="el" href="classI18N_1_1DotNet_1_1PlainString.html" title="Represents just a string. This class is used to allow interpolated strings to preferably be passed as...">PlainString</a>.   <a href="classI18N_1_1DotNet_1_1PlainString.html#aa3845103eed73a7c8b15960e699fffb6">More...</a><br /></td></tr>
-<tr class="separator:aa3845103eed73a7c8b15960e699fffb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05199bd0fd4b2afc54b5c561de123fdb"><td class="memItemLeft" align="right" valign="top">static implicit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI18N_1_1DotNet_1_1PlainString.html#a05199bd0fd4b2afc54b5c561de123fdb">operator PlainString</a> (FormattableString value)</td></tr>
+<tr class="memdesc:a05199bd0fd4b2afc54b5c561de123fdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a FormattableString value to a <a class="el" href="classI18N_1_1DotNet_1_1PlainString.html" title="Represents just a string. This class is used to allow interpolated strings to preferably be passed as...">PlainString</a>.   <a href="classI18N_1_1DotNet_1_1PlainString.html#a05199bd0fd4b2afc54b5c561de123fdb">More...</a><br /></td></tr>
+<tr class="separator:a05199bd0fd4b2afc54b5c561de123fdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="properties" name="properties"></a>
 Properties</h2></td></tr>
@@ -129,8 +129,8 @@ Properties</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="aa3845103eed73a7c8b15960e699fffb6" name="aa3845103eed73a7c8b15960e699fffb6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa3845103eed73a7c8b15960e699fffb6">&#9670;&#160;</a></span>operator PlainString() <span class="overload">[1/2]</span></h2>
+<a id="a05199bd0fd4b2afc54b5c561de123fdb" name="a05199bd0fd4b2afc54b5c561de123fdb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05199bd0fd4b2afc54b5c561de123fdb">&#9670;&#160;</a></span>operator PlainString() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -142,7 +142,7 @@ Properties</h2></td></tr>
           <td class="memname">static implicit operator <a class="el" href="classI18N_1_1DotNet_1_1PlainString.html">PlainString</a> </td>
           <td>(</td>
           <td class="paramtype">FormattableString&#160;</td>
-          <td class="paramname"><em>arg</em></td><td>)</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -155,10 +155,15 @@ Properties</h2></td></tr>
 
 <p>Converts a FormattableString value to a <a class="el" href="classI18N_1_1DotNet_1_1PlainString.html" title="Represents just a string. This class is used to allow interpolated strings to preferably be passed as...">PlainString</a>.  </p>
 <p >This implicit operator is needed to avoid FormattableString values to be automatically converted to string and then to <a class="el" href="classI18N_1_1DotNet_1_1PlainString.html" title="Represents just a string. This class is used to allow interpolated strings to preferably be passed as...">PlainString</a> when resolving parameter overloads. </p>
-<p >Value</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>Value.</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">InvalidOperationException</td><td>Always thrown</td></tr>
+    <tr><td class="paramname">InvalidOperationException</td><td>Always thrown.</td></tr>
   </table>
   </dd>
 </dl>
@@ -192,7 +197,7 @@ Properties</h2></td></tr>
 <p>Converts a string value to a <a class="el" href="classI18N_1_1DotNet_1_1PlainString.html" title="Represents just a string. This class is used to allow interpolated strings to preferably be passed as...">PlainString</a>.  </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">value</td><td>Value</td></tr>
+    <tr><td class="paramname">value</td><td>Value.</td></tr>
   </table>
   </dd>
 </dl>

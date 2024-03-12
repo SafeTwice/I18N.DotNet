@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@b32fa3</span>
+   <div id="projectname">I18N.DotNet<span id="projectnumber">&#160;main@6544ac</span>
    </div>
   </td>
  </tr>
@@ -199,11 +199,11 @@ Properties</h2></td></tr>
 <p >Contexts are used to disambiguate the conversion of the same base-language string to different language-specific strings depending on the context where the conversion is performed. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">splitContextIds</td><td>Chain of context identifiers in split form</td></tr>
+    <tr><td class="paramname">splitContextIds</td><td>Chain of context identifiers in split form.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classI18N_1_1DotNet_1_1Localizer.html" title="Simple loadable localizer.">Localizer</a> for the given context</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classI18N_1_1DotNet_1_1Localizer.html" title="Simple loadable localizer.">Localizer</a> for the given context.</dd></dl>
 
 <p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a5fca3a722db044bd6c40299650ba3c8b">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1ContextLocalizer.html#a3c1dfe25147bc0569792b0857e07428d">ContextLocalizer</a>.</p>
 
@@ -238,11 +238,11 @@ Properties</h2></td></tr>
 <p >Contexts can be nested. The context identifier can identify a chain of nested contexts by separating their identifiers with the '.' character (left = outermost / right = innermost). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">contextId</td><td>Identifier of the context</td></tr>
+    <tr><td class="paramname">contextId</td><td>Identifier of the context.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classI18N_1_1DotNet_1_1Localizer.html" title="Simple loadable localizer.">Localizer</a> for the given context</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classI18N_1_1DotNet_1_1Localizer.html" title="Simple loadable localizer.">Localizer</a> for the given context.</dd></dl>
 
 <p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#ae49c2e04c4044ffb978c74f29acec614">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1ContextLocalizer.html#aa9c24c939c61e04036c77c878d12a923">ContextLocalizer</a>.</p>
 
@@ -283,8 +283,8 @@ Properties</h2></td></tr>
 <p>Loads translations for the current localizer language from a localization configuration file in XML format obtained from an embedded resource in the given assembly.  </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">assembly</td><td>Assembly that contains the embedded XML file</td></tr>
-    <tr><td class="paramname">resourceName</td><td>Name of the embedded resource for the XML file</td></tr>
+    <tr><td class="paramname">assembly</td><td>Assembly that contains the embedded XML file.</td></tr>
+    <tr><td class="paramname">resourceName</td><td>Name of the embedded resource for the XML file.</td></tr>
     <tr><td class="paramname">merge</td><td>Replaces the current translations with the loaded ones when&lt;c&gt;false, otherwise merges both (existing translations are overridden with loaded ones).</td></tr>
   </table>
   </dd>
@@ -337,9 +337,9 @@ Properties</h2></td></tr>
 <p >All the translations loaded previously in the localizer are discarded and replaced with the new ones. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">assembly</td><td>Assembly that contains the embedded XML file</td></tr>
-    <tr><td class="paramname">resourceName</td><td>Name of the embedded resource for the XML file</td></tr>
-    <tr><td class="paramname">culture</td><td>Culture for the target language of translations, or <code>null</code> to use the current UI culture (obtained from CultureInfo.CurrentUICulture)</td></tr>
+    <tr><td class="paramname">assembly</td><td>Assembly that contains the embedded XML file.</td></tr>
+    <tr><td class="paramname">resourceName</td><td>Name of the embedded resource for the XML file.</td></tr>
+    <tr><td class="paramname">culture</td><td>Culture for the target language of translations, or <code>null</code> to use the current UI culture (obtained from CultureInfo.CurrentUICulture).</td></tr>
   </table>
   </dd>
 </dl>
@@ -392,9 +392,9 @@ Properties</h2></td></tr>
 <p >If the system does not support a culture for <em>language</em> , then CultureInfo.InvariantCulture will be used as the culture for formatting operations.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">assembly</td><td>Assembly that contains the embedded XML file</td></tr>
-    <tr><td class="paramname">resourceName</td><td>Name of the embedded resource for the XML file</td></tr>
-    <tr><td class="paramname">language</td><td>Name, code or identifier for the target language of translations</td></tr>
+    <tr><td class="paramname">assembly</td><td>Assembly that contains the embedded XML file.</td></tr>
+    <tr><td class="paramname">resourceName</td><td>Name of the embedded resource for the XML file.</td></tr>
+    <tr><td class="paramname">language</td><td>Name, code or identifier for the target language of translations.</td></tr>
   </table>
   </dd>
 </dl>
@@ -439,7 +439,7 @@ Properties</h2></td></tr>
 <p>Loads translations for the current localizer language from a localization configuration file in XML format obtained from a stream.  </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">stream</td><td>Stream with the localization configuration</td></tr>
+    <tr><td class="paramname">stream</td><td>Stream with the localization configuration.</td></tr>
     <tr><td class="paramname">merge</td><td>Replaces the current translations with the loaded ones when&lt;c&gt;false, otherwise merges both (existing translations are overridden with loaded ones).</td></tr>
   </table>
   </dd>
@@ -485,8 +485,8 @@ Properties</h2></td></tr>
 <p >All the translations loaded previously in the localizer are discarded and replaced with the new ones. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">stream</td><td>Stream with the localization configuration</td></tr>
-    <tr><td class="paramname">culture</td><td>Culture for the target language of translations, or <code>null</code> to use the current UI culture (obtained from CultureInfo.CurrentUICulture)</td></tr>
+    <tr><td class="paramname">stream</td><td>Stream with the localization configuration.</td></tr>
+    <tr><td class="paramname">culture</td><td>Culture for the target language of translations, or <code>null</code> to use the current UI culture (obtained from CultureInfo.CurrentUICulture).</td></tr>
   </table>
   </dd>
 </dl>
@@ -532,8 +532,8 @@ Properties</h2></td></tr>
 <p >If the system does not support a culture for <em>language</em> , then CultureInfo.InvariantCulture will be used as the culture for formatting operations.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">stream</td><td>Stream with the localization configuration</td></tr>
-    <tr><td class="paramname">language</td><td>Name, code or identifier for the target language of translations</td></tr>
+    <tr><td class="paramname">stream</td><td>Stream with the localization configuration.</td></tr>
+    <tr><td class="paramname">language</td><td>Name, code or identifier for the target language of translations.</td></tr>
   </table>
   </dd>
 </dl>
@@ -577,7 +577,7 @@ Properties</h2></td></tr>
 <p>Loads translations for the current localizer language from a localization configuration file in XML format.  </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">filepath</td><td>Path to the localization configuration file</td></tr>
+    <tr><td class="paramname">filepath</td><td>Path to the localization configuration file.</td></tr>
     <tr><td class="paramname">merge</td><td>Replaces the current translations with the loaded ones when&lt;c&gt;false, otherwise merges both (existing translations are overridden with loaded ones).</td></tr>
   </table>
   </dd>
@@ -623,8 +623,8 @@ Properties</h2></td></tr>
 <p >All the translations loaded previously in the localizer are discarded and replaced with the new ones. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">filepath</td><td>Path to the localization configuration file</td></tr>
-    <tr><td class="paramname">culture</td><td>Culture for the target language of translations, or <code>null</code> to use the current UI culture (obtained from CultureInfo.CurrentUICulture)</td></tr>
+    <tr><td class="paramname">filepath</td><td>Path to the localization configuration file.</td></tr>
+    <tr><td class="paramname">culture</td><td>Culture for the target language of translations, or <code>null</code> to use the current UI culture (obtained from CultureInfo.CurrentUICulture).</td></tr>
   </table>
   </dd>
 </dl>
@@ -670,8 +670,8 @@ Properties</h2></td></tr>
 <p >If the system does not support a culture for <em>language</em> , then CultureInfo.InvariantCulture will be used as the culture for formatting operations.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">filepath</td><td>Path to the localization configuration file</td></tr>
-    <tr><td class="paramname">language</td><td>Name, code or identifier for the target language of translations</td></tr>
+    <tr><td class="paramname">filepath</td><td>Path to the localization configuration file.</td></tr>
+    <tr><td class="paramname">language</td><td>Name, code or identifier for the target language of translations.</td></tr>
   </table>
   </dd>
 </dl>
@@ -715,7 +715,7 @@ Properties</h2></td></tr>
 <p>Loads translations for the current localizer language from a localization configuration in an XML document.  </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">doc</td><td>XML document with the localization configuration</td></tr>
+    <tr><td class="paramname">doc</td><td>XML document with the localization configuration.</td></tr>
     <tr><td class="paramname">merge</td><td>Replaces the current translations with the loaded ones when&lt;c&gt;false, otherwise merges both (existing translations are overridden with loaded ones).</td></tr>
   </table>
   </dd>
@@ -761,8 +761,8 @@ Properties</h2></td></tr>
 <p >All the translations loaded previously in the localizer are discarded and replaced with the new ones. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">doc</td><td>XML document with the localization configuration</td></tr>
-    <tr><td class="paramname">culture</td><td>Culture for the target language of translations, or <code>null</code> to use the current UI culture (obtained from CultureInfo.CurrentUICulture)</td></tr>
+    <tr><td class="paramname">doc</td><td>XML document with the localization configuration.</td></tr>
+    <tr><td class="paramname">culture</td><td>Culture for the target language of translations, or <code>null</code> to use the current UI culture (obtained from CultureInfo.CurrentUICulture).</td></tr>
   </table>
   </dd>
 </dl>
@@ -808,8 +808,8 @@ Properties</h2></td></tr>
 <p >If the system does not support a culture for <em>language</em> , then CultureInfo.InvariantCulture will be used as the culture for formatting operations.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">doc</td><td>XML document with the localization configuration</td></tr>
-    <tr><td class="paramname">language</td><td>Name, code or identifier for the target language of translations</td></tr>
+    <tr><td class="paramname">doc</td><td>XML document with the localization configuration.</td></tr>
+    <tr><td class="paramname">language</td><td>Name, code or identifier for the target language of translations.</td></tr>
   </table>
   </dd>
 </dl>
@@ -849,14 +849,14 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Localizes an interpolated string.  </p>
-<p >Converts the composite format string of the base-language formattable string <em>frmtText</em>  (e.g. an interpolated string) to its corresponding language-specific localized composite format value, and then generates the result by formatting the localized composite format value along with the<em>frmtText</em>  arguments by using the formatting conventions of the localizer culture. </p>
+<p >Converts the composite format string of the base-language formattable string <em>frmtText</em>  (e.g. an interpolated string) to its corresponding language-specific localized composite format value, and then generates the result by formatting the localized composite format value along with the <em>frmtText</em>  arguments by using the formatting conventions of the localizer culture. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">frmtText</td><td>Base-language formattable string</td></tr>
+    <tr><td class="paramname">frmtText</td><td>Base-language formattable string.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Formatted string generated from the language-specific localized format string if found, or generated from<em>frmtText</em>  otherwise</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Formatted string generated from the language-specific localized format string if found, or generated from <em>frmtText</em>  otherwise.</dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname">FormatException</td><td>Thrown when the localized format value of <em>frmtText</em>  is invalid.</td></tr>
@@ -896,11 +896,11 @@ Properties</h2></td></tr>
 <p >Converts the base-language strings in <em>texts</em>  to their corresponding language-specific localized values. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">texts</td><td>Base-language strings</td></tr>
+    <tr><td class="paramname">texts</td><td>Base-language strings.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Language-specific localized strings if found, or the base-language string otherwise.</dd></dl>
 
 <p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#a3579424af7a27438a10c409e974bcdbf">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1ContextLocalizer.html#a3579424af7a27438a10c409e974bcdbf">ContextLocalizer</a>.</p>
 
@@ -934,11 +934,11 @@ Properties</h2></td></tr>
 <p >Converts the base-language string <em>text</em>  to its corresponding language-specific localized value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">text</td><td>Base-language string</td></tr>
+    <tr><td class="paramname">text</td><td>Base-language string.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Language-specific localized string if found, or <em>text</em>  otherwise</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Language-specific localized string if found, or <em>text</em>  otherwise.</dd></dl>
 
 <p>Implemented in <a class="el" href="classI18N_1_1DotNet_1_1AutoLoadLocalizer.html#ada22a224e5a85fd1589101df66e1d0f2">AutoLoadLocalizer</a>, and <a class="el" href="classI18N_1_1DotNet_1_1ContextLocalizer.html#ada22a224e5a85fd1589101df66e1d0f2">ContextLocalizer</a>.</p>
 
@@ -979,15 +979,15 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Localizes and then formats a string.  </p>
-<p >Converts the base-language format string <em>format</em>  to its corresponding language-specific localized format value, and then generates the result by formatting the localized format value along with the<em>args</em>  arguments by using the formatting conventions of the localizer culture. </p>
+<p >Converts the base-language format string <em>format</em>  to its corresponding language-specific localized format value, and then generates the result by formatting the localized format value along with the <em>args</em>  arguments by using the formatting conventions of the localizer culture. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">format</td><td>Base-language format string</td></tr>
-    <tr><td class="paramname">args</td><td>Arguments for the format string</td></tr>
+    <tr><td class="paramname">format</td><td>Base-language format string.</td></tr>
+    <tr><td class="paramname">args</td><td>Arguments for the format string.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Formatted string generated from the language-specific localized format string if found, or generated from<em>format</em>  otherwise</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Formatted string generated from the language-specific localized format string if found, or generated from <em>format</em>  otherwise.</dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname">FormatException</td><td>Thrown when <em>format</em>  or its localized format value is invalid.</td></tr>

@@ -255,7 +255,10 @@ namespace I18N.DotNet
                     {
                         m_internalLocalizer.LoadXML( m_assembly, m_resourceName, false, m_ignoreIfNotExists );
                     }
+
+                    m_internalLocalizer.LocalizationsUpdated += () => LocalizationsUpdated?.Invoke();
                 }
+
                 return m_internalLocalizer;
             }
         }

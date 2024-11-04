@@ -31,6 +31,13 @@ namespace I18N.DotNet
         public CultureInfo TargetCulture => Language.Culture;
 
         //===========================================================================
+        //                             PUBLIC EVENTS
+        //===========================================================================
+
+        /// <inheritdoc/>
+        public event Action? LocalizationsUpdated;
+
+        //===========================================================================
         //                            PUBLIC METHODS
         //===========================================================================
 
@@ -92,6 +99,37 @@ namespace I18N.DotNet
         }
 
         /// <inheritdoc/>
+        public Localizable GetLocalizable( PlainString text )
+        {
+            return new LocalizablePlainString( text.Value, this );
+        }
+
+        /// <inheritdoc/>
+        public Localizable GetLocalizable( FormattableString text )
+        {
+            return new LocalizableFormat( text, this );
+        }
+
+        /// <inheritdoc/>
+        public IEnumerable<Localizable> GetLocalizables( IEnumerable<string> texts )
+        {
+            foreach( var text in texts )
+            {
+                yield return new LocalizablePlainString( text, this );
+            }
+        }
+
+        /// <inheritdoc/>
+#if NET7_0_OR_GREATER
+        public Localizable GetLocalizableFormat( [StringSyntax( "CompositeFormat" )] string format, params object?[] args )
+#else
+        public Localizable GetLocalizableFormat( string format, params object?[] args )
+#endif
+        {
+            return new LocalizableFormat( format, args, this );
+        }
+
+        /// <inheritdoc/>
         ILocalizer ILocalizer.Context( string contextId )
         {
             return GetContext( contextId );
@@ -145,7 +183,7 @@ namespace I18N.DotNet
         //                            PROTECTED METHODS
         //===========================================================================
 
-        private protected void Clear()
+        protected private void Clear()
         {
             m_localizations.Clear();
 
@@ -156,7 +194,7 @@ namespace I18N.DotNet
             }
         }
 
-        private protected void Load( XElement element )
+        protected private void Load( XElement element )
         {
             foreach( var childElement in element.Elements() )
             {
@@ -173,6 +211,16 @@ namespace I18N.DotNet
                     default:
                         throw new ILoadableLocalizer.ParseException( $"Line {( (IXmlLineInfo) childElement ).LineNumber}: Invalid XML element" );
                 }
+            }
+        }
+
+        protected private void RaiseLocalizationsUpdated()
+        {
+            LocalizationsUpdated?.Invoke();
+
+            foreach( var context in m_nestedContexts.Values )
+            {
+                context.RaiseLocalizationsUpdated();
             }
         }
 

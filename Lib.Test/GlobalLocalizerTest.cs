@@ -1,7 +1,8 @@
 ﻿/// @file
-/// @copyright  Copyright (c) 2020-2023 SafeTwice S.L. All rights reserved.
+/// @copyright  Copyright (c) 2020-2025 SafeTwice S.L. All rights reserved.
 /// @license    See LICENSE.txt
 
+using System.Linq;
 using Xunit;
 
 namespace I18N.DotNet.Test
@@ -17,13 +18,13 @@ namespace I18N.DotNet.Test
         }
 
         [Fact]
-        public void Localize_String()
+        public void Localize_PlainString()
         {
             Assert.Equal( "Test", GlobalLocalizer.Localize( "Test" ) );
         }
 
         [Fact]
-        public void Localize_Interpolated()
+        public void Localize_InterpolatedString()
         {
             int i = 1234;
 
@@ -31,7 +32,13 @@ namespace I18N.DotNet.Test
         }
 
         [Fact]
-        public void Localize_Format()
+        public void Localize_MultipleStrings()
+        {
+            Assert.Equal( new string[] { "ABC", "123" }, GlobalLocalizer.Localize( new string[] { "ABC", "123" } ) );
+        }
+
+        [Fact]
+        public void LocalizeFormat()
         {
             int i = 1234;
 
@@ -39,9 +46,31 @@ namespace I18N.DotNet.Test
         }
 
         [Fact]
-        public void Localize_Multiple()
+        public void GetLocalizable_PlainString()
         {
-            Assert.Equal( new string[] { "ABC", "123" }, GlobalLocalizer.Localize( new string[] { "ABC", "123" } ) );
+            Assert.Equal( "Test", GlobalLocalizer.GetLocalizable( "Test" ) );
+        }
+
+        [Fact]
+        public void GetLocalizable_InterpolatedString()
+        {
+            int i = 1234;
+
+            Assert.Equal( "Test 1234", GlobalLocalizer.GetLocalizable( $"Test {i}" ) );
+        }
+
+        [Fact]
+        public void GetLocalizables()
+        {
+            Assert.Equal( new string[] { "ABC", "123" }, GlobalLocalizer.GetLocalizables( new[] { "ABC", "123" } ).Select( l => l.Localized ) );
+        }
+
+        [Fact]
+        public void GetLocalizableFormat()
+        {
+            int i = 1234;
+
+            Assert.Equal( "Test 1234", GlobalLocalizer.GetLocalizableFormat( "Test {0}", i ) );
         }
 
         [Fact]

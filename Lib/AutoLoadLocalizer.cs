@@ -37,6 +37,13 @@ namespace I18N.DotNet
         public const string DEFAULT_RESOURCE_NAME = "Resources.I18N.xml";
 
         //===========================================================================
+        //                             PUBLIC EVENTS
+        //===========================================================================
+
+        /// <inheritdoc/>
+        public event Action? LocalizationsUpdated;
+
+        //===========================================================================
         //                          PUBLIC CONSTRUCTORS
         //===========================================================================
 
@@ -82,6 +89,25 @@ namespace I18N.DotNet
 #endif
         {
             return InternalLocalizer.LocalizeFormat( format, args );
+        }
+
+        /// <inheritdoc/>
+        public Localizable GetLocalizable( PlainString text ) => InternalLocalizer.GetLocalizable( text );
+
+        /// <inheritdoc/>
+        public Localizable GetLocalizable( FormattableString formattableText ) => InternalLocalizer.GetLocalizable( formattableText );
+
+        /// <inheritdoc/>
+        public IEnumerable<Localizable> GetLocalizables( IEnumerable<string> texts ) => InternalLocalizer.GetLocalizables( texts );
+
+        /// <inheritdoc/>
+#if NET7_0_OR_GREATER
+        public Localizable GetLocalizableFormat( [StringSyntax( "CompositeFormat" )] string format, params object?[] args )
+#else
+        public Localizable GetLocalizableFormat( string format, params object?[] args )
+#endif
+        {
+        	 return InternalLocalizer.GetLocalizableFormat( format, args );
         }
 
         /// <inheritdoc/>

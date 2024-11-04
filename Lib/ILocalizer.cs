@@ -32,6 +32,15 @@ namespace I18N.DotNet
         public CultureInfo TargetCulture { get; }
 
         //===========================================================================
+        //                                  EVENTS
+        //===========================================================================
+
+        /// <summary>
+        /// Event triggered when the localizations are updated.
+        /// </summary>
+        public event Action LocalizationsUpdated;
+
+        //===========================================================================
         //                                  METHODS
         //===========================================================================
 
@@ -86,6 +95,51 @@ namespace I18N.DotNet
         string LocalizeFormat( [StringSyntax( "CompositeFormat" )] string format, params object?[] args );
 #else
         string LocalizeFormat( string format, params object?[] args );
+#endif
+
+        /// <summary>
+        /// Gets a localizable expression for a string.
+        /// </summary>
+        /// <remarks>
+        /// The returned <see cref="Localizable"/> instance will act as a delegated call to <see cref="Localize(PlainString)"/>.
+        /// </remarks>
+        /// <param name="text">Base-language string.</param>
+        /// <returns><see cref="Localizable"/> instance that can localize the string.</returns>
+        Localizable GetLocalizable( PlainString text );
+
+        /// <summary>
+        /// Gets a localizable expression for an interpolated string.
+        /// </summary>
+        /// <remarks>
+        /// The returned <see cref="Localizable"/> instance will act as a delegated call to <see cref="Localize(FormattableString)"/>.
+        /// </remarks>
+        /// <param name="formattableText">Base-language formattable string.</param>
+        /// <returns><see cref="Localizable"/> instance that can localize the interpolated string.</returns>
+        Localizable GetLocalizable( FormattableString formattableText );
+
+        /// <summary>
+        /// Gets localizable expressions for multiple strings.
+        /// </summary>
+        /// <remarks>
+        /// The returned <see cref="Localizable"/> instances will act as a delegated calls to <see cref="Localize(PlainString)"/>.
+        /// </remarks>
+        /// <param name="texts">Base-language strings.</param>
+        /// <returns><see cref="Localizable"/> instances that can localize the input strings.</returns>
+        IEnumerable<Localizable> GetLocalizables( IEnumerable<string> texts );
+
+        /// <summary>
+        /// Gets a localizable expression for string formatting operation.
+        /// </summary>
+        /// <remarks>
+        /// The returned <see cref="Localizable"/> instance will act as a delegated call to <see cref="LocalizeFormat(string, object[])"/>.
+        /// </remarks>
+        /// <param name="format">Base-language format string.</param>
+        /// <param name="args">Arguments for the format string.</param>
+        /// <returns><see cref="Localizable"/> instance that can localize then execute the format operation.</returns>
+#if NET7_0_OR_GREATER
+        Localizable GetLocalizableFormat( [StringSyntax( "CompositeFormat" )] string format, params object?[] args );
+#else
+        Localizable GetLocalizableFormat( string format, params object?[] args );
 #endif
 
         /// <summary>

@@ -81,6 +81,55 @@ namespace I18N.DotNet
         }
 
         /// <summary>
+        /// Gets a localizable expression for a string using the global localizer.
+        /// </summary>
+        /// <seealso cref="ILocalizer.GetLocalizable(PlainString)"/>
+        /// <param name="text">Base-language string.</param>
+        /// <returns><see cref="Localizable"/> instance that can localize the string.</returns>
+        public static Localizable GetLocalizable( PlainString text )
+        {
+            return Localizer.GetLocalizable( text );
+        }
+
+        /// <summary>
+        /// Gets a localizable expression for an interpolated string using the global localizer.
+        /// </summary>
+        /// <seealso cref="ILocalizer.GetLocalizable(FormattableString)"/>
+        /// <param name="formattableText">Base-language formattable string.</param>
+        /// <returns><see cref="Localizable"/> instance that can localize the interpolated string.</returns>
+        public static Localizable GetLocalizable( FormattableString formattableText )
+        {
+            return Localizer.GetLocalizable( formattableText );
+        }
+
+        /// <summary>
+        /// Gets localizable expressions for multiple strings using the global localizer.
+        /// </summary>
+        /// <seealso cref="ILocalizer.GetLocalizables(IEnumerable{string})"/>
+        /// <param name="texts">Base-language strings.</param>
+        /// <returns><see cref="Localizable"/> instances that can localize the input strings.</returns>
+        public static IEnumerable<Localizable> GetLocalizables( IEnumerable<string> texts )
+        {
+            return Localizer.GetLocalizables( texts );
+        }
+
+        /// <summary>
+        /// Gets a localizable expression for string formatting operation using the global localizer.
+        /// </summary>
+        /// <seealso cref="ILocalizer.GetLocalizableFormat(string, object[])"/>
+        /// <param name="format">Base-language format string.</param>
+        /// <param name="args">Arguments for the format string.</param>
+        /// <returns><see cref="Localizable"/> instance that can localize then execute the format operation.</returns>
+#if NET7_0_OR_GREATER
+        public static Localizable GetLocalizableFormat( [StringSyntax( "CompositeFormat" )] string format, params object?[] args )
+#else
+        public static Localizable GetLocalizableFormat( string format, params object?[] args )
+#endif
+        {
+            return Localizer.GetLocalizableFormat( format, args );
+        }
+
+        /// <summary>
         /// Gets a context in the global localizer.
         /// </summary>
         /// <seealso cref="ILocalizer.Context(string)"/>

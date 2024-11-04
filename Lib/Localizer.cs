@@ -1,5 +1,5 @@
 ﻿/// @file
-/// @copyright  Copyright (c) 2020-2024 SafeTwice S.L. All rights reserved.
+/// @copyright  Copyright (c) 2020-2025 SafeTwice S.L. All rights reserved.
 /// @license    See LICENSE.txt
 
 using System;
@@ -99,6 +99,8 @@ namespace I18N.DotNet
             }
 
             Load( rootElement );
+
+            RaiseLocalizationsUpdated();
         }
 
         /// <inheritdoc/>

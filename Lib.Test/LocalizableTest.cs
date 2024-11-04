@@ -179,5 +179,37 @@ namespace I18N.DotNet.Test
 
             Assert.Equal( "Clave simple 1", localizable.ToString() );
         }
+
+        [Fact]
+        public void Localizable_NotifyPropertyChanged()
+        {
+            // Arrange
+
+            var localizer = new Localizer();
+            localizer.LoadXML( GetI18NConfig(), "fr" );
+
+            // Act
+
+            var localizable = localizer.GetLocalizable( "Simple Key 1" );
+
+            // Act & Assert
+
+            Assert.Equal( "Clef simple 1", localizable.Localized );
+
+            // Arrange
+
+            string? localizableUpdatedProperty = null;
+            localizable.PropertyChanged += ( _, e ) => localizableUpdatedProperty = e.PropertyName;
+
+            Assert.Null( localizableUpdatedProperty );
+
+            localizer.LoadXML( GetI18NConfig(), "es" );
+
+            // Act & Assert
+
+            Assert.Equal( nameof( Localizable.Localized ), localizableUpdatedProperty );
+
+            Assert.Equal( "Clave simple 1", localizable.Localized );
+        }
     }
 }

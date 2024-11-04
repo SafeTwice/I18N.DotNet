@@ -3,6 +3,7 @@
 /// @license    See LICENSE.txt
 
 using System;
+using System.ComponentModel;
 
 namespace I18N.DotNet
 {
@@ -12,7 +13,7 @@ namespace I18N.DotNet
     /// <remarks>
     /// The localized value is automatically updated when the localizer is updated.
     /// </remarks>
-    public abstract class Localizable : IDisposable
+    public abstract class Localizable : IDisposable, INotifyPropertyChanged
     {
         //===========================================================================
         //                           PUBLIC PROPERTIES
@@ -34,6 +35,13 @@ namespace I18N.DotNet
         /// Localizer used to translate the text expression.
         /// </summary>
         public ILocalizer Localizer { get; }
+
+        //===========================================================================
+        //                             PUBLIC EVENTS
+        //===========================================================================
+
+        /// <inheritdoc/>
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         //===========================================================================
         //                               FINALIZER
@@ -114,6 +122,8 @@ namespace I18N.DotNet
         private void OnLocalizerUpdated()
         {
             m_localizedText = null;
+
+            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( nameof( Localized ) ) );
         }
 
         //===========================================================================

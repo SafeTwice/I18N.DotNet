@@ -43,7 +43,9 @@ namespace I18N.DotNet
         [ExcludeFromCodeCoverage]
         public static implicit operator PlainString( FormattableString value )
         {
+#pragma warning disable S3877 // Exceptions should not be thrown from unexpected methods
             throw new InvalidOperationException();
+#pragma warning restore S3877
         }
     }
 }

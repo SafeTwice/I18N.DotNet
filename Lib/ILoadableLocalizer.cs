@@ -1,5 +1,5 @@
 ﻿/// @file
-/// @copyright  Copyright (c) 2023-2024 SafeTwice S.L. All rights reserved.
+/// @copyright  Copyright (c) 2023-2025 SafeTwice S.L. All rights reserved.
 /// @license    See LICENSE.txt
 
 using System;
@@ -41,11 +41,11 @@ namespace I18N.DotNet
         /// <remarks>
         /// All the translations loaded previously in the localizer are discarded and replaced with the new ones.
         /// </remarks>
-        /// <param name="filepath">Path to the localization configuration file.</param>
+        /// <param name="filePath">Path to the localization configuration file.</param>
         /// <param name="culture">Culture for the target language of translations,
         ///                       or <c>null</c> to use the current UI culture (obtained from <see cref="CultureInfo.CurrentUICulture"/>).</param>
         /// <exception cref="ParseException">Thrown when the input file cannot be parsed properly.</exception>
-        void LoadXML( string filepath, CultureInfo? culture = null );
+        void LoadXML( string filePath, CultureInfo? culture = null );
 
         /// <summary>
         /// Loads translations for the given <paramref name="language"/> from a localization configuration file in XML format.
@@ -55,19 +55,19 @@ namespace I18N.DotNet
         /// <para>If the system does not support a culture for <paramref name="language"/>, then <see cref="CultureInfo.InvariantCulture"/>
         /// will be used as the culture for formatting operations.</para>
         /// </remarks>
-        /// <param name="filepath">Path to the localization configuration file.</param>
+        /// <param name="filePath">Path to the localization configuration file.</param>
         /// <param name="language">Name, code or identifier for the target language of translations.</param>
         /// <exception cref="ParseException">Thrown when the input file cannot be parsed properly.</exception>
-        void LoadXML( string filepath, string language );
+        void LoadXML( string filePath, string language );
 
         /// <summary>
         /// Loads translations for the current localizer language from a localization configuration file in XML format.
         /// </summary>
-        /// <param name="filepath">Path to the localization configuration file.</param>
+        /// <param name="filePath">Path to the localization configuration file.</param>
         /// <param name="merge">Replaces the current translations with the loaded ones when<c>false</c>,
         ///                     otherwise merges both (existing translations are overridden with loaded ones).</param>
         /// <exception cref="ParseException">Thrown when the input file cannot be parsed properly.</exception>
-        void LoadXML( string filepath, bool merge );
+        void LoadXML( string filePath, bool merge );
 
         /// <summary>
         /// Loads translations for the given <paramref name="culture"/> from a localization configuration file in XML format obtained from a stream.

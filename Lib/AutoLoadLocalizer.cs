@@ -1,5 +1,5 @@
 ﻿/// @file
-/// @copyright  Copyright (c) 2023-2024 SafeTwice S.L. All rights reserved.
+/// @copyright  Copyright (c) 2023-2025 SafeTwice S.L. All rights reserved.
 /// @license    See LICENSE.txt
 
 using System;
@@ -40,6 +40,8 @@ namespace I18N.DotNet
         //                          PUBLIC CONSTRUCTORS
         //===========================================================================
 
+#pragma warning disable S3427 // This constructor is intended only for public use
+
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -57,6 +59,8 @@ namespace I18N.DotNet
             m_ignoreIfNotExists = false;
         }
 
+#pragma warning restore S3427
+
         //===========================================================================
         //                            PUBLIC METHODS
         //===========================================================================
@@ -65,13 +69,20 @@ namespace I18N.DotNet
         public string Localize( PlainString text ) => InternalLocalizer.Localize( text );
 
         /// <inheritdoc/>
-        public string Localize( FormattableString frmtText ) => InternalLocalizer.Localize( frmtText );
+        public string Localize( FormattableString text ) => InternalLocalizer.Localize( text );
 
         /// <inheritdoc/>
         public IEnumerable<string> Localize( IEnumerable<string> texts ) => InternalLocalizer.Localize( texts );
 
         /// <inheritdoc/>
-        public string LocalizeFormat( string format, params object[] args ) => InternalLocalizer.LocalizeFormat( format, args );
+#if NET7_0_OR_GREATER
+        public string LocalizeFormat( [StringSyntax( "CompositeFormat" )] string format, params object?[] args )
+#else
+        public string LocalizeFormat( string format, params object?[] args )
+#endif
+        {
+            return InternalLocalizer.LocalizeFormat( format, args );
+        }
 
         /// <inheritdoc/>
         public ILocalizer Context( string contextId ) => InternalLocalizer.Context( contextId );
@@ -80,24 +91,24 @@ namespace I18N.DotNet
         public ILocalizer Context( IEnumerable<string> splitContextIds ) => InternalLocalizer.Context( splitContextIds );
 
         /// <inheritdoc/>
-        public void LoadXML( string filepath, CultureInfo? culture = null )
+        public void LoadXML( string filePath, CultureInfo? culture = null )
         {
             m_internalLocalizer ??= new Localizer();
-            m_internalLocalizer.LoadXML( filepath, culture );
+            m_internalLocalizer.LoadXML( filePath, culture );
         }
 
         /// <inheritdoc/>
-        public void LoadXML( string filepath, string language )
+        public void LoadXML( string filePath, string language )
         {
             m_internalLocalizer ??= new Localizer();
-            m_internalLocalizer.LoadXML( filepath, language );
+            m_internalLocalizer.LoadXML( filePath, language );
         }
 
         /// <inheritdoc/>
-        public void LoadXML( string filepath, bool merge )
+        public void LoadXML( string filePath, bool merge )
         {
             m_internalLocalizer ??= new Localizer();
-            m_internalLocalizer.LoadXML( filepath, merge );
+            m_internalLocalizer.LoadXML( filePath, merge );
         }
 
         /// <inheritdoc/>

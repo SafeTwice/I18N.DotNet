@@ -1,5 +1,5 @@
 ﻿/// @file
-/// @copyright  Copyright (c) 2020-2024 SafeTwice S.L. All rights reserved.
+/// @copyright  Copyright (c) 2020-2025 SafeTwice S.L. All rights reserved.
 /// @license    See LICENSE.txt
 
 using System;
@@ -8,6 +8,10 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
+
+#if NET7_0_OR_GREATER
+using System.Diagnostics.CodeAnalysis;
+#endif
 
 namespace I18N.DotNet
 {
@@ -48,26 +52,9 @@ namespace I18N.DotNet
         }
 
         /// <inheritdoc/>
-        public string Localize( FormattableString frmtText )
+        public string Localize( FormattableString text )
         {
-            return LocalizeFormat( frmtText.Format, frmtText.GetArguments() );
-        }
-
-        /// <inheritdoc/>
-        public string LocalizeFormat( string format, params object?[] args )
-        {
-            if( m_localizations.TryGetValue( format, out var localizedFormat ) )
-            {
-                return String.Format( Language.Culture, localizedFormat, args );
-            }
-            else if( m_parentContext != null )
-            {
-                return m_parentContext.LocalizeFormat( format, args );
-            }
-            else
-            {
-                return String.Format( Language.Culture, format, args );
-            }
+            return LocalizeFormat( text.Format, text.GetArguments() );
         }
 
         /// <inheritdoc/>
@@ -81,6 +68,27 @@ namespace I18N.DotNet
             }
 
             return result;
+        }
+
+        /// <inheritdoc/>
+#if NET7_0_OR_GREATER
+        public string LocalizeFormat( [StringSyntax( "CompositeFormat" )] string format, params object?[] args )
+#else
+        public string LocalizeFormat( string format, params object?[] args )
+#endif
+        {
+            if( m_localizations.TryGetValue( format, out var localizedFormat ) )
+            {
+                return String.Format( Language.Culture, localizedFormat, args );
+            }
+            else if( m_parentContext != null )
+            {
+                return m_parentContext.LocalizeFormat( format, args );
+            }
+            else
+            {
+                return String.Format( Language.Culture, format, args );
+            }
         }
 
         /// <inheritdoc/>
@@ -208,6 +216,7 @@ namespace I18N.DotNet
                         {
                             throw new ILoadableLocalizer.ParseException( $"Line {( (IXmlLineInfo) childElement ).LineNumber}: Too many child '{childElement.Name}' XML elements" );
                         }
+
                         key = UnescapeEscapeCodes( childElement.Value );
                         break;
 
@@ -220,6 +229,7 @@ namespace I18N.DotNet
                             {
                                 throw new ILoadableLocalizer.ParseException( $"Line {( (IXmlLineInfo) childElement ).LineNumber}: Too many child '{childElement.Name}' XML elements with the same 'lang' attribute" );
                             }
+
                             valueFull = loadedValue;
                         }
                         else if( loadedValueType == EValueType.PRIMARY )
@@ -228,8 +238,10 @@ namespace I18N.DotNet
                             {
                                 throw new ILoadableLocalizer.ParseException( $"Line {( (IXmlLineInfo) childElement ).LineNumber}: Too many child '{childElement.Name}' XML elements with the same 'lang' attribute" );
                             }
+
                             valuePrimary = loadedValue;
                         }
+
                         break;
 
                     default:
@@ -252,11 +264,8 @@ namespace I18N.DotNet
 
         private EValueType LoadValue( XElement element, out string? value )
         {
-            string? lang = element.Attribute( "lang" )?.Value.ToLower();
-            if( lang == null )
-            {
+            string? lang = element.Attribute( "lang" )?.Value.ToLower() ??
                 throw new ILoadableLocalizer.ParseException( $"Line {( (IXmlLineInfo) element ).LineNumber}: Missing attribute 'lang' in '{element.Name}' XML element" );
-            }
 
             if( lang == Language.Full )
             {
@@ -294,11 +303,8 @@ namespace I18N.DotNet
 
         private void LoadContext( XElement element )
         {
-            string? contextId = element.Attribute( "id" )?.Value;
-            if( contextId == null )
-            {
+            string? contextId = element.Attribute( "id" )?.Value ??
                 throw new ILoadableLocalizer.ParseException( $"Line {( (IXmlLineInfo) element ).LineNumber}: Missing attribute 'id' in '{element.Name}' XML element" );
-            }
 
             GetContext( contextId ).Load( element );
         }
@@ -337,7 +343,7 @@ namespace I18N.DotNet
         //                           PRIVATE CONSTANTS
         //===========================================================================
 
-        private static readonly Dictionary<string, string> ESCAPE_CODES = new Dictionary<string, string>
+        private static readonly Dictionary<string, string> ESCAPE_CODES = new()
         {
             { "n", "\n" },
             { "r", "\r" },

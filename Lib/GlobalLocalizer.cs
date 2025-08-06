@@ -1,9 +1,13 @@
 ﻿/// @file
-/// @copyright  Copyright (c) 2020-2023 SafeTwice S.L. All rights reserved.
+/// @copyright  Copyright (c) 2020-2025 SafeTwice S.L. All rights reserved.
 /// @license    See LICENSE.txt
 
 using System;
 using System.Collections.Generic;
+
+#if NET7_0_OR_GREATER
+using System.Diagnostics.CodeAnalysis;
+#endif
 
 namespace I18N.DotNet
 {
@@ -40,12 +44,12 @@ namespace I18N.DotNet
         /// Localizes an interpolated string using the global localizer.
         /// </summary>
         /// <seealso cref="ILocalizer.Localize(FormattableString)"/>
-        /// <param name="frmtText">Base-language formattable string.</param>
+        /// <param name="text">Base-language formattable string.</param>
         /// <returns>Formatted string generated from the language-specific localized format string if found, 
-        ///          or generated from <paramref name="frmtText"/> otherwise.</returns>
-        public static string Localize( FormattableString frmtText )
+        ///          or generated from <paramref name="text"/> otherwise.</returns>
+        public static string Localize( FormattableString text )
         {
-            return Localizer.Localize( frmtText );
+            return Localizer.Localize( text );
         }
 
         /// <summary>
@@ -67,7 +71,11 @@ namespace I18N.DotNet
         /// <param name="args">Arguments for the format string.</param>
         /// <returns>Formatted string generated from the language-specific localized format string if found,
         ///          or generated from <paramref name="format"/> otherwise.</returns>
-        public static string LocalizeFormat( string format, params object[] args )
+#if NET7_0_OR_GREATER
+        public static string LocalizeFormat( [StringSyntax( "CompositeFormat" )] string format, params object?[] args )
+#else
+        public static string LocalizeFormat( string format, params object?[] args )
+#endif
         {
             return Localizer.LocalizeFormat( format, args );
         }

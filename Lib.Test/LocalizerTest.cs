@@ -1,15 +1,16 @@
 /// @file
-/// @copyright  Copyright (c) 2020-2024 SafeTwice S.L. All rights reserved.
+/// @copyright  Copyright (c) 2020-2025 SafeTwice S.L. All rights reserved.
 /// @license    See LICENSE.txt
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using Xunit;
 using static I18N.DotNet.Test.TestHelpers;
 
-#pragma warning disable CA1861, CA1859
+#pragma warning disable IDE0079
+#pragma warning disable CA1861, CA1859, IDE0300
+#pragma warning restore IDE0079
 
 namespace I18N.DotNet.Test
 {
@@ -403,7 +404,7 @@ namespace I18N.DotNet.Test
         {
             // Prepare
 
-            var localizer = new Localizer( );
+            var localizer = new Localizer();
             localizer.LoadXML( GetI18NConfig(), "es-es" );
 
             ILocalizer ilocalizer = localizer;
@@ -437,7 +438,7 @@ namespace I18N.DotNet.Test
 
             // Execute & Verify
 
-            var exception = Assert.Throws<System.Xml.XmlException>( () => localizer.LoadXML( data ) );
+            Assert.Throws<System.Xml.XmlException>( () => localizer.LoadXML( data ) );
         }
 
         [Fact]

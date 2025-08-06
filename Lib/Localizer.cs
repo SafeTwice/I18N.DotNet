@@ -32,21 +32,21 @@ namespace I18N.DotNet
         //===========================================================================
 
         /// <inheritdoc/>
-        public void LoadXML( string filepath, CultureInfo? culture = null )
+        public void LoadXML( string filePath, CultureInfo? culture = null )
         {
-            LoadXML( XDocument.Load( filepath, LoadOptions.SetLineInfo ), culture );
+            LoadXML( XDocument.Load( filePath, LoadOptions.SetLineInfo ), culture );
         }
 
         /// <inheritdoc/>
-        public void LoadXML( string filepath, string language )
+        public void LoadXML( string filePath, string language )
         {
-            LoadXML( XDocument.Load( filepath, LoadOptions.SetLineInfo ), language );
+            LoadXML( XDocument.Load( filePath, LoadOptions.SetLineInfo ), language );
         }
 
         /// <inheritdoc/>
-        public void LoadXML( string filepath, bool merge )
+        public void LoadXML( string filePath, bool merge )
         {
-            LoadXML( XDocument.Load( filepath, LoadOptions.SetLineInfo ), merge );
+            LoadXML( XDocument.Load( filePath, LoadOptions.SetLineInfo ), merge );
         }
 
         /// <inheritdoc/>
